@@ -25,7 +25,7 @@
   in
   {
     devShells.x86_64-linux.default = pkgs.mkShell {
-      buildInputs = [ pkgs.neovim ];
+      buildInputs = [];
     };
   nixosConfigurations = {
      nixos = nixpkgs.lib.nixosSystem {
