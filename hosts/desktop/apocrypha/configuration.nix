@@ -14,7 +14,7 @@
     # boot.loader.grub.device = "/dev/vda";
     # boot.loader.grub.useOSProber = true;
 
-    networking.hostName = "nixos"; # Define hostname
+    networking.hostName = "apocrypha"; # Define hostname
     # networking.wireless.enable = true; # Enable wireless support via wpa_supplicant
 
     # Configure network proxy
@@ -54,14 +54,18 @@
 
     # Enable Shell
     programs.fish.enable = true;
-    programs.nushell.enale = true;
-    programs.zsh.enalbe = true;
+    programs.nushell.enable = true;
+    programs.zsh.enable = true;
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.fangyuan = {
+    users.users.hare = {
         isNormalUser = true;
         description = "Fang Yuan";
-        extraGroups = [ "networkmanager" "wheel" ];
+        extraGroups = [
+            "networkmanager"
+            "wheel"
+            "libvirtd"
+        ];
         packages = with pkgs; [
         #  thunderbird
         ];
@@ -72,7 +76,7 @@
         extraSpecialArgs = { inherit inputs; };
         backupFileExtension = "backup";
         users = {
-            fangyuan = import ./home.nix;
+            hare = import ./home.nix;
         };
     };
 
@@ -105,8 +109,8 @@
         wlr.enable = true;
     };
 
+    # # Polkit
     security.polkit.enable = true;
-
     systemd = {
         user.services.polkit-gnome-authentication-agent-1 = {
             description = "polkit-gnome-authentication-agent-1";
@@ -123,15 +127,16 @@
         };
     };
 
+    # # File Explorer
     programs.thunar.enable = true;
     programs.thunar.plugins = with pkgs.xfce; [
         thunar-archive-plugin
         thunar-volman
     ];
-
     services.gvfs.enable = true; # Mount, trash, and other functionalities
     services.tumbler.enable = true; # Thumbnail support for images
 
+    # # Audio
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
@@ -155,31 +160,14 @@
         ffmpegthumbnailer # Video files thumbnail
         pavucontrol
         polybar-pulseaudio-control
-        vim
-        neovim
-        emacs
         tree-sitter
         libgcc
         gcc
         zig
-        coreutils
-        fd
         clang
         go
-        ripgrep
-        gnumake
-        fzf
         wl-clipboard
         xclip
-        rar
-        unrar
-        zip
-        unzip
-        p7zip
-        pcmanfm
-        xarchiver
-        lf
-        superfile
         feh
         mpv
         mpvc
@@ -208,9 +196,69 @@
         eww
         papirus-icon-theme
         fastfetch
-        stow
+        # # Basic Utils
+        binutils
+        coreutils
+        diffutils
+        fd
+        file
+        findutils
+        fzf
+        gawk
         git
+        glibc
+        gnugrep
+        gnumake
+        gnused
+        gnutar
+        less
+        procps
+        ripgrep
+        sharutils
+        stow
+        toybox
+        util-linux
+        xz
+        # # Archive Managers and Compression
+        p7zip
+        peazip # Manager
+        rar
+        unrar
+        unzip
+        xarchiver # Manager
+        zip
+        # # File Explorer
+        lf
+        pcmanfm
+        ranger
+        superfile
+        # # Terminal
+        alacritty
         kitty
+        tmux
+        wezterm
+        # # Editors
+        emacs
+        neovim
+        vim
+        # # VSCode
+        vscodium
+        (vscode-with-extensions.override {
+            vscode = vscodium;
+            vscodeExtensions = with vscode-extensions; [
+                bbenoist.nix
+                ms-python.python
+                ms-azuretools.vscode-docker
+                ms-vscode-remote.remote-ssh
+            ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+                {
+                    name = "remote-ssh-edit";
+                    publisher = "ms-vscode-remote";
+                    version = "0.47.2";
+                    sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
+                }
+            ];
+        })
     ];
 
     fonts.packages = with pkgs; [
@@ -224,7 +272,7 @@
     stylix.enable = true;
     stylix.autoEnable = true;
     stylix.polarity = "dark";
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
     stylix.image = ./gruvbox_image46.png;
 
     # Some programs need SUID wrappers, can be configured further or are
