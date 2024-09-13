@@ -90,8 +90,6 @@
         enable = true; # Enable X11
         autorun = true; # Define if it should autostart
         # videoDrivers = [ "r128" ]; # Manually set drivers
-        displayManager.lightdm.enable = true; # Enable lightdm
-        windowManager.i3.enable = true; # Install i3
     };
 
     hardware.graphics = {
@@ -99,10 +97,29 @@
         enable32Bit = true; # Enable support for 32Bit
     };
 
-    programs.sway = {
-        enable = true; # Install sway
-        # package = pkgs.swayfx;
+    # # i3 Window Manager
+    services.xserver.windowManager.i3.enable = true;
+
+    # # Display Manager
+    services.displayManager = {
+        sddm.enable = true;
+        # lightdm.enable = true;
     };
+
+    # # Sway Window Manager
+    # programs.sway = {
+        # enable = true;
+        # package = pkgs.swayfx;
+    # };
+
+    # # Hyprland Window Manager
+    programs.hyprland = {
+        enable = true;
+    };
+    # # Hint Electron apps to use Wayland
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    # # Enable Kitty Terminal
+    programs.kitty.enable = true;
 
     xdg.portal = {
         enable = true;
@@ -150,17 +167,11 @@
     };
 
     environment.systemPackages = with pkgs; [
-        # inputs.nixpkgs.legacyPackages.${pkgs.system}.neovim
         home-manager
         polkit # Polkit
         polkit_gnome # Polkit Agent
-        zsh # Shell
-        fish # Shell
-        nushell # Shell
         ffmpegthumbnailer # Video files thumbnail
         pavucontrol
-        polybar-pulseaudio-control
-        tree-sitter
         libgcc
         gcc
         zig
@@ -171,15 +182,10 @@
         feh
         mpv
         mpvc
-        palemoon-bin
+        #palemoon-bin
         floorp
-        librewolf
+        #librewolf
         tor
-        mpd
-        mpc-cli
-        ncmpcpp
-        plattenalbum
-        ymuse
         qbittorrent
         logmein-hamachi
         haguichi
@@ -234,12 +240,12 @@
         superfile
         # # Terminal
         alacritty
-        kitty
+        # kitty
         tmux
         wezterm
         # # Editors
-        emacs
-        neovim
+        # emacs
+        # neovim
         vim
         # # VSCode
         vscodium
@@ -259,6 +265,10 @@
                 }
             ];
         })
+        # # Wine
+        wineWowPackages.staging
+        winetricks
+        protontricks
     ];
 
     fonts.packages = with pkgs; [
