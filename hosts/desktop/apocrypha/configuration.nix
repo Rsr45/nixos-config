@@ -271,31 +271,27 @@
         protontricks
     ];
 
-    # # Steam
-    programs.steam = {
-        enable = true;
-        remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-        dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-        localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    # # Steam and Gamescope
+    programs = {
+        gamescope = {
+            enable = true;
+            capSysNice = true;
+        };
+        steam = {
+            enable = true;
+            remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+            dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+            localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+            gamescopeSession.enable = true;
+        };
+        hardware.xone.enable = true; # support for the xbox controller USB dongle
+        services.getty.autologinUser = "hare";
+        environment = {
+            systemPackages = pkgs.mangohud;
+            loginShellInit = ''
+                [[ "$(tty)" = "/dev/tty1" ]] && ./gs.sh
+            '';
     };
-
-programs = {
-  gamescope = {
-    enable = true;
-    capSysNice = true;
-  };
-  steam = {
-    enable = true;
-    gamescopeSession.enable = true;
-};
-hardware.xone.enable = true; # support for the xbox controller USB dongle
-services.getty.autologinUser = "your_user";
-environment = {
-  systemPackages = pkgs.mangohud;
-  loginShellInit = ''
-    [[ "$(tty)" = "/dev/tty1" ]] && ./gs.sh
-  '';
-};
 
     fonts.packages = with pkgs; [
         (nerdfonts.override { fonts = [ "FiraCode" ]; })
