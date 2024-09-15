@@ -10,6 +10,7 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         stylix.url = "github:danth/stylix";
+        ags.url = "github:Aylur/ags";
     };
 
     outputs = { self, nixpkgs, ... } @ inputs:
@@ -28,6 +29,7 @@
                 specialArgs = { inherit inputs system; };
                 modules = [
                     ./hosts/desktop/apocrypha/configuration.nix
+                    inputs.stylix.nixosModules.stylix
                 ];
             };
             nixos = nixpkgs.lib.nixosSystem {

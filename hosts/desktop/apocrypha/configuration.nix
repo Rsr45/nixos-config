@@ -54,13 +54,13 @@
 
     # Enable Shell
     programs.fish.enable = true;
-    programs.nushell.enable = true;
+    # programs.nushell.enable = true;
     programs.zsh.enable = true;
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.hare = {
         isNormalUser = true;
-        description = "Fang Yuan";
+        description = "Hare";
         extraGroups = [
             "networkmanager"
             "wheel"
@@ -89,7 +89,7 @@
     services.xserver = {
         enable = true; # Enable X11
         autorun = true; # Define if it should autostart
-        # videoDrivers = [ "r128" ]; # Manually set drivers
+        videoDrivers = [ "amdgpu" ]; # Manually set drivers
     };
 
     hardware.graphics = {
@@ -118,8 +118,8 @@
     };
     # # Hint Electron apps to use Wayland
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    # # Enable Kitty Terminal
-    programs.kitty.enable = true;
+    # # Enable Kitty Terminal [DEPRECATED]
+    # programs.kitty.enable = true;
 
     xdg.portal = {
         enable = true;
@@ -179,27 +179,13 @@
         go
         wl-clipboard
         xclip
-        feh
-        mpv
-        mpvc
         #palemoon-bin
         floorp
         #librewolf
         tor
-        qbittorrent
-        logmein-hamachi
-        haguichi
-        anydesk
-        obsidian
-        keepassxc
-        smassh
-        typioca
-        mapscii
         pywal
-        dmenu
         polybar
         swww
-        eww
         papirus-icon-theme
         fastfetch
         # # Basic Utils
@@ -240,7 +226,7 @@
         superfile
         # # Terminal
         alacritty
-        # kitty
+        kitty
         tmux
         wezterm
         # # Editors
@@ -251,7 +237,7 @@
         vscodium
         (vscode-with-extensions.override {
             vscode = vscodium;
-            vscodeExtensions = with vscode-extensions; [
+            vscodeExtensions = with pkgs.vscode-extensions; [
                 bbenoist.nix
                 ms-python.python
                 ms-azuretools.vscode-docker
@@ -265,10 +251,42 @@
                 }
             ];
         })
+        # # App Launchers and Widgets
+        ags
+        dmenu
+        eww
+        tofi
+        rofi
+        wofi
+        # # Utils
+        yt-dlp
+        thefuck
+        ffmpeg
+        # # Apps
+        feh
+        mpv
+        mpvc
+        qbittorrent
+        logmein-hamachi
+        haguichi
+        anydesk
+        obsidian # Note
+        keepassxc # Password Manager
+        smassh
+        typioca
+        mapscii
+        librewolf #Browser
+        floorp # Browser
+        tor # Browser
+        motrix # Download Manager
         # # Wine
         wineWowPackages.staging
         winetricks
         protontricks
+        # # Launchers and some utils
+        heroic
+        lutris
+        mangohud
     ];
 
     # # Steam and Gamescope
@@ -283,15 +301,12 @@
             dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
             localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
             gamescopeSession.enable = true;
+            gamescopeSession.args = [ "-r 144" "-S stretch" ];
         };
-        hardware.xone.enable = true; # support for the xbox controller USB dongle
-        services.getty.autologinUser = "hare";
-        environment = {
-            systemPackages = pkgs.mangohud;
-            loginShellInit = ''
-                [[ "$(tty)" = "/dev/tty1" ]] && ./gs.sh
-            '';
+        gamemode.enable = true;
     };
+
+    hardware.xone.enable = true; # support for the xbox controller USB dongle
 
     fonts.packages = with pkgs; [
         (nerdfonts.override { fonts = [ "FiraCode" ]; })
@@ -301,11 +316,11 @@
         liberation_ttf
     ];
 
-    stylix.enable = true;
-    stylix.autoEnable = true;
-    stylix.polarity = "dark";
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
-    stylix.image = ./wallhaven-d6y12l_3840x2160.png;
+    # stylix.enable = true;
+    # stylix.autoEnable = true;
+    # stylix.polarity = "dark";
+    # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    # stylix.image = ./wallhaven-d6y12l_3840x2160.png;
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
