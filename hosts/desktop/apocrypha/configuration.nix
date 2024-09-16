@@ -237,7 +237,7 @@
         vscodium
         (vscode-with-extensions.override {
             vscode = vscodium;
-            vscodeExtensions = with pkgs.vscode-extensions; [
+            vscodeExtensions = with vscode-extensions; [
                 bbenoist.nix
                 ms-python.python
                 ms-azuretools.vscode-docker
@@ -262,7 +262,10 @@
         yt-dlp
         thefuck
         ffmpeg
+        ps3iso-utils
+        ps3-disc-dumper
         # # Apps
+        vesktop
         feh
         mpv
         mpvc

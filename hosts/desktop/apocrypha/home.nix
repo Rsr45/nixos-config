@@ -72,6 +72,10 @@
                 workspace_swipe_direction_lock_threshold = 10;
                 workspace_swipe_create_new = true;
             };
+            "exec-once" = [
+                "ags"
+                "swww kill; swww-daemon"
+            ];
             binds = { scroll_event_delay = 0; };
             input = {
                 # Keyboard: Add a layout and uncomment kb_options for Win+Space switching shortcut
@@ -222,7 +226,32 @@
             bind = ,escape, submap, reset    
             bind = ,return,  submap, reset    
             submap = reset
+            # # 
+            plugin {
+                hyprbars {
+                    bar_text_font = Rubik, Geist, AR One Sans, Reddit Sans, Inter, Roboto, Ubuntu, Noto Sans, sans-serif
+                    bar_height = 30
+                    bar_padding = 10
+                    bar_button_padding = 5
+                    bar_precedence_over_border = true
+                    bar_part_of_window = true
+
+                    bar_color = rgba(1D1011FF)
+                    col.text = rgba(F7DCDEFF)
+
+
+                    # example buttons (R -> L)
+                    # hyprbars-button = color, size, on-click
+                    hyprbars-button = rgb(FF605C), 16, 󰖭, hyprctl dispatch killactive
+                    hyprbars-button = rgb(00CA4E), 16, 󰖯, hyprctl dispatch fullscreen 1
+                    hyprbars-button = rgb(FFBD44), 16, 󰖰, hyprctl dispatch movetoworkspacesilent special
+                }
+            }
         '';
+        plugins = with pkgs.hyprlandPlugins; [
+            hyprbars
+            csgo-vulkan-fix
+        ];
     };
 
     programs.ags = {
@@ -387,6 +416,10 @@
     home.packages = with pkgs; [
         # # Fonts
         cascadia-code
+        rubik
+        geist-font
+        inter
+        roboto
         (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
         # # You can also create simple shell scripts directly inside your
