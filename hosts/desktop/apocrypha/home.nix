@@ -73,7 +73,8 @@
                 workspace_swipe_create_new = true;
             };
             "exec-once" = [
-                "ags"
+                # "ags"
+                "eww daemon & eww open bar_1"
                 "swww kill; swww-daemon"
             ];
             binds = { scroll_event_delay = 0; };
@@ -236,8 +237,8 @@
                     bar_precedence_over_border = true
                     bar_part_of_window = true
 
-                    bar_color = rgba(1D1011FF)
-                    col.text = rgba(F7DCDEFF)
+                    bar_color = rgba(161616FF)
+                    col.text = rgba(FFFFFFFF)
 
 
                     # example buttons (R -> L)
@@ -262,6 +263,14 @@
             webkitgtk
             accountsservice
         ];
+    };
+
+    programs.eww = {
+        enable = true;
+        enableBashIntegration = true;
+        enableFishIntegration = true;
+        enableZshIntegration = true;
+        configDir = "/home/hare/nixos-config/hosts/desktop/apocrypha/config-dir/eww-config-dir/";
     };
 
     programs.fish = {
@@ -420,6 +429,7 @@
         geist-font
         inter
         roboto
+        font-awesome
         (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
         # # You can also create simple shell scripts directly inside your
