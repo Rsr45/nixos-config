@@ -11,6 +11,10 @@
         };
         stylix.url = "github:danth/stylix";
         ags.url = "github:Aylur/ags";
+        nixvim = {
+            url = "github:nix-community/nixvim";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = { self, nixpkgs, ... } @ inputs:

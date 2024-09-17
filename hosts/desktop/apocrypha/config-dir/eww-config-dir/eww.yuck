@@ -83,7 +83,7 @@
 
 
           (label :text audio_sink))
-        (button :onclick "pavucontrol &"
+        (button :onclick "pwvucontrol &"
           "${volume}%")))))
 
 

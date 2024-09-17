@@ -171,7 +171,6 @@
         polkit # Polkit
         polkit_gnome # Polkit Agent
         ffmpegthumbnailer # Video files thumbnail
-        pavucontrol
         libgcc
         gcc
         zig
@@ -268,7 +267,9 @@
         bun
         dart-sass
         libnotify
-        pamixer
+        notify
+        notify-client
+        pwvucontrol
         # # Apps
         vesktop
         feh
