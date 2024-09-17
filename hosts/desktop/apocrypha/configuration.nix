@@ -264,6 +264,11 @@
         ffmpeg
         ps3iso-utils
         ps3-disc-dumper
+        tldr
+        bun
+        dart-sass
+        libnotify
+        pamixer
         # # Apps
         vesktop
         feh
@@ -282,6 +287,8 @@
         floorp # Browser
         tor # Browser
         motrix # Download Manager
+        # # Language Server
+        nil
         # # Wine
         wineWowPackages.staging
         winetricks
