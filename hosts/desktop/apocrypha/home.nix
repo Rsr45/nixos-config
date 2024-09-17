@@ -6,7 +6,10 @@
     home.username = "hare";
     home.homeDirectory = "/home/hare";
 
-    imports = [ inputs.ags.homeManagerModules.default ];
+    imports = [
+        inputs.ags.homeManagerModules.default
+        inputs.nixvim.homeManagerModules.nixvim
+    ];
 
     # # Fixes Cursor
     home.pointerCursor = {
@@ -52,7 +55,7 @@
                 gaps_in = 4;
                 gaps_out = 5;
                 gaps_workspaces = 50;
-                border_size = 1;
+                border_size = 4;
                 layout = "dwindle";
                 resize_on_border = true;
                 "col.active_border" = "rgba(471868FF)";
@@ -98,7 +101,7 @@
                 follow_mouse = 1;
             };
             decoration = {
-                rounding = 20;
+                rounding = 0;
 
                 blur = {
                     enabled = true;
@@ -155,7 +158,7 @@
                 focus_on_activate = true;
                 animate_manual_resizes = false;
                 animate_mouse_windowdragging = false;
-                enable_swallow = false;
+                enable_swallow = true;
                 swallow_regex = "(foot|kitty|allacritty|Alacritty)";
 
                 disable_hyprland_logo = true;
@@ -228,29 +231,29 @@
             bind = ,return,  submap, reset    
             submap = reset
             # # 
-            plugin {
-                hyprbars {
-                    bar_text_font = Rubik, Geist, AR One Sans, Reddit Sans, Inter, Roboto, Ubuntu, Noto Sans, sans-serif
-                    bar_height = 30
-                    bar_padding = 10
-                    bar_button_padding = 5
-                    bar_precedence_over_border = true
-                    bar_part_of_window = true
+            # plugin {
+               # hyprbars {
+                  #  bar_text_font = Rubik, Geist, AR One Sans, Reddit Sans, Inter, Roboto, Ubuntu, Noto Sans, sans-serif
+                  #  bar_height = 30
+                  #  bar_padding = 10
+                  #  bar_button_padding = 5
+                  #  bar_precedence_over_border = false
+                  #  bar_part_of_window = true
 
-                    bar_color = rgba(161616FF)
-                    col.text = rgba(FFFFFFFF)
+                  #  bar_color = rgba(161616FF)
+                  #  col.text = rgba(FFFFFFFF)
 
 
-                    # example buttons (R -> L)
-                    # hyprbars-button = color, size, on-click
-                    hyprbars-button = rgb(FF605C), 16, 󰖭, hyprctl dispatch killactive
-                    hyprbars-button = rgb(00CA4E), 16, 󰖯, hyprctl dispatch fullscreen 1
-                    hyprbars-button = rgb(FFBD44), 16, 󰖰, hyprctl dispatch movetoworkspacesilent special
-                }
-            }
+                  #  # example buttons (R -> L)
+                  #  # hyprbars-button = color, size, on-click
+                  #  hyprbars-button = rgb(FF605C), 16, 󰖭, hyprctl dispatch killactive
+                  #  hyprbars-button = rgb(00CA4E), 16, 󰖯, hyprctl dispatch fullscreen 1
+                  #  hyprbars-button = rgb(FFBD44), 16, 󰖰, hyprctl dispatch movetoworkspacesilent special
+               # }
+           # }
         '';
         plugins = with pkgs.hyprlandPlugins; [
-            hyprbars
+           # hyprbars
             csgo-vulkan-fix
         ];
     };
@@ -396,6 +399,61 @@
         settings = {
             import = [ "/home/hare/nixos-config/hosts/desktop/apocrypha/themes/alacritty/kanagawa_wave.toml" ];
         };
+    };
+
+    programs.nixvim = {
+        enable = true;
+        vimdiffAlias = true;
+        colorschemes.oxocarbon.enable = true;
+        plugins = {
+            lualine.enable = true;
+            which-key.enable = true;
+            nix.enable = true;
+            numbertoggle.enable = true;
+            neoscroll.enable = true;
+            nvim-tree.enable = true;
+            lsp = {
+                enable = true;
+                servers = {
+                    # # Nix
+                    nil-ls.enable = true;
+                    # # Lua
+                    lua-ls.enable = true;
+                };
+            };
+            treesitter = {
+                enable = true;
+
+                grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+                    bash
+                    css
+                    json
+                    lua
+                    make
+                    markdown
+                    nix
+                    regex
+                    toml
+                    vim
+                    vimdoc
+                    xml
+                    yaml
+                    yuck
+                    fennel
+                ];
+            };
+        };
+        extraConfigLua = ''
+            -- Make line numbers default
+            vim.opt.number = true
+            vim.opt.relativenumber = true
+
+            -- Enable mouse mode.
+            vim.opt.mouse = 'a'
+
+            -- Don't show the mode.
+            vim.opt.showmode = false
+        '';
     };
 
    # programs.vim = {
