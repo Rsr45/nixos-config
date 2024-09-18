@@ -270,6 +270,7 @@
         notify
         notify-client
         pwvucontrol
+        grim
         # # Apps
         vesktop
         feh

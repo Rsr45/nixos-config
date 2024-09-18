@@ -52,8 +52,8 @@
         border_size = 4;
         layout = "dwindle";
         resize_on_border = true;
-        "col.active_border" = "rgba(471868FF)";
-        "col.inactive_border" = "rgba(4f4256CC)";
+        "col.active_border" = "rgba(FFFFFFFF)";
+        "col.inactive_border" = "rgba(131313FF)";
       };
       dwindle = {
         preserve_split = true;
@@ -161,6 +161,7 @@
         "$mod, i, exec, floorp"
         "$mod, Return, exec, alacritty"
         "$mod, t, exec, thunar"
+        "$mod, End, exec, grim"
         # # Window management
         # # Focusing
         # # bind = Super, ←/↑/→/↓,, # Move focus in direction
@@ -168,8 +169,6 @@
         "$mod, Right, movefocus, r"
         "$mod, Up, movefocus, u"
         "$mod, Down, movefocus, d"
-        "$mod, BracketLeft, movefocus, l"
-        "$mod, BracketRight, movefocus, r"
         "$mod+Shift, Q, killactive,"
         "$mod+Shift+Alt, Q, exec, hyprctl kill" # Pick and kill a window
         # # Window arrangement
@@ -189,6 +188,7 @@
         # # Wallpaper
         "$mod+Alt, W, exec, /home/hare/nixos-config/hosts/desktop/apocrypha/wallpaper_changer.sh"
         # # Power Off etc.
+        "Ctrl+Shift+Super, Delete, exec, systemctl reboot" # Restart
         "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff" # Power off
       ]
       ++ (
@@ -286,6 +286,7 @@
       cd = "z";
       yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
       yt-mp4 = "yt-dlp -f mp4";
+      reboot = "systemctl reboot";
       shutdown = "systemctl poweroff";
     };
     antidote = {
@@ -386,15 +387,14 @@
 
   programs.nixvim = {
     enable = true;
-    vimdiffAlias = true;
     colorschemes.oxocarbon.enable = true;
     plugins = {
       lualine.enable = true;
-      which-key.enable = true;
+      neoscroll.enable = true;
       nix.enable = true;
       numbertoggle.enable = true;
-      neoscroll.enable = true;
       nvim-tree.enable = true;
+      which-key.enable = true;
       lsp = {
         enable = true;
         servers = {
@@ -409,6 +409,7 @@
         grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           bash
           css
+          fennel
           json
           lua
           make
@@ -421,12 +422,11 @@
           xml
           yaml
           yuck
-          fennel
         ];
-      };
+      };      
       cmp = {
         enable = true;
-        autoEnableSources = true;
+        autoEnableSources = false;
         settings = {
           mapping = {
             __raw = ''
@@ -447,38 +447,70 @@
             '';
           };
         };
-        sources = [
-          { name = "nvim_lsp"; }
-          { name = "path"; }
-          { name = "buffer"; }
-        ];
       };
-      nvim-colorizer.enable = true;
+      nvim-colorizer = {
+        enable = true;
+        userDefaultOptions = {
+          mode = "background";
+        };
+      };
+      telescope = {
+        enable = true;
+        extensions = {
+          fzf-native = {
+            enable = true;
+          };
+        };
+      };
       dashboard = {
         enable = true;
         settings = {
           theme = "doom";
           config = {
             header = [
-              "=================     ===============     ===============   ========  ========"
-              "\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //"
-              "||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||"
-              "|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
-              "||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
-              "|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||"
-              "||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||"
-              "|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||"
-              "||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||"
-              "||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||"
-              "||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||"
-              "||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||"
-              "||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||"
-              "||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||"
-              "||   .=='    _-'          `-__\._-'         `-_./__-'         `' |. /|  |   ||"
-              "||.=='    _-'                                                     `' |  /==.||"
-              "=='    _-'                                                            \/   `=="
-              "\   _-'                                                                `-_   /"
-              " `''                                                                      ``'"
+    "                                                                              "
+    "=================     ===============     ===============   ========  ========"
+    "\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //"
+    "||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||"
+    "|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
+    "||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
+    "|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||"
+    "||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||"
+    "|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||"
+    "||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||"
+    "||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||"
+    "||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||"
+    "||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||"
+    "||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||"
+    "||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||"
+    "||   .=='    _-'          `-__\\._-'         `-_./__-'         `' |. /|  |   ||"
+    "||.=='    _-'                                                     `' |  /==.||"
+    "=='    _-'                        N E O V I M                         \\/   `=="
+    "\\   _-'                                                                `-_   /"
+    " `''                                                                      ``'  "
+            ];
+            center = [
+              {
+                action = "Telescope oldfiles";
+                desc = "Recently Opened Files";
+                icon = "󱪞 ";
+                key = "r";
+                key_format = "%s";
+              }
+              {
+                action = "Telescope find_files";
+                desc = "Find Files           ";
+                icon = " ";
+                key = "f";
+                key_format = "%s";
+              }
+              {
+                action = "Telescope live_grep";
+                desc = "Find Words           ";
+                icon = " ";
+                key = "w";
+                key_format = "%s";
+              }
             ];
           };
         };
@@ -511,10 +543,10 @@
   home.packages = with pkgs; [
     # # Fonts
     cascadia-code
-    rubik
     geist-font
     inter
     roboto
+    rubik
     font-awesome
     (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
