@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
     imports =
@@ -66,9 +66,9 @@
             "wheel"
             "libvirtd"
         ];
-        packages = with pkgs; [
+        #packages = with pkgs; [
         #  thunderbird
-        ];
+        #];
         shell = pkgs.zsh;
     };
 
@@ -271,6 +271,10 @@
         notify-client
         pwvucontrol
         grim
+        slurp
+        socat
+        jq
+        python3
         # # Apps
         vesktop
         feh

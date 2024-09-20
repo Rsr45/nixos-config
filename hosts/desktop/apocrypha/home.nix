@@ -288,6 +288,8 @@
       yt-mp4 = "yt-dlp -f mp4";
       reboot = "systemctl reboot";
       shutdown = "systemctl poweroff";
+      yamltotoml = "find . -type f -name '*.yaml' | xargs -I {} alacritty migrate -c {}";
+      ymltotoml = "find . -type f -name '*.yml' | xargs -I {} alacritty migrate -c {}";
     };
     antidote = {
       enable = true;
@@ -381,7 +383,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      import = [ "/home/hare/nixos-config/hosts/desktop/apocrypha/themes/alacritty/kanagawa_wave.toml" ];
+      import = [ "/home/hare/nixos-config/hosts/desktop/apocrypha/themes/alacritty/oxocarbon-dark.toml" ];
     };
   };
 
