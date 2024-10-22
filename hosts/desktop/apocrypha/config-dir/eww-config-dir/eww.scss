@@ -42,7 +42,7 @@ window {
 }
 
 .volume-metric {
-  background-color: #131313;
+  background-color: #1D2021;
   color: #FFFFFF;
   padding: 0;
 
@@ -62,7 +62,7 @@ window {
   }
   scale trough {
     all: unset;
-    background-color: #131313;
+    background-color: #1D2021;
     min-width: 34px;
     min-height: 2px;
   }
@@ -73,7 +73,7 @@ window {
 }
 
 .metric {
-  background-color: #131313;
+  background-color: #1D2021;
   padding: 5px 2px;
 }
 .metric-icon {
@@ -93,7 +93,7 @@ window {
 
 .music_popup {
   all: unset;
-  background-color: #131313;
+  background-color: #1D2021;
   padding: 0px 20px;
   margin: 0;
 }
@@ -101,7 +101,7 @@ window {
 // System Tray
 menu {
 	padding: 5px 5px;
-  background-color: #131313;
+  background-color: #1D2021;
 
 	>menuitem {
     font-size: 14px;
@@ -113,7 +113,7 @@ menu {
 		}
 
 		&:hover {
-      background-color: #131313;
+      background-color: #1D2021;
 		}
 	}
 
