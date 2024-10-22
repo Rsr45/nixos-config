@@ -9,7 +9,12 @@
   imports = [
     inputs.ags.homeManagerModules.default
     inputs.nixvim.homeManagerModules.nixvim
+    inputs.spicetify-nix.homeManagerModules.default
   ];
+
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 
   # # Fixes Cursor
   home.pointerCursor = {
@@ -61,7 +66,9 @@
       };
       "exec-once" = [
         # "ags"
-        "eww daemon & eww open bar_1"
+        # "eww daemon & eww open bar_1"
+        "dunst"
+        "waybar -b verticalBar"
         "swww kill; swww-daemon"
       ];
       input = {
@@ -156,12 +163,22 @@
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
       ];
+      bindel = [
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ];
+      bindl = [
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioPlay, exec, playerctl play-pause"
+        ", XF86AudioPrev, exec, playerctl previous"
+        ", XF86AudioNext, exec, playerctl next"
+      ];
       bind = [
         # # Apps
         "$mod, i, exec, floorp"
         "$mod, Return, exec, alacritty"
         "$mod, t, exec, thunar"
-        "$mod, End, exec, grim"
+        "$mod, Space, exec, pkill fuzzel || fuzzel"
         # # Window management
         # # Focusing
         # # bind = Super, ←/↑/→/↓,, # Move focus in direction
@@ -182,38 +199,58 @@
         "$mod+Alt, F, fullscreenstate, 0 3" # Toggle fake fullscreen
         "$mod, F, fullscreen, 0"
         "$mod, D, fullscreen, 1"
-        # # Special
-        "$mod, S, togglespecialworkspace,"
-        "$mod, mouse:275, togglespecialworkspace,"
+        # # Workspaces
+        "$mod, 1, workspace, 1"
+        "$mod, 2, workspace, 2"
+        "$mod, 3, workspace, 3"
+        "$mod, 4, workspace, 4"
+        "$mod, 5, workspace, 5"
+        "$mod, 6, workspace, 6"
+        "$mod, 7, workspace, 7"
+        "$mod, 8, workspace, 8"
+        "$mod, 9, workspace, 9"
+        "$mod, 0, workspace, 10"
+        "$mod SHIFT, 1, movetoworkspace, 1"
+        "$mod SHIFT, 2, movetoworkspace, 2"
+        "$mod SHIFT, 3, movetoworkspace, 3"
+        "$mod SHIFT, 4, movetoworkspace, 4"
+        "$mod SHIFT, 5, movetoworkspace, 5"
+        "$mod SHIFT, 6, movetoworkspace, 6"
+        "$mod SHIFT, 7, movetoworkspace, 7"
+        "$mod SHIFT, 8, movetoworkspace, 8"
+        "$mod SHIFT, 9, movetoworkspace, 9"
+        "$mod SHIFT, 0, movetoworkspace, 10"
+        "$mod, mouse_down, workspace, e+1"
+        "$mod, mouse_up, workspace, e-1"
+        # # Special Workspaces
+        "$mod, S, togglespecialworkspace, magic"
+        "$mod ALT, S, movetoworkspace, special:magic"
+        # # Screenshot, Color Picker
+        ", Print, exec, grim"
+        "$mod SHIFT, S, exec, slurp | grim -g - $(date +'Screenshot_%F-%T.png')"
+        "$mod SHIFT, C, exec, hyprpicker -a -f hex"
         # # Wallpaper
-        "$mod+Alt, W, exec, /home/hare/nixos-config/hosts/desktop/apocrypha/wallpaper_changer.sh"
+        "$mod+Alt, W, exec, waypaper"
         # # Power Off etc.
         "Ctrl+Shift+Super, Delete, exec, systemctl reboot" # Restart
         "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff" # Power off
-      ]
-      ++ (
-        builtins.concatLists (builtins.genList (i:
-          let ws = i + 1;
-            in [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-            ]
-          )
-        9)
-      );
+      ];
+      windowrulev2 = [
+        "float, class:(waypaper)"
+      ];
     };
     extraConfig = ''
-      # # Resizing with submap    
-      bind = $mod, R, submap,resize    
-      submap = resize    
-      binde=,Right,resizeactive,  40 0    
-      binde=,Left,resizeactive, -40 0    
-      binde=,Down,resizeactive,   0 -40    
-      binde=,Up,resizeactive,   0 40    
-      bind = ,escape, submap, reset    
-      bind = ,return,  submap, reset    
+      # # Resizing with submap
+      bind = $mod, R, submap,resize
+      submap = resize
+      binde=,Right,resizeactive,  40 0
+      binde=,Left,resizeactive, -40 0
+      binde=,Up,resizeactive,   0 -40
+      binde=,Down,resizeactive,   0 40
+      bind = ,escape, submap, reset
+      bind = ,return,  submap, reset
       submap = reset
-      # # 
+      # #
       # plugin {
         # hyprbars {
           #  bar_text_font = Rubik, Geist, AR One Sans, Reddit Sans, Inter, Roboto, Ubuntu, Noto Sans, sans-serif
@@ -257,6 +294,181 @@
     enableFishIntegration = true;
     enableZshIntegration = true;
     configDir = "/home/hare/nixos-config/hosts/desktop/apocrypha/config-dir/eww-config-dir/";
+  };
+
+  programs.waybar = {
+    enable = true;
+    settings = {
+      verticalBar = {
+        name = "verticalBar";
+        layer = "top";
+        position = "left";
+        #margin = "5 2 5 0";
+        #reload_style_on_change = "true";
+        modules-left = [
+          "custom/nixos"
+          "hyprland/workspaces"
+        ];
+        modules-center = [ "clock" ];
+        modules-right = [ "pulseaudio" "disk" "memory" "cpu" "tray" ];
+        fixed-center = "true";
+        "custom/nixos" = {
+          format = "";
+          tooltip = false;
+        };
+        "hyprland/workspaces" = {
+          format = "{icon}";
+          on-click = "activate";
+          all-outputs = true;
+          format-icons = {
+            "1" = "一";
+            "2" = "二";
+            "3" = "三";
+            "4" = "四";
+            "5" = "五";
+            "6" = "六";
+            "7" = "七";
+            "8" = "八";
+            "9" = "九";
+            "10" = "十";
+          };
+          #format-icons = {
+          #"1" = "१";
+          #"2" = "२";
+          #"3" = "३";
+          #"4" = "४";
+          #"5" = "५";
+          #"6" = "६";
+          #"7" = "७";
+          #"8" = "८";
+          #"9" = "९";
+          #"10" = "०";
+          #};
+        };
+        "clock" = {
+          interval = 1;
+          format = "{:%H\n%M\n%S}";
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
+          calendar = {
+            mode = "month";
+            mode-mon-col = 3;
+            weeks-pos = "right";
+            on-scroll = 1;
+            on-click-right = "mode";
+            format = {
+              "today" = "<span color='#3ddbd9'><b><u>{}</u></b></span>";
+            };
+          };
+        };
+      };
+    };
+    style = ''
+      .verticalBar {
+        border: 1;
+        border-radius: 4;
+        font-family: "IBMPlexMono";
+        background: #1d2021
+      }
+
+      window#waybar verticalBar {
+       color: #525252
+      }
+
+      .modules-left#verticalBar {
+        background: #1d2021
+      }
+
+      .modules-center#verticalBar {
+        background: #1d2021
+      }
+
+      .modules-right#verticalBar {
+        background: #1d2021
+      }
+
+      tooltip#verticalBar {
+        background-color: #1d2021
+      }
+
+      #custom-nixos#verticalBar {
+        font-size: 34px;
+      }
+
+      #custom-nixos {
+        font-size: 24px;
+      }
+      window#waybar {
+        color: #ffffff;
+      }
+      .modules-left {
+        border-radius: 0px;
+        background: #161616;
+        padding: 12px 0px;
+      }
+      .modules-center {
+        border-radius: 0px;
+        background: #161616;
+        padding: 12px 0px;
+      }
+      .modules-right {
+        border-radius: 0px;
+        background: #161616;
+        padding: 12px 0px;
+      }
+      tooltip {
+        color: #ffffff;
+        background-color: #161616;
+        text-shadow: none;
+      }
+
+      tooltip * {
+        color: #ffffff;
+        text-shadow: none;
+      }
+      #workspaces {
+        font-weight: 600;
+        border-radius: 4px;
+      }
+      #workspaces button {
+        color: #525252;
+        background: none;
+        padding: 0;
+      }
+      #workspaces button:hover {
+        color: #42be65;
+      }
+      #workspaces button.active {
+        color: #ffffff;
+      }
+      #clock {
+        color: #ffffff;
+        padding: 4px 2px 2px 2px;
+      }
+      #pulseaudio.muted {
+        color: #ee5396;
+      }
+    '';
+  };
+
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      colors = {
+        background = "161616ff";
+        text = "FFFFFFFF";
+        prompt = "FFFFFFFF";
+        input = "FFFFFFFF";
+        match = "be95ffff";
+        selection-match = "be95ffff";
+        selection = "FFFFFFFF";
+        selection-text = "161616FF";
+        border = "FFFFFFFF";
+      };
+      border = {
+        radius = "0";
+        width = "4";
+      };
+    };
   };
 
   programs.fish = {
@@ -389,14 +601,32 @@
 
   programs.nixvim = {
     enable = true;
-    colorschemes.oxocarbon.enable = true;
+    colorschemes = {
+      gruvbox.enable = false;
+      oxocarbon.enable = true;
+    };
     plugins = {
-      lualine.enable = true;
-      neoscroll.enable = true;
+      lualine = {
+        enable = true;
+      };
+      notify = {
+        enable = true;
+      };
       nix.enable = true;
       numbertoggle.enable = true;
-      nvim-tree.enable = true;
-      which-key.enable = true;
+      nvim-tree = {
+        enable = true;
+      };
+      which-key = {
+        enable = true;
+      };
+      intellitab = {
+        enable = true;
+        # package = pkgs.vimPlugins.intellitab-nvim;
+      };
+      comment = {
+        enable = true;
+      };
       lsp = {
         enable = true;
         servers = {
@@ -404,42 +634,59 @@
           nil-ls.enable = true;
           # # Lua
           lua-ls.enable = true;
+          # # TypeScript
+          ts-ls.enable = true;
         };
       };
       treesitter = {
         enable = true;
-        grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          bash
-          css
-          fennel
-          json
-          lua
-          make
-          markdown
-          nix
-          regex
-          toml
-          vim
-          vimdoc
-          xml
-          yaml
-          yuck
-        ];
-      };      
+        nixvimInjections = true;
+        # grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+          # bash
+          # css
+          # fennel
+          # json
+          # lua
+          # make
+          # markdown
+          # nix
+          # regex
+          # toml
+          # vim
+          # vimdoc
+          # xml
+          # yaml
+          # yuck
+          # typescript
+          # javascript
+        # ];
+      };
+      cmp-buffer.enable = true;
+      cmp-nvim-lsp.enable = true;
+      cmp-nvim-lua.enable = true;
+      cmp-path.enable = true;
+      cmp-treesitter.enable = true;
+      cmp_luasnip.enable = true;
       cmp = {
         enable = true;
-        autoEnableSources = false;
+        autoEnableSources = true;
         settings = {
+          sources = [
+            { name = "buffer"; }
+            { name = "luasnip"; }
+            { name = "nvim_lsp"; }
+            { name = "nvim_lua"; }
+            { name = "path"; }
+            { name = "treesitter"; }
+          ];
           mapping = {
-            __raw = ''
-              cmp.mapping.preset.insert({
-              ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-              ['<C-f>'] = cmp.mapping.scroll_docs(4),
-              ['<C-Space>'] = cmp.mapping.complete(),
-              ['<C-e>'] = cmp.mapping.abort(),
-              ['<CR>'] = cmp.mapping.confirm({ select = true }),
-              })
-            '';
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-e>" = "cmp.mapping.close()";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
           };
           snippet = {
             expand = ''
@@ -470,26 +717,26 @@
           theme = "doom";
           config = {
             header = [
-    "                                                                              "
-    "=================     ===============     ===============   ========  ========"
-    "\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //"
-    "||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||"
-    "|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
-    "||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
-    "|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||"
-    "||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||"
-    "|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||"
-    "||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||"
-    "||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||"
-    "||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||"
-    "||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||"
-    "||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||"
-    "||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||"
-    "||   .=='    _-'          `-__\\._-'         `-_./__-'         `' |. /|  |   ||"
-    "||.=='    _-'                                                     `' |  /==.||"
-    "=='    _-'                        N E O V I M                         \\/   `=="
-    "\\   _-'                                                                `-_   /"
-    " `''                                                                      ``'  "
+              "                                                                              "
+              "=================     ===============     ===============   ========  ========"
+              "\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //"
+              "||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||"
+              "|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
+              "||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
+              "|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||"
+              "||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||"
+              "|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||"
+              "||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||"
+              "||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||"
+              "||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||"
+              "||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||"
+              "||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||"
+              "||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||"
+              "||   .=='    _-'          `-__\\._-'         `-_./__-'         `' |. /|  |   ||"
+              "||.=='    _-'                                                     `' |  /==.||"
+              "=='    _-'                        N E O V I M                         \\/   `=="
+              "\\   _-'                                                                `-_   /"
+              " `''                                                                      ``'  "
             ];
             center = [
               {
@@ -516,10 +763,15 @@
             ];
           };
         };
-      };      
+      };
     };
+    extraConfigLuaPre = ''
+      vim.g.mapleader = ' '
+      vim.g.maplocalleader = ' '
+      vim.opt.background = "dark"
+    '';
     extraConfigLua = ''
-      -- Make line numbers default
+      -- Make line numbers default1
       vim.opt.number = true
       vim.opt.relativenumber = true
 
@@ -528,8 +780,87 @@
 
       -- Don't show the mode.
       vim.opt.showmode = false
+
+      -- Enable break indent
+      vim.opt.breakindent = true
+
+      -- Save undo history
+      vim.opt.undofile = true
+
+      -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+      vim.opt.ignorecase = true
+      vim.opt.smartcase = true
+
+      -- Keep signcolumn on by default
+      vim.opt.signcolumn = 'yes'
+
+      -- Decrease update time
+      vim.opt.updatetime = 250
+
+      -- Decrease mapped sequence wait time
+      -- Displays which-key popup sooner
+      vim.opt.timeoutlen = 300
+
+      -- Configure how new splits should be opened
+      vim.opt.splitright = true
+      vim.opt.splitbelow = true
+
+      -- Sets how neovim will display certain whitespace characters in the editor.
+      --  See `:help 'list'`
+      --  and `:help 'listchars'`
+      vim.opt.list = true
+      vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+      -- Preview substitutions live, as you type!
+      vim.opt.inccommand = 'split'
+
+      -- Show which line your cursor is on
+      vim.opt.cursorline = true
+
+      -- Minimal number of screen lines to keep above and below the cursor.
+      vim.opt.scrolloff = 10
+
+      -- [[ Basic Keymaps ]]
+      --  See `:help vim.keymap.set()`
+
+      -- Clear highlights on search when pressing <Esc> in normal mode
+      --  See `:help hlsearch`
+      vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+      -- Diagnostic keymaps
+      vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+      -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
+      -- or just use <C-\><C-n> to exit terminal mode
+      vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+      -- Keybinds to make split navigation easier.
+      --  Use CTRL+<←↓↑→> to switch between windows 
+      --
+      --  See `:help wincmd` for a list of all window commands
+      vim.keymap.set('n', '<C-left>', '<C-w><C-left>', { desc = 'Move focus to the left window' })
+      vim.keymap.set('n', '<C-right>', '<C-w><C-right>', { desc = 'Move focus to the right window' })
+      vim.keymap.set('n', '<C-down>', '<C-w><C-down>', { desc = 'Move focus to the lower window' })
+      vim.keymap.set('n', '<C-up>', '<C-w><C-up>', { desc = 'Move focus to the upper window' })
+    '';
+    extraConfigLuaPost = ''
     '';
   };
+
+  programs.spicetify =
+    let
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+    in
+      {
+      enable = true;
+      enabledExtensions = with spicePkgs.extensions; [
+        adblock
+        hidePodcasts
+        shuffle # shuffle+ (special characters are sanitized out of extension names)
+      ];
+      theme = spicePkgs.themes.text;
+      #colorScheme = "mocha";
+    };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -545,12 +876,22 @@
   home.packages = with pkgs; [
     # # Fonts
     cascadia-code
+    font-awesome
     geist-font
+    ibm-plex
     inter
+    iosevka
     roboto
     rubik
-    font-awesome
-    (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    (nerdfonts.override {
+      fonts = [
+        "FantasqueSansMono"
+        "IBMPlexMono"
+        "Iosevka"
+        "IosevkaTerm"
+        "IosevkaTermSlab"
+      ];
+    })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -563,9 +904,9 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = [ "FiraCodeNerdFontMono-Regular" ];
-      sansSerif = [ "FiraCodeNerdFont-Regular" ];
-      serif = [ "FiraCodeNerdFont-Regular" ];
+      monospace = [ "BlexMonoNerdFont" ];
+      sansSerif = [ "IBMPlexSans" ];
+      serif = [ "IBMPlexSerif" ];
     };
   };
 
