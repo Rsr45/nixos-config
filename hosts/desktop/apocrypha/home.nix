@@ -1,6 +1,8 @@
-{ pkgs, inputs, ... }:
-
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "hare";
@@ -52,7 +54,7 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
-      monitor = [ ",1920x1080@144,auto,1" ];
+      monitor = [",1920x1080@144,auto,1"];
       general = {
         gaps_in = 4;
         gaps_out = 5;
@@ -123,15 +125,15 @@
       animations = {
         enabled = true;
         bezier = [
-        "md3_decel, 0.05, 0.7, 0.1, 1"
-        "md3_accel, 0.3, 0, 0.8, 0.15"
-        "overshot, 0.05, 0.9, 0.1, 1.1"
-        "crazyshot, 0.1, 1.5, 0.76, 0.92"
-        "hyprnostretch, 0.05, 0.9, 0.1, 1.0"
-        "fluent_decel, 0.1, 1, 0, 1"
-        "easeInOutCirc, 0.85, 0, 0.15, 1"
-        "easeOutCirc, 0, 0.55, 0.45, 1"
-        "easeOutExpo, 0.16, 1, 0.3, 1"
+          "md3_decel, 0.05, 0.7, 0.1, 1"
+          "md3_accel, 0.3, 0, 0.8, 0.15"
+          "overshot, 0.05, 0.9, 0.1, 1.1"
+          "crazyshot, 0.1, 1.5, 0.76, 0.92"
+          "hyprnostretch, 0.05, 0.9, 0.1, 1.0"
+          "fluent_decel, 0.1, 1, 0, 1"
+          "easeInOutCirc, 0.85, 0, 0.15, 1"
+          "easeOutCirc, 0, 0.55, 0.45, 1"
+          "easeOutExpo, 0.16, 1, 0.3, 1"
         ];
         animation = [
           "windows, 1, 3, md3_decel, popin 60%"
@@ -321,8 +323,8 @@
           "custom/nixos"
           "hyprland/workspaces"
         ];
-        modules-center = [ "clock" ];
-        modules-right = [ "pulseaudio" "disk" "memory" "cpu" "tray" ];
+        modules-center = ["clock"];
+        modules-right = ["pulseaudio" "disk" "memory" "cpu" "tray"];
         fixed-center = "true";
         "custom/nixos" = {
           format = "";
@@ -566,7 +568,7 @@
           binaryPrefix = "si";
         };
         color = "blue";
-          separator = "  ";
+        separator = "  ";
       };
       modules = [
         "OS"
@@ -584,9 +586,9 @@
           key = "Time";
           format = "{14}:{17}:{20}";
         }
-          "break"
-          "player"
-          "media"
+        "break"
+        "player"
+        "media"
       ];
     };
   };
@@ -594,7 +596,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      import = [ ./themes/alacritty/oxocarbon-dark.toml ];
+      import = [./themes/alacritty/oxocarbon-dark.toml];
     };
   };
 
@@ -602,8 +604,11 @@
     enable = true;
     colorschemes = {
       gruvbox.enable = false;
-      oxocarbon.enable = true;
+      oxocarbon.enable = false;
     };
+    extraPlugins = with pkgs.vimPlugins; [
+      miasma-nvim
+    ];
     plugins = {
       lualine = {
         enable = true;
@@ -630,7 +635,19 @@
         enable = true;
         servers = {
           # # Nix
-          nil-ls.enable = true;
+          # nil-ls.enable = true;
+          nixd = {
+            enable = true;
+            settings = {
+              nixpkgs = {
+                expr = "import (builtins.getFlake \"/home/hare/nixos-config\").inputs.nixpkgs { }   ";
+              };
+              options = {
+                nixos.expr = "(builtins.getFlake \"/home/hare/nixos-config\").nixosConfigurations.apocrypha.options";
+                home-manager.expr = "(builtins.getFlake \"/home/hare/nixos-config\").homeConfigurations.apocrypha.options";
+              };
+            };
+          };
           # # Lua
           lua-ls.enable = true;
           # # TypeScript
@@ -641,23 +658,23 @@
         enable = true;
         nixvimInjections = true;
         # grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          # bash
-          # css
-          # fennel
-          # json
-          # lua
-          # make
-          # markdown
-          # nix
-          # regex
-          # toml
-          # vim
-          # vimdoc
-          # xml
-          # yaml
-          # yuck
-          # typescript
-          # javascript
+        # bash
+        # css
+        # fennel
+        # json
+        # lua
+        # make
+        # markdown
+        # nix
+        # regex
+        # toml
+        # vim
+        # vimdoc
+        # xml
+        # yaml
+        # yuck
+        # typescript
+        # javascript
         # ];
       };
       cmp-buffer.enable = true;
@@ -671,12 +688,12 @@
         autoEnableSources = true;
         settings = {
           sources = [
-            { name = "buffer"; }
-            { name = "luasnip"; }
-            { name = "nvim_lsp"; }
-            { name = "nvim_lua"; }
-            { name = "path"; }
-            { name = "treesitter"; }
+            {name = "buffer";}
+            {name = "luasnip";}
+            {name = "nvim_lsp";}
+            {name = "nvim_lua";}
+            {name = "path";}
+            {name = "treesitter";}
           ];
           mapping = {
             "<C-Space>" = "cmp.mapping.complete()";
@@ -768,6 +785,7 @@
       vim.g.mapleader = ' '
       vim.g.maplocalleader = ' '
       vim.opt.background = "dark"
+      vim.cmd.colorscheme 'miasma'
     '';
     extraConfigLua = ''
       -- Make line numbers default1
@@ -834,7 +852,7 @@
       vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
       -- Keybinds to make split navigation easier.
-      --  Use CTRL+<←↓↑→> to switch between windows 
+      --  Use CTRL+<←↓↑→> to switch between windows
       --
       --  See `:help wincmd` for a list of all window commands
       vim.keymap.set('n', '<C-left>', '<C-w><C-left>', { desc = 'Move focus to the left window' })
@@ -846,20 +864,18 @@
     '';
   };
 
-  programs.spicetify =
-    let
-      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-    in
-      {
-      enable = true;
-      enabledExtensions = with spicePkgs.extensions; [
-        adblock
-        hidePodcasts
-        shuffle # shuffle+ (special characters are sanitized out of extension names)
-      ];
-      theme = spicePkgs.themes.text;
-      #colorScheme = "mocha";
-    };
+  programs.spicetify = let
+    spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+  in {
+    enable = true;
+    enabledExtensions = with spicePkgs.extensions; [
+      adblock
+      hidePodcasts
+      shuffle # shuffle+ (special characters are sanitized out of extension names)
+    ];
+    theme = spicePkgs.themes.text;
+    #colorScheme = "mocha";
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -903,9 +919,9 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = [ "BlexMonoNerdFont" ];
-      sansSerif = [ "IBMPlexSans" ];
-      serif = [ "IBMPlexSerif" ];
+      monospace = ["BlexMonoNerdFont"];
+      sansSerif = ["IBMPlexSans"];
+      serif = ["IBMPlexSerif"];
     };
   };
 

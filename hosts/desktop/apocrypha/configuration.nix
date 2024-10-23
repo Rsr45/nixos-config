@@ -1,11 +1,13 @@
-{ pkgs, inputs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.home-manager
-    ];
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -16,12 +18,12 @@
     networkmanager = {
       enable = true;
       dns = "systemd-resolved";
-      insertNameservers = [ "9.9.9.9" "1.1.1.1" ];
+      insertNameservers = ["9.9.9.9" "1.1.1.1"];
     };
-    nameservers = [ "9.9.9.9" "1.1.1.1" ];
+    nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
-      # default = "http://user:password@proxy:port/";
-      # noProxy = "127.0.0.1,internal.domain";
+    # default = "http://user:password@proxy:port/";
+    # noProxy = "127.0.0.1,internal.domain";
     # };
   };
 
@@ -73,7 +75,7 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {inherit inputs;};
     backupFileExtension = "backup";
     users = {
       hare = import ./home.nix;
@@ -84,14 +86,14 @@
   nixpkgs.config.allowUnfree = true;
 
   # Enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   nix.optimise.automatic = true;
 
   services.xserver = {
     enable = true; # Enable X11
     autorun = true; # Define if it should autostart
-    videoDrivers = [ "amdgpu" ]; # Manually set drivers
+    videoDrivers = ["amdgpu"]; # Manually set drivers
   };
 
   hardware.graphics = {
@@ -110,8 +112,8 @@
 
   # # Sway Window Manager
   # programs.sway = {
-      # enable = true;
-      # package = pkgs.swayfx;
+  # enable = true;
+  # package = pkgs.swayfx;
   # };
 
   # # Hyprland Window Manager
@@ -133,9 +135,9 @@
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -223,19 +225,21 @@
     vscodium
     (vscode-with-extensions.override {
       vscode = vscodium;
-      vscodeExtensions = with vscode-extensions; [
-        bbenoist.nix
-        ms-python.python
-        ms-azuretools.vscode-docker
-        ms-vscode-remote.remote-ssh
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      vscodeExtensions = with vscode-extensions;
+        [
+          bbenoist.nix
+          ms-python.python
+          ms-azuretools.vscode-docker
+          ms-vscode-remote.remote-ssh
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
             name = "remote-ssh-edit";
             publisher = "ms-vscode-remote";
             version = "0.47.2";
             sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
           }
-      ];
+        ];
     })
     # # App Launchers and Widgets
     ags
@@ -321,6 +325,8 @@
     clang
     go
     nil
+    nixd
+    alejandra
     # # Wine
     wineWowPackages.staging
     winetricks
@@ -345,12 +351,14 @@
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
       gamescopeSession.enable = true;
-      gamescopeSession.args = [ "-r 144" "-S stretch" ];
+      gamescopeSession.args = ["-r 144" "-S stretch"];
     };
     gamemode.enable = true;
   };
 
   hardware.xone.enable = true; # support for the xbox controller USB dongle
+
+  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
@@ -361,30 +369,30 @@
     liberation_ttf
   ];
 
-    # stylix.enable = true;
-    # stylix.autoEnable = true;
-    # stylix.polarity = "dark";
-    # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
-    # stylix.image = ./wallhaven-d6y12l_3840x2160.png;
+  # stylix.enable = true;
+  # stylix.autoEnable = true;
+  # stylix.polarity = "dark";
+  # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+  # stylix.image = ./wallhaven-d6y12l_3840x2160.png;
 
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    # programs.mtr.enable = true;
-    # programs.gnupg.agent = {
-    #   enable = true;
-    #   enableSSHSupport = true;
-    # };
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
-    # List services that you want to enable:
+  # List services that you want to enable:
 
-    # Enable the OpenSSH daemon.
-    # services.openssh.enable = true;
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
 
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
   system.stateVersion = "24.05";
 }
