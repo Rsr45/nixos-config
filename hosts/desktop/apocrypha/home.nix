@@ -16,6 +16,9 @@
     allowUnfree = true;
   };
 
+  xdg.enable = true;
+  xdg.userDirs.enable = true;
+
   # # Fixes Cursor
   home.pointerCursor = {
     gtk.enable = true;
@@ -66,9 +69,9 @@
       };
       "exec-once" = [
         # "ags"
-        # "eww daemon & eww open bar_1"
+        "eww daemon & eww open bar_1"
         "dunst"
-        "waybar -b verticalBar"
+        # "waybar -b verticalBar"
         "swww kill; swww-daemon"
       ];
       input = {
@@ -174,12 +177,7 @@
         ", XF86AudioNext, exec, playerctl next"
       ];
       bind = [
-        # # Apps
-        "$mod, i, exec, floorp"
-        "$mod, Return, exec, alacritty"
-        "$mod, t, exec, thunar"
-        "$mod, Space, exec, pkill fuzzel || fuzzel"
-        # # Window management
+        # # # Window management
         # # Focusing
         # # bind = Super, ←/↑/→/↓,, # Move focus in direction
         "$mod, Left, movefocus, l"
@@ -225,12 +223,19 @@
         # # Special Workspaces
         "$mod, S, togglespecialworkspace, magic"
         "$mod ALT, S, movetoworkspace, special:magic"
+        # # # Actions
         # # Screenshot, Color Picker
         ", Print, exec, grim"
         "$mod SHIFT, S, exec, slurp | grim -g - $(date +'Screenshot_%F-%T.png')"
         "$mod SHIFT, C, exec, hyprpicker -a -f hex"
         # # Wallpaper
-        "$mod+Alt, W, exec, waypaper"
+        "$mod+Alt, W, exec, pkill waypaper || waypaper"
+        # # App Launcer
+        "$mod, Space, exec, pkill fuzzel || fuzzel"
+        # # Terminal
+        "$mod, Return, exec, alacritty"
+        # # File Explorer
+        "$mod, T, exec, thunar"
         # # Power Off etc.
         "Ctrl+Shift+Super, Delete, exec, systemctl reboot" # Restart
         "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff" # Power off
@@ -240,7 +245,7 @@
       ];
     };
     extraConfig = ''
-      # # Resizing with submap
+      # # Resizing with submap (like i3)
       bind = $mod, R, submap,resize
       submap = resize
       binde=,Right,resizeactive,  40 0
@@ -296,6 +301,11 @@
     configDir = "/home/hare/nixos-config/hosts/desktop/apocrypha/config-dir/eww-config-dir/";
   };
 
+  # # Waybar Configuration.
+  xdg.configFile."waybar" = {
+    source = ./config-dir/waybar-conf-dir;
+    recursive = true;
+  };
   programs.waybar = {
     enable = true;
     settings = {
@@ -363,87 +373,74 @@
       };
     };
     style = ''
+      /*Colors*/
+      @define-color bg #222222;
+      @define-color fg #c2c2b0;
       .verticalBar {
-        border: 1;
-        border-radius: 4;
+        border: none;
         font-family: "IBMPlexMono";
-        background: #1d2021
+        font-size: 14px;
+        background: @bg;
       }
 
-      window#waybar verticalBar {
-       color: #525252
+      window.verticalBar#waybar {
+       color: @fg;
       }
 
-      .modules-left#verticalBar {
-        background: #1d2021
+      .modules-left,
+      .modules-center,
+      .modules-right {
+        background: @bg;
       }
 
-      .modules-center#verticalBar {
-        background: #1d2021
+      menu,
+      tooltip {
+        color: @fg;
+        background-color: @bg;
+        border: none;
+        border-radius: 0;
       }
 
-      .modules-right#verticalBar {
-        background: #1d2021
+      menu label,
+      tooltip label {
+        font-size: 14px;
+        color: @fg;
+        border: none;
+        border-radius: 0;
       }
 
-      tooltip#verticalBar {
-        background-color: #1d2021
-      }
-
-      #custom-nixos#verticalBar {
-        font-size: 34px;
+      #custom-nixos,
+      #workspaces,
+      #clock,
+      #pulseaudio,
+      #disk,
+      #memory,
+      #cpu {
+        padding: 0px 2px 0px 2px;
       }
 
       #custom-nixos {
-        font-size: 24px;
+        font-size: 34px;
       }
+
+      #clock.verticalBar {
+        color: @fg;
+      }
+
+      #workspaces.verticalBar button {
+        color: @fg;
+        background: none;
+      }
+
+      #workspaces.verticalBar button:hover {
+        color: #ee5396;
+        background: none;
+      }
+
       window#waybar {
         color: #ffffff;
       }
-      .modules-left {
-        border-radius: 0px;
-        background: #161616;
-        padding: 12px 0px;
-      }
-      .modules-center {
-        border-radius: 0px;
-        background: #161616;
-        padding: 12px 0px;
-      }
-      .modules-right {
-        border-radius: 0px;
-        background: #161616;
-        padding: 12px 0px;
-      }
-      tooltip {
-        color: #ffffff;
-        background-color: #161616;
-        text-shadow: none;
-      }
 
-      tooltip * {
-        color: #ffffff;
-        text-shadow: none;
-      }
-      #workspaces {
-        font-weight: 600;
-        border-radius: 4px;
-      }
-      #workspaces button {
-        color: #525252;
-        background: none;
-        padding: 0;
-      }
-      #workspaces button:hover {
-        color: #42be65;
-      }
-      #workspaces button.active {
-        color: #ffffff;
-      }
-      #clock {
-        color: #ffffff;
-        padding: 4px 2px 2px 2px;
-      }
       #pulseaudio.muted {
         color: #ee5396;
       }
