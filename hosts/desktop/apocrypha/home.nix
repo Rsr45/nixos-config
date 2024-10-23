@@ -68,8 +68,8 @@
         smart_resizing = false;
       };
       "exec-once" = [
-        # "ags"
-        "eww daemon & eww open bar_1"
+        "ags -c /home/hare/.config/ags/simple-bar/config.js"
+        # "eww daemon & eww open bar_1"
         "dunst"
         # "waybar -b verticalBar"
         "swww kill; swww-daemon"
