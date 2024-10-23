@@ -283,9 +283,10 @@
     ];
   };
 
+  # # Aylur's Gtk Shell.
   programs.ags = {
     enable = true;
-    configDir = null;
+    configDir = ./config-dir/ags-conf-dir;
     extraPackages = with pkgs; [
       gtksourceview
       webkitgtk
@@ -293,12 +294,13 @@
     ];
   };
 
+  # # Elkowars Wacky Widgets.
   programs.eww = {
     enable = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
     enableZshIntegration = true;
-    configDir = "/home/hare/nixos-config/hosts/desktop/apocrypha/config-dir/eww-config-dir/";
+    configDir = ./config-dir/eww-config-dir;
   };
 
   # # Waybar Configuration.
@@ -592,7 +594,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      import = [ "/home/hare/nixos-config/hosts/desktop/apocrypha/themes/alacritty/oxocarbon-dark.toml" ];
+      import = [ ./themes/alacritty/oxocarbon-dark.toml ];
     };
   };
 
