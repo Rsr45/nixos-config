@@ -1,0 +1,71 @@
+      /*Colors*/
+      @define-color bg #222222;
+      @define-color fg #c2c2b0;
+      .verticalBar {
+        border: none;
+        font-family: "IBMPlexMono";
+        font-size: 14px;
+        background: @bg;
+      }
+
+      window.verticalBar#waybar {
+       color: @fg;
+      }
+
+      .modules-left,
+      .modules-center,
+      .modules-right {
+        background: @bg;
+      }
+
+      menu,
+      tooltip {
+        color: @fg;
+        background-color: @bg;
+        border: none;
+        border-radius: 0;
+      }
+
+      menu label,
+      tooltip label {
+        font-size: 14px;
+        color: @fg;
+        border: none;
+        border-radius: 0;
+      }
+
+      #custom-nixos,
+      #workspaces,
+      #clock,
+      #pulseaudio,
+      #disk,
+      #memory,
+      #cpu {
+        padding: 0px 2px 0px 2px;
+      }
+
+      #custom-nixos {
+        font-size: 34px;
+      }
+
+      #clock.verticalBar {
+        color: @fg;
+      }
+
+      #workspaces.verticalBar button {
+        color: @fg;
+        background: none;
+      }
+
+      #workspaces.verticalBar button:hover {
+        color: #ee5396;
+        background: none;
+      }
+
+      window#waybar {
+        color: #ffffff;
+      }
+
+      #pulseaudio.muted {
+        color: #ee5396;
+      }
