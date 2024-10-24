@@ -247,7 +247,7 @@
       ];
     };
     extraConfig = ''
-      # # Resizing with submap (like i3)
+      # # Resizing(like i3)
       bind = $mod, R, submap,resize
       submap = resize
       binde=,Right,resizeactive,  40 0
@@ -257,30 +257,8 @@
       bind = ,escape, submap, reset
       bind = ,return,  submap, reset
       submap = reset
-      # #
-      # plugin {
-        # hyprbars {
-          #  bar_text_font = Rubik, Geist, AR One Sans, Reddit Sans, Inter, Roboto, Ubuntu, Noto Sans, sans-serif
-          #  bar_height = 30
-          #  bar_padding = 10
-          #  bar_button_padding = 5
-          #  bar_precedence_over_border = false
-          #  bar_part_of_window = true
-
-          #  bar_color = rgba(161616FF)
-          #  col.text = rgba(FFFFFFFF)
-
-
-          #  # example buttons (R -> L)
-          #  # hyprbars-button = color, size, on-click
-          #  hyprbars-button = rgb(FF605C), 16, 󰖭, hyprctl dispatch killactive
-          #  hyprbars-button = rgb(00CA4E), 16, 󰖯, hyprctl dispatch fullscreen 1
-          #  hyprbars-button = rgb(FFBD44), 16, 󰖰, hyprctl dispatch movetoworkspacesilent special
-        # }
-      # }
     '';
     plugins = with pkgs.hyprlandPlugins; [
-      # hyprbars
       csgo-vulkan-fix
     ];
   };
@@ -305,150 +283,13 @@
     configDir = ./config-dir/eww-config-dir;
   };
 
-  # # Waybar Configuration.
+  # # Waybar.
   xdg.configFile."waybar" = {
     source = ./config-dir/waybar-conf-dir;
     recursive = true;
   };
   programs.waybar = {
     enable = true;
-    settings = {
-      verticalBar = {
-        name = "verticalBar";
-        layer = "top";
-        position = "left";
-        #margin = "5 2 5 0";
-        #reload_style_on_change = "true";
-        modules-left = [
-          "custom/nixos"
-          "hyprland/workspaces"
-        ];
-        modules-center = ["clock"];
-        modules-right = ["pulseaudio" "disk" "memory" "cpu" "tray"];
-        fixed-center = "true";
-        "custom/nixos" = {
-          format = "";
-          tooltip = false;
-        };
-        "hyprland/workspaces" = {
-          format = "{icon}";
-          on-click = "activate";
-          all-outputs = true;
-          format-icons = {
-            "1" = "一";
-            "2" = "二";
-            "3" = "三";
-            "4" = "四";
-            "5" = "五";
-            "6" = "六";
-            "7" = "七";
-            "8" = "八";
-            "9" = "九";
-            "10" = "十";
-          };
-          #format-icons = {
-          #"1" = "१";
-          #"2" = "२";
-          #"3" = "३";
-          #"4" = "४";
-          #"5" = "५";
-          #"6" = "६";
-          #"7" = "७";
-          #"8" = "८";
-          #"9" = "९";
-          #"10" = "०";
-          #};
-        };
-        "clock" = {
-          interval = 1;
-          format = "{:%H\n%M\n%S}";
-          tooltip-format = "<tt><small>{calendar}</small></tt>";
-          calendar = {
-            mode = "month";
-            mode-mon-col = 3;
-            weeks-pos = "right";
-            on-scroll = 1;
-            on-click-right = "mode";
-            format = {
-              "today" = "<span color='#3ddbd9'><b><u>{}</u></b></span>";
-            };
-          };
-        };
-      };
-    };
-    style = ''
-      /*Colors*/
-      @define-color bg #222222;
-      @define-color fg #c2c2b0;
-      .verticalBar {
-        border: none;
-        font-family: "IBMPlexMono";
-        font-size: 14px;
-        background: @bg;
-      }
-
-      window.verticalBar#waybar {
-       color: @fg;
-      }
-
-      .modules-left,
-      .modules-center,
-      .modules-right {
-        background: @bg;
-      }
-
-      menu,
-      tooltip {
-        color: @fg;
-        background-color: @bg;
-        border: none;
-        border-radius: 0;
-      }
-
-      menu label,
-      tooltip label {
-        font-size: 14px;
-        color: @fg;
-        border: none;
-        border-radius: 0;
-      }
-
-      #custom-nixos,
-      #workspaces,
-      #clock,
-      #pulseaudio,
-      #disk,
-      #memory,
-      #cpu {
-        padding: 0px 2px 0px 2px;
-      }
-
-      #custom-nixos {
-        font-size: 34px;
-      }
-
-      #clock.verticalBar {
-        color: @fg;
-      }
-
-      #workspaces.verticalBar button {
-        color: @fg;
-        background: none;
-      }
-
-      #workspaces.verticalBar button:hover {
-        color: #ee5396;
-        background: none;
-      }
-
-      window#waybar {
-        color: #ffffff;
-      }
-
-      #pulseaudio.muted {
-        color: #ee5396;
-      }
-    '';
   };
 
   programs.fuzzel = {
@@ -558,7 +399,7 @@
     enable = true;
     settings = {
       logo = {
-        source = "nixos_small";
+        source = "nixos";
         padding = {
           right = 1;
         };
