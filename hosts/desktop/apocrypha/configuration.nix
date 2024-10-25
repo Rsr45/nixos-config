@@ -9,9 +9,17 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # # Bootloader.
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+      };
+      efi = {
+        canTouchEfiVariables = true;
+      };
+    };
+  };
 
   networking = {
     hostName = "apocrypha"; # Define hostname
@@ -22,14 +30,16 @@
     };
     nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
-    # default = "http://user:password@proxy:port/";
-    # noProxy = "127.0.0.1,internal.domain";
+    #   default = "http://user:password@proxy:port/";
+    #   noProxy = "127.0.0.1,internal.domain";
     # };
   };
 
-  time.timeZone = "Europe/Istanbul"; # Set time zone
+  time = {
+    timeZone = "Europe/Istanbul";
+  };
 
-  # Select internationalisation properties.
+  # # Select internationalisation properties.
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
@@ -45,35 +55,62 @@
     };
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "tr";
-    variant = "";
+  # # Configure console keymap.
+  console = {
+    keyMap = "trq";
   };
 
-  # Configure console keymap
-  console.keyMap = "trq";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable Shell
-  programs.fish.enable = true;
-  # programs.nushell.enable = true;
-  programs.zsh.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.hare = {
-    isNormalUser = true;
-    description = "Hare";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "libvirtd"
-    ];
-    shell = pkgs.zsh;
+  # # Drivers, Keyboard Layout, CUPS Service.
+  services = {
+    xserver = {
+      enable = true;
+      autorun = true;
+      videoDrivers = ["amdgpu"];
+      xkb = {
+        layout = "tr";
+        variant = "";
+      };
+    };
+    printing = {
+      enable = true;
+    };
   };
 
+  # # OpenGL, 32Bit.
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+  };
+
+  # # Shell.
+  programs = {
+    fish = {
+      enable = true;
+    };
+    zsh = {
+      enable = true;
+    };
+  };
+
+  # # Define a user account. Don't forget to set a password with ‘passwd’.
+  users = {
+    users = {
+      hare = {
+        isNormalUser = true;
+        description = "Hare";
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+          "libvirtd"
+        ];
+        shell = pkgs.zsh;
+      };
+    };
+  };
+
+  # # Home Manager.
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
     backupFileExtension = "backup";
@@ -82,23 +119,18 @@
     };
   };
 
-  # Allow unfree packages
+  # # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
 
-  # Enable flakes
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-
-  nix.optimise.automatic = true;
-
-  services.xserver = {
-    enable = true; # Enable X11
-    autorun = true; # Define if it should autostart
-    videoDrivers = ["amdgpu"]; # Manually set drivers
-  };
-
-  hardware.graphics = {
-    enable = true; # Enable Opengl
-    enable32Bit = true; # Enable support for 32Bit
+  # # Flakes, Garbage Collector, nixd.
+  nix = {
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+    };
+    optimise = {
+      automatic = true;
+    };
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
   };
 
   # # i3 Window Manager
@@ -149,195 +181,207 @@
   };
 
   # # File Explorer
-  programs.thunar.enable = true;
-  programs.thunar.plugins = with pkgs.xfce; [
-    thunar-archive-plugin
-    thunar-volman
-  ];
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
+  programs = {
+    thunar = {
+      enable = true;
+      plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+        thunar-volman
+      ];
+    };
+  };
+  services = {
+    gvfs.enable = true; # Mount, trash, and other functionalities
+    tumbler.enable = true; # Thumbnail support for images
+  };
 
   # # Audio
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # jack.enable = true;
+  services = {
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+      # jack.enable = true;
 
-    # media-session.enable = true;
+      # media-session.enable = true;
+    };
   };
 
-  environment.systemPackages = with pkgs; [
-    home-manager
-    polkit # Polkit
-    polkit_gnome # Polkit Agent
-    papirus-icon-theme
-    fastfetch
-    # # Basic Utils
-    binutils
-    coreutils
-    desktop-file-utils
-    diffutils
-    fd
-    file
-    findutils
-    fzf
-    gawk
-    git
-    gnugrep
-    gnumake
-    gnused
-    gnutar
-    less
-    procps
-    ripgrep
-    sharutils
-    stow
-    toybox
-    util-linux
-    xdg-utils
-    xz
-    # # Archive Managers and Compression
-    p7zip
-    peazip # Manager
-    rar
-    unrar
-    unzip
-    xarchiver # Manager
-    zip
-    # # File Explorer
-    lf
-    pcmanfm
-    ranger
-    superfile
-    # # Terminal
-    alacritty
-    kitty
-    # waveterm
-    # # Editors
-    # emacs
-    # neovim
-    # vim
-    # # VSCode
-    vscodium
-    (vscode-with-extensions.override {
-      vscode = vscodium;
-      vscodeExtensions = with vscode-extensions;
-        [
-          bbenoist.nix
-          ms-python.python
-          ms-azuretools.vscode-docker
-          ms-vscode-remote.remote-ssh
-        ]
-        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "remote-ssh-edit";
-            publisher = "ms-vscode-remote";
-            version = "0.47.2";
-            sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
-          }
-        ];
-    })
-    # # App Launchers and Widgets
-    ags
-    dmenu
-    eww
-    fuzzel
-    tofi
-    rofi
-    wofi
-    polybar
-    swww
-    waybar
-    waypaper
-    # # Utils
-    yt-dlp
-    thefuck
-    ffmpeg
-    ffmpegthumbnailer
-    xclip
-    wl-clipboard
-    ps3iso-utils
-    ps3-disc-dumper
-    tldr
-    playerctl
-    dunst
-    # mako
-    notify
-    libnotify
-    pwvucontrol
-    grim # Screenshot
-    slurp # Screenshot
-    hyprpicker # Color Picker
-    socat
-    jq
-    python3
-    clearlooks-phenix
-    discordchatexporter-cli
-    nix-prefetch-github
-    # # Apps
-    blender
-    clamav
-    vesktop
-    teamspeak_client
-    teamspeak5_client
-    feh
-    mpv
-    mpvc
-    qbittorrent
-    logmein-hamachi
-    haguichi
-    anydesk
-    obsidian # Note
-    keepassxc # Password Manager
-    smassh
-    typioca
-    mapscii
-    spotify
-    ungoogled-chromium # Browser
-    librewolf # Browser
-    floorp # Browser
-    firefox # Browser
-    tor-browser # Browser
-    palemoon-bin # Browser
-    ladybird # Browser
-    opera # Browser
-    thunderbird # Mail Client
-    motrix # Download Manager
-    qmmp # Music Player # Winamp look alike
-    libreoffice-qt6
-    hunspell
-    hunspellDicts.tr_TR
-    hunspellDicts.en_US
-    jdk
-    jdk17
-    jdk8
-    gitkraken # Git
-    # # Language Server, Libraries, Compilers
-    glib
-    glibc
-    libgcc
-    gcc
-    zig
-    clang
-    go
-    nil
-    nixd
-    alejandra
-    # # Wine
-    wineWowPackages.staging
-    winetricks
-    protontricks
-    # # Launchers and some utils
-    heroic
-    lutris
-    mangohud
-    nexusmods-app-unfree
-    prismlauncher
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      home-manager
+      polkit # Polkit
+      polkit_gnome # Polkit Agent
+      papirus-icon-theme
+      fastfetch
+      # # Basic Utils
+      binutils
+      coreutils
+      desktop-file-utils
+      diffutils
+      fd
+      file
+      findutils
+      fzf
+      gawk
+      git
+      gnugrep
+      gnumake
+      gnused
+      gnutar
+      less
+      procps
+      ripgrep
+      sharutils
+      stow
+      toybox
+      util-linux
+      xdg-utils
+      xz
+      # # Archive Managers and Compression
+      p7zip
+      peazip # Manager
+      rar
+      unrar
+      unzip
+      xarchiver # Manager
+      zip
+      # # File Explorer
+      lf
+      pcmanfm
+      ranger
+      superfile
+      # # Terminal
+      alacritty
+      kitty
+      # waveterm
+      # # Editors
+      # emacs
+      # neovim
+      # vim
+      # # VSCode
+      vscodium
+      (vscode-with-extensions.override {
+        vscode = vscodium;
+        vscodeExtensions = with vscode-extensions;
+          [
+            bbenoist.nix
+            ms-python.python
+            ms-azuretools.vscode-docker
+            ms-vscode-remote.remote-ssh
+          ]
+          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+            {
+              name = "remote-ssh-edit";
+              publisher = "ms-vscode-remote";
+              version = "0.47.2";
+              sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
+            }
+          ];
+      })
+      # # App Launchers and Widgets
+      ags
+      dmenu
+      eww
+      fuzzel
+      tofi
+      rofi
+      wofi
+      polybar
+      swww
+      waybar
+      waypaper
+      # # Utils
+      yt-dlp
+      thefuck
+      ffmpeg
+      ffmpegthumbnailer
+      xclip
+      wl-clipboard
+      ps3iso-utils
+      ps3-disc-dumper
+      tldr
+      playerctl
+      dunst
+      # mako
+      notify
+      libnotify
+      pwvucontrol
+      grim # Screenshot
+      slurp # Screenshot
+      hyprpicker # Color Picker
+      socat
+      jq
+      python3
+      clearlooks-phenix
+      discordchatexporter-cli
+      nix-prefetch-github
+      # # Apps
+      blender
+      clamav
+      vesktop
+      teamspeak_client
+      teamspeak5_client
+      feh
+      mpv
+      mpvc
+      qbittorrent
+      logmein-hamachi
+      haguichi
+      anydesk
+      obsidian # Note
+      keepassxc # Password Manager
+      smassh
+      typioca
+      mapscii
+      spotify
+      ungoogled-chromium # Browser
+      librewolf # Browser
+      floorp # Browser
+      firefox # Browser
+      tor-browser # Browser
+      palemoon-bin # Browser
+      ladybird # Browser
+      opera # Browser
+      thunderbird # Mail Client
+      motrix # Download Manager
+      qmmp # Music Player # Winamp look alike
+      libreoffice-qt6
+      hunspell
+      hunspellDicts.tr_TR
+      hunspellDicts.en_US
+      jdk
+      jdk17
+      jdk8
+      gitkraken # Git
+      # # Language Server, Libraries, Compilers
+      glib
+      glibc
+      libgcc
+      gcc
+      zig
+      clang
+      go
+      nil
+      nixd
+      alejandra
+      # # Wine
+      wineWowPackages.staging
+      winetricks
+      protontricks
+      # # Launchers and some utils
+      heroic
+      lutris
+      mangohud
+      nexusmods-app-unfree
+      prismlauncher
+    ];
+  };
 
   # # Steam and Gamescope
   programs = {
@@ -357,8 +401,6 @@
   };
 
   hardware.xone.enable = true; # support for the xbox controller USB dongle
-
-  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
