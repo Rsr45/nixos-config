@@ -444,8 +444,28 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      import = [./themes/alacritty/oxocarbon-dark.toml];
+      import = [./themes/alacritty/miasma.toml];
     };
+  };
+
+  programs.wezterm = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    extraConfig = ''
+      -- Pull in the wezterm API
+      local wezterm = require 'wezterm'
+
+      -- This will hold the configuration.
+      local config = wezterm.config_builder()
+
+      -- This is where you actually apply your config choices
+      config.enable_wayland = false
+      config.front_end = "WebGpu"
+
+      -- and finally, return the configuration to wezterm
+      return config
+    '';
   };
 
   programs.nixvim = {
