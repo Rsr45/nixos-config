@@ -399,37 +399,44 @@
     enable = true;
     settings = {
       logo = {
-        source = "nixos";
+        source = "macos2";
         padding = {
-          right = 1;
+          right = 2;
         };
       };
-      display = {
-        size = {
-          binaryPrefix = "si";
-        };
-        color = "blue";
-        separator = "  ";
-      };
+      # display = {
+      # size = {
+      # binaryPrefix = "si";
+      # };
+      # color = "blue";
+      # separator = "  ";
+      # };
       modules = [
+        "Title"
+        "Separator"
         "OS"
+        "Kernel"
+        "Bios"
+        "Bootmgr"
+        "Separator"
         "DE"
         "WM"
+        "Terminal"
+        "Shell"
+        "Editor"
+        "Font"
+        "Separator"
+        "Board"
         "CPU"
         "GPU"
-        {
-          type = "datetime";
-          key = "Date";
-          format = "{1}-{3}-{11}";
-        }
-        {
-          type = "datetime";
-          key = "Time";
-          format = "{14}:{17}:{20}";
-        }
-        "break"
+        "Display"
+        "Monitor"
+        "Separator"
+        "DateTime"
+        "Uptime"
         "player"
         "media"
+        "Colors"
       ];
     };
   };
@@ -798,7 +805,7 @@
   #  /etc/profiles/per-user/fangyuan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    # EDITOR = "vim";
   };
 
   # Let Home Manager install and manage itself.
