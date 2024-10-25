@@ -259,6 +259,8 @@
       # # Terminal
       alacritty
       kitty
+      wezterm
+      tmux
       # waveterm
       # # Editors
       # emacs
