@@ -50,20 +50,30 @@
   };
 
   # # Hyprland Settings
+  # class                 border  bground text    indicator child_border
+  # client.focused          #fabd2f #1d2021 #fabd2f #83CAFA   #fabd2f
+  # client.focused_inactive #8C8C8C #4C4C4C #FFFFFF #4C4C4C   #8C8C8C
+  # client.unfocused        #4C4C4C #141617 #888888 #292D2E   #222222
+  # client.urgent           #EC69A0 #DB3279 #FFFFFF #DB3279   #DB3279
+  # client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
       "$mod" = "SUPER";
       monitor = [",1920x1080@144,auto,1"];
       general = {
-        gaps_in = 4;
-        gaps_out = 5;
-        gaps_workspaces = 50;
+        gaps_in = 0;
+        gaps_out = 0;
+        # gaps_workspaces = 50;
         border_size = 4;
         layout = "dwindle";
         resize_on_border = true;
-        "col.active_border" = "rgba(FFFFFFFF)";
-        "col.inactive_border" = "rgba(131313FF)";
+        # # Miasma.
+        # "col.active_border" = "rgb(b36d43)";
+        # "col.inactive_border" = "rgb(4c4c4c)";
+        # # Gruvbox Hard.
+        "col.active_border" = "rgb(fabd2f)";
+        "col.inactive_border" = "rgb(4c4c4c)";
       };
       dwindle = {
         preserve_split = true;
@@ -259,6 +269,7 @@
       submap = reset
     '';
     plugins = with pkgs.hyprlandPlugins; [
+      # borders-plus-plus
       csgo-vulkan-fix
     ];
   };
@@ -315,6 +326,35 @@
 
   programs.fish = {
     enable = true;
+    interactiveShellInit = ''
+      set fish_greeting # Disable greeting
+    '';
+    shellAbbrs = {
+      rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
+      reboot = "systemctl reboot";
+      shutdown = "systemctl poweroff";
+      logout = "hyprctl dispatch exit 1";
+      yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
+      yt-mp4 = "yt-dlp -f mp4";
+      cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
+    };
+    plugins = [
+      # Enable a plugin (here grc for colorized command output) from nixpkgs
+      {
+        name = "grc";
+        src = pkgs.fishPlugins.grc.src;
+      }
+      # Manually packaging and enable a plugin
+      {
+        name = "z";
+        src = pkgs.fetchFromGitHub {
+          owner = "jethrokuan";
+          repo = "z";
+          rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
+          sha256 = "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
+        };
+      }
+    ];
   };
 
   programs.zsh = {
@@ -337,7 +377,7 @@
       ls = "eza -a";
       ll = "eza -al";
       lt = "eza -a --tree --level=1";
-      cd = "z";
+      # cd = "z";
       yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
       yt-mp4 = "yt-dlp -f mp4";
       reboot = "systemctl reboot";
@@ -445,6 +485,9 @@
     enable = true;
     settings = {
       import = [./themes/alacritty/miasma.toml];
+      font = {
+        size = 12;
+      };
     };
   };
 
@@ -480,6 +523,120 @@
     plugins = {
       lualine = {
         enable = true;
+        settings = {
+          options = {
+            disabled_filetypes = {
+              __unkeyed-1 = "startify";
+              __unkeyed-2 = "neo-tree";
+              statusline = [
+                "dap-repl"
+              ];
+              winbar = [
+                "aerial"
+                "dap-repl"
+                "neotest-summary"
+              ];
+            };
+            globalstatus = true;
+          };
+          sections = {
+            lualine_a = [
+              "mode"
+            ];
+            lualine_b = [
+              "branch"
+            ];
+            lualine_c = [
+              "filename"
+              "diff"
+            ];
+            lualine_x = [
+              "diagnostics"
+              {
+                __unkeyed-1 = {
+                  __raw = ''
+                    function()
+                        local msg = ""
+                        local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+                        local clients = vim.lsp.get_active_clients()
+                        if next(clients) == nil then
+                            return msg
+                        end
+                        for _, client in ipairs(clients) do
+                            local filetypes = client.config.filetypes
+                            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                                return client.name
+                            end
+                        end
+                        return msg
+                    end
+                  '';
+                };
+                icon = "";
+              }
+              "encoding"
+              "fileformat"
+              "filetype"
+            ];
+            lualine_y = [
+              {
+                __unkeyed-1 = "aerial";
+                colored = true;
+                cond = {
+                  __raw = ''
+                    function()
+                      local buf_size_limit = 1024 * 1024
+                      if vim.api.nvim_buf_get_offset(0, vim.api.nvim_buf_line_count(0)) > buf_size_limit then
+                        return false
+                      end
+
+                      return true
+                    end
+                  '';
+                };
+                dense = false;
+                dense_sep = ".";
+                depth = {
+                  __raw = "nil";
+                };
+                sep = " ) ";
+              }
+            ];
+            lualine_z = [
+              {
+                __unkeyed-1 = "location";
+              }
+            ];
+          };
+          tabline = {
+            lualine_a = [
+              {
+                __unkeyed-1 = "buffers";
+                symbols = {
+                  alternate_file = "";
+                };
+              }
+            ];
+            lualine_z = [
+              "tabs"
+            ];
+          };
+          winbar = {
+            lualine_c = [
+              {
+                __unkeyed-1 = "navic";
+              }
+            ];
+            lualine_x = [
+              {
+                __unkeyed-1 = "filename";
+                newfile_status = true;
+                path = 3;
+                shorting_target = 150;
+              }
+            ];
+          };
+        };
       };
       notify = {
         enable = true;
@@ -525,25 +682,6 @@
       treesitter = {
         enable = true;
         nixvimInjections = true;
-        # grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        # bash
-        # css
-        # fennel
-        # json
-        # lua
-        # make
-        # markdown
-        # nix
-        # regex
-        # toml
-        # vim
-        # vimdoc
-        # xml
-        # yaml
-        # yuck
-        # typescript
-        # javascript
-        # ];
       };
       cmp-buffer.enable = true;
       cmp-nvim-lsp.enable = true;
