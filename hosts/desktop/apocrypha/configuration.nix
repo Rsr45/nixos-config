@@ -25,10 +25,10 @@
     hostName = "apocrypha"; # Define hostname
     networkmanager = {
       enable = true;
-      dns = "systemd-resolved";
-      insertNameservers = ["9.9.9.9" "1.1.1.1"];
+      # dns = "systemd-resolved";
+      # insertNameservers = ["9.9.9.9" "1.1.1.1"];
     };
-    nameservers = ["9.9.9.9" "1.1.1.1"];
+    # nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
     #   default = "http://user:password@proxy:port/";
     #   noProxy = "127.0.0.1,internal.domain";
