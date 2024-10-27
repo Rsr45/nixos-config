@@ -162,9 +162,16 @@
     enable = true;
   };
   # # Hint Electron apps to use Wayland
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+  };
   # # Enable Kitty Terminal [DEPRECATED]
   # programs.kitty.enable = true;
+
+  environment.variables = {
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+  };
 
   xdg.portal = {
     enable = true;
@@ -357,7 +364,7 @@
       firefox # Browser
       tor-browser # Browser
       palemoon-bin # Browser
-      ladybird # Browser
+      # ladybird # Browser
       opera # Browser
       thunderbird # Mail Client
       motrix # Download Manager
@@ -421,7 +428,6 @@
   fonts.packages = with pkgs; [
     # (nerdfonts.override { fonts = [  ]; })
     noto-fonts
-    noto-fonts-cjk
     noto-fonts-emoji
     liberation_ttf
   ];
