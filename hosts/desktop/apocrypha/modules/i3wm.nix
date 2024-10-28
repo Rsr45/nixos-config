@@ -5,15 +5,15 @@
   };
   xdg.configFile = {
     "i3" = {
-      source = ./config-dir/i3-conf-dir;
+      source = ../config-dir/i3-conf-dir;
       recursive = true;
     };
     "i3status" = {
-      source = ./config-dir/i3status-conf-dir;
+      source = ../config-dir/i3status-conf-dir;
       recursive = true;
     };
     "polybar" = {
-      source = ./config-dir/polybar-conf-dir;
+      source = ../config-dir/polybar-conf-dir;
       recursive = true;
     };
   };
