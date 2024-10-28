@@ -15,6 +15,7 @@
     ./modules/hyprland.nix
     ./modules/nixvim.nix
     ./modules/i3wm.nix
+    ./modules/sway.nix
   ];
 
   nixpkgs.config = {
