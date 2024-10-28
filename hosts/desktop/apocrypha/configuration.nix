@@ -341,6 +341,7 @@
       nix-prefetch-github
       # # Apps
       blender
+      upscayl
       clamav
       vesktop
       teamspeak_client
