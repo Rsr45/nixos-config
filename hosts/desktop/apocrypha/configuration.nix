@@ -152,10 +152,10 @@
   };
 
   # # Sway Window Manager
-  # programs.sway = {
-  # enable = true;
+  programs.sway = {
+    enable = true;
   # package = pkgs.swayfx;
-  # };
+  };
 
   # # Hyprland Window Manager
   programs.hyprland = {
