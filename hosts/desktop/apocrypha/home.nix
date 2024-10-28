@@ -14,7 +14,7 @@
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
     ./modules/nixvim.nix
-    ./i3wm.nix
+    ./modules/i3wm.nix
   ];
 
   nixpkgs.config = {
