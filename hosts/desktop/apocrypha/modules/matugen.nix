@@ -8,7 +8,8 @@
     enable = true;
     variant = "dark";
     jsonFormat = "hex";
-    palette = "default";
+    # palette = "scheme-tonal-spot";
+    wallpaper = "../current_wallpaper.png";
     templates = {
       gtk = {
         input_path = "./templates/gtk-colors.css";
