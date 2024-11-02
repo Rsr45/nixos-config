@@ -1,5 +1,9 @@
-{config, pkgs, inputs, ...}:
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   xsession.windowManager.i3 = {
     enable = true;
   };

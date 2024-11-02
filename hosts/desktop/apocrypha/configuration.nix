@@ -7,7 +7,6 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
-    ./modules/matugen.nix
   ];
 
   # # Bootloader.
@@ -158,7 +157,7 @@
   # # Sway Window Manager
   programs.sway = {
     enable = true;
-  # package = pkgs.swayfx;
+    # package = pkgs.swayfx;
   };
 
   # # Hyprland Window Manager
