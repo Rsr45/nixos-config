@@ -16,6 +16,7 @@
     ./modules/nixvim.nix
     ./modules/i3wm.nix
     ./modules/sway.nix
+    ./modules/matugen.nix
   ];
 
   nixpkgs.config = {
