@@ -198,8 +198,8 @@
         # # App Launcer
         "$mod, Space, exec, pkill fuzzel || fuzzel"
         # # Terminal
-        # "$mod, Return, exec, alacritty"
-        "$mod, Return, exec, wezterm"
+        "$mod, Return, exec, alacritty"
+        # "$mod, Return, exec, wezterm"
         # # File Explorer
         "$mod, T, exec, thunar"
         # # Power Off etc.
