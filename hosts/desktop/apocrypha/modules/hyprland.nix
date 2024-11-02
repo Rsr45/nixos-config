@@ -88,7 +88,7 @@
         dim_special = 0;
       };
       animations = {
-        enabled = true;
+        enabled = false;
         bezier = [
           "md3_decel, 0.05, 0.7, 0.1, 1"
           "md3_accel, 0.3, 0, 0.8, 0.15"

@@ -7,6 +7,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
+    ./modules/matugen.nix
   ];
 
   # # Bootloader.
@@ -113,6 +114,7 @@
           "networkmanager"
           "wheel"
           "libvirtd"
+          "adbusers"
         ];
         # shell = pkgs.zsh;
       };
@@ -127,6 +129,8 @@
       hare = import ./home.nix;
     };
   };
+
+  programs.adb.enable = true;
 
   # # Allow unfree packages.
   nixpkgs.config.allowUnfree = true;
@@ -353,6 +357,8 @@
       logmein-hamachi
       haguichi
       anydesk
+      localsend
+      matugen
       obsidian # Note
       keepassxc # Password Manager
       smassh

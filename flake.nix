@@ -19,6 +19,9 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    matugen = {
+      url = "github:/InioX/Matugen";
+    };
   };
 
   outputs = {
@@ -40,6 +43,7 @@
         modules = [
           ./hosts/desktop/apocrypha/configuration.nix
           inputs.stylix.nixosModules.stylix
+          inputs.matugen.nixosModules.default
         ];
       };
       nixos = nixpkgs.lib.nixosSystem {
