@@ -264,7 +264,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      import = [./themes/alacritty/miasma.toml];
+      import = ["colors.toml"];
       font = {
         size = 12;
       };
