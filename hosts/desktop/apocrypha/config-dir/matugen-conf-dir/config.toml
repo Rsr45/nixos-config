@@ -17,5 +17,5 @@ input_path = '~/.config/matugen/templates/qtct-colors.conf'
 output_path = '~/.config/qt6ct/colors/matugen.conf'
 
 [templates.alacritty]
-input_path = '~/.config/mutagen/templates/alacritty.toml'
+input_path = '~/.config/matugen/templates/alacritty.toml'
 output_path = '~/.config/alacritty/colors.toml'

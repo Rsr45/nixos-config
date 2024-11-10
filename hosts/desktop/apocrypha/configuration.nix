@@ -82,6 +82,9 @@
       enable = true;
       enable32Bit = true;
     };
+    xone = { # support for the xbox controller USB dongle
+      enable = true;
+    };
   };
 
   # # Shell.
@@ -123,7 +126,7 @@
   # # Home Manager.
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
-    backupFileExtension = "backup";
+    backupFileExtension = "backup1";
     users = {
       hare = import ./home.nix;
     };
@@ -233,11 +236,10 @@
 
   environment = {
     systemPackages = with pkgs; [
-      home-manager
+      # #
+      home-manager # Home Manager
       polkit # Polkit
       polkit_gnome # Polkit Agent
-      papirus-icon-theme
-      fastfetch
       # # Basic Utils
       binutils
       coreutils
@@ -279,12 +281,7 @@
       alacritty
       kitty
       wezterm
-      tmux
       # waveterm
-      # # Editors
-      # emacs
-      # neovim
-      # vim
       # # VSCode
       vscodium
       (vscode-with-extensions.override {
@@ -329,7 +326,7 @@
       tldr
       playerctl
       dunst
-      # mako
+      hyprgui
       notify
       libnotify
       pwvucontrol
@@ -339,31 +336,30 @@
       socat
       jq
       python3
-      clearlooks-phenix
       discordchatexporter-cli
       nix-prefetch-github
+      wallust
       # # Apps
-      blender
-      upscayl
-      clamav
-      vesktop
-      teamspeak_client
-      teamspeak5_client
-      feh
-      mpv
-      mpvc
-      qbittorrent
-      logmein-hamachi
-      haguichi
-      anydesk
-      localsend
-      matugen
+      # blender
+      upscayl # Image Upscaler
+      vesktop # Discord Client
+      teamspeak_client # Teamspeak Client
+      teamspeak5_client # Teamspeak Client
+      feh # Image Viewer
+      mpv # Video Player
+      mpvc # Video Player
+      qbittorrent # Torrent Client
+      logmein-hamachi # Hamachi
+      haguichi # Hamachi Client
+      anydesk # Remote Desktop Client
+      localsend # File Sharing
+      matugen # Material Color Generator
       obsidian # Note
       keepassxc # Password Manager
-      smassh
-      typioca
-      mapscii
-      spotify
+      smassh # Typing Test
+      typioca # Typing Test
+      mapscii # Map in Terminal
+      spotify # Spotify Client
       ungoogled-chromium # Browser
       librewolf # Browser
       floorp # Browser
@@ -374,15 +370,20 @@
       opera # Browser
       thunderbird # Mail Client
       motrix # Download Manager
-      qmmp # Music Player # Winamp look alike
+      qmmp # Music Player Winamp look alike
       libreoffice-qt6
       hunspell
       hunspellDicts.tr_TR
       hunspellDicts.en_US
-      jdk
-      jdk17
-      jdk8
-      gitkraken # Git
+      jdk # Java
+      jdk17 # Java 17
+      jdk8 # Java 8
+      gitkraken # Git Client
+      neovide # Neovim GUI
+      lunarvim # Neovim Distrubition
+      fastfetch # System Information Tool
+      btop # Resource Monitoring
+      grc # Fish Shell Dependency
       # # Language Server, Libraries, Compilers
       glib
       glibc
@@ -394,8 +395,6 @@
       nil
       nixd
       alejandra
-      # # Fish
-      grc
       # # Wine
       wineWowPackages.staging
       winetricks
@@ -403,15 +402,36 @@
       # # Launchers and some utils
       heroic
       lutris
-      mangohud
+      mangohud # Fps Counter.
       nexusmods-app-unfree
       prismlauncher
+      # # Emulation
+      duckstation # PSX
+      pcsx2 # PS2
+      rpcs3 # PS3
+      shadps4 # PS4
+      (retroarch.override {
+        cores = with libretro; [
+          genesis-plus-gx
+          snes9x # SNES
+          beetle-psx-hw # PSX
+          ppsspp # PSP
+          flycast # Dreamcast
+          picodrive
+        ];
+      })
       # # Games
-      gzdoom
+      gzdoom # DOOM Source Port.
+      chocolate-doom # DOOM Source Port.
+      crispy-doom # DOOM Source Port.
+      woof-doom # DOOM Source Port.
+      dsda-doom # DOOM Source Port.
+      dsda-launcher # DSDA-DOOM Launcher.
+      eternity # DOOM Source Port.
     ];
   };
 
-  # # Steam and Gamescope
+  # # Steam
   programs = {
     gamescope = {
       enable = true;
@@ -419,16 +439,24 @@
     };
     steam = {
       enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-      gamescopeSession.enable = true;
-      gamescopeSession.args = ["-r 144" "-S stretch"];
+      remotePlay = {
+        openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      };
+      dedicatedServer = {
+        openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      };
+      localNetworkGameTransfers = {
+        openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+      };
+      gamescopeSession = {
+        enable = true;
+        args = ["-r 144" "-S stretch"];
+      };
     };
-    gamemode.enable = true;
+    gamemode = {
+      enable = true;
+    };
   };
-
-  hardware.xone.enable = true; # support for the xbox controller USB dongle
 
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [

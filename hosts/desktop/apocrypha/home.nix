@@ -263,12 +263,12 @@
 
   programs.alacritty = {
     enable = true;
-    settings = {
-      import = ["colors.toml"];
-      font = {
-        size = 12;
-      };
-    };
+    # settings = {
+    #   import = ["home/hare/.config/alacritty/colors.toml"];
+    #   font = {
+    #     size = 12;
+    #   };
+    # };
   };
 
   programs.wezterm = {
