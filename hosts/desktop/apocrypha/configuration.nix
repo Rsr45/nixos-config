@@ -82,7 +82,7 @@
       enable = true;
       enable32Bit = true;
     };
-    xone = { # support for the xbox controller USB dongle
+    xone = {
       enable = true;
     };
   };
