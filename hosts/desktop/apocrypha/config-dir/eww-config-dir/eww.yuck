@@ -16,16 +16,31 @@
     (systray :orientation "v" :icon-size 15 :spacing 10)))
   ;(workspaces :wsp_yuck {screen == 1 ? workspaces_1_yuck : workspaces_2_yuck}))
 
-(defwidget workspaces [screen]
-  (box :orientation "v" :class "workspaces"
-    (for wsp in {workspaces[screen]}
-      (button :class "${wsp.focused ? "active" : "inactive"}"
-              :onclick "swaymsg workspace ${wsp.name}"
-        {wsp.name}))))
+;; (defwidget workspaces [screen]
+;;   (box :orientation "v" :class "workspaces"
+;;     (for wsp in {workspaces[screen]}
+;;       (button :class "${wsp.focused ? "active" : "inactive"}"
+;;               :onclick "swaymsg workspace ${wsp.name}"
+;;         {wsp.name}))))
 
 
 ;(defwidget workspaces [wsp_yuck]
   ;(literal :content wsp_yuck))
+
+(defwidget workspaces []
+  (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget"
+    (box :space-evenly true
+      (label :text "${workspaces}${current_workspace}" :visible false)
+      (for workspace in workspaces
+        (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
+          (box :class "workspace-entry ${workspace.windows > 0 ? "occupied" : "empty"}"
+            (label :text "${workspace.id}" :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""}" )
+            )
+          )
+        )
+      )
+    )
+  )
 
 
 (defwidget middle [] (time))
@@ -110,8 +125,9 @@
 (defvar audio_sink "")
 
 (deflisten volume :initial "0" "./audio.sh volume")
-(deflisten workspaces :initial '{"DP-2": [], "HDMI-A-1": []}' "./swayspaces.py")
-
+;; (deflisten workspaces :initial '{"DP-2": [], "HDMI-A-1": []}' "./swayspaces.py")
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
+(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
 
 (defpoll hour :interval "1s" "date +%H")
 (defpoll min  :interval "1s" "date +%M")
@@ -122,8 +138,8 @@
 (defpoll month    :interval "1h"  "date +%m")
 (defpoll year     :interval "1h"  "date +%y")
 
-(defvar workspaces_1_yuck "")
-(defvar workspaces_2_yuck "")
+;; (defvar workspaces_1_yuck "")
+;; (defvar workspaces_2_yuck "")
 
 (defwindow niri_scroller
   :monitor '["<primary>", "DisplayPort-3", "ZOWIE XL LCD"]'
