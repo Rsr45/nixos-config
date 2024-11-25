@@ -268,13 +268,15 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      import = ["./themes/alacritty/pastel_dark.toml"];
+      general = {
+        import = [./themes/alacritty/pastel_dark.toml];
+      };
       font = {
         size = 12;
-        normal = {
-          family = "BlexMonoNerdFont";
-          style = "Regular";
-        };
+        # normal = [
+        #   family = "BlexMonoNerdFont";
+        #   style = "Regular";
+        # ];
       };
     };
   };
