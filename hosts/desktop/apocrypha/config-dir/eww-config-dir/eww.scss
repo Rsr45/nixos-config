@@ -3,8 +3,8 @@
 }
 
 window {
-  background: #161616;
-  color: #FFFFFF;
+  background: #000000;
+  color: #d4be98;
   font-size: 14px;
 
   & > * {
@@ -42,8 +42,8 @@ window {
 }
 
 .volume-metric {
-  background-color: #1D2021;
-  color: #FFFFFF;
+  background-color: #131313;
+  color: #d4be98;
   padding: 0;
 
   .volume-top > scale {
@@ -57,12 +57,12 @@ window {
   scale trough highlight {
     all: unset;
     //background-color: #8ec07c;
-    background-color: #161616;
+    background-color: #000000;
     border-bottom-right-radius: 5px;
   }
   scale trough {
     all: unset;
-    background-color: #1D2021;
+    background-color: #131313;
     min-width: 34px;
     min-height: 2px;
   }
@@ -73,7 +73,7 @@ window {
 }
 
 .metric {
-  background-color: #1D2021;
+  background-color: #131313;
   padding: 5px 2px;
 }
 .metric-icon {
@@ -84,7 +84,7 @@ window {
 .time {
   padding-top: 7px;
   padding-bottom: 7px;
-  color: #FFFFFF;
+  color: #d4be98;
 }
 
 
@@ -93,7 +93,7 @@ window {
 
 .music_popup {
   all: unset;
-  background-color: #1D2021;
+  background-color: #131313;
   padding: 0px 20px;
   margin: 0;
 }
@@ -101,7 +101,7 @@ window {
 // System Tray
 menu {
 	padding: 5px 5px;
-  background-color: #1D2021;
+  background-color: #131313;
 
 	>menuitem {
     font-size: 14px;
@@ -109,11 +109,11 @@ menu {
     //color: $foreground;
 
 		&:disabled label {
-			color: #928374;
+			color: #d4be98;
 		}
 
 		&:hover {
-      background-color: #1D2021;
+      background-color: #131313;
 		}
 	}
 

@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }: {
   imports = [
@@ -25,8 +26,8 @@
     hostName = "apocrypha"; # Define hostname
     networkmanager = {
       enable = true;
-      # dns = "systemd-resolved";
-      # insertNameservers = ["9.9.9.9" "1.1.1.1"];
+      dns = "systemd-resolved";
+      insertNameservers = ["9.9.9.9" "1.1.1.1"];
     };
     # nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
@@ -150,6 +151,24 @@
 
   # # i3 Window Manager
   services.xserver.windowManager.i3.enable = true;
+
+  # # Awesome
+  services.xserver.windowManager.awesome = {
+    enable = true;
+    luaModules = lib.attrValues {
+      inherit
+        (pkgs.luajitPackages)
+        lgi
+        ldbus
+        luadbi-mysql
+        luaposix
+        dkjson
+        ;
+    };
+  };
+  services.picom.enable = true;
+  services.upower.enable = true;
+  services.acpid.enable = true;
 
   # # Display Manager
   services.displayManager = {
@@ -339,6 +358,8 @@
       discordchatexporter-cli
       nix-prefetch-github
       wallust
+      iat
+      fuseiso
       # # Apps
       # blender
       upscayl # Image Upscaler
@@ -369,12 +390,16 @@
       # ladybird # Browser
       opera # Browser
       thunderbird # Mail Client
+      gtk3
+      protonmail-desktop # Proton Mail Client
       motrix # Download Manager
       qmmp # Music Player Winamp look alike
+      element-desktop # Matrix Client
       libreoffice-qt6
       hunspell
       hunspellDicts.tr_TR
       hunspellDicts.en_US
+      picom
       jdk # Java
       jdk17 # Java 17
       jdk8 # Java 8
@@ -384,6 +409,7 @@
       fastfetch # System Information Tool
       btop # Resource Monitoring
       grc # Fish Shell Dependency
+      tesseract # OCR
       # # Language Server, Libraries, Compilers
       glib
       glibc
@@ -406,6 +432,7 @@
       nexusmods-app-unfree
       prismlauncher
       # # Emulation
+      ppsspp # PSP
       duckstation # PSX
       pcsx2 # PS2
       rpcs3 # PS3
@@ -430,6 +457,15 @@
       eternity # DOOM Source Port.
     ];
   };
+
+    nixpkgs.overlays = [
+    (self: super:
+    {
+      awesome = super.awesome.override {
+        gtk3Support = true;
+      };
+    })
+  ];
 
   # # Steam
   programs = {

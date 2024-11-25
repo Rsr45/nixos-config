@@ -27,16 +27,19 @@
         # "col.active_border" = "rgb(b36d43)";
         # "col.inactive_border" = "rgb(4c4c4c)";
         # # Gruvbox Hard.
-        "col.active_border" = "rgb(fabd2f)";
-        "col.inactive_border" = "rgb(4c4c4c)";
+        # "col.active_border" = "rgb(fabd2f)";
+        # "col.inactive_border" = "rgb(4c4c4c)";
+        # # Zen
+        "col.active_border" = "rgb(161616)";
+        "col.inactive_border" = "rgb(131313)";
       };
       dwindle = {
         preserve_split = true;
         smart_resizing = false;
       };
       "exec-once" = [
-        "ags -c /home/hare/.config/ags/simple-bar/config.js"
-        # "eww daemon & eww open bar_1"
+        # "ags -c /home/hare/.config/ags/simple-bar/config.js"
+        "eww daemon & eww open bar_1"
         "dunst"
         # "waybar -b verticalBar"
         "swww kill; swww-daemon"

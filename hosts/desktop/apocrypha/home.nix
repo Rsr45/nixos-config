@@ -40,8 +40,12 @@
     enable = true;
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Classic";
-    theme.package = pkgs.gruvbox-gtk-theme;
-    theme.name = "Gruvbox-Dark";
+    theme = {
+      name = "Graphite-Dark";
+      package = pkgs.graphite-gtk-theme.override {
+        tweaks = ["black"];
+      };
+    };
     iconTheme.package = pkgs.papirus-icon-theme;
     iconTheme.name = "Papirus-Dark";
   };
@@ -263,12 +267,16 @@
 
   programs.alacritty = {
     enable = true;
-    # settings = {
-    #   import = ["home/hare/.config/alacritty/colors.toml"];
-    #   font = {
-    #     size = 12;
-    #   };
-    # };
+    settings = {
+      import = ["./themes/alacritty/pastel_dark.toml"];
+      font = {
+        size = 12;
+        normal = {
+          family = "BlexMonoNerdFont";
+          style = "Regular";
+        };
+      };
+    };
   };
 
   programs.wezterm = {
@@ -303,8 +311,8 @@
       hidePodcasts
       shuffle # shuffle+ (special characters are sanitized out of extension names)
     ];
-    theme = spicePkgs.themes.text;
-    #colorScheme = "mocha";
+    theme = spicePkgs.themes.comfy;
+    colorScheme = "mono";
   };
 
   # This value determines the Home Manager release that your configuration is

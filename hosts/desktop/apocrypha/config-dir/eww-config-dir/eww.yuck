@@ -49,7 +49,7 @@
        :space-evenly true
        :spacing "5"
 
-    (volume)
+    ;; (volume)
 
     (metric :icon ""
             :font-size 0.8
@@ -62,30 +62,30 @@
     (box :class "metric" (date))))
 
 
-(defwidget volume []
-  (box :class "volume-metric"
-       :orientation "v"
-       :space-evenly false
-       :valign "fill"
-       :vexpand false
-    (scale :orientation "h"
-           :min 0
-           :max 100
-           :onchange "pamixer --set-volume $(echo {} | sed 's/\\..*//g')"
-           :value volume)
-    (eventbox :onscroll "if [ '{}' == 'up' ]; then pamixer -i 5; else pamixer -d 5; fi"
-              :vexpand true
-              :valign "fill"
-      (box :orientation "v"
-           :valign "fill"
-           :vexpand true
-        (button :onclick "rofi -theme ~/.config/rofi/launchers/type-4/style-2.rasi -show rofi-sound -modi 'rofi-sound:rofi-sound-output-chooser' &"
-                :onrightclick "./audio.sh toggle"
+;; (defwidget volume []
+;;   (box :class "volume-metric"
+;;        :orientation "v"
+;;        :space-evenly false
+;;        :valign "fill"
+;;        :vexpand false
+;;     (scale :orientation "h"
+;;            :min 0
+;;            :max 100
+;;            :onchange "pamixer --set-volume $(echo {} | sed 's/\\..*//g')"
+;;            :value volume)
+;;     (eventbox :onscroll "if [ '{}' == 'up' ]; then pamixer -i 5; else pamixer -d 5; fi"
+;;               :vexpand true
+;;               :valign "fill"
+;;       (box :orientation "v"
+;;            :valign "fill"
+;;            :vexpand true
+;;         (button :onclick "rofi -theme ~/.config/rofi/launchers/type-4/style-2.rasi -show rofi-sound -modi 'rofi-sound:rofi-sound-output-chooser' &"
+;;                 :onrightclick "./audio.sh toggle"
 
 
-          (label :text audio_sink))
-        (button :onclick "pwvucontrol &"
-          "${volume}%")))))
+;;           (label :text audio_sink))
+;;         (button :onclick "pwvucontrol &"
+;;           "${volume}%")))))
 
 
 
