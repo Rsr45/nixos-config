@@ -1,7 +1,7 @@
 {
+  config,
   pkgs,
   inputs,
-  lib,
   ...
 }: {
   imports = [
@@ -10,7 +10,7 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  # # Bootloader.
+  # # Bootloader
   boot = {
     loader = {
       systemd-boot = {
@@ -22,6 +22,7 @@
     };
   };
 
+  # # Network
   networking = {
     hostName = "apocrypha"; # Define hostname
     networkmanager = {
@@ -40,7 +41,7 @@
     timeZone = "Europe/Istanbul";
   };
 
-  # # Select internationalisation properties.
+  # # Select internationalisation properties
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
@@ -56,13 +57,16 @@
     };
   };
 
-  # # Configure console keymap.
+  # # Configure console keymap
   console = {
     keyMap = "trq";
   };
 
-  # # Drivers, Keyboard Layout, CUPS Service.
+  # # Drivers, Keyboard Layout, CUPS Service
   services = {
+    displayManager = {
+      sddm.enable = true;
+    };
     xserver = {
       enable = true;
       autorun = true;
@@ -77,7 +81,7 @@
     };
   };
 
-  # # OpenGL, 32Bit.
+  # # OpenGL, 32Bit
   hardware = {
     graphics = {
       enable = true;
@@ -88,26 +92,33 @@
     };
   };
 
-  # # Shell.
+  # # Shell
   programs = {
-    bash = {
-      interactiveShellInit = ''
-        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-        then
-          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-          exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-        fi
-      '';
-    };
-    fish = {
-      enable = true;
-    };
+    # bash = {
+    #   interactiveShellInit = ''
+    #     if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+    #     then
+    #       shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+    #       exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+    #     fi
+    #   '';
+    # };
+    # fish = {
+    #   enable = true;
+    # };
     zsh = {
       enable = true;
     };
+    adb = {
+      enable = true;
+    };
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
   };
 
-  # # Define a user account. Don't forget to set a password with ‘passwd’.
+  # # Define a user account. Don't forget to set a password with ‘passwd’
   users = {
     users = {
       hare = {
@@ -118,13 +129,14 @@
           "wheel"
           "libvirtd"
           "adbusers"
+          "mpd"
         ];
-        # shell = pkgs.zsh;
+        shell = pkgs.zsh;
       };
     };
   };
 
-  # # Home Manager.
+  # # Home Manager
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
     backupFileExtension = "backup1";
@@ -133,12 +145,10 @@
     };
   };
 
-  programs.adb.enable = true;
-
-  # # Allow unfree packages.
+  # # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # # Flakes, Garbage Collector, nixd.
+  # # Flakes, Garbage Collector, Hard Link, nixd
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes"];
@@ -146,56 +156,18 @@
     optimise = {
       automatic = true;
     };
-    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-  };
-
-  # # i3 Window Manager
-  services.xserver.windowManager.i3.enable = true;
-
-  # # Awesome
-  services.xserver.windowManager.awesome = {
-    enable = true;
-    luaModules = lib.attrValues {
-      inherit
-        (pkgs.luajitPackages)
-        lgi
-        ldbus
-        luadbi-mysql
-        luaposix
-        dkjson
-        ;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
     };
-  };
-  services.picom.enable = true;
-  services.upower.enable = true;
-  services.acpid.enable = true;
-
-  # # Display Manager
-  services.displayManager = {
-    sddm.enable = true;
-    # lightdm.enable = true;
-  };
-
-  # # Sway Window Manager
-  programs.sway = {
-    enable = true;
-    # package = pkgs.swayfx;
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
   };
 
   # # Hyprland Window Manager
   programs.hyprland = {
     enable = true;
-  };
-  # # Hint Electron apps to use Wayland
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    QT_QPA_PLATFORMTHEME = "qt5ct";
-  };
-  # # Enable Kitty Terminal [DEPRECATED]
-  # programs.kitty.enable = true;
-
-  environment.variables = {
-    QT_QPA_PLATFORMTHEME = "qt5ct";
+    xwayland.enable = true;
   };
 
   xdg.portal = {
@@ -248,12 +220,39 @@
       };
       pulse.enable = true;
       # jack.enable = true;
-
       # media-session.enable = true;
     };
   };
 
+  # # MPD
+  services.mpd = {
+    enable = true;
+    user = "hare";
+    musicDirectory = "/home/hare/Music/";
+    extraConfig = ''
+      audio_output {
+      type "pipewire"
+      name "My PipeWire Output"
+      }
+      # must specify one or more outputs in order to play audio!
+      # (e.g. ALSA, PulseAudio, PipeWire), see next sections
+    '';
+
+    # Optional:
+    network.listenAddress = "any"; # if you want to allow non-localhost connections
+    # network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
+  };
+  systemd.services.mpd.environment = {
+    # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
+    XDG_RUNTIME_DIR = "/run/user/1000/";
+  };
+
   environment = {
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
+    variables = {
+    };
     systemPackages = with pkgs; [
       # #
       home-manager # Home Manager
@@ -292,14 +291,14 @@
       xarchiver # Manager
       zip
       # # File Explorer
-      lf
-      pcmanfm
-      ranger
-      superfile
+      # lf
+      # pcmanfm
+      # ranger
+      # superfile
       # # Terminal
       alacritty
-      kitty
-      wezterm
+      # kitty
+      # wezterm
       # waveterm
       # # VSCode
       vscodium
@@ -345,7 +344,7 @@
       tldr
       playerctl
       dunst
-      hyprgui
+      # hyprgui
       notify
       libnotify
       pwvucontrol
@@ -357,21 +356,24 @@
       python3
       discordchatexporter-cli
       nix-prefetch-github
-      wallust
-      iat
+      exiftool
+      # wallust
+      # iat
       fuseiso
       # # Apps
       # blender
-      upscayl # Image Upscaler
+      # upscayl # Image Upscaler
       vesktop # Discord Client
       teamspeak_client # Teamspeak Client
-      teamspeak5_client # Teamspeak Client
+      # teamspeak5_client # Teamspeak Client
       feh # Image Viewer
       mpv # Video Player
-      mpvc # Video Player
+      # mpvc # Video Player
+      vlc # Video Player
+      vlc-bittorrent
       qbittorrent # Torrent Client
-      logmein-hamachi # Hamachi
-      haguichi # Hamachi Client
+      # logmein-hamachi # Hamachi
+      # haguichi # Hamachi Client
       anydesk # Remote Desktop Client
       localsend # File Sharing
       matugen # Material Color Generator
@@ -381,20 +383,28 @@
       typioca # Typing Test
       mapscii # Map in Terminal
       spotify # Spotify Client
+      youtube-music # YT Music Client
       ungoogled-chromium # Browser
-      librewolf # Browser
+      # librewolf # Browser
       floorp # Browser
-      firefox # Browser
-      tor-browser # Browser
-      palemoon-bin # Browser
+      # firefox # Browser
+      # tor-browser # Browser
+      # palemoon-bin # Browser
       # ladybird # Browser
       opera # Browser
       thunderbird # Mail Client
-      gtk3
-      protonmail-desktop # Proton Mail Client
+      # protonmail-desktop # Proton Mail Client
       motrix # Download Manager
-      qmmp # Music Player Winamp look alike
+      # qmmp # Music Player Winamp look alike
+      # deadbeef
+      # audacious
+      plattenalbum
+      ymuse
+      ncmpcpp
+      mpc
       element-desktop # Matrix Client
+      # fluffychat # Matrix Client
+      # fluffychat-web
       libreoffice-qt6
       hunspell
       hunspellDicts.tr_TR
@@ -408,8 +418,8 @@
       lunarvim # Neovim Distrubition
       fastfetch # System Information Tool
       btop # Resource Monitoring
-      grc # Fish Shell Dependency
-      tesseract # OCR
+      # grc # Fish Shell Dependency
+      # tesseract # OCR
       # # Language Server, Libraries, Compilers
       glib
       glibc
@@ -426,17 +436,23 @@
       winetricks
       protontricks
       # # Launchers and some utils
-      heroic
+      (heroic.override {
+        extraPkgs = pkgs: [
+          pkgs.gamescope
+        ];
+      })
       lutris
-      mangohud # Fps Counter.
+      mangohud
       nexusmods-app-unfree
       prismlauncher
+      steamcmd
       # # Emulation
       ppsspp # PSP
       duckstation # PSX
       pcsx2 # PS2
       rpcs3 # PS3
       shadps4 # PS4
+      ryujinx # Switch
       (retroarch.override {
         cores = with libretro; [
           genesis-plus-gx
@@ -449,23 +465,23 @@
       })
       # # Games
       gzdoom # DOOM Source Port.
-      chocolate-doom # DOOM Source Port.
-      crispy-doom # DOOM Source Port.
-      woof-doom # DOOM Source Port.
-      dsda-doom # DOOM Source Port.
-      dsda-launcher # DSDA-DOOM Launcher.
-      eternity # DOOM Source Port.
+      # chocolate-doom # DOOM Source Port.
+      # crispy-doom # DOOM Source Port.
+      # woof-doom # DOOM Source Port.
+      # dsda-doom # DOOM Source Port.
+      # dsda-launcher # DSDA-DOOM Launcher.
+      # eternity # DOOM Source Port.
     ];
   };
 
-    nixpkgs.overlays = [
-    (self: super:
-    {
-      awesome = super.awesome.override {
-        gtk3Support = true;
-      };
-    })
-  ];
+  #   nixpkgs.overlays = [
+  #   (self: super:
+  #   {
+  #     awesome = super.awesome.override {
+  #       gtk3Support = true;
+  #     };
+  #   })
+  # ];
 
   # # Steam
   programs = {
@@ -475,6 +491,21 @@
     };
     steam = {
       enable = true;
+      package = pkgs.steam.override {
+        extraPkgs = pkgs:
+          with pkgs; [
+            xorg.libXcursor
+            xorg.libXi
+            xorg.libXinerama
+            xorg.libXScrnSaver
+            libpng
+            libpulseaudio
+            libvorbis
+            stdenv.cc.cc.lib
+            libkrb5
+            keyutils
+          ];
+      };
       remotePlay = {
         openFirewall = true; # Open ports in the firewall for Steam Remote Play
       };

@@ -14,8 +14,8 @@
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
     ./modules/nixvim.nix
-    ./modules/i3wm.nix
-    ./modules/sway.nix
+    # ./modules/i3wm.nix
+    # ./modules/sway.nix
     ./modules/matugen.nix
   ];
 
@@ -53,9 +53,9 @@
   # # QT Settings
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
+    platformTheme.name = "gtk";
     style.name = "adwaita-dark";
-    style.package = pkgs.adwaita-qt;
+    # style.package = pkgs.adwaita-qt;
   };
 
   # # Aylur's Gtk Shell.
@@ -64,7 +64,7 @@
     configDir = ./config-dir/ags-conf-dir;
     extraPackages = with pkgs; [
       gtksourceview
-      webkitgtk
+      # webkitgtk
       accountsservice
     ];
   };
@@ -91,15 +91,15 @@
     enable = true;
     settings = {
       colors = {
-        background = "161616ff";
-        text = "FFFFFFFF";
-        prompt = "FFFFFFFF";
-        input = "FFFFFFFF";
+        background = "000000ff";
+        text = "d4be98FF";
+        prompt = "d4be98FF";
+        input = "d4be98FF";
         match = "be95ffff";
         selection-match = "be95ffff";
-        selection = "FFFFFFFF";
-        selection-text = "161616FF";
-        border = "FFFFFFFF";
+        selection = "d4be98FF";
+        selection-text = "000000FF";
+        border = "d4be98FF";
       };
       border = {
         radius = "0";
@@ -161,13 +161,15 @@
       ls = "eza -a";
       ll = "eza -al";
       lt = "eza -a --tree --level=1";
-      # cd = "z";
+      rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
       yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
       yt-mp4 = "yt-dlp -f mp4";
       reboot = "systemctl reboot";
       shutdown = "systemctl poweroff";
+      logout = "hyprctl dispatch exit 1";
       yamltotoml = "find . -type f -name '*.yaml' | xargs -I {} alacritty migrate -c {}";
       ymltotoml = "find . -type f -name '*.yml' | xargs -I {} alacritty migrate -c {}";
+      cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
     };
     antidote = {
       enable = true;
@@ -397,7 +399,6 @@
   #  /etc/profiles/per-user/fangyuan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "qt5ct";
     # EDITOR = "vim";
   };
 

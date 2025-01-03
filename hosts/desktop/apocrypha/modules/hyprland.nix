@@ -13,6 +13,7 @@
   # client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
   wayland.windowManager.hyprland = {
     enable = true;
+    xwayland.enable = true;
     settings = {
       "$mod" = "SUPER";
       monitor = [",1920x1080@144,auto,1"];
