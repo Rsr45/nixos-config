@@ -13,7 +13,7 @@
     inputs.nixvim.homeManagerModules.nixvim
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
-    ./modules/nixvim.nix
+    # ./modules/nixvim.nix
     # ./modules/i3wm.nix
     # ./modules/sway.nix
     ./modules/matugen.nix
@@ -340,15 +340,17 @@
     iosevka
     roboto
     rubik
-    (nerdfonts.override {
-      fonts = [
-        "FantasqueSansMono"
-        "IBMPlexMono"
-        "Iosevka"
-        "IosevkaTerm"
-        "IosevkaTermSlab"
-      ];
-    })
+    nerd-fonts.fantasque-sans-mono
+    nerd-fonts.blex-mono
+    # (nerdfonts.override {
+    #   fonts = [
+    #     "FantasqueSansMono"
+    #     "IBMPlexMono"
+    #     "Iosevka"
+    #     "IosevkaTerm"
+    #     "IosevkaTermSlab"
+    #   ];
+    # })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
