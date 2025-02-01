@@ -14,6 +14,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
+    systemd.enable = false;
     settings = {
       "$mod" = "SUPER";
       monitor = [",1920x1080@144,auto,1"];
@@ -79,12 +80,12 @@
           contrast = 1;
         };
         # Shadow
-        drop_shadow = false;
-        shadow_ignore_window = true;
-        shadow_range = 20;
-        shadow_offset = "0 2";
-        shadow_render_power = 2;
-        "col.shadow" = "rgba(0000001A)";
+        # drop_shadow = false;
+        # shadow_ignore_window = true;
+        # shadow_range = 20;
+        # shadow_offset = "0 2";
+        # shadow_render_power = 2;
+        # "col.shadow" = "rgba(0000001A)";
 
         # Dim
         dim_inactive = false;
