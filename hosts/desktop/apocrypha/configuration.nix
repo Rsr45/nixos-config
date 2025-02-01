@@ -168,7 +168,10 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    withUWSM  = true;
   };
+
+  programs.uwsm.enable = true;
 
   xdg.portal = {
     enable = true;
@@ -453,16 +456,16 @@
       rpcs3 # PS3
       shadps4 # PS4
       ryujinx # Switch
-      (retroarch.override {
-        cores = with libretro; [
-          genesis-plus-gx
-          snes9x # SNES
-          beetle-psx-hw # PSX
-          ppsspp # PSP
-          flycast # Dreamcast
-          picodrive
-        ];
-      })
+      # (retroarch.override {
+      #   cores = with libretro; [
+      #     genesis-plus-gx
+      #     snes9x # SNES
+      #     beetle-psx-hw # PSX
+      #     ppsspp # PSP
+      #     flycast # Dreamcast
+      #     picodrive
+      #   ];
+      # })
       # # Games
       gzdoom # DOOM Source Port.
       # chocolate-doom # DOOM Source Port.
