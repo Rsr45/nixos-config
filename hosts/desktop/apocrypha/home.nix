@@ -30,31 +30,45 @@
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
+    package = pkgs.capitaine-cursors-themed;
+    name = "Capitaine Cursors (Gruvbox)";
     size = 24;
   };
 
   # # GTK Settings
   gtk = {
     enable = true;
-    cursorTheme.package = pkgs.bibata-cursors;
-    cursorTheme.name = "Bibata-Modern-Classic";
-    theme = {
-      name = "Graphite-Dark";
-      package = pkgs.graphite-gtk-theme.override {
-        tweaks = ["black"];
-      };
-    };
-    iconTheme.package = pkgs.papirus-icon-theme;
-    iconTheme.name = "Papirus-Dark";
+    cursorTheme.package = pkgs.capitaine-cursors-themed;
+    cursorTheme.name = "Capitaine Cursors (Gruvbox)";
+    # theme = {
+    #   package = pkgs.gruvbox-material-gtk-theme;
+    #   name = "Gruvbox-Material-Dark";
+    # };
+    # theme = {
+    #   name = "Gruvbox-Orange-Dark-Compact-Medium";
+    #   package = pkgs.gruvbox-gtk-theme.override {
+    #     colorVariants = ["dark"];
+    #     sizeVariants = ["compact"];
+    #     themeVariants = ["orange"];
+    #     tweakVariants = ["medium"];
+    #     iconVariants = ["Dark"];
+    #   };
+    # };
+    # theme = {
+    #   name = "Graphite-Dark";
+    #   package = pkgs.graphite-gtk-theme.override {
+    #     tweaks = ["black"];
+    #   };
+    # };
+    # iconTheme.package = pkgs.papirus-icon-theme;
+    # iconTheme.name = "Papirus-Dark";
   };
 
   # # QT Settings
   qt = {
     enable = true;
     platformTheme.name = "gtk";
-    style.name = "adwaita-dark";
+    # style.name = "adwaita-dark";
     # style.package = pkgs.adwaita-qt;
   };
 
