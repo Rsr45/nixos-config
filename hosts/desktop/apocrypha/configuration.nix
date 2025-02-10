@@ -553,11 +553,11 @@
     liberation_ttf
   ];
 
-  stylix.enable = true;
-  stylix.autoEnable = true;
-  stylix.polarity = "dark";
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-  stylix.image = ./wallhaven-d6y12l_3840x2160.png;
+  # stylix.enable = true;
+  # stylix.autoEnable = true;
+  # stylix.polarity = "dark";
+  # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+  # stylix.image = ./wallhaven-d6y12l_3840x2160.png;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
