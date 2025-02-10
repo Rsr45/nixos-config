@@ -87,6 +87,10 @@
       enable = true;
       enable32Bit = true;
     };
+    amdgpu.amdvlk = {
+        enable = true;
+        support32Bit.enable = true;
+    };
     xone = {
       enable = true;
     };
@@ -212,9 +216,11 @@
   };
 
   # # Audio
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services = {
+    pulseaudio = {
+      enable = false;
+    };
     pipewire = {
       enable = true;
       alsa = {
@@ -401,6 +407,7 @@
       # qmmp # Music Player Winamp look alike
       # deadbeef
       # audacious
+      nautilus
       plattenalbum
       ymuse
       ncmpcpp
@@ -417,6 +424,7 @@
       jdk17 # Java 17
       jdk8 # Java 8
       gitkraken # Git Client
+      neovim
       neovide # Neovim GUI
       lunarvim # Neovim Distrubition
       fastfetch # System Information Tool
@@ -438,15 +446,17 @@
       wineWowPackages.staging
       winetricks
       protontricks
+      cabextract
+      zenity
       # # Launchers and some utils
       (heroic.override {
         extraPkgs = pkgs: [
           pkgs.gamescope
         ];
       })
-      lutris
+      # lutris
       mangohud
-      nexusmods-app-unfree
+      # nexusmods-app-unfree
       prismlauncher
       steamcmd
       # # Emulation
@@ -455,7 +465,7 @@
       pcsx2 # PS2
       rpcs3 # PS3
       shadps4 # PS4
-      ryujinx # Switch
+      # ryujinx # Switch
       # (retroarch.override {
       #   cores = with libretro; [
       #     genesis-plus-gx
@@ -488,6 +498,9 @@
 
   # # Steam
   programs = {
+    # java = {
+    #   enable = true;
+    # };
     gamescope = {
       enable = true;
       capSysNice = true;
@@ -495,8 +508,12 @@
     steam = {
       enable = true;
       package = pkgs.steam.override {
+        # withJava = true;
+        # withPrimus = true;
         extraPkgs = pkgs:
           with pkgs; [
+            # bumblebee
+            # glxinfo
             xorg.libXcursor
             xorg.libXi
             xorg.libXinerama
@@ -536,11 +553,11 @@
     liberation_ttf
   ];
 
-  # stylix.enable = true;
-  # stylix.autoEnable = true;
-  # stylix.polarity = "dark";
-  # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
-  # stylix.image = ./wallhaven-d6y12l_3840x2160.png;
+  stylix.enable = true;
+  stylix.autoEnable = true;
+  stylix.polarity = "dark";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+  stylix.image = ./wallhaven-d6y12l_3840x2160.png;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
