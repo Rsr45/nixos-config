@@ -32,7 +32,7 @@
     x11.enable = true;
     package = pkgs.capitaine-cursors-themed;
     name = "Capitaine Cursors (Gruvbox)";
-    size = 24;
+    size = 32;
   };
 
   # # GTK Settings
@@ -44,24 +44,24 @@
     #   package = pkgs.gruvbox-material-gtk-theme;
     #   name = "Gruvbox-Material-Dark";
     # };
-    # theme = {
-    #   name = "Gruvbox-Orange-Dark-Compact-Medium";
-    #   package = pkgs.gruvbox-gtk-theme.override {
-    #     colorVariants = ["dark"];
-    #     sizeVariants = ["compact"];
-    #     themeVariants = ["orange"];
-    #     tweakVariants = ["medium"];
-    #     iconVariants = ["Dark"];
-    #   };
-    # };
+    theme = {
+      name = "Gruvbox-Orange-Dark-Compact-Medium";
+      package = pkgs.gruvbox-gtk-theme.override {
+        colorVariants = ["dark"];
+        sizeVariants = ["compact"];
+        themeVariants = ["orange"];
+        tweakVariants = ["medium"];
+        iconVariants = ["Dark"];
+      };
+    };
     # theme = {
     #   name = "Graphite-Dark";
     #   package = pkgs.graphite-gtk-theme.override {
     #     tweaks = ["black"];
     #   };
     # };
-    # iconTheme.package = pkgs.papirus-icon-theme;
-    # iconTheme.name = "Papirus-Dark";
+    iconTheme.package = pkgs.papirus-icon-theme;
+    iconTheme.name = "Papirus-Dark";
   };
 
   # # QT Settings
