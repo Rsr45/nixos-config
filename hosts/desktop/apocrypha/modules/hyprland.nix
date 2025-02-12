@@ -4,17 +4,15 @@
   pkgs,
   ...
 }: {
-  # # Hyprland Settings
-  # class                 border  bground text    indicator child_border
-  # client.focused          #fabd2f #1d2021 #fabd2f #83CAFA   #fabd2f
-  # client.focused_inactive #8C8C8C #4C4C4C #FFFFFF #4C4C4C   #8C8C8C
-  # client.unfocused        #4C4C4C #141617 #888888 #292D2E   #222222
-  # client.urgent           #EC69A0 #DB3279 #FFFFFF #DB3279   #DB3279
-  # client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
     systemd.enable = false;
+    plugins = [
+      inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
+      inputs.hyprland-plugins.packages.${pkgs.system}.hyprscroller
+      inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+    ];
     settings = {
       "$mod" = "SUPER";
       monitor = [",1920x1080@144,auto,1"];
@@ -217,16 +215,18 @@
       ];
     };
     extraConfig = ''
-      # # Resizing(like i3)
-      bind = $mod, R, submap,resize
-      submap = resize
-      binde=,Right,resizeactive,  40 0
-      binde=,Left,resizeactive, -40 0
-      binde=,Up,resizeactive,   0 -40
-      binde=,Down,resizeactive,   0 40
-      bind = ,escape, submap, reset
-      bind = ,return,  submap, reset
-      submap = reset
+      plugin {
+        hyprexpo {
+          columns = 3
+          gap_size = 5
+          bg_col = rgb(000000)
+          workspace_method = first 1 # [center/first] [workspace] e.g. first 1 or center m+1
+
+          enable_gesture = false # laptop touchpad, 4 fingers
+          gesture_distance = 300 # how far is the "max"
+          gesture_positive = false
+        }
+      }
 
       bind = , Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of whole screen taken" -t 1000
       bind = $mod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of the region taken" -t 1000
