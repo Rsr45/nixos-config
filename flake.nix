@@ -15,6 +15,10 @@
     zen-browser.url = "github:MarceColl/zen-browser-flake";
     stylix.url = "github:danth/stylix";
     ags.url = "github:Aylur/ags";
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
