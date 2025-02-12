@@ -396,6 +396,7 @@
       ungoogled-chromium # Browser
       # librewolf # Browser
       floorp # Browser
+      inputs.zen-browser.packages."${system}".default
       # firefox # Browser
       # tor-browser # Browser
       # palemoon-bin # Browser
