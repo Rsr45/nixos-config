@@ -13,10 +13,6 @@
     inputs.nixvim.homeManagerModules.nixvim
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
-    # ./modules/nixvim.nix
-    # ./modules/i3wm.nix
-    # ./modules/sway.nix
-    ./modules/matugen.nix
   ];
 
   nixpkgs.config = {
@@ -38,30 +34,27 @@
   # # GTK Settings
   gtk = {
     enable = true;
-    cursorTheme.package = pkgs.capitaine-cursors-themed;
-    cursorTheme.name = "Capitaine Cursors (Gruvbox)";
-    # theme = {
-    #   package = pkgs.gruvbox-material-gtk-theme;
-    #   name = "Gruvbox-Material-Dark";
-    # };
+    cursorTheme = {
+      package = pkgs.capitaine-cursors-themed;
+      name = "Capitaine Cursors (Gruvbox)";
+    };
     theme = {
-      name = "Gruvbox-Orange-Dark-Compact-Medium";
+      name = "Gruvbox-Yellow-Dark-Compact-Medium";
       package = pkgs.gruvbox-gtk-theme.override {
         colorVariants = ["dark"];
         sizeVariants = ["compact"];
-        themeVariants = ["orange"];
+        themeVariants = ["yellow"];
         tweakVariants = ["medium"];
         iconVariants = ["Dark"];
       };
     };
-    # theme = {
-    #   name = "Graphite-Dark";
-    #   package = pkgs.graphite-gtk-theme.override {
-    #     tweaks = ["black"];
-    #   };
-    # };
-    iconTheme.package = pkgs.papirus-icon-theme;
-    iconTheme.name = "Papirus-Dark";
+    iconTheme = {
+      package = pkgs.gruvbox-plus-icons;
+      name = "Gruvbox-Plus-Dark";
+    };
+    font = {
+      name = "IBM Plex Serif";
+    };
   };
 
   # # QT Settings
@@ -105,106 +98,142 @@
     enable = true;
     settings = {
       colors = {
-        background = "000000ff";
-        text = "d4be98FF";
-        prompt = "d4be98FF";
-        input = "d4be98FF";
-        match = "be95ffff";
-        selection-match = "be95ffff";
-        selection = "d4be98FF";
-        selection-text = "000000FF";
-        border = "d4be98FF";
+        background = "282828ff";
+        text = "FBF1C7ff";
+        prompt = "FBF1C7ff";
+        input = "FBF1C7ff";
+        match = "FABD2Fff";
+        selection-match = "FABD2Fff";
+        selection = "3C3836ff";
+        selection-text = "FBF1C7ff";
+        border = "3C3836FF";
       };
       border = {
-        radius = "0";
+        radius = "12";
         width = "4";
       };
     };
   };
 
-  programs.fish = {
+  services.dunst = {
     enable = true;
-    interactiveShellInit = ''
-      set fish_greeting # Disable greeting
-    '';
-    shellAbbrs = {
-      rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
-      reboot = "systemctl reboot";
-      shutdown = "systemctl poweroff";
-      logout = "hyprctl dispatch exit 1";
-      yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
-      yt-mp4 = "yt-dlp -f mp4";
-      cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
+    settings = {
+      global = {
+        width = 300;
+        height = 300;
+        offset = "30x50";
+        origin = "top-right";
+        transparency = 10;
+        frame_color = "#3C3836";
+        font = "IBM Plex Serif";
+        corner_radius = "12";
+        gap_size = "8";
+      };
+
+      urgency_normal = {
+        background = "#282828";
+        foreground = "#FBF1C7";
+        timeout = 10;
+      };
     };
-    plugins = [
-      # Enable a plugin (here grc for colorized command output) from nixpkgs
-      {
-        name = "grc";
-        src = pkgs.fishPlugins.grc.src;
-      }
-      # Manually packaging and enable a plugin
-      {
-        name = "z";
-        src = pkgs.fetchFromGitHub {
-          owner = "jethrokuan";
-          repo = "z";
-          rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
-          sha256 = "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
-        };
-      }
-    ];
   };
 
-  programs.zsh = {
+  programs.nushell = {
     enable = true;
-    enableCompletion = true;
-    autocd = true;
-    autosuggestion = {
-      enable = true;
-    };
-    history = {
-      append = true;
-      share = true;
-      extended = true;
-      ignoreSpace = true;
-      ignoreAllDups = true;
-      ignoreDups = true;
-      expireDuplicatesFirst = true;
-    };
     shellAliases = {
-      ls = "eza -a";
-      ll = "eza -al";
-      lt = "eza -a --tree --level=1";
       rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
-      yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
-      yt-mp4 = "yt-dlp -f mp4";
       reboot = "systemctl reboot";
       shutdown = "systemctl poweroff";
       logout = "hyprctl dispatch exit 1";
-      yamltotoml = "find . -type f -name '*.yaml' | xargs -I {} alacritty migrate -c {}";
-      ymltotoml = "find . -type f -name '*.yml' | xargs -I {} alacritty migrate -c {}";
+      yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
+      yt-mp4 = "yt-dlp -f mp4";
       cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
     };
-    antidote = {
-      enable = true;
-      plugins = [
-        "getantidote/use-omz"
-        "zsh-users/zsh-syntax-highlighting"
-        "zsh-users/zsh-autosuggestions"
-        "zsh-users/zsh-completions"
-        "zsh-users/zsh-history-substring-search"
-        "MichaelAquilina/zsh-auto-notify"
-      ];
-    };
-    oh-my-zsh = {
-      enable = true;
-      theme = "bureau";
-      plugins = [
-        "git"
-        "sudo"
-      ];
-    };
   };
+
+  # programs.fish = {
+  #   enable = true;
+  #   interactiveShellInit = ''
+  #     set fish_greeting # Disable greeting
+  #   '';
+  #   shellAbbrs = {
+  #     rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
+  #     reboot = "systemctl reboot";
+  #     shutdown = "systemctl poweroff";
+  #     logout = "hyprctl dispatch exit 1";
+  #     yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
+  #     yt-mp4 = "yt-dlp -f mp4";
+  #     cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
+  #   };
+  #   plugins = [
+  #     # Enable a plugin (here grc for colorized command output) from nixpkgs
+  #     {
+  #       name = "grc";
+  #       src = pkgs.fishPlugins.grc.src;
+  #     }
+  #     # Manually packaging and enable a plugin
+  #     {
+  #       name = "z";
+  #       src = pkgs.fetchFromGitHub {
+  #         owner = "jethrokuan";
+  #         repo = "z";
+  #         rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
+  #         sha256 = "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
+  #       };
+  #     }
+  #   ];
+  # };
+
+  # programs.zsh = {
+  #   enable = true;
+  #   enableCompletion = true;
+  #   autocd = true;
+  #   autosuggestion = {
+  #     enable = true;
+  #   };
+  #   history = {
+  #     append = true;
+  #     share = true;
+  #     extended = true;
+  #     ignoreSpace = true;
+  #     ignoreAllDups = true;
+  #     ignoreDups = true;
+  #     expireDuplicatesFirst = true;
+  #   };
+  #   shellAliases = {
+  #     ls = "eza -a";
+  #     ll = "eza -al";
+  #     lt = "eza -a --tree --level=1";
+  #     rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
+  #     yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
+  #     yt-mp4 = "yt-dlp -f mp4";
+  #     reboot = "systemctl reboot";
+  #     shutdown = "systemctl poweroff";
+  #     logout = "hyprctl dispatch exit 1";
+  #     yamltotoml = "find . -type f -name '*.yaml' | xargs -I {} alacritty migrate -c {}";
+  #     ymltotoml = "find . -type f -name '*.yml' | xargs -I {} alacritty migrate -c {}";
+  #     cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
+  #   };
+  #   antidote = {
+  #     enable = true;
+  #     plugins = [
+  #       "getantidote/use-omz"
+  #       "zsh-users/zsh-syntax-highlighting"
+  #       "zsh-users/zsh-autosuggestions"
+  #       "zsh-users/zsh-completions"
+  #       "zsh-users/zsh-history-substring-search"
+  #       "MichaelAquilina/zsh-auto-notify"
+  #     ];
+  #   };
+  #   oh-my-zsh = {
+  #     enable = true;
+  #     theme = "bureau";
+  #     plugins = [
+  #       "git"
+  #       "sudo"
+  #     ];
+  #   };
+  # };
 
   programs.zoxide = {
     enable = true;
@@ -239,7 +268,7 @@
     enable = true;
     settings = {
       logo = {
-        source = "macos2";
+        # source = "macos2";
         padding = {
           right = 2;
         };
@@ -297,6 +326,14 @@
     };
   };
 
+  programs.kitty = {
+    enable = true;
+    themeFile = "gruvbox-dark";
+    font = {
+      name = "BlexMono Nerd Font";
+    };
+  };
+
   programs.wezterm = {
     enable = true;
     enableBashIntegration = true;
@@ -346,25 +383,9 @@
   # environment.
   home.packages = with pkgs; [
     # # Fonts
-    cascadia-code
     font-awesome
-    geist-font
     ibm-plex
-    inter
-    iosevka
-    roboto
-    rubik
-    nerd-fonts.fantasque-sans-mono
     nerd-fonts.blex-mono
-    # (nerdfonts.override {
-    #   fonts = [
-    #     "FantasqueSansMono"
-    #     "IBMPlexMono"
-    #     "Iosevka"
-    #     "IosevkaTerm"
-    #     "IosevkaTermSlab"
-    #   ];
-    # })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -377,9 +398,9 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = ["BlexMonoNerdFont"];
-      sansSerif = ["IBMPlexSans"];
-      serif = ["IBMPlexSerif"];
+      monospace = ["BlexMono Nerd Font"];
+      sansSerif = ["IBM Plex Sans"];
+      serif = ["IBM Plex Serif"];
     };
   };
 

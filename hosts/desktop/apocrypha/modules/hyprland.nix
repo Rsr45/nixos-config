@@ -10,38 +10,23 @@
     systemd.enable = false;
     plugins = [
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
-      inputs.hyprland-plugins.packages.${pkgs.system}.hyprscroller
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
     ];
     settings = {
       "$mod" = "SUPER";
       monitor = [",1920x1080@144,auto,1"];
       general = {
-        gaps_in = 0;
-        gaps_out = 0;
-        # gaps_workspaces = 50;
+        gaps_in = 5;
+        gaps_out = 10;
         border_size = 4;
         layout = "dwindle";
         resize_on_border = true;
-        # # Miasma.
-        # "col.active_border" = "rgb(b36d43)";
-        # "col.inactive_border" = "rgb(4c4c4c)";
-        # # Gruvbox Hard.
-        # "col.active_border" = "rgb(fabd2f)";
-        # "col.inactive_border" = "rgb(4c4c4c)";
-        # # Zen
-        "col.active_border" = "rgb(161616)";
-        "col.inactive_border" = "rgb(131313)";
-      };
-      dwindle = {
-        preserve_split = true;
-        smart_resizing = false;
+        "col.active_border" = "rgb(282828)";
+        "col.inactive_border" = "rgb(282828)";
       };
       "exec-once" = [
-        # "ags -c /home/hare/.config/ags/simple-bar/config.js"
         "eww daemon & eww open bar_1"
         "dunst"
-        # "waybar -b verticalBar"
         "swww kill; swww-daemon"
       ];
       input = {
@@ -64,19 +49,10 @@
         follow_mouse = 1;
       };
       decoration = {
-        rounding = 0;
+        rounding = 12;
+        rounding_power = 2.0;
+        dim_inactive = true;
 
-        blur = {
-          enabled = true;
-          xray = true;
-          special = false;
-          new_optimizations = true;
-          size = 5;
-          passes = 4;
-          brightness = 1;
-          noise = 1.0e-2;
-          contrast = 1;
-        };
         # Shadow
         # drop_shadow = false;
         # shadow_ignore_window = true;
@@ -84,11 +60,6 @@
         # shadow_offset = "0 2";
         # shadow_render_power = 2;
         # "col.shadow" = "rgba(0000001A)";
-
-        # Dim
-        dim_inactive = false;
-        dim_strength = 0.1;
-        dim_special = 0;
       };
       animations = {
         enabled = false;
@@ -113,6 +84,19 @@
           # "specialWorkspace, 1, 3, md3_decel, slidefadevert 15%"
           "specialWorkspace, 1, 3, md3_decel, slidevert"
         ];
+      };
+      plugin = {
+        hyprbars = {
+          bar_text_font = "IBM Plex Serif";
+          bar_height = "30";
+          bar_padding = "10";
+          bar_button_padding = "5";
+          bar_precedence_over_border = "true";
+          bar_part_of_window = "true";
+
+          bar_color = "rgba(282828FF)";
+          col.text = "rgba(FBF1C7FF)";
+        };
       };
       misc = {
         vfr = 1;
@@ -168,31 +152,32 @@
         "$mod, F, fullscreen, 0"
         "$mod, D, fullscreen, 1"
         # # Workspaces
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, 6, workspace, 6"
-        "$mod, 7, workspace, 7"
-        "$mod, 8, workspace, 8"
-        "$mod, 9, workspace, 9"
-        "$mod, 0, workspace, 10"
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-        "$mod SHIFT, 6, movetoworkspace, 6"
-        "$mod SHIFT, 7, movetoworkspace, 7"
-        "$mod SHIFT, 8, movetoworkspace, 8"
-        "$mod SHIFT, 9, movetoworkspace, 9"
-        "$mod SHIFT, 0, movetoworkspace, 10"
-        "$mod, mouse_down, workspace, e+1"
-        "$mod, mouse_up, workspace, e-1"
+        # "$mod, 1, workspace, 1"
+        # "$mod, 2, workspace, 2"
+        # "$mod, 3, workspace, 3"
+        # "$mod, 4, workspace, 4"
+        # "$mod, 5, workspace, 5"
+        # "$mod, 6, workspace, 6"
+        # "$mod, 7, workspace, 7"
+        # "$mod, 8, workspace, 8"
+        # "$mod, 9, workspace, 9"
+        # "$mod, 0, workspace, 10"
+        # "$mod SHIFT, 1, movetoworkspace, 1"
+        # "$mod SHIFT, 2, movetoworkspace, 2"
+        # "$mod SHIFT, 3, movetoworkspace, 3"
+        # "$mod SHIFT, 4, movetoworkspace, 4"
+        # "$mod SHIFT, 5, movetoworkspace, 5"
+        # "$mod SHIFT, 6, movetoworkspace, 6"
+        # "$mod SHIFT, 7, movetoworkspace, 7"
+        # "$mod SHIFT, 8, movetoworkspace, 8"
+        # "$mod SHIFT, 9, movetoworkspace, 9"
+        # "$mod SHIFT, 0, movetoworkspace, 10"
+        # "$mod, mouse_down, workspace, e+1"
+        # "$mod, mouse_up, workspace, e-1"
         # # Special Workspaces
         "$mod, S, togglespecialworkspace, magic"
         "$mod ALT, S, movetoworkspace, special:magic"
+        "$mod, i, togglespecialworkspace, special"
         # # # Actions
         # # Color Picker
         "$mod SHIFT, C, exec, hyprpicker -a -f hex"
@@ -200,15 +185,27 @@
         "$mod+Alt, W, exec, pkill waypaper || waypaper"
         # # App Launcer
         "$mod, Space, exec, pkill fuzzel || fuzzel"
-        # # Terminal
-        "$mod, Return, exec, alacritty"
-        # "$mod, Return, exec, wezterm"
+        # # -______Terminal______- # #
+        "$mod, Return, exec, kitty"
         # # File Explorer
-        "$mod, T, exec, thunar"
+        "$mod, T, exec, nemo"
         # # Power Off etc.
         "Ctrl+Shift+Super, Delete, exec, systemctl reboot" # Restart
         "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff" # Power off
-      ];
+      ]
+      ++ (
+        # workspaces
+        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+        builtins.concatLists (builtins.genList (
+          i: let
+          ws = i + 1;
+          in [
+            "$mod, code:1${toString i}, workspace, ${toString ws}"
+            "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+          ]
+        )
+        9)
+      );
       windowrulev2 = [
         "float, class:(waypaper)"
         "float, workspace:10"
@@ -228,6 +225,7 @@
         }
       }
 
+      bind = SUPER, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable
       bind = , Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of whole screen taken" -t 1000
       bind = $mod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of the region taken" -t 1000
     '';
