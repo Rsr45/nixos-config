@@ -3,14 +3,14 @@
 }
 
 window {
-  background: #000000;
-  color: #d4be98;
+  background: #282828;
+  color: #FBF1C7;
   font-size: 14px;
 
   & > * {
     margin: 3px;
   }
-  font-family: "Rubik (TTF)";
+  font-family: "IBM Plex Serif";
 }
 
 .workspaces {
@@ -42,8 +42,8 @@ window {
 }
 
 .volume-metric {
-  background-color: #131313;
-  color: #d4be98;
+  background-color: #282828;
+  color: #FBF1C7;
   padding: 0;
 
   .volume-top > scale {
@@ -57,12 +57,12 @@ window {
   scale trough highlight {
     all: unset;
     //background-color: #8ec07c;
-    background-color: #000000;
+    background-color: #282828;
     border-bottom-right-radius: 5px;
   }
   scale trough {
     all: unset;
-    background-color: #131313;
+    background-color: #282828;
     min-width: 34px;
     min-height: 2px;
   }
@@ -73,7 +73,7 @@ window {
 }
 
 .metric {
-  background-color: #131313;
+  background-color: #282828;
   padding: 5px 2px;
 }
 .metric-icon {
@@ -84,7 +84,7 @@ window {
 .time {
   padding-top: 7px;
   padding-bottom: 7px;
-  color: #d4be98;
+  color: #FBF1C7;
 }
 
 
@@ -93,7 +93,7 @@ window {
 
 .music_popup {
   all: unset;
-  background-color: #131313;
+  background-color: #282828;
   padding: 0px 20px;
   margin: 0;
 }
@@ -101,7 +101,7 @@ window {
 // System Tray
 menu {
 	padding: 5px 5px;
-  background-color: #131313;
+  background-color: #282828;
 
 	>menuitem {
     font-size: 14px;
@@ -109,11 +109,11 @@ menu {
     //color: $foreground;
 
 		&:disabled label {
-			color: #d4be98;
+			color: #FBF1C7;
 		}
 
 		&:hover {
-      background-color: #131313;
+      background-color: #282828;
 		}
 	}
 
