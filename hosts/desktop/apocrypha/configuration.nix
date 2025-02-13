@@ -88,8 +88,8 @@
       enable32Bit = true;
     };
     amdgpu.amdvlk = {
-        enable = true;
-        support32Bit.enable = true;
+      enable = true;
+      support32Bit.enable = true;
     };
     xone = {
       enable = true;
@@ -110,9 +110,9 @@
     # fish = {
     #   enable = true;
     # };
-    zsh = {
-      enable = true;
-    };
+    # zsh = {
+    #   enable = true;
+    # };
     adb = {
       enable = true;
     };
@@ -135,7 +135,7 @@
           "adbusers"
           "mpd"
         ];
-        shell = pkgs.zsh;
+        shell = pkgs.nushell;
       };
     };
   };
@@ -156,6 +156,8 @@
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes"];
+      substituters = ["https://hyprland.cachix.org"];
+      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
     optimise = {
       automatic = true;
@@ -172,7 +174,9 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    withUWSM  = true;
+    withUWSM = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   programs.uwsm.enable = true;
@@ -202,8 +206,8 @@
 
   services.flatpak.enable = true;
   systemd.services.flatpak-repo = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.flatpak ];
+    wantedBy = ["multi-user.target"];
+    path = [pkgs.flatpak];
     script = ''
       flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     '';
@@ -307,12 +311,15 @@
       unrar
       unzip
       xarchiver # Manager
+      # kdePackages.ark
       zip
       # # File Explorer
+      # kdePackages.dolphin
       # lf
       # pcmanfm
       # ranger
       # superfile
+      nemo
       # # Terminal
       alacritty
       # kitty
@@ -417,7 +424,7 @@
       # qmmp # Music Player Winamp look alike
       # deadbeef
       # audacious
-      nautilus
+      # nautilus
       plattenalbum
       ymuse
       ncmpcpp
@@ -557,10 +564,7 @@
 
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
-    # (nerdfonts.override { fonts = [  ]; })
-    noto-fonts
-    noto-fonts-emoji
-    liberation_ttf
+    roboto
   ];
 
   # stylix.enable = true;
