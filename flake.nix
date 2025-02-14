@@ -14,7 +14,7 @@
     };
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     stylix.url = "github:danth/stylix";
-    ags.url = "github:Aylur/ags";
+    ags.url = "github:aylur/ags";
     nvf = {
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
