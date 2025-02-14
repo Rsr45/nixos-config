@@ -110,16 +110,16 @@ function Workspaces() {
 }
 
 function FocusedClient() {
-    const hypr = Hyprland.get_default()
-    const focused = bind(hypr, "focusedClient")
+   const hypr = Hyprland.get_default()
+   const focused = bind(hypr, "focusedClient")
 
-    return <box
-        className="Focused"
-        visible={focused.as(Boolean)}>
-        {focused.as(client => (
-            client && <label label={bind(client, "title").as(String)} />
-        ))}
-    </box>
+   return <box
+       className="Focused"
+       visible={focused.as(Boolean)}>
+       {focused.as(client => (
+           client && <label label={bind(client, "title").as(String)} />
+       ))}
+   </box>
 }
 
 function Time({ format = "%H:%M - %A %e." }) {
