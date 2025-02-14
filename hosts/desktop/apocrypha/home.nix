@@ -99,6 +99,10 @@
     enableZshIntegration = true;
     configDir = ./config-dir/eww-config-dir;
   };
+  xdg.configFile."eww-bar" = {
+    source = ./config-dir/eww-bar-conf-dir;
+    recursive = true;
+  };
 
   # # Waybar.
   xdg.configFile."waybar" = {
