@@ -208,6 +208,8 @@
       );
       windowrulev2 = [
         "float, class:(waypaper)"
+        "float, class:(com.saivert.pwvucontrol)"
+        "size 812 599, class:(com.saivert.pwvucontrol) "
         "float, workspace:10"
       ];
     };

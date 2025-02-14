@@ -13,6 +13,7 @@
     inputs.nixvim.homeManagerModules.nixvim
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
+    ./modules/nvf.nix
   ];
 
   nixpkgs.config = {
@@ -21,6 +22,11 @@
 
   xdg.enable = true;
   xdg.userDirs.enable = true;
+
+  dconf = {
+    enable = true;
+    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  };
 
   # # Fixes Cursor
   home.pointerCursor = {
@@ -60,9 +66,12 @@
   # # QT Settings
   qt = {
     enable = true;
-    platformTheme.name = "gtk";
-    # style.name = "adwaita-dark";
-    # style.package = pkgs.adwaita-qt;
+    platformTheme.name = "qtct";
+    style.name = "kvantum";
+  };
+  xdg.configFile = {
+    "Kvantum/Gruvbox-Dark-Brown".source = "${pkgs.gruvbox-kvantum}/share/Kvantum/Gruvbox-Dark-Brown";
+    "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=Gruvbox-Dark-Brown";
   };
 
   # # Aylur's Gtk Shell.
@@ -70,9 +79,9 @@
     enable = true;
     configDir = ./config-dir/ags-conf-dir;
     extraPackages = with pkgs; [
-      gtksourceview
-      # webkitgtk
-      accountsservice
+      inputs.ags.packages.${pkgs.system}.apps
+      inputs.ags.packages.${pkgs.system}.hyprland
+      fzf
     ];
   };
 
