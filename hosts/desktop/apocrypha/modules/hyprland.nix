@@ -25,7 +25,7 @@
         "col.inactive_border" = "rgb(282828)";
       };
       "exec-once" = [
-        "eww daemon & eww open bar_1"
+        "waybar -c .config/waybar/sleek/config -s .config/waybar/sleek/style.css"
         "dunst"
         "swww kill; swww-daemon"
       ];
@@ -94,8 +94,8 @@
           bar_precedence_over_border = "true";
           bar_part_of_window = "true";
 
-          bar_color = "rgba(282828FF)";
-          col.text = "rgba(FBF1C7FF)";
+          bar_color = "rgb(282828)";
+          col.text = "rgb(FBF1C7)";
         };
       };
       misc = {
