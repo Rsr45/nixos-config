@@ -11,6 +11,7 @@
     plugins = [
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+      inputs.hyprland-plugins.packages.${pkgs.system}.borders-plus-plus
     ];
     settings = {
       "$mod" = "SUPER";
@@ -95,7 +96,17 @@
           bar_part_of_window = "true";
 
           bar_color = "rgb(282828)";
-          col.text = "rgb(FBF1C7)";
+        };
+        borders-plus-plus = {
+          add_borders = "1"; # 0 - 9
+
+          # you can add up to 9 borders
+
+          # -1 means "default" as in the one defined in general:border_size
+          border_size_1 = "-1";
+
+          # makes outer edges match rounding of the parent. Turn on / off to better understand. Default = on.
+          natural_rounding = "yes";
         };
       };
       misc = {
@@ -228,6 +239,7 @@
           gesture_distance = 300 # how far is the "max"
           gesture_positive = false
         }
+
       }
 
       bind = SUPER, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable
