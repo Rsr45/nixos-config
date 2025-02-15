@@ -130,82 +130,85 @@
         ", XF86AudioPrev, exec, playerctl previous"
         ", XF86AudioNext, exec, playerctl next"
       ];
-      bind = [
-        # # # Window management
-        # # Focusing
-        # # bind = Super, ←/↑/→/↓,, # Move focus in direction
-        "$mod, Left, movefocus, l"
-        "$mod, Right, movefocus, r"
-        "$mod, Up, movefocus, u"
-        "$mod, Down, movefocus, d"
-        "$mod+Shift, Q, killactive,"
-        "$mod+Shift+Alt, Q, exec, hyprctl kill" # Pick and kill a window
-        # # Window arrangement
-        # # bind = Super+Shift, ←/↑/→/↓,, # Window: move in direction
-        "$mod+Shift, Left, movewindow, l"
-        "$mod+Shift, Right, movewindow, r"
-        "$mod+Shift, Up, movewindow, u"
-        "$mod+Shift, Down, movewindow, d"
-        # # Positioning mode
-        "$mod+Alt, Space, togglefloating,"
-        "$mod+Alt, F, fullscreenstate, 0 3" # Toggle fake fullscreen
-        "$mod, F, fullscreen, 0"
-        "$mod, D, fullscreen, 1"
-        # # Workspaces
-        # "$mod, 1, workspace, 1"
-        # "$mod, 2, workspace, 2"
-        # "$mod, 3, workspace, 3"
-        # "$mod, 4, workspace, 4"
-        # "$mod, 5, workspace, 5"
-        # "$mod, 6, workspace, 6"
-        # "$mod, 7, workspace, 7"
-        # "$mod, 8, workspace, 8"
-        # "$mod, 9, workspace, 9"
-        # "$mod, 0, workspace, 10"
-        # "$mod SHIFT, 1, movetoworkspace, 1"
-        # "$mod SHIFT, 2, movetoworkspace, 2"
-        # "$mod SHIFT, 3, movetoworkspace, 3"
-        # "$mod SHIFT, 4, movetoworkspace, 4"
-        # "$mod SHIFT, 5, movetoworkspace, 5"
-        # "$mod SHIFT, 6, movetoworkspace, 6"
-        # "$mod SHIFT, 7, movetoworkspace, 7"
-        # "$mod SHIFT, 8, movetoworkspace, 8"
-        # "$mod SHIFT, 9, movetoworkspace, 9"
-        # "$mod SHIFT, 0, movetoworkspace, 10"
-        # "$mod, mouse_down, workspace, e+1"
-        # "$mod, mouse_up, workspace, e-1"
-        # # Special Workspaces
-        "$mod, S, togglespecialworkspace, magic"
-        "$mod ALT, S, movetoworkspace, special:magic"
-        "$mod, i, togglespecialworkspace, special"
-        # # # Actions
-        # # Color Picker
-        "$mod SHIFT, C, exec, hyprpicker -a -f hex"
-        # # Wallpaper
-        "$mod+Alt, W, exec, pkill waypaper || waypaper"
-        # # App Launcer
-        "$mod, Space, exec, pkill fuzzel || fuzzel"
-        # # -______Terminal______- # #
-        "$mod, Return, exec, kitty"
-        # # File Explorer
-        "$mod, T, exec, nemo"
-        # # Power Off etc.
-        "Ctrl+Shift+Super, Delete, exec, systemctl reboot" # Restart
-        "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff" # Power off
-      ]
-      ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-        builtins.concatLists (builtins.genList (
-          i: let
-          ws = i + 1;
-          in [
-            "$mod, code:1${toString i}, workspace, ${toString ws}"
-            "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-          ]
-        )
-        9)
-      );
+      bind =
+        [
+          # # # Window management
+          # # Focusing
+          # # bind = Super, ←/↑/→/↓,, # Move focus in direction
+          "$mod, Left, movefocus, l"
+          "$mod, Right, movefocus, r"
+          "$mod, Up, movefocus, u"
+          "$mod, Down, movefocus, d"
+          "$mod+Shift, Q, killactive,"
+          "$mod+Shift+Alt, Q, exec, hyprctl kill" # Pick and kill a window
+          # # Window arrangement
+          # # bind = Super+Shift, ←/↑/→/↓,, # Window: move in direction
+          "$mod+Shift, Left, movewindow, l"
+          "$mod+Shift, Right, movewindow, r"
+          "$mod+Shift, Up, movewindow, u"
+          "$mod+Shift, Down, movewindow, d"
+          # # Positioning mode
+          "$mod+Alt, Space, togglefloating,"
+          "$mod+Alt, F, fullscreenstate, 0 3" # Toggle fake fullscreen
+          "$mod, F, fullscreen, 0"
+          "$mod, D, fullscreen, 1"
+          # # Workspaces
+          # "$mod, 1, workspace, 1"
+          # "$mod, 2, workspace, 2"
+          # "$mod, 3, workspace, 3"
+          # "$mod, 4, workspace, 4"
+          # "$mod, 5, workspace, 5"
+          # "$mod, 6, workspace, 6"
+          # "$mod, 7, workspace, 7"
+          # "$mod, 8, workspace, 8"
+          # "$mod, 9, workspace, 9"
+          # "$mod, 0, workspace, 10"
+          # "$mod SHIFT, 1, movetoworkspace, 1"
+          # "$mod SHIFT, 2, movetoworkspace, 2"
+          # "$mod SHIFT, 3, movetoworkspace, 3"
+          # "$mod SHIFT, 4, movetoworkspace, 4"
+          # "$mod SHIFT, 5, movetoworkspace, 5"
+          # "$mod SHIFT, 6, movetoworkspace, 6"
+          # "$mod SHIFT, 7, movetoworkspace, 7"
+          # "$mod SHIFT, 8, movetoworkspace, 8"
+          # "$mod SHIFT, 9, movetoworkspace, 9"
+          # "$mod SHIFT, 0, movetoworkspace, 10"
+          # "$mod, mouse_down, workspace, e+1"
+          # "$mod, mouse_up, workspace, e-1"
+          # # Special Workspaces
+          "$mod, S, togglespecialworkspace, magic"
+          "$mod ALT, S, movetoworkspace, special:magic"
+          "$mod, i, togglespecialworkspace, special"
+          # # # Actions
+          # # Color Picker
+          "$mod SHIFT, C, exec, hyprpicker -a -f hex"
+          # # Wallpaper
+          "$mod+Alt, W, exec, pkill waypaper || waypaper"
+          # # App Launcer
+          "$mod, Space, exec, pkill fuzzel || fuzzel"
+          # # -______Terminal______- # #
+          "$mod, Return, exec, kitty"
+          # # File Explorer
+          "$mod, T, exec, nemo"
+          # # Power Off etc.
+          "Ctrl+Shift+Super, Delete, exec, systemctl reboot" # Restart
+          "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff" # Power off
+        ]
+        ++ (
+          # workspaces
+          # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+          builtins.concatLists (
+            builtins.genList (
+              i: let
+                ws = i + 1;
+              in [
+                "$mod, code:1${toString i}, workspace, ${toString ws}"
+                "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+              ]
+            )
+            9
+          )
+        );
       windowrulev2 = [
         "float, class:(waypaper)"
         "float, class:(com.saivert.pwvucontrol)"
