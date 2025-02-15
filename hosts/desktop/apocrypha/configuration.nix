@@ -28,7 +28,10 @@
     networkmanager = {
       enable = true;
       dns = "systemd-resolved";
-      insertNameservers = ["9.9.9.9" "1.1.1.1"];
+      insertNameservers = [
+        "9.9.9.9"
+        "1.1.1.1"
+      ];
     };
     # nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
@@ -155,9 +158,15 @@
   # # Flakes, Garbage Collector, Hard Link, nixd
   nix = {
     settings = {
-      experimental-features = ["nix-command" "flakes"];
+      builders-use-substitutes = true;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       substituters = ["https://hyprland.cachix.org"];
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+      extra-substituters = ["https://anyrun.cachix.org"];
+      extra-trusted-public-keys = ["anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="];
     };
     optimise = {
       automatic = true;
@@ -167,7 +176,6 @@
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
-    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
   };
 
   # # Hyprland Window Manager
@@ -348,8 +356,11 @@
       # # App Launchers and Widgets
       ags
       dmenu
+      bemenu
       eww
       fuzzel
+      inputs.anyrun.packages.${system}.anyrun-with-all-plugins
+      yofi
       tofi
       rofi
       wofi
@@ -459,6 +470,7 @@
       nil
       nixd
       alejandra
+      nixfmt-rfc-style
       # # Wine
       wineWowPackages.staging
       winetricks
@@ -554,7 +566,10 @@
       };
       gamescopeSession = {
         enable = true;
-        args = ["-r 144" "-S stretch"];
+        args = [
+          "-r 144"
+          "-S stretch"
+        ];
       };
     };
     gamemode = {
@@ -563,15 +578,9 @@
   };
 
   fonts.fontDir.enable = true;
+  fonts.enableDefaultPackages = true;
   fonts.packages = with pkgs; [
-    roboto
   ];
-
-  # stylix.enable = true;
-  # stylix.autoEnable = true;
-  # stylix.polarity = "dark";
-  # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-  # stylix.image = ./wallhaven-d6y12l_3840x2160.png;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

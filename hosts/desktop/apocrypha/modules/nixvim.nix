@@ -372,7 +372,6 @@
       vim.keymap.set('n', '<C-down>', '<C-w><C-down>', { desc = 'Move focus to the lower window' })
       vim.keymap.set('n', '<C-up>', '<C-w><C-up>', { desc = 'Move focus to the upper window' })
     '';
-    extraConfigLuaPost = ''
-    '';
+    extraConfigLuaPost = '''';
   };
 }
