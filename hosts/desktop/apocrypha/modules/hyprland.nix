@@ -38,53 +38,36 @@
         repeat_delay = 250;
         repeat_rate = 35;
         accel_profile = "flat";
-
-        touchpad = {
-          natural_scroll = true;
-          disable_while_typing = true;
-          clickfinger_behavior = true;
-          scroll_factor = 0.5;
-        };
-
-        # special_fallthrough = true   # only in new hyprland versions. but they're hella fucked
         follow_mouse = 1;
       };
       decoration = {
         rounding = 12;
         rounding_power = 2.0;
         dim_inactive = true;
-
-        # Shadow
-        # drop_shadow = false;
-        # shadow_ignore_window = true;
-        # shadow_range = 20;
-        # shadow_offset = "0 2";
-        # shadow_render_power = 2;
-        # "col.shadow" = "rgba(0000001A)";
       };
       animations = {
-        enabled = false;
-        bezier = [
-          "md3_decel, 0.05, 0.7, 0.1, 1"
-          "md3_accel, 0.3, 0, 0.8, 0.15"
-          "overshot, 0.05, 0.9, 0.1, 1.1"
-          "crazyshot, 0.1, 1.5, 0.76, 0.92"
-          "hyprnostretch, 0.05, 0.9, 0.1, 1.0"
-          "fluent_decel, 0.1, 1, 0, 1"
-          "easeInOutCirc, 0.85, 0, 0.15, 1"
-          "easeOutCirc, 0, 0.55, 0.45, 1"
-          "easeOutExpo, 0.16, 1, 0.3, 1"
-        ];
-        animation = [
-          "windows, 1, 3, md3_decel, popin 60%"
-          "border, 1, 10, default"
-          "fade, 1, 2.5, md3_decel"
-          # "workspaces, 1, 3.5, md3_decel, slide"
-          "workspaces, 1, 7, fluent_decel, slide"
-          # "workspaces, 1, 7, fluent_decel, slidefade 15%"
-          # "specialWorkspace, 1, 3, md3_decel, slidefadevert 15%"
-          "specialWorkspace, 1, 3, md3_decel, slidevert"
-        ];
+        # enabled = false;
+        # bezier = [
+        #   "md3_decel, 0.05, 0.7, 0.1, 1"
+        #   "md3_accel, 0.3, 0, 0.8, 0.15"
+        #   "overshot, 0.05, 0.9, 0.1, 1.1"
+        #   "crazyshot, 0.1, 1.5, 0.76, 0.92"
+        #   "hyprnostretch, 0.05, 0.9, 0.1, 1.0"
+        #   "fluent_decel, 0.1, 1, 0, 1"
+        #   "easeInOutCirc, 0.85, 0, 0.15, 1"
+        #   "easeOutCirc, 0, 0.55, 0.45, 1"
+        #   "easeOutExpo, 0.16, 1, 0.3, 1"
+        # ];
+        # animation = [
+        #   "windows, 1, 3, md3_decel, popin 60%"
+        #   "border, 1, 10, default"
+        #   "fade, 1, 2.5, md3_decel"
+        #   # "workspaces, 1, 3.5, md3_decel, slide"
+        #   "workspaces, 1, 7, fluent_decel, slide"
+        #   # "workspaces, 1, 7, fluent_decel, slidefade 15%"
+        #   # "specialWorkspace, 1, 3, md3_decel, slidefadevert 15%"
+        #   "specialWorkspace, 1, 3, md3_decel, slidevert"
+        # ];
       };
       plugin = {
         hyprbars = {
@@ -96,11 +79,13 @@
           bar_part_of_window = "true";
 
           bar_color = "rgb(282828)";
+          "col.text" = "rgb(FBF1C7)";
         };
         borders-plus-plus = {
           add_borders = "1"; # 0 - 9
 
           # you can add up to 9 borders
+          "col.border_1" = "rgb(1D2021)";
 
           # -1 means "default" as in the one defined in general:border_size
           border_size_1 = "-1";

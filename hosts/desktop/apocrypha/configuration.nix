@@ -389,7 +389,7 @@
       hyprpicker # Color Picker
       socat
       jq
-      python3
+      # python3
       discordchatexporter-cli
       nix-prefetch-github
       exiftool
@@ -412,12 +412,12 @@
       # haguichi # Hamachi Client
       anydesk # Remote Desktop Client
       localsend # File Sharing
-      matugen # Material Color Generator
+      #matugen # Material Color Generator
       obsidian # Note
       keepassxc # Password Manager
-      smassh # Typing Test
-      typioca # Typing Test
-      mapscii # Map in Terminal
+      #smassh # Typing Test
+      #typioca # Typing Test
+      # mapscii # Map in Terminal
       spotify # Spotify Client
       youtube-music # YT Music Client
       ungoogled-chromium # Browser
