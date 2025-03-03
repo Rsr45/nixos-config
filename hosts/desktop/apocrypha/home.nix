@@ -14,6 +14,7 @@
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
     ./modules/nvf.nix
+    ./modules/matugen.nix
   ];
 
   nixpkgs.config = {
@@ -45,14 +46,8 @@
       name = "Capitaine Cursors (Gruvbox)";
     };
     theme = {
-      name = "Gruvbox-Yellow-Dark-Compact-Medium";
-      package = pkgs.gruvbox-gtk-theme.override {
-        colorVariants = ["dark"];
-        sizeVariants = ["compact"];
-        themeVariants = ["yellow"];
-        tweakVariants = ["medium"];
-        iconVariants = ["Dark"];
-      };
+      package = pkgs.adw-gtk3;
+      name = "adw-gtk3";
     };
     iconTheme = {
       package = pkgs.papirus-icon-theme;
@@ -66,13 +61,13 @@
   # # QT Settings
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
-    style.name = "kvantum";
+    platformTheme.name = "gtk";
+    style.name = "adwaita-dark";
   };
-  xdg.configFile = {
-    "Kvantum/Gruvbox-Dark-Brown".source = "${pkgs.gruvbox-kvantum}/share/Kvantum/Gruvbox-Dark-Brown";
-    "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=Gruvbox-Dark-Brown";
-  };
+  # xdg.configFile = {
+  #   "Kvantum/Gruvbox-Dark-Brown".source = "${pkgs.gruvbox-kvantum}/share/Kvantum/Gruvbox-Dark-Brown";
+  #   "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=Gruvbox-Dark-Brown";
+  # };
 
   # # Aylur's Gtk Shell.
   programs.ags = {
