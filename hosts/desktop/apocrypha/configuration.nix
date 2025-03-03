@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -158,15 +157,12 @@
   # # Flakes, Garbage Collector, Hard Link, nixd
   nix = {
     settings = {
-      builders-use-substitutes = true;
       experimental-features = [
         "nix-command"
         "flakes"
       ];
       substituters = ["https://hyprland.cachix.org"];
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-      extra-substituters = ["https://anyrun.cachix.org"];
-      extra-trusted-public-keys = ["anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="];
     };
     optimise = {
       automatic = true;
@@ -359,7 +355,7 @@
       bemenu
       eww
       fuzzel
-      inputs.anyrun.packages.${system}.anyrun-with-all-plugins
+      # inputs.anyrun.packages.${system}.anyrun-with-all-plugins
       yofi
       tofi
       rofi
@@ -412,7 +408,8 @@
       # haguichi # Hamachi Client
       anydesk # Remote Desktop Client
       localsend # File Sharing
-      #matugen # Material Color Generator
+      matugen # Material Color Generator
+      pywalfox-native
       obsidian # Note
       keepassxc # Password Manager
       #smassh # Typing Test
@@ -421,37 +418,38 @@
       spotify # Spotify Client
       youtube-music # YT Music Client
       ungoogled-chromium # Browser
-      # librewolf # Browser
-      floorp # Browser
-      inputs.zen-browser.packages."${system}".default
+      librewolf # Browser
+      # floorp # Browser
+      # inputs.zen-browser.packages."${system}".default
       # firefox # Browser
-      # tor-browser # Browser
+      tor-browser # Browser
       # palemoon-bin # Browser
       # ladybird # Browser
-      opera # Browser
-      thunderbird # Mail Client
+      # opera # Browser
+      # thunderbird # Mail Client
       # protonmail-desktop # Proton Mail Client
       motrix # Download Manager
       # qmmp # Music Player Winamp look alike
       # deadbeef
-      # audacious
+      audacious
       # nautilus
       plattenalbum
       ymuse
       ncmpcpp
       mpc
+      miru
+      # stremio
       element-desktop # Matrix Client
       # fluffychat # Matrix Client
       # fluffychat-web
-      libreoffice-qt6
+      libreoffice-qt6-fresh
       hunspell
       hunspellDicts.tr_TR
       hunspellDicts.en_US
-      picom
       jdk # Java
       jdk17 # Java 17
       jdk8 # Java 8
-      gitkraken # Git Client
+      # gitkraken # Git Client
       neovim
       neovide # Neovim GUI
       lunarvim # Neovim Distrubition
@@ -470,30 +468,28 @@
       nil
       nixd
       alejandra
-      nixfmt-rfc-style
       # # Wine
       wineWowPackages.staging
       winetricks
       protontricks
-      cabextract
-      zenity
       # # Launchers and some utils
       (heroic.override {
         extraPkgs = pkgs: [
           pkgs.gamescope
+          pkgs.gamemode
         ];
       })
-      # lutris
+      gamemode
+      gamescope
       mangohud
-      # nexusmods-app-unfree
       prismlauncher
       steamcmd
       # # Emulation
-      ppsspp # PSP
-      duckstation # PSX
-      pcsx2 # PS2
-      rpcs3 # PS3
-      shadps4 # PS4
+      # ppsspp # PSP
+      # duckstation # PSX
+      # pcsx2 # PS2
+      # rpcs3 # PS3
+      # shadps4 # PS4
       # ryujinx # Switch
       # (retroarch.override {
       #   cores = with libretro; [
@@ -505,7 +501,7 @@
       #     picodrive
       #   ];
       # })
-      # # Games
+      # # DOOM
       gzdoom # DOOM Source Port.
       # chocolate-doom # DOOM Source Port.
       # crispy-doom # DOOM Source Port.
@@ -516,20 +512,8 @@
     ];
   };
 
-  #   nixpkgs.overlays = [
-  #   (self: super:
-  #   {
-  #     awesome = super.awesome.override {
-  #       gtk3Support = true;
-  #     };
-  #   })
-  # ];
-
   # # Steam
   programs = {
-    # java = {
-    #   enable = true;
-    # };
     gamescope = {
       enable = true;
       capSysNice = true;
@@ -537,12 +521,8 @@
     steam = {
       enable = true;
       package = pkgs.steam.override {
-        # withJava = true;
-        # withPrimus = true;
         extraPkgs = pkgs:
           with pkgs; [
-            # bumblebee
-            # glxinfo
             xorg.libXcursor
             xorg.libXi
             xorg.libXinerama
@@ -579,8 +559,8 @@
 
   fonts.fontDir.enable = true;
   fonts.enableDefaultPackages = true;
-  fonts.packages = with pkgs; [
-  ];
+  # fonts.packages = with pkgs; [
+  # ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

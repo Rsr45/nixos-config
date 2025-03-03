@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   imports = [
     inputs.nvf.homeManagerModules.default
   ];
@@ -17,11 +12,16 @@
           name = "gruvbox";
           style = "dark";
         };
-
+        options = {
+          tabstop = 2;
+          shiftwidth = 2;
+        };
+        formatter.conform-nvim.enable = true;
+        dashboard.dashboard-nvim.enable = true;
+        autopairs.nvim-autopairs.enable = true;
         statusline.lualine.enable = true;
         telescope.enable = true;
         autocomplete.nvim-cmp.enable = true;
-
         languages = {
           enableFormat = true;
           enableLSP = true;
@@ -34,6 +34,9 @@
           css.enable = true;
           bash.enable = true;
           markdown.enable = true;
+          dart.lsp.enable = true;
+          lua.lsp.enable = true;
+          vala.lsp.enable = true;
         };
       };
     };
