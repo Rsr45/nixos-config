@@ -28,10 +28,6 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -52,7 +48,6 @@
         specialArgs = {inherit inputs system;};
         modules = [
           ./hosts/desktop/apocrypha/configuration.nix
-          inputs.stylix.nixosModules.stylix
         ];
       };
       nixos = nixpkgs.lib.nixosSystem {

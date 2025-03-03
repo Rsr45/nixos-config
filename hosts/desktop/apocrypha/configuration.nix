@@ -67,7 +67,10 @@
   # # Drivers, Keyboard Layout, CUPS Service
   services = {
     displayManager = {
-      sddm.enable = true;
+      sddm = {
+        enable = true;
+        autoNumlock = true;
+      };
     };
     xserver = {
       enable = true;
@@ -276,6 +279,7 @@
   environment = {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
+      ADW_DISABLE_PORTAL = "1";
     };
     variables = {
     };
@@ -387,7 +391,7 @@
       jq
       # python3
       discordchatexporter-cli
-      nix-prefetch-github
+      nix-prefetch-git
       exiftool
       # wallust
       # iat

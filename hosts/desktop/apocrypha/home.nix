@@ -56,6 +56,16 @@
     font = {
       name = "IBM Plex Serif";
     };
+    gtk3 = {
+      extraConfig = {
+        gtk-application-prefer-dark-theme = 1;
+      };
+    };
+    gtk4 = {
+      extraConfig = {
+        gtk-application-prefer-dark-theme = 1;
+      };
+    };
   };
 
   # # QT Settings
@@ -159,6 +169,10 @@
       yt-mp4 = "yt-dlp -f mp4";
       cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
     };
+    configFile.text = ''
+      $env.config.buffer_editor = "vi"
+      $env.config.show_banner = false
+    '';
   };
 
   # programs.fish = {
@@ -324,7 +338,7 @@
     enable = true;
     settings = {
       general = {
-        import = [./themes/alacritty/pastel_dark.toml];
+        import = ["colors.toml"];
       };
       font = {
         size = 12;
@@ -338,7 +352,10 @@
 
   programs.kitty = {
     enable = true;
-    themeFile = "gruvbox-dark";
+    extraConfig = ''
+      include colors.conf
+    '';
+    # themeFile = "gruvbox-dark";
     font = {
       name = "BlexMono Nerd Font";
     };

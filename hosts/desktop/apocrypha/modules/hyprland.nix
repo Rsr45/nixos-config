@@ -9,7 +9,7 @@
     xwayland.enable = true;
     systemd.enable = false;
     plugins = [
-      inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
+      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
       inputs.hyprland-plugins.packages.${pkgs.system}.borders-plus-plus
     ];
@@ -43,10 +43,10 @@
       decoration = {
         rounding = 12;
         rounding_power = 2.0;
-        dim_inactive = true;
+        dim_inactive = false;
       };
       animations = {
-        # enabled = false;
+        enabled = false;
         # bezier = [
         #   "md3_decel, 0.05, 0.7, 0.1, 1"
         #   "md3_accel, 0.3, 0, 0.8, 0.15"
@@ -70,17 +70,17 @@
         # ];
       };
       plugin = {
-        hyprbars = {
-          bar_text_font = "IBM Plex Serif";
-          bar_height = "30";
-          bar_padding = "10";
-          bar_button_padding = "5";
-          bar_precedence_over_border = "true";
-          bar_part_of_window = "true";
+        # hyprbars = {
+        #   bar_text_font = "IBM Plex Serif";
+        #   bar_height = "30";
+        #   bar_padding = "10";
+        #   bar_button_padding = "5";
+        #   bar_precedence_over_border = "true";
+        #   bar_part_of_window = "true";
 
-          bar_color = "rgb(282828)";
-          "col.text" = "rgb(FBF1C7)";
-        };
+        #   bar_color = "rgb(282828)";
+        #   "col.text" = "rgb(FBF1C7)";
+        # };
         borders-plus-plus = {
           add_borders = "1"; # 0 - 9
 
