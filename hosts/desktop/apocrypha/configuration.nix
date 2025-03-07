@@ -66,11 +66,11 @@
 
   # # Drivers, Keyboard Layout, CUPS Service
   services = {
-    displayManager = {
-      sddm = {
-        enable = true;
-        autoNumlock = true;
-      };
+    displayManager.sddm = {
+      enable = true;
+      # wayland.enable = true;
+      autoNumlock = true;
+      theme = "${import ./lib/pkgs/sddm-elegant.nix {inherit pkgs;}}";
     };
     xserver = {
       enable = true;
@@ -148,7 +148,7 @@
   # # Home Manager
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
-    backupFileExtension = "backup1";
+    backupFileExtension = "backup3";
     users = {
       hare = import ./home.nix;
     };
@@ -314,25 +314,16 @@
       xz
       # # Archive Managers and Compression
       p7zip
-      peazip # Manager
       rar
+      zip
       unrar
       unzip
-      xarchiver # Manager
-      # kdePackages.ark
-      zip
-      # # File Explorer
-      # kdePackages.dolphin
-      # lf
-      # pcmanfm
-      # ranger
-      # superfile
+      xarchiver
       nemo
-      # # Terminal
       alacritty
-      # kitty
-      # wezterm
-      # waveterm
+      kitty
+      libsForQt5.qt5.qtquickcontrols2
+      libsForQt5.qt5.qtgraphicaleffects
       # # VSCode
       vscodium
       (vscode-with-extensions.override {
@@ -354,16 +345,8 @@
           ];
       })
       # # App Launchers and Widgets
-      ags
-      dmenu
-      bemenu
       eww
       fuzzel
-      # inputs.anyrun.packages.${system}.anyrun-with-all-plugins
-      yofi
-      tofi
-      rofi
-      wofi
       polybar
       swww
       waybar
@@ -421,39 +404,31 @@
       # mapscii # Map in Terminal
       spotify # Spotify Client
       youtube-music # YT Music Client
+      brave
       ungoogled-chromium # Browser
       librewolf # Browser
-      # floorp # Browser
-      # inputs.zen-browser.packages."${system}".default
-      # firefox # Browser
+      floorp # Browser
+      inputs.zen-browser.packages."${system}".default
       tor-browser # Browser
-      # palemoon-bin # Browser
-      # ladybird # Browser
-      # opera # Browser
       # thunderbird # Mail Client
-      # protonmail-desktop # Proton Mail Client
-      motrix # Download Manager
-      # qmmp # Music Player Winamp look alike
-      # deadbeef
-      audacious
-      # nautilus
-      plattenalbum
+      amberol
       ymuse
+      plattenalbum
       ncmpcpp
       mpc
       miru
       # stremio
+      signal-desktop
       element-desktop # Matrix Client
       # fluffychat # Matrix Client
-      # fluffychat-web
-      libreoffice-qt6-fresh
+      onlyoffice-desktopeditors
+      libreoffice-fresh
       hunspell
       hunspellDicts.tr_TR
       hunspellDicts.en_US
       jdk # Java
       jdk17 # Java 17
       jdk8 # Java 8
-      # gitkraken # Git Client
       neovim
       neovide # Neovim GUI
       lunarvim # Neovim Distrubition

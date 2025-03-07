@@ -1,0 +1,48 @@
+(defwindow bar
+    :monitor 0
+    :stacking "fg"
+    :exclusive true
+    :geometry (geometry :x 0 :y 0 :width "100%" :height "30px" :anchor "top center")
+(bar))
+
+(defwidget bar []
+    (centerbox :orientation "h"
+        (left :halign "start")
+        (middle :halign "center")
+        (right :halign "end")))
+
+(defwidget left [] (box :space-evenly false (workspaces)))
+
+(defwidget middle [] (box  (clock)))
+
+(defwidget right [] (box  (date)))
+
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
+(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
+(defwidget workspaces []
+  (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget"
+    (box :space-evenly true
+      (label :text "${workspaces}${current_workspace}" :visible false)
+      (for workspace in workspaces
+        (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
+          (box :class "workspace-entry ${workspace.windows > 0 ? "occupied" : "empty"}"
+            (label :text "${workspace.id}" :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""}" )
+            )
+          )
+        )
+      )
+    )
+  )
+
+(defpoll hour :interval "1s" "date +%H")
+(defpoll min  :interval "1s" "date +%M")
+(defpoll sec  :interval "1s" "date +%S")
+(defwidget clock []
+    (box hour min sec))
+
+(defpoll day_word :interval "10m" "date +%a | tr [:upper:] [:lower:]")
+(defpoll day      :interval "10m" "date +%d")
+(defpoll month    :interval "1h"  "date +%m")
+(defpoll year     :interval "1h"  "date +%y")
+(defwidget date []
+    (box day_word month year))

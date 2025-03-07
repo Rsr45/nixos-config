@@ -11,7 +11,7 @@
     plugins = [
       # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
       inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
-      inputs.hyprland-plugins.packages.${pkgs.system}.borders-plus-plus
+      # inputs.hyprland-plugins.packages.${pkgs.system}.borders-plus-plus
     ];
     settings = {
       "$mod" = "SUPER";
@@ -26,7 +26,7 @@
         "col.inactive_border" = "rgb(282828)";
       };
       "exec-once" = [
-        "waybar -c .config/waybar/sleek/config -s .config/waybar/sleek/style.css"
+        "eww daemon; eww open bar_1"
         "dunst"
         "swww kill; swww-daemon"
       ];
@@ -41,7 +41,7 @@
         follow_mouse = 1;
       };
       decoration = {
-        rounding = 12;
+        rounding = 0;
         rounding_power = 2.0;
         dim_inactive = false;
       };
@@ -81,18 +81,18 @@
         #   bar_color = "rgb(282828)";
         #   "col.text" = "rgb(FBF1C7)";
         # };
-        borders-plus-plus = {
-          add_borders = "1"; # 0 - 9
+        # borders-plus-plus = {
+        #   add_borders = "1"; # 0 - 9
 
-          # you can add up to 9 borders
-          "col.border_1" = "rgb(1D2021)";
+        #   # you can add up to 9 borders
+        #   "col.border_1" = "rgb(1D2021)";
 
-          # -1 means "default" as in the one defined in general:border_size
-          border_size_1 = "-1";
+        #   # -1 means "default" as in the one defined in general:border_size
+        #   border_size_1 = "-1";
 
-          # makes outer edges match rounding of the parent. Turn on / off to better understand. Default = on.
-          natural_rounding = "yes";
-        };
+        #   # makes outer edges match rounding of the parent. Turn on / off to better understand. Default = on.
+        #   natural_rounding = "yes";
+        # };
       };
       misc = {
         vfr = 1;
@@ -208,8 +208,14 @@
       windowrulev2 = [
         "float, class:(waypaper)"
         "float, class:(com.saivert.pwvucontrol)"
-        "size 812 599, class:(com.saivert.pwvucontrol) "
-        "float, workspace:10"
+        "size 815 600, class:(com.saivert.pwvucontrol) "
+        "float, class:(io.bassi.Amberol)"
+        "size 360 660, class:(io.bassi.Amberol)"
+        "size 800 600, class:(kitty)"
+        "float, workspace:4"
+        "float, workspace:5"
+        "float, workspace:6"
+        "float, workspace:7"
       ];
     };
     extraConfig = ''
@@ -226,6 +232,8 @@
         }
 
       }
+
+      source = colors.conf
 
       bind = SUPER, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable
       bind = , Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of whole screen taken" -t 1000
