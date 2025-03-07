@@ -9,7 +9,7 @@
       vim = {
         theme = {
           enable = true;
-          name = "gruvbox";
+          name = "oxocarbon";
           style = "dark";
         };
         options = {

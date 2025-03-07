@@ -12,10 +12,7 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-    treefmt-nix.url = "github:numtide/treefmt-nix";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    stylix.url = "github:danth/stylix";
-    ags.url = "github:aylur/ags";
     nvf = {
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -54,14 +51,12 @@
         specialArgs = {inherit inputs system;};
         modules = [
           ./hosts/vm/nixos/configuration.nix
-          inputs.stylix.nixosModules.stylix
         ];
       };
       heaven = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs system;};
         modules = [
           ./hosts/desktop/heaven/configuration.nix
-          inputs.stylix.nixosModules.stylix
         ];
       };
     };

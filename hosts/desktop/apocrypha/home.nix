@@ -9,12 +9,12 @@
   home.homeDirectory = "/home/hare";
 
   imports = [
-    inputs.ags.homeManagerModules.default
     inputs.nixvim.homeManagerModules.nixvim
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
     ./modules/nvf.nix
     ./modules/matugen.nix
+    ./modules/tmux.nix
   ];
 
   nixpkgs.config = {
@@ -23,10 +23,43 @@
 
   xdg.enable = true;
   xdg.userDirs.enable = true;
+  xdg = {
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "image/jpeg" = "feh.desktop";
+        "image/png" = "feh.desktop";
+        "image/gif" = "mpv.desktop";
+        "image/webp" = "feh.desktop";
+        "application/pdf" = "floorp.desktop";
+        "text/html" = "floorp.desktop";
+        "x-scheme-handler/http" = "floorp.desktop";
+        "x-scheme-handler/https" = "floorp.desktop";
+        "x-scheme-handler/about" = "floorp.desktop";
+        "x-scheme-handler/unknown" = "floorp.desktop";
+        "inode/directory" = "nemo.desktop";
+        "application/x-gnome-saved-search" = "nemo.desktop";
+        "text/plain" = "neovide.desktop";
+        "application/zip" = "xarchiver.desktop";
+        "application/vnd.rar" = "xarchiver.desktop";
+        "application/x-7z-compressed" = "xarchiver.desktop";
+        "application/x-tar" = "xarchiver.desktop";
+        "application/vnd.microsoft.portable-executable" = "wine.desktop";
+      };
+    };
+  };
 
   dconf = {
     enable = true;
-    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+      "org/cinnamon/desktop/applications/terminal" = {
+        exec = "kitty";
+        # exec-arg = ""; # argument
+      };
+    };
   };
 
   # # Fixes Cursor
@@ -45,13 +78,9 @@
       package = pkgs.capitaine-cursors-themed;
       name = "Capitaine Cursors (Gruvbox)";
     };
-    theme = {
-      package = pkgs.adw-gtk3;
-      name = "adw-gtk3";
-    };
     iconTheme = {
-      package = pkgs.papirus-icon-theme;
-      name = "Papirus-Dark";
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
     };
     font = {
       name = "IBM Plex Serif";
@@ -68,32 +97,17 @@
     };
   };
 
+  xdg.configFile = {
+    "gtk-3.0/gtk.css".text = "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-3.0/gtk.css');";
+    "gtk-4.0/gtk.css".text = "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-3.0/gtk.css');";
+    "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=KvLibadwaitaDark";
+  };
+
   # # QT Settings
   qt = {
     enable = true;
-    platformTheme.name = "gtk";
-    style.name = "adwaita-dark";
-  };
-  # xdg.configFile = {
-  #   "Kvantum/Gruvbox-Dark-Brown".source = "${pkgs.gruvbox-kvantum}/share/Kvantum/Gruvbox-Dark-Brown";
-  #   "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=Gruvbox-Dark-Brown";
-  # };
-
-  # # Aylur's Gtk Shell.
-  programs.ags = {
-    enable = true;
-    configDir = ./config-dir/ags-conf-dir;
-    extraPackages = with pkgs; [
-      inputs.ags.packages.${pkgs.system}.apps
-      inputs.ags.packages.${pkgs.system}.hyprland
-      inputs.ags.packages.${pkgs.system}.mpris
-      inputs.ags.packages.${pkgs.system}.wireplumber
-      inputs.ags.packages.${pkgs.system}.tray
-      inputs.ags.packages.${pkgs.system}.notifd
-      inputs.ags.packages.${pkgs.system}.network
-      inputs.ags.packages.${pkgs.system}.battery
-      fzf
-    ];
+    platformTheme.name = "qtct";
+    style.name = "kvantum";
   };
 
   # # Elkowars Wacky Widgets.
@@ -144,15 +158,15 @@
         offset = "30x50";
         origin = "top-right";
         transparency = 10;
-        frame_color = "#3C3836";
+        frame_color = "#282828";
         font = "IBM Plex Serif";
-        corner_radius = "12";
+        corner_radius = "0";
         gap_size = "8";
       };
 
       urgency_normal = {
-        background = "#282828";
-        foreground = "#FBF1C7";
+        background = "#2D2D2D";
+        foreground = "#FFFFFF";
         timeout = 10;
       };
     };
