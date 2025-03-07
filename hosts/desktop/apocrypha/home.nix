@@ -66,8 +66,8 @@
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.capitaine-cursors-themed;
-    name = "Capitaine Cursors (Gruvbox)";
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
     size = 32;
   };
 
@@ -75,12 +75,12 @@
   gtk = {
     enable = true;
     cursorTheme = {
-      package = pkgs.capitaine-cursors-themed;
-      name = "Capitaine Cursors (Gruvbox)";
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Original-Classic";
     };
     iconTheme = {
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
     };
     font = {
       name = "IBM Plex Serif";
@@ -99,15 +99,15 @@
 
   xdg.configFile = {
     "gtk-3.0/gtk.css".text = "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-3.0/gtk.css');";
-    "gtk-4.0/gtk.css".text = "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-3.0/gtk.css');";
-    "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=KvLibadwaitaDark";
+    "gtk-4.0/gtk.css".text = "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-4.0/gtk.css');";
+    # "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=KvLibadwaitaDark";
   };
 
   # # QT Settings
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
-    style.name = "kvantum";
+    platformTheme.name = "gtk3";
+    # style.name = "kvantum";
   };
 
   # # Elkowars Wacky Widgets.
