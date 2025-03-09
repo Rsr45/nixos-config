@@ -209,13 +209,8 @@
         "float, class:(waypaper)"
         "float, class:(com.saivert.pwvucontrol)"
         "size 815 600, class:(com.saivert.pwvucontrol) "
-        "float, class:(io.bassi.Amberol)"
         "size 360 660, class:(io.bassi.Amberol)"
         "size 800 600, class:(kitty)"
-        "float, workspace:4"
-        "float, workspace:5"
-        "float, workspace:6"
-        "float, workspace:7"
       ];
     };
     extraConfig = ''
