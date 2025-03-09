@@ -68,7 +68,7 @@
   services = {
     displayManager.sddm = {
       enable = true;
-      # wayland.enable = true;
+      wayland.enable = true;
       autoNumlock = true;
       theme = "${import ./lib/pkgs/sddm-elegant.nix {inherit pkgs;}}";
     };
@@ -326,24 +326,24 @@
       libsForQt5.qt5.qtgraphicaleffects ## Dependency for sddm theme(s).
       # # VSCode
       vscodium
-      (vscode-with-extensions.override {
-        vscode = vscodium;
-        vscodeExtensions = with vscode-extensions;
-          [
-            bbenoist.nix
-            ms-python.python
-            ms-azuretools.vscode-docker
-            ms-vscode-remote.remote-ssh
-          ]
-          ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-            {
-              name = "remote-ssh-edit";
-              publisher = "ms-vscode-remote";
-              version = "0.47.2";
-              sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
-            }
-          ];
-      })
+      # (vscode-with-extensions.override {
+      #   vscode = vscodium;
+      #   vscodeExtensions = with vscode-extensions;
+      #     [
+      #       bbenoist.nix
+      #       ms-python.python
+      #       ms-azuretools.vscode-docker
+      #       ms-vscode-remote.remote-ssh
+      #     ]
+      #     ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      #       {
+      #         name = "remote-ssh-edit";
+      #         publisher = "ms-vscode-remote";
+      #         version = "0.47.2";
+      #         sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
+      #       }
+      #     ];
+      # })
       # # App Launchers and Widgets
       swww
       waypaper
