@@ -12,7 +12,7 @@
     inputs.nixvim.homeManagerModules.nixvim
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
-    # ./modules/hyprlock.nix
+    ./modules/hyprlock.nix
     ./modules/nvf.nix
     ./modules/zed.nix
     ./modules/matugen.nix
