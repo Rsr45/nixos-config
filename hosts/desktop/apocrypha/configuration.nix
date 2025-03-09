@@ -323,7 +323,7 @@
       alacritty
       kitty
       github-desktop
-      libsForQt5.qt5.qtgraphicaleffects
+      libsForQt5.qt5.qtgraphicaleffects ## Dependency for sddm theme(s).
       # # VSCode
       vscodium
       (vscode-with-extensions.override {
@@ -345,11 +345,7 @@
           ];
       })
       # # App Launchers and Widgets
-      eww
-      fuzzel
-      polybar
       swww
-      waybar
       waypaper
       # # Utils
       yt-dlp
@@ -380,14 +376,13 @@
       # iat
       fuseiso
       # # Apps
-      # blender
+      blender
       # upscayl # Image Upscaler
       vesktop # Discord Client
       teamspeak_client # Teamspeak Client
       # teamspeak5_client # Teamspeak Client
       feh # Image Viewer
       mpv # Video Player
-      # mpvc # Video Player
       vlc # Video Player
       vlc-bittorrent
       qbittorrent # Torrent Client
@@ -395,29 +390,22 @@
       # haguichi # Hamachi Client
       anydesk # Remote Desktop Client
       localsend # File Sharing
-      matugen # Material Color Generator
       pywalfox-native
       obsidian # Note
       keepassxc # Password Manager
-      #smassh # Typing Test
-      #typioca # Typing Test
-      # mapscii # Map in Terminal
       spotify # Spotify Client
       youtube-music # YT Music Client
       brave
-      ungoogled-chromium # Browser
-      librewolf # Browser
-      floorp # Browser
+      ungoogled-chromium
+      floorp
       inputs.zen-browser.packages."${system}".default
-      tor-browser # Browser
-      # thunderbird # Mail Client
+      tor-browser
       amberol
       ymuse
       plattenalbum
       ncmpcpp
       mpc
       miru
-      # stremio
       signal-desktop
       element-desktop # Matrix Client
       # fluffychat # Matrix Client
@@ -432,10 +420,7 @@
       neovim
       neovide # Neovim GUI
       lunarvim # Neovim Distrubition
-      fastfetch # System Information Tool
       btop # Resource Monitoring
-      # grc # Fish Shell Dependency
-      # tesseract # OCR
       # # Language Server, Libraries, Compilers
       glib
       glibc

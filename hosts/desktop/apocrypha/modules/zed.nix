@@ -51,9 +51,9 @@
         env = {
           TERM = "kitty";
         };
-        font_family = ".SystemUIFont";
-        font_features = null;
-        font_size = null;
+        # font_family = "BlexMono Nerd Font";
+        # font_features = null;
+        # font_size = null;
         line_height = "comfortable";
         option_as_meta = false;
         button = false;

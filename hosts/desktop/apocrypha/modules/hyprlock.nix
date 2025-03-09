@@ -1,8 +1,10 @@
 {...}: {
   programs.hyprlock = {
     enable = true;
-    # settings = {
-
-    # };
+    settings = {
+      general = {
+        hide_cursor = true;
+      };
+    };
   };
 }
