@@ -322,6 +322,7 @@
       nemo
       alacritty
       kitty
+      github-desktop
       libsForQt5.qt5.qtgraphicaleffects
       # # VSCode
       vscodium

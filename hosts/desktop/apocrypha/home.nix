@@ -12,7 +12,9 @@
     inputs.nixvim.homeManagerModules.nixvim
     inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
+    # ./modules/hyprlock.nix
     ./modules/nvf.nix
+    ./modules/zed.nix
     ./modules/matugen.nix
     ./modules/tmux.nix
   ];
@@ -306,7 +308,6 @@
     enable = true;
     settings = {
       logo = {
-        # source = "macos2";
         padding = {
           right = 2;
         };
@@ -366,10 +367,10 @@
 
   programs.kitty = {
     enable = true;
-    extraConfig = ''
-      include colors.conf
-    '';
-    # themeFile = "gruvbox-dark";
+    # extraConfig = ''
+    #   include colors.conf
+    # '';
+    themeFile = "gruvbox-dark";
     font = {
       name = "BlexMono Nerd Font";
     };
