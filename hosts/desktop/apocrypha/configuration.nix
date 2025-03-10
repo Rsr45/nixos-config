@@ -430,6 +430,7 @@
       clang
       go
       alejandra
+      inputs.nil.packages."${system}".default
       # # Wine
       wineWowPackages.staging
       winetricks
