@@ -429,8 +429,6 @@
       zig
       clang
       go
-      nil
-      nixd
       alejandra
       # # Wine
       wineWowPackages.staging
