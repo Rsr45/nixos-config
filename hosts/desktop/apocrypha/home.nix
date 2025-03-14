@@ -298,12 +298,6 @@
     icons = "auto";
   };
 
-  # programs.git = {
-  #   enable = true;
-  #   userName = "Rsr45";
-  #   userEmail = "efe45676@gmail.com";
-  # };
-
   programs.fastfetch = {
     enable = true;
     settings = {
