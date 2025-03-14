@@ -25,31 +25,31 @@
 
   xdg.enable = true;
   xdg.userDirs.enable = true;
-  xdg = {
-    mimeApps = {
-      enable = true;
-      defaultApplications = {
-        "image/jpeg" = "feh.desktop";
-        "image/png" = "feh.desktop";
-        "image/gif" = "mpv.desktop";
-        "image/webp" = "feh.desktop";
-        "application/pdf" = "floorp.desktop";
-        "text/html" = "floorp.desktop";
-        "x-scheme-handler/http" = "floorp.desktop";
-        "x-scheme-handler/https" = "floorp.desktop";
-        "x-scheme-handler/about" = "floorp.desktop";
-        "x-scheme-handler/unknown" = "floorp.desktop";
-        "inode/directory" = "nemo.desktop";
-        "application/x-gnome-saved-search" = "nemo.desktop";
-        "text/plain" = "neovide.desktop";
-        "application/zip" = "xarchiver.desktop";
-        "application/vnd.rar" = "xarchiver.desktop";
-        "application/x-7z-compressed" = "xarchiver.desktop";
-        "application/x-tar" = "xarchiver.desktop";
-        "application/vnd.microsoft.portable-executable" = "wine.desktop";
-      };
-    };
-  };
+  # xdg = {
+  #   mimeApps = {
+  #     enable = true;
+  #     defaultApplications = {
+  #       "image/jpeg" = "feh.desktop";
+  #       "image/png" = "feh.desktop";
+  #       "image/gif" = "mpv.desktop";
+  #       "image/webp" = "feh.desktop";
+  #       "application/pdf" = "floorp.desktop";
+  #       "text/html" = "floorp.desktop";
+  #       "x-scheme-handler/http" = "floorp.desktop";
+  #       "x-scheme-handler/https" = "floorp.desktop";
+  #       "x-scheme-handler/about" = "floorp.desktop";
+  #       "x-scheme-handler/unknown" = "floorp.desktop";
+  #       "inode/directory" = "nemo.desktop";
+  #       "application/x-gnome-saved-search" = "nemo.desktop";
+  #       "text/plain" = "neovide.desktop";
+  #       "application/zip" = "xarchiver.desktop";
+  #       "application/vnd.rar" = "xarchiver.desktop";
+  #       "application/x-7z-compressed" = "xarchiver.desktop";
+  #       "application/x-tar" = "xarchiver.desktop";
+  #       "application/vnd.microsoft.portable-executable" = "wine.desktop";
+  #     };
+  #   };
+  # };
 
   dconf = {
     enable = true;
@@ -298,11 +298,11 @@
     icons = "auto";
   };
 
-  programs.git = {
-    enable = true;
-    userName = "Rsr45";
-    userEmail = "efe45676@gmail.com";
-  };
+  # programs.git = {
+  #   enable = true;
+  #   userName = "Rsr45";
+  #   userEmail = "efe45676@gmail.com";
+  # };
 
   programs.fastfetch = {
     enable = true;

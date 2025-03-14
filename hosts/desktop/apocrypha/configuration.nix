@@ -27,11 +27,11 @@
     hostName = "apocrypha"; # Define hostname
     networkmanager = {
       enable = true;
-      dns = "systemd-resolved";
-      insertNameservers = [
-        "9.9.9.9"
-        "1.1.1.1"
-      ];
+      # dns = "systemd-resolved";
+      # insertNameservers = [
+      #   "9.9.9.9"
+      #   "1.1.1.1"
+      # ];
     };
     # nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
@@ -323,6 +323,7 @@
       nemo
       alacritty
       kitty
+      git-credential-keepassxc
       github-desktop
       libsForQt5.qt5.qtgraphicaleffects ## Dependency for sddm theme(s).
       # # VSCode
