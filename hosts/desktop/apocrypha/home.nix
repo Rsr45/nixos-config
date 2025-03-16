@@ -1,22 +1,17 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "hare";
   home.homeDirectory = "/home/hare";
 
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
-    inputs.spicetify-nix.homeManagerModules.default
     ./modules/hyprland.nix
     ./modules/hyprlock.nix
     ./modules/nvf.nix
     ./modules/zed.nix
     ./modules/matugen.nix
     ./modules/tmux.nix
+    ./modules/spotify.nix
   ];
 
   nixpkgs.config = {
@@ -145,7 +140,7 @@
         border = "3C3836FF";
       };
       border = {
-        radius = "12";
+        radius = "0";
         width = "4";
       };
     };
@@ -157,19 +152,19 @@
       global = {
         width = 300;
         height = 300;
-        offset = "30x50";
-        origin = "top-right";
+        offset = "30x30";
+        origin = "bottom-right";
         transparency = 10;
-        frame_color = "#282828";
+        frame_color = "#3C3836";
         font = "IBM Plex Serif";
         corner_radius = "0";
         gap_size = "8";
       };
 
       urgency_normal = {
-        background = "#2D2D2D";
-        foreground = "#FFFFFF";
-        timeout = 10;
+        background = "#282828";
+        foreground = "#FBF1C7";
+        timeout = 5;
       };
     };
   };
@@ -391,19 +386,6 @@
       -- and finally, return the configuration to wezterm
       return config
     '';
-  };
-
-  programs.spicetify = let
-    spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-  in {
-    enable = true;
-    enabledExtensions = with spicePkgs.extensions; [
-      adblock
-      hidePodcasts
-      shuffle # shuffle+ (special characters are sanitized out of extension names)
-    ];
-    theme = spicePkgs.themes.comfy;
-    colorScheme = "mono";
   };
 
   # This value determines the Home Manager release that your configuration is

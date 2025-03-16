@@ -9,17 +9,21 @@
       vim = {
         theme = {
           enable = true;
-          name = "oxocarbon";
+          name = "gruvbox";
           style = "dark";
         };
         options = {
           tabstop = 2;
           shiftwidth = 2;
         };
+        filetree = {
+          nvimTree.enable = true;
+        };
         formatter.conform-nvim.enable = true;
         dashboard.dashboard-nvim.enable = true;
         autopairs.nvim-autopairs.enable = true;
         statusline.lualine.enable = true;
+        tabline.nvimBufferline.enable = true;
         telescope.enable = true;
         autocomplete.nvim-cmp.enable = true;
         languages = {
@@ -28,15 +32,15 @@
           enableTreesitter = true;
 
           nix.enable = true;
-          nu.enable = true;
-          ts.enable = true;
-          rust.enable = true;
-          css.enable = true;
-          bash.enable = true;
-          markdown.enable = true;
-          dart.lsp.enable = true;
-          lua.lsp.enable = true;
-          vala.lsp.enable = true;
+          # nu.enable = true;
+          # ts.enable = true;
+          # rust.enable = true;
+          # css.enable = true;
+          # bash.enable = true;
+          # markdown.enable = true;
+          # dart.lsp.enable = true;
+          # lua.lsp.enable = true;
+          # vala.lsp.enable = true;
         };
       };
     };
