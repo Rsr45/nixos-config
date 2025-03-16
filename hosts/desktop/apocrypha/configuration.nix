@@ -324,7 +324,6 @@
       alacritty
       kitty
       git-credential-keepassxc
-      github-desktop
       libsForQt5.qt5.qtgraphicaleffects ## Dependency for sddm theme(s).
       # # VSCode
       vscodium
@@ -395,7 +394,7 @@
       pywalfox-native
       obsidian # Note
       keepassxc # Password Manager
-      spotify # Spotify Client
+      # spotify # Spotify Client
       youtube-music # YT Music Client
       brave
       ungoogled-chromium
@@ -408,7 +407,6 @@
       ncmpcpp
       mpc
       miru
-      signal-desktop
       element-desktop # Matrix Client
       # fluffychat # Matrix Client
       onlyoffice-desktopeditors
@@ -432,7 +430,7 @@
       clang
       go
       alejandra
-      inputs.nil.packages."${system}".default
+      nil
       # # Wine
       wineWowPackages.staging
       winetricks
