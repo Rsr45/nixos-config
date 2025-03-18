@@ -27,11 +27,11 @@
     hostName = "apocrypha"; # Define hostname
     networkmanager = {
       enable = true;
-      # dns = "systemd-resolved";
-      # insertNameservers = [
-      #   "9.9.9.9"
-      #   "1.1.1.1"
-      # ];
+      dns = "systemd-resolved";
+      insertNameservers = [
+        "9.9.9.9"
+        "1.1.1.1"
+      ];
     };
     # nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
@@ -184,7 +184,8 @@
     xwayland.enable = true;
     withUWSM = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   programs.uwsm.enable = true;
@@ -255,27 +256,27 @@
   };
 
   # # MPD
-  services.mpd = {
-    enable = true;
-    user = "hare";
-    musicDirectory = "/home/hare/Music/";
-    extraConfig = ''
-      audio_output {
-      type "pipewire"
-      name "My PipeWire Output"
-      }
-      # must specify one or more outputs in order to play audio!
-      # (e.g. ALSA, PulseAudio, PipeWire), see next sections
-    '';
+  # services.mpd = {
+  #   enable = true;
+  #   user = "hare";
+  #   musicDirectory = "/home/hare/Music/";
+  #   extraConfig = ''
+  #     audio_output {
+  #     type "pipewire"
+  #     name "My PipeWire Output"
+  #     }
+  #     # must specify one or more outputs in order to play audio!
+  #     # (e.g. ALSA, PulseAudio, PipeWire), see next sections
+  #   '';
 
-    # Optional:
-    network.listenAddress = "any"; # if you want to allow non-localhost connections
-    # network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
-  };
-  systemd.services.mpd.environment = {
-    # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
-    XDG_RUNTIME_DIR = "/run/user/1000/";
-  };
+  #   # Optional:
+  #   network.listenAddress = "any"; # if you want to allow non-localhost connections
+  #   # network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
+  # };
+  # systemd.services.mpd.environment = {
+  #   # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
+  #   XDG_RUNTIME_DIR = "/run/user/1000/";
+  # };
 
   environment = {
     sessionVariables = {
@@ -324,9 +325,9 @@
       alacritty
       kitty
       git-credential-keepassxc
-      libsForQt5.qt5.qtgraphicaleffects ## Dependency for sddm theme(s).
+      libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
       # # VSCode
-      vscodium
+      # vscodium
       # (vscode-with-extensions.override {
       #   vscode = vscodium;
       #   vscodeExtensions = with vscode-extensions;
@@ -394,13 +395,12 @@
       pywalfox-native
       obsidian # Note
       keepassxc # Password Manager
-      # spotify # Spotify Client
-      youtube-music # YT Music Client
       brave
       ungoogled-chromium
       floorp
       inputs.zen-browser.packages."${system}".default
       tor-browser
+      fum
       amberol
       ymuse
       plattenalbum
@@ -430,7 +430,9 @@
       clang
       go
       alejandra
+      nixfmt-rfc-style
       nil
+      nixd
       # # Wine
       wineWowPackages.staging
       winetricks
@@ -475,8 +477,10 @@
     ];
   };
 
+  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+
   fonts.fontDir.enable = true;
-  fonts.enableDefaultPackages = true;
+  fonts.enableDefaultPackages = false;
   # fonts.packages = with pkgs; [
   # ];
 

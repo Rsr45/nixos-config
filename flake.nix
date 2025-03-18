@@ -13,16 +13,9 @@
       inputs.hyprland.follows = "hyprland";
     };
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nvf.url = "github:notashelf/nvf";
     # nixvim = {
     #   url = "github:nix-community/nixvim";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    # nil = {
-    #   url = "github:oxalica/nil";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
     spicetify-nix = {
@@ -37,12 +30,6 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-      config = {
-        allowUnfree = true;
-      };
-    };
   in {
     nixosConfigurations = {
       apocrypha = nixpkgs.lib.nixosSystem {

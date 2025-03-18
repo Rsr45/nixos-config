@@ -1,17 +1,27 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "hare";
   home.homeDirectory = "/home/hare";
 
   imports = [
+    ./modules/gtk.nix
+    ./modules/qt.nix
+    ./modules/cursor.nix
+    ./modules/font.nix
     ./modules/hyprland.nix
     ./modules/hyprlock.nix
     ./modules/nvf.nix
     ./modules/zed.nix
-    ./modules/matugen.nix
+    # ./modules/helix/default.nix
+    # ./modules/matugen.nix
     ./modules/tmux.nix
     ./modules/spotify.nix
+    ./modules/mpd.nix
   ];
 
   nixpkgs.config = {
@@ -19,7 +29,16 @@
   };
 
   xdg.enable = true;
-  xdg.userDirs.enable = true;
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+    extraConfig = {
+      XDG_DEV_DIR = "${config.home.homeDirectory}/Dev";
+      XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
+      XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+      XDG_WALLPAPERS_DIR = "${config.xdg.userDirs.pictures}/Wallpapers";
+    };
+  };
   # xdg = {
   #   mimeApps = {
   #     enable = true;
@@ -49,62 +68,11 @@
   dconf = {
     enable = true;
     settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-      };
       "org/cinnamon/desktop/applications/terminal" = {
         exec = "kitty";
         # exec-arg = ""; # argument
       };
     };
-  };
-
-  # # Fixes Cursor
-  home.pointerCursor = {
-    gtk.enable = true;
-    x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Original-Classic";
-    size = 32;
-  };
-
-  # # GTK Settings
-  gtk = {
-    enable = true;
-    cursorTheme = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Original-Classic";
-    };
-    iconTheme = {
-      package = pkgs.papirus-icon-theme;
-      name = "Papirus-Dark";
-    };
-    font = {
-      name = "IBM Plex Serif";
-    };
-    gtk3 = {
-      extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
-      };
-    };
-    gtk4 = {
-      extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
-      };
-    };
-  };
-
-  xdg.configFile = {
-    "gtk-3.0/gtk.css".text = "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-3.0/gtk.css');";
-    "gtk-4.0/gtk.css".text = "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-4.0/gtk.css');";
-    # "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=KvLibadwaitaDark";
-  };
-
-  # # QT Settings
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk3";
-    # style.name = "kvantum";
   };
 
   # # Elkowars Wacky Widgets.
@@ -156,7 +124,7 @@
         origin = "bottom-right";
         transparency = 10;
         frame_color = "#3C3836";
-        font = "IBM Plex Serif";
+        font = "Geist";
         corner_radius = "0";
         gap_size = "8";
       };
@@ -361,7 +329,7 @@
     # '';
     themeFile = "gruvbox-dark";
     font = {
-      name = "BlexMono Nerd Font";
+      name = "GeistMono Nerd Font";
     };
   };
 
@@ -399,29 +367,19 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    # # Fonts
-    font-awesome
-    ibm-plex
-    nerd-fonts.symbols-only
-    nerd-fonts.blex-mono
+  # home.packages = with pkgs; [
+  #   # # Fonts
+  #   font-awesome
+  #   ibm-plex
+  #   nerd-fonts.blex-mono
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-  ];
-
-  fonts.fontconfig = {
-    enable = true;
-    defaultFonts = {
-      monospace = ["BlexMono Nerd Font"];
-      sansSerif = ["IBM Plex Sans"];
-      serif = ["IBM Plex Serif"];
-    };
-  };
+  #   # # You can also create simple shell scripts directly inside your
+  #   # # configuration. For example, this adds a command 'my-hello' to your
+  #   # # environment:
+  #   # (pkgs.writeShellScriptBin "my-hello" ''
+  #   #   echo "Hello, ${config.home.username}!"
+  #   # '')
+  # ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
