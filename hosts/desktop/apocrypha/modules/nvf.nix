@@ -8,8 +8,8 @@
     settings.vim = {
       theme = {
         enable = true;
-        name = "rose-pine";
-        style = "main";
+        name = "gruvbox";
+        style = "dark";
       };
 
       options = {
@@ -40,7 +40,7 @@
 
       languages = {
         enableDAP = true;
-        enableExtraDiagnostics = true;
+        # enableExtraDiagnostics = true;
         enableFormat = true;
         enableLSP = true;
         enableTreesitter = true;

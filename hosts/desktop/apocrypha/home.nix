@@ -9,9 +9,10 @@
   home.homeDirectory = "/home/hare";
 
   imports = [
+    # ./modules/stylix.nix
     ./modules/gtk.nix
-    ./modules/qt.nix
-    ./modules/cursor.nix
+    # ./modules/qt.nix
+    # ./modules/cursor.nix
     ./modules/font.nix
     ./modules/hyprland.nix
     ./modules/hyprlock.nix
@@ -22,6 +23,7 @@
     ./modules/tmux.nix
     ./modules/spotify.nix
     ./modules/mpd.nix
+    ./modules/nixcord.nix
   ];
 
   nixpkgs.config = {
@@ -78,41 +80,43 @@
   # # Elkowars Wacky Widgets.
   programs.eww = {
     enable = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    enableZshIntegration = true;
     configDir = ./config-dir/eww-config-dir;
   };
 
   # # Waybar.
-  xdg.configFile."waybar" = {
-    source = ./config-dir/waybar-conf-dir;
-    recursive = true;
-  };
+  # xdg.configFile."waybar" = {
+  #   source = ./config-dir/waybar-conf-dir;
+  #   recursive = true;
+  # };
   programs.waybar = {
     enable = true;
   };
 
+  programs.wofi.enable = true;
+
   programs.fuzzel = {
     enable = true;
     settings = {
-      colors = {
-        background = "282828ff";
-        text = "FBF1C7ff";
-        prompt = "FBF1C7ff";
-        input = "FBF1C7ff";
-        match = "FABD2Fff";
-        selection-match = "FABD2Fff";
-        selection = "3C3836ff";
-        selection-text = "FBF1C7ff";
-        border = "3C3836FF";
-      };
+      # colors = {
+      #   background = "282828ff";
+      #   text = "FBF1C7ff";
+      #   prompt = "FBF1C7ff";
+      #   input = "FBF1C7ff";
+      #   match = "FABD2Fff";
+      #   selection-match = "FABD2Fff";
+      #   selection = "3C3836ff";
+      #   selection-text = "FBF1C7ff";
+      #   border = "3C3836FF";
+      # };
       border = {
         radius = "0";
         width = "4";
       };
     };
   };
+
+  programs.btop.enable = true;
+  programs.mpv.enable = true;
 
   services.dunst = {
     enable = true;
@@ -122,18 +126,18 @@
         height = 300;
         offset = "30x30";
         origin = "bottom-right";
-        transparency = 10;
-        frame_color = "#3C3836";
-        font = "Geist";
+        # transparency = 10;
+        # frame_color = "#3C3836";
+        # font = "Geist";
         corner_radius = "0";
         gap_size = "8";
       };
 
-      urgency_normal = {
-        background = "#282828";
-        foreground = "#FBF1C7";
-        timeout = 5;
-      };
+      # urgency_normal = {
+      #   background = "#282828";
+      #   foreground = "#FBF1C7";
+      #   timeout = 5;
+      # };
     };
   };
 
@@ -308,18 +312,18 @@
 
   programs.alacritty = {
     enable = true;
-    settings = {
-      general = {
-        import = ["colors.toml"];
-      };
-      font = {
-        size = 12;
-        # normal = [
-        #   family = "BlexMonoNerdFont";
-        #   style = "Regular";
-        # ];
-      };
-    };
+    # settings = {
+    #   # general = {
+    #   #   import = ["colors.toml"];
+    #   # };
+    #   font = {
+    #     size = 12;
+    #     # normal = [
+    #     #   family = "BlexMonoNerdFont";
+    #     #   style = "Regular";
+    #     # ];
+    #   };
+    # };
   };
 
   programs.kitty = {
@@ -327,16 +331,14 @@
     # extraConfig = ''
     #   include colors.conf
     # '';
-    themeFile = "gruvbox-dark";
-    font = {
-      name = "GeistMono Nerd Font";
-    };
+    # themeFile = "gruvbox-dark";
+    # font = {
+    #   name = "GeistMono Nerd Font";
+    # };
   };
 
   programs.wezterm = {
     enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
     extraConfig = ''
       -- Pull in the wezterm API
       local wezterm = require 'wezterm'
@@ -347,9 +349,6 @@
       -- This is where you actually apply your config choices
       config.enable_wayland = false
       config.front_end = "WebGpu"
-
-      -- Colorschemes
-      config.color_scheme = 'Gruvbox dark, hard (base16)'
 
       -- and finally, return the configuration to wezterm
       return config

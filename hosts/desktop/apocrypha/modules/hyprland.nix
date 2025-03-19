@@ -25,7 +25,7 @@
         "col.inactive_border" = "rgb(282828)";
       };
       "exec-once" = [
-        # "eww daemon; eww open bar_1"
+        "eww daemon; eww open bar_1"
         "dunst"
         "swww kill; swww-daemon"
       ];

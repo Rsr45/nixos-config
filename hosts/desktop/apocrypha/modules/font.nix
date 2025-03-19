@@ -16,9 +16,9 @@
       emoji = ["Noto Color Emoji"];
     };
   };
-  gtk.font = {
-    name = "Geist";
-  };
+  # gtk.font = {
+  #   name = "Geist";
+  # };
   home.packages = with pkgs; [
     geist-font
     ibm-plex

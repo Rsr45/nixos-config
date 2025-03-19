@@ -6,6 +6,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./modules/stylix.nix
     ./modules/steam.nix
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -149,7 +150,7 @@
   # # Home Manager
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
-    backupFileExtension = "backup3";
+    backupFileExtension = "backup";
     users = {
       hare = import ./home.nix;
     };
@@ -380,7 +381,7 @@
       # # Apps
       blender
       # upscayl # Image Upscaler
-      vesktop # Discord Client
+      # vesktop # Discord Client
       teamspeak_client # Teamspeak Client
       # teamspeak5_client # Teamspeak Client
       feh # Image Viewer
@@ -420,7 +421,7 @@
       neovim
       neovide # Neovim GUI
       lunarvim # Neovim Distrubition
-      btop # Resource Monitoring
+      # btop # Resource Monitoring
       # # Language Server, Libraries, Compilers
       glib
       glibc
