@@ -173,16 +173,16 @@
       ## tell zed to use direnv and direnv can use a flake.nix enviroment.
       load_direnv = "shell_hook";
       base_keymap = "JetBrains";
-      theme = {
-        mode = "system";
-        light = "Flexoki Light";
-        dark = "Gruvbox Dark";
-      };
+      # theme = {
+      #   mode = "system";
+      #   light = "Flexoki Light";
+      #   dark = "Gruvbox Dark";
+      # };
       show_whitespaces = "selection";
-      ui_font_size = 16;
-      buffer_font_size = 14;
-      ui_font_family = "GeistMono Nerd Font";
-      buffer_font_family = "GeistMono Nerd Font";
+      # ui_font_size = 16;
+      # buffer_font_size = 14;
+      # ui_font_family = "GeistMono Nerd Font";
+      # buffer_font_family = "GeistMono Nerd Font";
     };
   };
 }
