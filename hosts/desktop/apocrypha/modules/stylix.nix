@@ -4,24 +4,26 @@
   config,
   ...
 }: {
-  imports = [inputs.stylix.nixosModules.stylix];
-  stylix.homeManagerIntegration.autoImport = true;
-  stylix.homeManagerIntegration.followSystem = true;
+  imports = [inputs.stylix.homeManagerModules.stylix];
 
   stylix = {
     enable = true;
     autoEnable = false;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/mountain.yaml";
+
     cursor = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Classic";
       size = 24;
     };
-    targets = {
-      gtk.enable = true;
-      qt.enable = true;
-      chromium.enable = true;
+
+    iconTheme = {
+      enable = true;
+      package = pkgs.papirus-icon-theme;
+      dark = "Papirus-Dark";
+      light = "Papirus-Light";
     };
+
     fonts = {
       serif = {
         package = pkgs.ibm-plex;
@@ -42,36 +44,39 @@
         package = pkgs.noto-fonts-emoji;
         name = "Noto Color Emoji";
       };
-      sizes.desktop = 12;
-      sizes.popups = 12;
-      sizes.applications = 12;
-      sizes.terminal = 12;
+      sizes = {
+        desktop = 12;
+        popups = 12;
+        applications = 12;
+        terminal = 12;
+      };
     };
-  };
 
-  home-manager.users.hare = {
-    stylix = {
-      iconTheme = {
+    targets = {
+      # chromium.enable = true;
+      gtk.enable = true;
+      qt.enable = true;
+      hyprland.enable = true;
+      floorp = {
         enable = true;
-        package = pkgs.papirus-icon-theme;
-        dark = "Papirus-Dark";
-        light = "Papirus-Light";
+        colorTheme.enable = true;
+        profileNames = ["rsr"];
       };
-      targets = {
-        gtk.enable = true;
-        qt.enable = true;
-        wezterm.enable = true;
-        kitty.enable = true;
-        wofi.enable = true;
-        fuzzel.enable = true;
-        dunst.enable = true;
-        nixcord.enable = true;
-        zed.enable = true;
-        btop.enable = true;
-        mpv.enable = true;
-        nushell.enable = true;
-        spicetify.enable = true;
-      };
+      wezterm.enable = true;
+      kitty.enable = true;
+      wofi.enable = true;
+      fuzzel.enable = true;
+      dunst.enable = true;
+      nixcord.enable = true;
+      zed.enable = true;
+      nvf.enable = true;
+      btop.enable = true;
+      mpv.enable = true;
+      nushell.enable = true;
+      spicetify.enable = true;
+      tmux.enable = true;
+      gitui.enable = true;
+      waybar.enable = true;
     };
   };
 }

@@ -21,8 +21,8 @@
         border_size = 4;
         layout = "dwindle";
         resize_on_border = true;
-        "col.active_border" = "rgb(282828)";
-        "col.inactive_border" = "rgb(282828)";
+        # "col.active_border" = "rgb(282828)";
+        # "col.inactive_border" = "rgb(282828)";
       };
       "exec-once" = [
         "eww daemon; eww open bar_1"
@@ -223,8 +223,6 @@
       ];
     };
     extraConfig = ''
-      source = colors.conf
-
       bind = SUPER, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable
       bind = , Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of whole screen taken" -t 1000
       bind = $mod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of the region taken" -t 1000

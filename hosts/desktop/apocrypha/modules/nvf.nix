@@ -6,15 +6,16 @@
   programs.nvf = {
     enable = true;
     settings.vim = {
-      theme = {
-        enable = true;
-        name = "gruvbox";
-        style = "dark";
-      };
+      # theme = {
+      #   enable = true;
+      #   name = "gruvbox";
+      #   style = "dark";
+      # };
 
       options = {
         tabstop = 2;
         shiftwidth = 2;
+        showmode = false;
       };
 
       filetree.nvimTree = {
@@ -30,9 +31,12 @@
         statusline.enable = true;
         tabline.enable = true;
         pairs.enable = true;
-        clue.enable = true;
         diff.enable = true;
         git.enable = true;
+      };
+      binds = {
+        whichKey.enable = true;
+        cheatsheet.enable = true;
       };
       # tabline.nvimBufferline.enable = true;
       telescope.enable = true;

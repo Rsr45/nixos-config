@@ -9,13 +9,14 @@
   home.homeDirectory = "/home/hare";
 
   imports = [
-    # ./modules/stylix.nix
+    ./modules/stylix.nix
     ./modules/gtk.nix
     # ./modules/qt.nix
     # ./modules/cursor.nix
     ./modules/font.nix
     ./modules/hyprland.nix
     ./modules/hyprlock.nix
+    ./modules/waybar.nix
     ./modules/nvf.nix
     ./modules/zed.nix
     # ./modules/helix/default.nix
@@ -24,6 +25,7 @@
     ./modules/spotify.nix
     ./modules/mpd.nix
     ./modules/nixcord.nix
+    ./modules/floorp.nix
   ];
 
   nixpkgs.config = {
@@ -88,9 +90,8 @@
   #   source = ./config-dir/waybar-conf-dir;
   #   recursive = true;
   # };
-  programs.waybar = {
-    enable = true;
-  };
+
+  programs.gitui.enable = true;
 
   programs.wofi.enable = true;
 
