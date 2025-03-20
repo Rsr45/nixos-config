@@ -6,7 +6,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./modules/stylix.nix
     ./modules/steam.nix
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -481,7 +480,7 @@
   nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
   fonts.fontDir.enable = true;
-  fonts.enableDefaultPackages = false;
+  fonts.enableDefaultPackages = true;
   # fonts.packages = with pkgs; [
   # ];
 
