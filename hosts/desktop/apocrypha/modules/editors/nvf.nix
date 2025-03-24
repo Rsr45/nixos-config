@@ -6,12 +6,6 @@
   programs.nvf = {
     enable = true;
     settings.vim = {
-      # theme = {
-      #   enable = true;
-      #   name = "gruvbox";
-      #   style = "dark";
-      # };
-
       options = {
         tabstop = 2;
         shiftwidth = 2;
@@ -25,8 +19,7 @@
 
       formatter.conform-nvim.enable = true;
       dashboard.dashboard-nvim.enable = true;
-      autopairs.nvim-autopairs.enable = true;
-      # statusline.lualine.enable = false;
+
       mini = {
         statusline.enable = true;
         tabline.enable = true;
@@ -34,17 +27,19 @@
         diff.enable = true;
         git.enable = true;
       };
+
       binds = {
         whichKey.enable = true;
         cheatsheet.enable = true;
       };
+
+      ui.colorizer.enable = true;
       # tabline.nvimBufferline.enable = true;
       telescope.enable = true;
       autocomplete.nvim-cmp.enable = true;
 
       languages = {
         enableDAP = true;
-        # enableExtraDiagnostics = true;
         enableFormat = true;
         enableLSP = true;
         enableTreesitter = true;
@@ -63,15 +58,22 @@
           };
         };
 
+        clang.enable = true;
+        csharp.enable = true;
+        lua.enable = true;
         # nu.enable = true;
         # ts.enable = true;
         # rust.enable = true;
         # css.enable = true;
         # bash.enable = true;
         # markdown.enable = true;
-        # dart.lsp.enable = true;
-        # lua.lsp.enable = true;
-        # vala.lsp.enable = true;
+        dart = {
+          enable = true;
+          flutter-tools.enable = true;
+        };
+
+        vala.enable = true;
+        go.enable = true;
       };
     };
   };

@@ -22,9 +22,11 @@
   home.packages = with pkgs; [
     geist-font
     ibm-plex
+    cantarell-fonts
     noto-fonts
     nerd-fonts.geist-mono
     nerd-fonts.blex-mono
+    nerd-fonts.fira-code
     nerd-fonts.symbols-only
     font-awesome
     noto-fonts-color-emoji

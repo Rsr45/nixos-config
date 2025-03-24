@@ -13,6 +13,7 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    schizofox.url = "github:schizofox/schizofox";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     nvf.url = "github:notashelf/nvf";
     # nixvim = {

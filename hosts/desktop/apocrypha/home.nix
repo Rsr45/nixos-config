@@ -16,16 +16,17 @@
     ./modules/font.nix
     ./modules/hyprland.nix
     ./modules/hyprlock.nix
-    ./modules/waybar.nix
-    ./modules/nvf.nix
-    ./modules/zed.nix
-    # ./modules/helix/default.nix
     # ./modules/matugen.nix
-    ./modules/tmux.nix
     ./modules/spotify.nix
     ./modules/mpd.nix
     ./modules/nixcord.nix
-    ./modules/floorp.nix
+    ./modules/terminals/default.nix
+    ./modules/widgets/default.nix
+    ./modules/browsers/default.nix
+    ./modules/editors/default.nix
+    ./modules/shell/default.nix
+    ./modules/cli/default.nix
+    ./modules/default.nix
   ];
 
   nixpkgs.config = {
@@ -39,8 +40,11 @@
     extraConfig = {
       XDG_DEV_DIR = "${config.home.homeDirectory}/Dev";
       XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
+      XDG_GAMES_DIR = "${config.home.homeDirectory}/Games";
       XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
       XDG_WALLPAPERS_DIR = "${config.xdg.userDirs.pictures}/Wallpapers";
+      XDG_YOUTUBEMUSIC_DIR = "${config.xdg.userDirs.music}/Youtube";
+      XDG_YOUTUBE_DIR = "${config.xdg.userDirs.videos}/Youtube";
     };
   };
   # xdg = {
@@ -79,43 +83,7 @@
     };
   };
 
-  # # Elkowars Wacky Widgets.
-  programs.eww = {
-    enable = true;
-    configDir = ./config-dir/eww-config-dir;
-  };
-
-  # # Waybar.
-  # xdg.configFile."waybar" = {
-  #   source = ./config-dir/waybar-conf-dir;
-  #   recursive = true;
-  # };
-
   programs.gitui.enable = true;
-
-  programs.wofi.enable = true;
-
-  programs.fuzzel = {
-    enable = true;
-    settings = {
-      # colors = {
-      #   background = "282828ff";
-      #   text = "FBF1C7ff";
-      #   prompt = "FBF1C7ff";
-      #   input = "FBF1C7ff";
-      #   match = "FABD2Fff";
-      #   selection-match = "FABD2Fff";
-      #   selection = "3C3836ff";
-      #   selection-text = "FBF1C7ff";
-      #   border = "3C3836FF";
-      # };
-      border = {
-        radius = "0";
-        width = "4";
-      };
-    };
-  };
-
   programs.btop.enable = true;
   programs.mpv.enable = true;
 
@@ -127,121 +95,11 @@
         height = 300;
         offset = "30x30";
         origin = "bottom-right";
-        # transparency = 10;
-        # frame_color = "#3C3836";
-        # font = "Geist";
-        corner_radius = "0";
+        corner_radius = "7";
         gap_size = "8";
       };
-
-      # urgency_normal = {
-      #   background = "#282828";
-      #   foreground = "#FBF1C7";
-      #   timeout = 5;
-      # };
     };
   };
-
-  programs.nushell = {
-    enable = true;
-    shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
-      reboot = "systemctl reboot";
-      shutdown = "systemctl poweroff";
-      logout = "hyprctl dispatch exit 1";
-      yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
-      yt-mp4 = "yt-dlp -f mp4";
-      cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
-    };
-    configFile.text = ''
-      $env.config.buffer_editor = "vi"
-      $env.config.show_banner = false
-    '';
-  };
-
-  # programs.fish = {
-  #   enable = true;
-  #   interactiveShellInit = ''
-  #     set fish_greeting # Disable greeting
-  #   '';
-  #   shellAbbrs = {
-  #     rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
-  #     reboot = "systemctl reboot";
-  #     shutdown = "systemctl poweroff";
-  #     logout = "hyprctl dispatch exit 1";
-  #     yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
-  #     yt-mp4 = "yt-dlp -f mp4";
-  #     cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
-  #   };
-  #   plugins = [
-  #     # Enable a plugin (here grc for colorized command output) from nixpkgs
-  #     {
-  #       name = "grc";
-  #       src = pkgs.fishPlugins.grc.src;
-  #     }
-  #     # Manually packaging and enable a plugin
-  #     {
-  #       name = "z";
-  #       src = pkgs.fetchFromGitHub {
-  #         owner = "jethrokuan";
-  #         repo = "z";
-  #         rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
-  #         sha256 = "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
-  #       };
-  #     }
-  #   ];
-  # };
-
-  # programs.zsh = {
-  #   enable = true;
-  #   enableCompletion = true;
-  #   autocd = true;
-  #   autosuggestion = {
-  #     enable = true;
-  #   };
-  #   history = {
-  #     append = true;
-  #     share = true;
-  #     extended = true;
-  #     ignoreSpace = true;
-  #     ignoreAllDups = true;
-  #     ignoreDups = true;
-  #     expireDuplicatesFirst = true;
-  #   };
-  #   shellAliases = {
-  #     ls = "eza -a";
-  #     ll = "eza -al";
-  #     lt = "eza -a --tree --level=1";
-  #     rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
-  #     yt-mp3 = "yt-dlp --add-metadata -x --audio-quality 0 --audio-format mp3";
-  #     yt-mp4 = "yt-dlp -f mp4";
-  #     reboot = "systemctl reboot";
-  #     shutdown = "systemctl poweroff";
-  #     logout = "hyprctl dispatch exit 1";
-  #     yamltotoml = "find . -type f -name '*.yaml' | xargs -I {} alacritty migrate -c {}";
-  #     ymltotoml = "find . -type f -name '*.yml' | xargs -I {} alacritty migrate -c {}";
-  #     cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
-  #   };
-  #   antidote = {
-  #     enable = true;
-  #     plugins = [
-  #       "getantidote/use-omz"
-  #       "zsh-users/zsh-syntax-highlighting"
-  #       "zsh-users/zsh-autosuggestions"
-  #       "zsh-users/zsh-completions"
-  #       "zsh-users/zsh-history-substring-search"
-  #       "MichaelAquilina/zsh-auto-notify"
-  #     ];
-  #   };
-  #   oh-my-zsh = {
-  #     enable = true;
-  #     theme = "bureau";
-  #     plugins = [
-  #       "git"
-  #       "sudo"
-  #     ];
-  #   };
-  # };
 
   programs.zoxide = {
     enable = true;
@@ -249,9 +107,6 @@
     enableFishIntegration = true;
     enableNushellIntegration = true;
     enableZshIntegration = true;
-    package = pkgs.zoxide;
-    options = [
-    ];
   };
 
   programs.eza = {
@@ -260,100 +115,8 @@
     enableFishIntegration = true;
     enableNushellIntegration = true;
     enableZshIntegration = true;
-    extraOptions = [
-      "--group-directories-first"
-    ];
+    extraOptions = ["--group-directories-first"];
     icons = "auto";
-  };
-
-  programs.fastfetch = {
-    enable = true;
-    settings = {
-      logo = {
-        padding = {
-          right = 2;
-        };
-      };
-      # display = {
-      # size = {
-      # binaryPrefix = "si";
-      # };
-      # color = "blue";
-      # separator = "  ";
-      # };
-      modules = [
-        "Title"
-        "Separator"
-        "OS"
-        "Kernel"
-        "Bios"
-        "Bootmgr"
-        "Separator"
-        "DE"
-        "WM"
-        "Terminal"
-        "Shell"
-        "Editor"
-        "Font"
-        "Separator"
-        "Board"
-        "CPU"
-        "GPU"
-        "Display"
-        "Monitor"
-        "Separator"
-        "DateTime"
-        "Uptime"
-        "player"
-        "media"
-        "Colors"
-      ];
-    };
-  };
-
-  programs.alacritty = {
-    enable = true;
-    # settings = {
-    #   # general = {
-    #   #   import = ["colors.toml"];
-    #   # };
-    #   font = {
-    #     size = 12;
-    #     # normal = [
-    #     #   family = "BlexMonoNerdFont";
-    #     #   style = "Regular";
-    #     # ];
-    #   };
-    # };
-  };
-
-  programs.kitty = {
-    enable = true;
-    # extraConfig = ''
-    #   include colors.conf
-    # '';
-    # themeFile = "gruvbox-dark";
-    # font = {
-    #   name = "GeistMono Nerd Font";
-    # };
-  };
-
-  programs.wezterm = {
-    enable = true;
-    extraConfig = ''
-      -- Pull in the wezterm API
-      local wezterm = require 'wezterm'
-
-      -- This will hold the configuration.
-      local config = wezterm.config_builder()
-
-      -- This is where you actually apply your config choices
-      config.enable_wayland = false
-      config.front_end = "WebGpu"
-
-      -- and finally, return the configuration to wezterm
-      return config
-    '';
   };
 
   # This value determines the Home Manager release that your configuration is
@@ -367,19 +130,20 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  # home.packages = with pkgs; [
-  #   # # Fonts
-  #   font-awesome
-  #   ibm-plex
-  #   nerd-fonts.blex-mono
+  home.packages = with pkgs; [
+    nsxiv
+    #   # # Fonts
+    #   font-awesome
+    #   ibm-plex
+    #   nerd-fonts.blex-mono
 
-  #   # # You can also create simple shell scripts directly inside your
-  #   # # configuration. For example, this adds a command 'my-hello' to your
-  #   # # environment:
-  #   # (pkgs.writeShellScriptBin "my-hello" ''
-  #   #   echo "Hello, ${config.home.username}!"
-  #   # '')
-  # ];
+    #   # # You can also create simple shell scripts directly inside your
+    #   # # configuration. For example, this adds a command 'my-hello' to your
+    #   # # environment:
+    #   # (pkgs.writeShellScriptBin "my-hello" ''
+    #   #   echo "Hello, ${config.home.username}!"
+    #   # '')
+  ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -413,7 +177,7 @@
   #  /etc/profiles/per-user/fangyuan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "vim";
+    EDITOR = "vi";
   };
 
   # Let Home Manager install and manage itself.
