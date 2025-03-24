@@ -8,8 +8,8 @@
 
   stylix = {
     enable = true;
-    autoEnable = false;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/mountain.yaml";
+    # autoEnable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal.yaml";
 
     cursor = {
       package = pkgs.bibata-cursors;
@@ -26,18 +26,18 @@
 
     fonts = {
       serif = {
-        package = pkgs.ibm-plex;
-        name = "IBM Plex Serif";
+        package = pkgs.cantarell-fonts;
+        name = "Cantarell";
       };
 
       sansSerif = {
-        package = pkgs.ibm-plex;
-        name = "IBM Plex Sans";
+        package = pkgs.cantarell-fonts;
+        name = "Cantarell";
       };
 
       monospace = {
-        package = pkgs.nerd-fonts.blex-mono;
-        name = "BlexMono Nerd Font";
+        package = pkgs.nerd-fonts.fira-code;
+        name = "FiraCode Nerd Font";
       };
 
       emoji = {
@@ -53,17 +53,12 @@
     };
 
     targets = {
-      # chromium.enable = true;
       gtk.enable = true;
       qt.enable = true;
       hyprland.enable = true;
-      floorp = {
-        enable = true;
-        colorTheme.enable = true;
-        profileNames = ["rsr"];
-      };
       wezterm.enable = true;
       kitty.enable = true;
+      ghostty.enable = true;
       wofi.enable = true;
       fuzzel.enable = true;
       dunst.enable = true;

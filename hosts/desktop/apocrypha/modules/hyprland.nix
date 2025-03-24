@@ -25,9 +25,10 @@
         # "col.inactive_border" = "rgb(282828)";
       };
       "exec-once" = [
-        "eww daemon; eww open bar_1"
+        # "eww daemon; eww open bar_1"
+        "waybar"
         "dunst"
-        "swww kill; swww-daemon"
+        "waypaper --restore"
       ];
       input = {
         # Keyboard: Add a layout and uncomment kb_options for Win+Space switching shortcut
@@ -40,7 +41,7 @@
         follow_mouse = 1;
       };
       decoration = {
-        rounding = 0;
+        rounding = 7;
         rounding_power = 2.0;
         dim_inactive = false;
       };
@@ -111,7 +112,7 @@
         animate_manual_resizes = false;
         animate_mouse_windowdragging = false;
         enable_swallow = true;
-        swallow_regex = "(foot|kitty|allacritty|Alacritty|org.wezfurlong.wezterm)";
+        swallow_regex = "(foot|kitty|allacritty|Alacritty|org.wezfurlong.wezterm|com.mitchellh.ghostty)";
 
         disable_hyprland_logo = true;
         new_window_takes_over_fullscreen = 2;
@@ -135,88 +136,57 @@
         ", XF86AudioPrev, exec, playerctl previous"
         ", XF86AudioNext, exec, playerctl next"
       ];
-      bind =
-        [
-          # # # Window management
-          # # Focusing
-          # # bind = Super, ←/↑/→/↓,, # Move focus in direction
-          "$mod, Left, movefocus, l"
-          "$mod, Right, movefocus, r"
-          "$mod, Up, movefocus, u"
-          "$mod, Down, movefocus, d"
-          "$mod+Shift, Q, killactive,"
-          "$mod+Shift+Alt, Q, exec, hyprctl kill" # Pick and kill a window
-          # # Window arrangement
-          # # bind = Super+Shift, ←/↑/→/↓,, # Window: move in direction
-          "$mod+Shift, Left, movewindow, l"
-          "$mod+Shift, Right, movewindow, r"
-          "$mod+Shift, Up, movewindow, u"
-          "$mod+Shift, Down, movewindow, d"
-          # # Positioning mode
-          "$mod+Alt, Space, togglefloating,"
-          "$mod+Alt, F, fullscreenstate, 0 3" # Toggle fake fullscreen
-          "$mod, F, fullscreen, 0"
-          "$mod, D, fullscreen, 1"
-          # # Workspaces
-          # "$mod, 1, workspace, 1"
-          # "$mod, 2, workspace, 2"
-          # "$mod, 3, workspace, 3"
-          # "$mod, 4, workspace, 4"
-          # "$mod, 5, workspace, 5"
-          # "$mod, 6, workspace, 6"
-          # "$mod, 7, workspace, 7"
-          # "$mod, 8, workspace, 8"
-          # "$mod, 9, workspace, 9"
-          # "$mod, 0, workspace, 10"
-          # "$mod SHIFT, 1, movetoworkspace, 1"
-          # "$mod SHIFT, 2, movetoworkspace, 2"
-          # "$mod SHIFT, 3, movetoworkspace, 3"
-          # "$mod SHIFT, 4, movetoworkspace, 4"
-          # "$mod SHIFT, 5, movetoworkspace, 5"
-          # "$mod SHIFT, 6, movetoworkspace, 6"
-          # "$mod SHIFT, 7, movetoworkspace, 7"
-          # "$mod SHIFT, 8, movetoworkspace, 8"
-          # "$mod SHIFT, 9, movetoworkspace, 9"
-          # "$mod SHIFT, 0, movetoworkspace, 10"
-          # "$mod, mouse_down, workspace, e+1"
-          # "$mod, mouse_up, workspace, e-1"
-          # # Special Workspaces
-          "$mod, S, togglespecialworkspace, magic"
-          "$mod ALT, S, movetoworkspace, special:magic"
-          "$mod, i, togglespecialworkspace, special"
-          # # # Actions
-          # # Color Picker
-          "$mod SHIFT, C, exec, hyprpicker -a -f hex"
-          # # Wallpaper
-          "$mod+Alt, W, exec, pkill waypaper || waypaper"
-          # # App Launcer
-          "$mod, Space, exec, pkill fuzzel || fuzzel"
-          # # -______Terminal______- # #
-          "$mod, Return, exec, kitty"
-          # # File Explorer
-          "$mod, T, exec, nemo"
-          # # Power Off etc.
-          "Ctrl+Shift+Super, Delete, exec, systemctl reboot" # Restart
-          "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff" # Power off
-        ]
-        ++ (
-          # workspaces
-          # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-          builtins.concatLists (
-            builtins.genList (
-              i: let
-                ws = i + 1;
-              in [
-                "$mod, code:1${toString i}, workspace, ${toString ws}"
-                "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-              ]
-            )
-            9
-          )
-        );
+      bind = [
+        "$mod, Left, movefocus, l"
+        "$mod, Right, movefocus, r"
+        "$mod, Up, movefocus, u"
+        "$mod, Down, movefocus, d"
+        "$mod+Shift, Q, killactive,"
+        "$mod+Shift+Alt, Q, exec, hyprctl kill"
+        "$mod+Shift, Left, movewindow, l"
+        "$mod+Shift, Right, movewindow, r"
+        "$mod+Shift, Up, movewindow, u"
+        "$mod+Shift, Down, movewindow, d"
+        "$mod+SHIFT, Space, togglefloating,"
+        "$mod+ALT, F, fullscreenstate, 0 3"
+        "$mod, F, fullscreen, 0"
+        "$mod+SHIFT, F, fullscreen, 1"
+        "$mod, 1, workspace, 1"
+        "$mod, 2, workspace, 2"
+        "$mod, 3, workspace, 3"
+        "$mod, 4, workspace, 4"
+        "$mod, 5, workspace, 5"
+        "$mod, 6, workspace, 6"
+        "$mod, 7, workspace, 7"
+        "$mod, 8, workspace, 8"
+        "$mod, 9, workspace, 9"
+        "$mod, 0, workspace, 10"
+        "$mod SHIFT, 1, movetoworkspace, 1"
+        "$mod SHIFT, 2, movetoworkspace, 2"
+        "$mod SHIFT, 3, movetoworkspace, 3"
+        "$mod SHIFT, 4, movetoworkspace, 4"
+        "$mod SHIFT, 5, movetoworkspace, 5"
+        "$mod SHIFT, 6, movetoworkspace, 6"
+        "$mod SHIFT, 7, movetoworkspace, 7"
+        "$mod SHIFT, 8, movetoworkspace, 8"
+        "$mod SHIFT, 9, movetoworkspace, 9"
+        "$mod SHIFT, 0, movetoworkspace, 10"
+        "$mod, S, togglespecialworkspace, magic"
+        "$mod ALT, S, movetoworkspace, special:magic"
+        # "$mod, i, togglespecialworkspace, special"
+        "$mod SHIFT, C, exec, hyprpicker -a -f hex"
+        "$mod+Alt, W, exec, waypaper"
+        "$mod, Space, exec, pkill fuzzel || fuzzel"
+        "$mod, D, exec, bemenu-run"
+        "$mod, Return, exec, kitty"
+        "$mod, T, exec, nemo"
+        "Ctrl+Shift+Super, Delete, exec, systemctl reboot"
+        "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff"
+      ];
       windowrulev2 = [
         "float, class:(waypaper)"
         "float, class:(com.saivert.pwvucontrol)"
+        "float, class:(xdg-desktop-portal-gtk)"
         "size 815 600, class:(com.saivert.pwvucontrol) "
         "size 360 660, class:(io.bassi.Amberol)"
         "size 800 600, class:(kitty)"
@@ -226,6 +196,24 @@
       bind = SUPER, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable
       bind = , Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of whole screen taken" -t 1000
       bind = $mod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of the region taken" -t 1000
+      # will switch to a submap called resize
+      bind = $mod, R, submap, resize
+
+      # will start a submap called "resize"
+      submap = resize
+
+      # sets repeatable binds for resizing the active window
+      binde = , right, resizeactive, 10 0
+      binde = , left, resizeactive, -10 0
+      binde = , up, resizeactive, 0 -10
+      binde = , down, resizeactive, 0 10
+
+      # use reset to go back to the global submap
+      bind = , escape, submap, reset
+      bind = $mod, R, submap, reset
+
+      # will reset the submap, which will return to the global submap
+      submap = reset
     '';
   };
 }

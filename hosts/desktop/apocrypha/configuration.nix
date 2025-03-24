@@ -102,23 +102,8 @@
     };
   };
 
-  # # Shell
+  # #
   programs = {
-    # bash = {
-    #   interactiveShellInit = ''
-    #     if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-    #     then
-    #       shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-    #       exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-    #     fi
-    #   '';
-    # };
-    # fish = {
-    #   enable = true;
-    # };
-    # zsh = {
-    #   enable = true;
-    # };
     adb = {
       enable = true;
     };
@@ -346,11 +331,7 @@
       #       }
       #     ];
       # })
-      # # App Launchers and Widgets
-      swww
-      waypaper
       # # Utils
-      yt-dlp
       thefuck
       ffmpeg
       ffmpegthumbnailer
@@ -361,8 +342,6 @@
       tldr
       playerctl
       dunst
-      # hyprgui
-      notify
       libnotify
       pwvucontrol
       grim # Screenshot
@@ -426,13 +405,16 @@
       glibc
       libgcc
       gcc
+      ncurses
       zig
       clang
       go
+      vala
       alejandra
       nixfmt-rfc-style
       nil
       nixd
+      love
       # # Wine
       wineWowPackages.staging
       winetricks
