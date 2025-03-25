@@ -11,8 +11,6 @@
   imports = [
     ./modules/stylix.nix
     ./modules/gtk.nix
-    # ./modules/qt.nix
-    # ./modules/cursor.nix
     ./modules/font.nix
     ./modules/hyprland.nix
     ./modules/hyprlock.nix
@@ -99,24 +97,6 @@
         gap_size = "8";
       };
     };
-  };
-
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    enableNushellIntegration = true;
-    enableZshIntegration = true;
-  };
-
-  programs.eza = {
-    enable = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    enableNushellIntegration = true;
-    enableZshIntegration = true;
-    extraOptions = ["--group-directories-first"];
-    icons = "auto";
   };
 
   # This value determines the Home Manager release that your configuration is
