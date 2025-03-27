@@ -12,11 +12,11 @@
     extensions = {
       enableDefaultExtensions = true;
       enableExtraExtensions = true;
-      darkreader.enable = true;
       extraExtensions = {
         "{531906d3-e22f-4a6c-a102-8057b88a1a63}".install_url = "https://addons.mozilla.org/firefox/downloads/latest/single-file/latest.xpi";
         "DontFuckWithPaste@raim.ist".install_url = "https://addons.mozilla.org/firefox/downloads/latest/don-t-fuck-with-paste/latest.xpi";
         "{3c078156-979c-498b-8990-85f7987dd929}".install_url = "https://addons.mozilla.org/firefox/downloads/latest/sidebery/latest.xpi";
+        # "FirefoxColor@mozilla.com".install_url = "https://addons.mozilla.org/firefox/downloads/latest/firefox-color/latest.xpi";
       };
     };
 
@@ -27,11 +27,11 @@
     };
 
     theme = {
-      colors = {
-        background-darker = "121212";
-        background = "000000";
-        foreground = "C1C1C1";
-      };
+      # colors = {
+      #   background-darker = "121212";
+      #   background = "000000";
+      #   foreground = "C1C1C1";
+      # };
 
       extraUserChrome = ''
         /**

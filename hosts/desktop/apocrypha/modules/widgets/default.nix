@@ -5,5 +5,6 @@
     ./wofi.nix
     ./eww.nix
     ./waybar.nix
+    ./wlogout.nix
   ];
 }

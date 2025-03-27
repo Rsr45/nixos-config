@@ -9,7 +9,12 @@
   stylix = {
     enable = true;
     # autoEnable = false;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    override = {
+      base01 = "#282828";
+      base02 = "#3c3836";
+      base03 = "#504945";
+    };
 
     cursor = {
       package = pkgs.bibata-cursors;
@@ -62,7 +67,7 @@
       wofi.enable = true;
       fuzzel.enable = true;
       dunst.enable = true;
-      nixcord.enable = true;
+      nixcord.enable = false;
       zed.enable = true;
       nvf.enable = true;
       btop.enable = true;

@@ -6,7 +6,7 @@
   imports = [inputs.nixcord.homeManagerModules.nixcord];
 
   programs.nixcord = {
-    enable = true; # enable Nixcord. Also installs discord package
+    enable = true;
     discord.enable = false;
     discord.vencord.package = pkgs.vencord;
     vesktop.enable = true;
@@ -95,7 +95,7 @@
         youtubeAdblock.enable = true;
         noTypingAnimation.enable = true;
         clearURLs.enable = true;
-        colorSighted.enable = true;
+        # colorSighted.enable = true;
         disableCallIdle.enable = true;
         ctrlEnterSend.enable = true;
         copyFileContents.enable = true;

@@ -11,6 +11,7 @@
     shellAliases = {
       g = "git";
       "..." = "cd ../..";
+      cd = "z";
       rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
       reboot = "systemctl reboot";
       shutdown = "systemctl poweroff";
@@ -19,5 +20,6 @@
       yt-v = "yt-dlp --embed-metadata --restrict-filenames --output '${config.home.homeDirectory}/Videos/Youtube/%(title).200B.%(ext)s'";
       cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
     };
+    shell.enableShellIntegration = true;
   };
 }

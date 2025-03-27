@@ -9,6 +9,7 @@
     shellAliases = {
       g = "git";
       "..." = "cd ../..";
+      cd = "z";
       rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
       reboot = "systemctl reboot";
       shutdown = "systemctl poweroff";
