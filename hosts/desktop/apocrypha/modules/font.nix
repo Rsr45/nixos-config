@@ -2,14 +2,14 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      monospace = ["GeistMono Nerd Font"];
+      monospace = ["FiraCode Nerd Font"];
       sansSerif = [
-        "Geist"
+        "Cantarell"
         "Noto Color Emoji"
         "Symbols Nerd Font"
       ];
       serif = [
-        "Noto Serif"
+        "Cantarell"
         "Noto Color Emoji"
         "Symbols Nerd Font"
       ];
