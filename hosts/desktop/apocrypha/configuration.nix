@@ -10,6 +10,8 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # # Bootloader
   boot = {
     loader = {
@@ -27,11 +29,11 @@
     hostName = "apocrypha"; # Define hostname
     networkmanager = {
       enable = true;
-      dns = "systemd-resolved";
-      insertNameservers = [
-        "9.9.9.9"
-        "1.1.1.1"
-      ];
+      # dns = "systemd-resolved";
+      # insertNameservers = [
+      #   "9.9.9.9"
+      #   "1.1.1.1"
+      # ];
     };
     # nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
@@ -92,11 +94,12 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+      extraPackages = with pkgs; [mesa libva libvdpau-va-gl vulkan-loader vulkan-validation-layers mesa.opencl];
     };
-    amdgpu.amdvlk = {
-      enable = true;
-      support32Bit.enable = true;
-    };
+    # amdgpu.amdvlk = {
+    #   enable = true;
+    #   support32Bit.enable = true;
+    # };
     xone = {
       enable = true;
     };
@@ -269,6 +272,8 @@
       ADW_DISABLE_PORTAL = "1";
     };
     variables = {
+      RUSTICL_ENABLE = "radeonsi";
+      ROC_ENABLE_PRE_VEGA = "1";
     };
     systemPackages = with pkgs; [
       # #

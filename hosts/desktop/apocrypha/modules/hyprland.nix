@@ -26,9 +26,9 @@
       };
       "exec-once" = [
         # "eww daemon; eww open bar_1"
-        "waybar"
-        "dunst"
-        "waypaper --restore"
+        "uwsm app -- waybar"
+        "uwsm app -- dunst"
+        "uwsm app -- waypaper --restore"
       ];
       input = {
         # Keyboard: Add a layout and uncomment kb_options for Win+Space switching shortcut
@@ -173,12 +173,12 @@
         "$mod, S, togglespecialworkspace, magic"
         "$mod ALT, S, movetoworkspace, special:magic"
         # "$mod, i, togglespecialworkspace, special"
-        "$mod SHIFT, C, exec, hyprpicker -a -f hex"
-        "$mod+Alt, W, exec, waypaper"
-        "$mod, Space, exec, pkill fuzzel || fuzzel"
-        "$mod, D, exec, bemenu-run"
-        "$mod, Return, exec, kitty"
-        "$mod, T, exec, nemo"
+        "$mod SHIFT, C, exec, uwsm app -- hyprpicker --a --f hex"
+        "$mod+Alt, W, exec, uwsm app -- waypaper"
+        "$mod, Space, exec, uwsm app -- pkill fuzzel || fuzzel"
+        "$mod, D, exec, uwsm app -- bemenu-run"
+        "$mod, Return, exec, uwsm app -- kitty"
+        "$mod, T, exec, uwsm app -- nemo"
         "Ctrl+Shift+Super, Delete, exec, systemctl reboot"
         "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff"
       ];

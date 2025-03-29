@@ -9,8 +9,7 @@
       local config = wezterm.config_builder()
 
       -- This is where you actually apply your config choices
-      -- config.enable_wayland = false
-      -- config.front_end = "WebGpu"
+      enable_tab_bar = false
 
       -- and finally, return the configuration to wezterm
       return config
