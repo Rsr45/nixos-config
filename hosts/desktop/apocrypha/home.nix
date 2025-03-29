@@ -14,7 +14,6 @@
     ./modules/font.nix
     ./modules/hyprland.nix
     ./modules/hyprlock.nix
-    # ./modules/matugen.nix
     ./modules/spotify.nix
     ./modules/mpd.nix
     ./modules/nixcord.nix
@@ -25,6 +24,7 @@
     ./modules/shell/default.nix
     ./modules/cli/default.nix
     ./modules/default.nix
+    ./modules/zathura.nix
   ];
 
   nixpkgs.config = {
@@ -45,6 +45,7 @@
       XDG_YOUTUBE_DIR = "${config.xdg.userDirs.videos}/Youtube";
     };
   };
+  xdg.portal.enable = true;
   # xdg = {
   #   mimeApps = {
   #     enable = true;
@@ -53,7 +54,7 @@
   #       "image/png" = "feh.desktop";
   #       "image/gif" = "mpv.desktop";
   #       "image/webp" = "feh.desktop";
-  #       "application/pdf" = "floorp.desktop";
+  #       "application/pdf" = "org.pwmt.zathura.desktop";
   #       "text/html" = "floorp.desktop";
   #       "x-scheme-handler/http" = "floorp.desktop";
   #       "x-scheme-handler/https" = "floorp.desktop";
@@ -112,6 +113,8 @@
   # environment.
   home.packages = with pkgs; [
     nsxiv
+    davinci-resolve
+    shotcut
     #   # # Fonts
     #   font-awesome
     #   ibm-plex

@@ -12,6 +12,7 @@
     extensions = {
       enableDefaultExtensions = true;
       enableExtraExtensions = true;
+      darkreader.enable = true;
       extraExtensions = {
         "{531906d3-e22f-4a6c-a102-8057b88a1a63}".install_url = "https://addons.mozilla.org/firefox/downloads/latest/single-file/latest.xpi";
         "DontFuckWithPaste@raim.ist".install_url = "https://addons.mozilla.org/firefox/downloads/latest/don-t-fuck-with-paste/latest.xpi";
@@ -27,11 +28,11 @@
     };
 
     theme = {
-      # colors = {
-      #   background-darker = "121212";
-      #   background = "000000";
-      #   foreground = "C1C1C1";
-      # };
+      colors = {
+        background-darker = "1D2021";
+        background = "282828";
+        foreground = "D5C4A1";
+      };
 
       extraUserChrome = ''
         /**
