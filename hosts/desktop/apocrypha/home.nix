@@ -94,7 +94,7 @@
         height = 300;
         offset = "30x30";
         origin = "bottom-right";
-        corner_radius = "7";
+        corner_radius = "0";
         gap_size = "8";
       };
     };
@@ -112,6 +112,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    osu-lazer-bin
     nsxiv
     davinci-resolve
     shotcut
