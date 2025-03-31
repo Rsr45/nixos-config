@@ -77,6 +77,7 @@
       tmux.enable = true;
       gitui.enable = true;
       waybar.enable = true;
+      waybar.addCss = false;
     };
   };
 }

@@ -274,6 +274,7 @@
     variables = {
       RUSTICL_ENABLE = "radeonsi";
       ROC_ENABLE_PRE_VEGA = "1";
+      DOTNET_CLI_TELEMETRY_OPTOUT = "1";
     };
     systemPackages = with pkgs; [
       # #
@@ -316,6 +317,7 @@
       kitty
       git-credential-keepassxc
       libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
+      networkmanagerapplet
       # # VSCode
       # vscodium
       # (vscode-with-extensions.override {
@@ -413,6 +415,12 @@
       ncurses
       zig
       clang
+      rustc
+      cargo
+      # rust-analyzer
+      # rustfmt
+      dotnet-sdk_8
+      dotnet-sdk_9
       go
       vala
       alejandra

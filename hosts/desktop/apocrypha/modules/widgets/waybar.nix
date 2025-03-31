@@ -6,22 +6,35 @@
         layer = "top";
         position = "top";
         height = 30;
+        spacing = 0;
         reload_style_on_change = true;
-        modules-left = ["tray"];
-        modules-center = ["hyprland/workspaces" "custom/seperator" "clock"];
-        modules-right = ["wireplumber" "network" "disk" "cpu" "memory"];
+        modules-left = ["custom/blank" "hyprland/workspaces"];
+        modules-center = ["clock"];
+        modules-right = ["wireplumber" "disk" "cpu" "memory" "custom/seperator" "network" "custom/power" "custom/blank"];
 
         "custom/seperator" = {
-          format = "  ";
+          format = " | ";
+          tooltip = false;
+        };
+
+        "custom/blank" = {
+          format = "  ";
+          tooltip = false;
+        };
+
+        "custom/power" = {
+          format = "  ";
+          on-click = "wlogout";
+          tooltip = false;
         };
 
         "hyprland/workspaces" = {
-          format = "{icon}";
-          format-icons = {
-            default = "  ";
-            urgent = "  ";
-            active = "  ";
-          };
+          # format = "{icon}";
+          # format-icons = {
+          #   default = "";
+          #   urgent = "";
+          #   active = "";
+          # };
           persistent-workspaces = {
             "1" = "[]";
             "2" = "[]";
@@ -55,14 +68,56 @@
         };
 
         "wireplumber" = {
-          format = "{volume}%";
-          format-muted = "  ";
+          format = "{volume}% ";
+          format-muted = "x% ";
           on-click = "pwvucontrol";
-          on-click-middle = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+          on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
 
         "disk" = {
-          format = "{percentage_used}%";
+          format = "{percentage_used}% ";
+        };
+
+        "cpu" = {
+          format = "{usage}% ";
+        };
+
+        "memory" = {
+          format = "{percentage}% ";
+        };
+
+        "tray" = {
+          spacing = 5;
+        };
+
+        "network" = {
+          format-wifi = " ";
+          format-ethernet = " ";
+          format-disconnected = " ";
+          tooltip-format-disconnected = "Error";
+          tooltip-format-wifi = "{essid} ({signalStrength}%)  ";
+          tooltip-format-ethernet = "{ifname} 🖧 ";
+          on-click = "nm-connection-editor";
+        };
+      };
+
+      bottomBar = {
+        layer = "top";
+        position = "bottom";
+        height = 20;
+        spacing = 0;
+        reload_style_on_change = true;
+
+        modules-left = ["custom/blank"];
+        modules-right = ["tray" "custom/blank"];
+
+        "custom/blank" = {
+          format = " ";
+          tooltip = false;
+        };
+
+        "tray" = {
+          spacing = 0;
         };
       };
     };

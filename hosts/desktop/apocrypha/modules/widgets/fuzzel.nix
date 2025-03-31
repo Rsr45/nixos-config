@@ -14,7 +14,7 @@
       #   border = "3C3836FF";
       # };
       border = {
-        radius = "7";
+        radius = "0";
         width = "4";
       };
     };

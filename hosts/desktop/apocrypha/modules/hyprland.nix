@@ -16,8 +16,8 @@
       "$mod" = "SUPER";
       monitor = [",1920x1080@144,auto,1"];
       general = {
-        gaps_in = 5;
-        gaps_out = 10;
+        gaps_in = 0;
+        gaps_out = 0;
         border_size = 4;
         layout = "dwindle";
         resize_on_border = true;
@@ -40,7 +40,7 @@
         follow_mouse = 1;
       };
       decoration = {
-        rounding = 7;
+        rounding = 0;
         rounding_power = 2.0;
         dim_inactive = false;
       };
