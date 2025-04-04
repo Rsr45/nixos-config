@@ -136,16 +136,16 @@
         ", XF86AudioNext, exec, playerctl next"
       ];
       bind = [
-        "$mod, Left, movefocus, l"
-        "$mod, Right, movefocus, r"
-        "$mod, Up, movefocus, u"
-        "$mod, Down, movefocus, d"
+        "$mod, h, movefocus, l"
+        "$mod, l, movefocus, r"
+        "$mod, k, movefocus, u"
+        "$mod, j, movefocus, d"
         "$mod+Shift, Q, killactive,"
         "$mod+Shift+Alt, Q, exec, hyprctl kill"
-        "$mod+Shift, Left, movewindow, l"
-        "$mod+Shift, Right, movewindow, r"
-        "$mod+Shift, Up, movewindow, u"
-        "$mod+Shift, Down, movewindow, d"
+        "$mod+Shift, h, movewindow, l"
+        "$mod+Shift, l, movewindow, r"
+        "$mod+Shift, k, movewindow, u"
+        "$mod+Shift, j, movewindow, d"
         "$mod+SHIFT, Space, togglefloating,"
         "$mod+ALT, F, fullscreenstate, 0 3"
         "$mod, F, fullscreen, 0"
@@ -202,10 +202,10 @@
       submap = resize
 
       # sets repeatable binds for resizing the active window
-      binde = , right, resizeactive, 10 0
-      binde = , left, resizeactive, -10 0
-      binde = , up, resizeactive, 0 -10
-      binde = , down, resizeactive, 0 10
+      binde = , l, resizeactive, 10 0
+      binde = , h, resizeactive, -10 0
+      binde = , k, resizeactive, 0 -10
+      binde = , j, resizeactive, 0 10
 
       # use reset to go back to the global submap
       bind = , escape, submap, reset
