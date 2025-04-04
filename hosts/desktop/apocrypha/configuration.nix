@@ -432,6 +432,7 @@
       wineWowPackages.staging
       winetricks
       protontricks
+      protonup-qt
       # # Launchers and some utils
       (heroic.override {
         extraPkgs = pkgs: [

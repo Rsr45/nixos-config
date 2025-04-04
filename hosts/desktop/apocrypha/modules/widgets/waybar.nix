@@ -3,6 +3,7 @@
     enable = true;
     settings = {
       mainBar = {
+        name = "mainBar";
         layer = "top";
         position = "top";
         height = 30;
@@ -102,6 +103,7 @@
       };
 
       bottomBar = {
+        name = "bottomBar";
         layer = "top";
         position = "bottom";
         height = 20;
@@ -121,5 +123,19 @@
         };
       };
     };
+
+    style = ''
+      * {
+        border: none;
+        border-radius: 0;
+      }
+      window#waybar.bottomBar {
+        background: #16191C;
+        color: #AAB2BF;
+      }
+      #workspaces button {
+        padding: 0 5px;
+      }
+    '';
   };
 }

@@ -69,7 +69,11 @@
       dunst.enable = true;
       nixcord.enable = false;
       zed.enable = true;
-      nvf.enable = true;
+      nvf = {
+        enable = true;
+        plugin = "mini-base16";
+      };
+      nixvim.enable = false;
       btop.enable = true;
       mpv.enable = true;
       nushell.enable = true;

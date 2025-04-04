@@ -11,7 +11,7 @@
 
       network.listenAddress = "any"; # if you want to allow non-localhost connections
     };
-    mpd-discord-rpc.enable = true;
+    mpd-discord-rpc.enable = false;
     mpd-mpris = {
       enable = true;
       mpd.useLocal = true;
