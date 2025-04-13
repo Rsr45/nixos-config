@@ -318,6 +318,7 @@
       git-credential-keepassxc
       libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
       networkmanagerapplet
+      filezilla
       # # VSCode
       # vscodium
       # (vscode-with-extensions.override {
@@ -424,7 +425,7 @@
       go
       vala
       alejandra
-      nixfmt-rfc-style
+      # nixfmt-rfc-style
       nil
       nixd
       love
