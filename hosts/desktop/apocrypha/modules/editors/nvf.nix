@@ -115,6 +115,7 @@
         enable = true;
         globalStyle = "solid";
       };
+      breadcrumbs.enable = true;
     };
 
     utility.oil-nvim.enable = true;
@@ -126,13 +127,14 @@
       refresh = {
         statusline = 100;
         tabline = 100;
+        winbar = 100;
       };
     };
 
-    treesitter.context = {
-      enable = true;
-      setupOpts.max_lines = 1;
-    };
+    # treesitter.context = {
+    #   enable = true;
+    #   setupOpts.max_lines = 1;
+    # };
 
     autocomplete = {
       enableSharedCmpSources = true;
@@ -153,7 +155,7 @@
       nix = {
         enable = true;
         # format.type = "alejandra";
-        lsp.server = "nixd";
+        lsp.server = "nil";
         lsp.options = {
           nixpkgs = {
             expr = "import (builtins.getFlake \"github:Rsr45/nixos-config\").inputs.nixpkgs { }";
