@@ -39,6 +39,11 @@
       };
     };
 
+    terminal.toggleterm = {
+      enable = true;
+      lazygit.enable = true;
+    };
+
     diagnostics.nvim-lint.enable = true; # fixes lzn-auto-require can't find lint.lua
     git.enable = true;
     autopairs.nvim-autopairs.enable = true;
