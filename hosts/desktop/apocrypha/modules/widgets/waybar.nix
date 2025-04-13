@@ -11,7 +11,7 @@
         reload_style_on_change = true;
         modules-left = ["custom/blank" "hyprland/workspaces"];
         modules-center = ["clock"];
-        modules-right = ["wireplumber" "disk" "cpu" "memory" "custom/seperator" "network" "custom/power" "custom/blank"];
+        modules-right = ["tray" "wireplumber" "disk" "cpu" "memory" "custom/seperator" "network" "custom/power" "custom/blank"];
 
         "custom/seperator" = {
           format = " | ";
@@ -102,36 +102,32 @@
         };
       };
 
-      bottomBar = {
-        name = "bottomBar";
-        layer = "top";
-        position = "bottom";
-        height = 20;
-        spacing = 0;
-        reload_style_on_change = true;
-
-        modules-left = ["custom/blank"];
-        modules-right = ["tray" "custom/blank"];
-
-        "custom/blank" = {
-          format = " ";
-          tooltip = false;
-        };
-
-        "tray" = {
-          spacing = 0;
-        };
-      };
+      # bottomBar = {
+      #   name = "bottomBar";
+      #   layer = "top";
+      #   position = "bottom";
+      #   height = 20;
+      #   spacing = 0;
+      #   reload_style_on_change = true;
+      #
+      #   modules-left = ["custom/blank"];
+      #   modules-right = ["tray" "custom/blank"];
+      #
+      #   "custom/blank" = {
+      #     format = " ";
+      #     tooltip = false;
+      #   };
+      #
+      #   "tray" = {
+      #     spacing = 0;
+      #   };
+      # };
     };
 
     style = ''
       * {
         border: none;
         border-radius: 0;
-      }
-      window#waybar.bottomBar {
-        background: #16191C;
-        color: #AAB2BF;
       }
       #workspaces button {
         padding: 0 5px;
