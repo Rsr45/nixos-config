@@ -379,13 +379,13 @@
       # haguichi # Hamachi Client
       anydesk # Remote Desktop Client
       localsend # File Sharing
-      pywalfox-native
+      # pywalfox-native
       obsidian # Note
       keepassxc # Password Manager
       brave
-      ungoogled-chromium
+      # ungoogled-chromium
       floorp
-      inputs.zen-browser.packages."${system}".default
+      # inputs.zen-browser.packages."${system}".default
       tor-browser
       fum
       amberol
