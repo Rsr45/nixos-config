@@ -44,6 +44,7 @@
       lazygit.enable = true;
     };
 
+    utility.yazi-nvim.enable = true;
     diagnostics.nvim-lint.enable = true; # fixes lzn-auto-require can't find lint.lua
     git.enable = true;
     autopairs.nvim-autopairs.enable = true;
@@ -91,7 +92,6 @@
       };
       nvim-web-devicons.enable = true;
     };
-    mini.icons.enable = true;
 
     ui = {
       colorizer = {
@@ -126,7 +126,6 @@
     utility.oil-nvim.enable = true;
     navigation.harpoon.enable = true;
     telescope.enable = true;
-    mini.tabline.enable = false;
     statusline.lualine = {
       enable = true;
       refresh = {
@@ -135,11 +134,6 @@
         winbar = 100;
       };
     };
-
-    # treesitter.context = {
-    #   enable = true;
-    #   setupOpts.max_lines = 1;
-    # };
 
     autocomplete = {
       enableSharedCmpSources = true;
