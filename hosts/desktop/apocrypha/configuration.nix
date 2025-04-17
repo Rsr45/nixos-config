@@ -29,11 +29,11 @@
     hostName = "apocrypha"; # Define hostname
     networkmanager = {
       enable = true;
-      # dns = "systemd-resolved";
-      # insertNameservers = [
-      #   "9.9.9.9"
-      #   "1.1.1.1"
-      # ];
+      dns = "systemd-resolved";
+      insertNameservers = [
+        "9.9.9.9"
+        "1.1.1.1"
+      ];
     };
     # nameservers = ["9.9.9.9" "1.1.1.1"];
     # proxy = {
@@ -319,6 +319,7 @@
       libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
       networkmanagerapplet
       filezilla
+      sioyek
       # # VSCode
       # vscodium
       # (vscode-with-extensions.override {

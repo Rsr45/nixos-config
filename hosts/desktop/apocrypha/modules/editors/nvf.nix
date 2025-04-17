@@ -2,7 +2,8 @@
   inputs,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     inputs.nvf.homeManagerModules.default
   ];
@@ -98,7 +99,7 @@
         enable = true;
         setupOpts = {
           filetypes = {
-            "*" = {};
+            "*" = { };
           };
           user_default_options = {
             RGB = true;
@@ -153,8 +154,8 @@
 
       nix = {
         enable = true;
-        # format.type = "alejandra";
-        lsp.server = "nil";
+        format.type = "nixfmt";
+        lsp.server = "nil"; # nixd has problems with breadcrumbs out of the box take a look.
         lsp.options = {
           nixpkgs = {
             expr = "import (builtins.getFlake \"github:Rsr45/nixos-config\").inputs.nixpkgs { }";

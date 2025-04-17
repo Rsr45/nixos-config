@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  config,
   ...
 }: {
   imports = [inputs.stylix.homeManagerModules.stylix];
@@ -9,12 +8,12 @@
   stylix = {
     enable = true;
     # autoEnable = false;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-    override = {
-      base01 = "#282828";
-      base02 = "#3c3836";
-      base03 = "#504945";
-    };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
+    # override = {
+    #   base01 = "#282828";
+    #   base02 = "#3c3836";
+    #   base03 = "#504945";
+    # };
 
     cursor = {
       package = pkgs.capitaine-cursors-themed;
@@ -82,6 +81,11 @@
       gitui.enable = true;
       waybar.enable = true;
       waybar.addCss = false;
+      floorp = {
+        enable = true;
+        colorTheme.enable = true;
+        profileNames = ["rsr"];
+      };
     };
   };
 }
