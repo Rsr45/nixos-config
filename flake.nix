@@ -27,32 +27,37 @@
     nixcord.url = "github:kaylorben/nixcord";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: let
-    system = "x86_64-linux";
-  in {
-    nixosConfigurations = {
-      apocrypha = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs system;};
-        modules = [
-          ./hosts/desktop/apocrypha/configuration.nix
-        ];
-      };
-      nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs system;};
-        modules = [
-          ./hosts/vm/nixos/configuration.nix
-        ];
-      };
-      heaven = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs system;};
-        modules = [
-          ./hosts/desktop/heaven/configuration.nix
-        ];
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nur,
+      ...
+    }@inputs:
+    let
+      system = "x86_64-linux";
+    in
+    {
+      formatter.x86_64-linux = nixpkgs.legacyPackages."${system}".linux.nixfmt-rfc-style;
+      nixosConfigurations = {
+        apocrypha = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs system; };
+          modules = [
+            ./hosts/desktop/apocrypha/configuration.nix
+          ];
+        };
+        nixos = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs system; };
+          modules = [
+            ./hosts/vm/nixos/configuration.nix
+          ];
+        };
+        heaven = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs system; };
+          modules = [
+            ./hosts/desktop/heaven/configuration.nix
+          ];
+        };
       };
     };
-  };
 }
