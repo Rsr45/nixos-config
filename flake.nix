@@ -31,7 +31,6 @@
     {
       self,
       nixpkgs,
-      nur,
       ...
     }@inputs:
     let
