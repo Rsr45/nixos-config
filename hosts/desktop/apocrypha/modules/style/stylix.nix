@@ -2,8 +2,9 @@
   inputs,
   pkgs,
   ...
-}: {
-  imports = [inputs.stylix.homeManagerModules.stylix];
+}:
+{
+  imports = [ inputs.stylix.homeManagerModules.stylix ];
 
   stylix = {
     enable = true;
@@ -84,7 +85,7 @@
       floorp = {
         enable = true;
         colorTheme.enable = true;
-        profileNames = ["rsr"];
+        profileNames = [ "rsr" ];
       };
     };
   };

@@ -155,7 +155,7 @@
       nix = {
         enable = true;
         format.type = "nixfmt";
-        lsp.server = "nil"; # nixd has problems with breadcrumbs out of the box take a look.
+        lsp.server = "nixd"; # nixd has problems with breadcrumbs out of the box take a look.
         lsp.options = {
           nixpkgs = {
             expr = "import (builtins.getFlake \"github:Rsr45/nixos-config\").inputs.nixpkgs { }";

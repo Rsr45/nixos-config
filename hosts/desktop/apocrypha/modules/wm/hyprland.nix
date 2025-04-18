@@ -2,7 +2,8 @@
   inputs,
   pkgs,
   ...
-}: {
+}:
+{
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -14,7 +15,7 @@
     ];
     settings = {
       "$mod" = "SUPER";
-      monitor = [",1920x1080@144,auto,1"];
+      monitor = [ ",1920x1080@144,auto,1" ];
       general = {
         gaps_in = 0;
         gaps_out = 0;
@@ -25,6 +26,7 @@
         # "col.inactive_border" = "rgb(282828)";
       };
       "exec-once" = [
+        # "systemctl --user enable --now hyprpolkitagent.service"
         # "eww daemon; eww open bar_1"
         "uwsm app -- waybar"
         "uwsm app -- dunst"
@@ -175,7 +177,8 @@
         # "$mod, i, togglespecialworkspace, special"
         "$mod SHIFT, C, exec, uwsm app -- hyprpicker --a --f hex"
         "$mod+Alt, W, exec, uwsm app -- waypaper"
-        "$mod, Space, exec, uwsm app -- pkill fuzzel || fuzzel"
+        # "$mod, Space, exec, uwsm app -- pkill fuzzel || fuzzel"
+        "$mod, Space, exec, uwsm app -- anyrun"
         "$mod, D, exec, uwsm app -- bemenu-run"
         "$mod, Return, exec, uwsm app -- kitty"
         "$mod, T, exec, uwsm app -- nemo"

@@ -2,11 +2,12 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./modules/steam.nix
+    ../../.././modules/default.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -73,12 +74,12 @@
       enable = true;
       wayland.enable = true;
       autoNumlock = true;
-      theme = "${import ./lib/pkgs/sddm-elegant.nix {inherit pkgs;}}";
+      theme = "${import ../../.././lib/pkgs/sddm-elegant.nix { inherit pkgs; }}";
     };
     xserver = {
       enable = true;
       autorun = true;
-      videoDrivers = ["amdgpu"];
+      videoDrivers = [ "amdgpu" ];
       xkb = {
         layout = "tr";
         variant = "";
@@ -94,7 +95,7 @@
     graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [mesa libva libvdpau-va-gl vulkan-loader vulkan-validation-layers mesa.opencl];
+      # extraPackages = with pkgs; [mesa libva libvdpau-va-gl vulkan-loader vulkan-validation-layers mesa.opencl];
     };
     # amdgpu.amdvlk = {
     #   enable = true;
@@ -136,7 +137,7 @@
 
   # # Home Manager
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = { inherit inputs; };
     backupFileExtension = "backup";
     users = {
       hare = import ./home.nix;
@@ -153,8 +154,8 @@
         "nix-command"
         "flakes"
       ];
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
     optimise = {
       automatic = true;
@@ -188,9 +189,9 @@
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = ["graphical-session.target"];
-      wants = ["graphical-session.target"];
-      after = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -203,8 +204,8 @@
 
   services.flatpak.enable = true;
   systemd.services.flatpak-repo = {
-    wantedBy = ["multi-user.target"];
-    path = [pkgs.flatpak];
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.flatpak ];
     script = ''
       flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     '';
@@ -243,29 +244,6 @@
     };
   };
 
-  # # MPD
-  # services.mpd = {
-  #   enable = true;
-  #   user = "hare";
-  #   musicDirectory = "/home/hare/Music/";
-  #   extraConfig = ''
-  #     audio_output {
-  #     type "pipewire"
-  #     name "My PipeWire Output"
-  #     }
-  #     # must specify one or more outputs in order to play audio!
-  #     # (e.g. ALSA, PulseAudio, PipeWire), see next sections
-  #   '';
-
-  #   # Optional:
-  #   network.listenAddress = "any"; # if you want to allow non-localhost connections
-  #   # network.startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
-  # };
-  # systemd.services.mpd.environment = {
-  #   # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
-  #   XDG_RUNTIME_DIR = "/run/user/1000/";
-  # };
-
   environment = {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -277,34 +255,9 @@
       DOTNET_CLI_TELEMETRY_OPTOUT = "1";
     };
     systemPackages = with pkgs; [
-      # #
-      home-manager # Home Manager
-      polkit # Polkit
-      polkit_gnome # Polkit Agent
-      # # Basic Utils
-      binutils
-      coreutils
-      desktop-file-utils
-      diffutils
-      fd
-      file
-      findutils
-      fzf
-      gawk
-      git
-      gnugrep
-      gnumake
-      gnused
-      gnutar
-      less
-      procps
-      ripgrep
-      sharutils
-      stow
-      toybox
-      util-linux
-      xdg-utils
-      xz
+      home-manager
+      polkit
+      polkit_gnome
       # # Archive Managers and Compression
       p7zip
       rar
@@ -319,51 +272,10 @@
       libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
       networkmanagerapplet
       filezilla
-      sioyek
-      # # VSCode
-      # vscodium
-      # (vscode-with-extensions.override {
-      #   vscode = vscodium;
-      #   vscodeExtensions = with vscode-extensions;
-      #     [
-      #       bbenoist.nix
-      #       ms-python.python
-      #       ms-azuretools.vscode-docker
-      #       ms-vscode-remote.remote-ssh
-      #     ]
-      #     ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      #       {
-      #         name = "remote-ssh-edit";
-      #         publisher = "ms-vscode-remote";
-      #         version = "0.47.2";
-      #         sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
-      #       }
-      #     ];
-      # })
       # # Utils
-      thefuck
-      ffmpeg
-      ffmpegthumbnailer
-      xclip
-      wl-clipboard
-      ps3iso-utils
-      ps3-disc-dumper
-      tldr
-      playerctl
-      dunst
-      libnotify
-      pwvucontrol
-      grim # Screenshot
-      slurp # Screenshot
-      hyprpicker # Color Picker
-      socat
-      jq
-      # python3
       discordchatexporter-cli
       nix-prefetch-git
       exiftool
-      # wallust
-      # iat
       fuseiso
       # # Apps
       blender
@@ -382,30 +294,25 @@
       localsend # File Sharing
       # pywalfox-native
       obsidian # Note
-      keepassxc # Password Manager
       brave
       # ungoogled-chromium
-      floorp
+      # floorp
       # inputs.zen-browser.packages."${system}".default
       tor-browser
-      fum
+      # fum
       amberol
-      ymuse
-      plattenalbum
-      ncmpcpp
-      mpc
-      miru
+      # miru
       element-desktop # Matrix Client
       # fluffychat # Matrix Client
       onlyoffice-desktopeditors
-      libreoffice-fresh
+      # libreoffice-fresh
       hunspell
       hunspellDicts.tr_TR
       hunspellDicts.en_US
       jdk # Java
       jdk17 # Java 17
       jdk8 # Java 8
-      neovim
+      # neovim
       neovide # Neovim GUI
       lunarvim # Neovim Distrubition
       # btop # Resource Monitoring
@@ -421,11 +328,11 @@
       cargo
       # rust-analyzer
       # rustfmt
-      dotnet-sdk_8
-      dotnet-sdk_9
+      # dotnet-sdk_8
+      # dotnet-sdk_9
       go
       vala
-      alejandra
+      # alejandra
       # nixfmt-rfc-style
       nil
       nixd
@@ -475,7 +382,7 @@
     ];
   };
 
-  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
   fonts.fontDir.enable = true;
   fonts.enableDefaultPackages = true;
