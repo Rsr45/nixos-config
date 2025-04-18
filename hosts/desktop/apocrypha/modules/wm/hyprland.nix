@@ -10,7 +10,7 @@
     systemd.enable = false;
     plugins = [
       # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
-      inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
       # inputs.hyprland-plugins.packages.${pkgs.system}.borders-plus-plus
     ];
     settings = {
@@ -70,41 +70,41 @@
         #   "specialWorkspace, 1, 3, md3_decel, slidevert"
         # ];
       };
-      plugin = {
-        # hyprbars = {
-        #   bar_text_font = "IBM Plex Serif";
-        #   bar_height = "30";
-        #   bar_padding = "10";
-        #   bar_button_padding = "5";
-        #   bar_precedence_over_border = "true";
-        #   bar_part_of_window = "true";
+      # plugin = {
+      # hyprbars = {
+      #   bar_text_font = "IBM Plex Serif";
+      #   bar_height = "30";
+      #   bar_padding = "10";
+      #   bar_button_padding = "5";
+      #   bar_precedence_over_border = "true";
+      #   bar_part_of_window = "true";
 
-        #   bar_color = "rgb(282828)";
-        #   "col.text" = "rgb(FBF1C7)";
-        # };
-        # borders-plus-plus = {
-        #   add_borders = "1"; # 0 - 9
+      #   bar_color = "rgb(282828)";
+      #   "col.text" = "rgb(FBF1C7)";
+      # };
+      # borders-plus-plus = {
+      #   add_borders = "1"; # 0 - 9
 
-        #   # you can add up to 9 borders
-        #   "col.border_1" = "rgb(1D2021)";
+      #   # you can add up to 9 borders
+      #   "col.border_1" = "rgb(1D2021)";
 
-        #   # -1 means "default" as in the one defined in general:border_size
-        #   border_size_1 = "-1";
+      #   # -1 means "default" as in the one defined in general:border_size
+      #   border_size_1 = "-1";
 
-        #   # makes outer edges match rounding of the parent. Turn on / off to better understand. Default = on.
-        #   natural_rounding = "yes";
-        # };
-        hyprexpo = {
-          columns = "3";
-          gap_size = "5";
-          bg_col = "rgb(000000)";
-          workspace_method = "first 1"; # [center/first] [workspace] e.g. first 1 or center m+1
-
-          enable_gesture = "false"; # laptop touchpad, 4 fingers
-          gesture_distance = "300"; # how far is the "max"
-          gesture_positive = "false";
-        };
-      };
+      #   # makes outer edges match rounding of the parent. Turn on / off to better understand. Default = on.
+      #   natural_rounding = "yes";
+      # };
+      # hyprexpo = {
+      #   columns = "3";
+      #   gap_size = "5";
+      #   bg_col = "rgb(000000)";
+      #   workspace_method = "first 1"; # [center/first] [workspace] e.g. first 1 or center m+1
+      #
+      #   enable_gesture = "false"; # laptop touchpad, 4 fingers
+      #   gesture_distance = "300"; # how far is the "max"
+      #   gesture_positive = "false";
+      # };
+      # };
       misc = {
         vfr = 1;
         vrr = 1;
@@ -195,7 +195,7 @@
       ];
     };
     extraConfig = ''
-      bind = SUPER, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable
+      # bind = SUPER, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable
       bind = , Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of whole screen taken" -t 1000
       bind = $mod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png') | dunstify "Screenshot of the region taken" -t 1000
       # will switch to a submap called resize
