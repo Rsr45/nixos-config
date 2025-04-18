@@ -1,12 +1,20 @@
-{inputs, ...}: {
-  imports = [inputs.schizofox.homeManagerModules.default];
+{ inputs, ... }:
+{
+  imports = [ inputs.schizofox.homeManagerModules.default ];
 
   programs.schizofox = {
     enable = true;
 
     search = {
       defaultSearchEngine = "DuckDuckGo";
-      removeEngines = ["Google" "Bing" "Amazon.com" "eBay" "Twitter" "Wikipedia"];
+      removeEngines = [
+        "Google"
+        "Bing"
+        "Amazon.com"
+        "eBay"
+        "Twitter"
+        "Wikipedia"
+      ];
     };
 
     extensions = {
@@ -14,9 +22,12 @@
       enableExtraExtensions = true;
       darkreader.enable = true;
       extraExtensions = {
-        "{531906d3-e22f-4a6c-a102-8057b88a1a63}".install_url = "https://addons.mozilla.org/firefox/downloads/latest/single-file/latest.xpi";
-        "DontFuckWithPaste@raim.ist".install_url = "https://addons.mozilla.org/firefox/downloads/latest/don-t-fuck-with-paste/latest.xpi";
-        "{3c078156-979c-498b-8990-85f7987dd929}".install_url = "https://addons.mozilla.org/firefox/downloads/latest/sidebery/latest.xpi";
+        "{531906d3-e22f-4a6c-a102-8057b88a1a63}".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/single-file/latest.xpi";
+        "DontFuckWithPaste@raim.ist".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/don-t-fuck-with-paste/latest.xpi";
+        "{3c078156-979c-498b-8990-85f7987dd929}".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/sidebery/latest.xpi";
       };
     };
 

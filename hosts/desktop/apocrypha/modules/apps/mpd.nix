@@ -1,4 +1,5 @@
-{...}: {
+{ pkgs, ... }:
+{
   services = {
     mpd = {
       enable = true;
@@ -17,4 +18,10 @@
       mpd.useLocal = true;
     };
   };
+
+  home.packages = with pkgs; [
+    mpc
+    ncmpcpp
+    ymuse
+  ];
 }

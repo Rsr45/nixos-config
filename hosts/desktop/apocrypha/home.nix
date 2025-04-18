@@ -1,30 +1,23 @@
 {
-  pkgs,
   config,
   ...
-}: {
+}:
+{
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "hare";
   home.homeDirectory = "/home/hare";
 
   imports = [
-    ./modules/stylix.nix
-    ./modules/gtk.nix
-    ./modules/font.nix
-    ./modules/hyprland.nix
-    ./modules/hyprlock.nix
-    ./modules/spotify.nix
-    ./modules/mpd.nix
-    ./modules/nixcord.nix
     ./modules/terminals/default.nix
     ./modules/widgets/default.nix
     ./modules/browsers/default.nix
     ./modules/editors/default.nix
     ./modules/shell/default.nix
-    ./modules/cli/default.nix
-    ./modules/default.nix
-    ./modules/zathura.nix
+    ./modules/packages/default.nix
+    ./modules/apps/default.nix
+    ./modules/wm/default.nix
+    ./modules/style/default.nix
   ];
 
   nixpkgs.config = {
@@ -111,23 +104,20 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    osu-lazer-bin
-    nsxiv
-    davinci-resolve
-    shotcut
-    #   # # Fonts
-    #   font-awesome
-    #   ibm-plex
-    #   nerd-fonts.blex-mono
+  # home.packages = with pkgs; [
+  # osu-lazer-bin
+  #   # # Fonts
+  #   font-awesome
+  #   ibm-plex
+  #   nerd-fonts.blex-mono
 
-    #   # # You can also create simple shell scripts directly inside your
-    #   # # configuration. For example, this adds a command 'my-hello' to your
-    #   # # environment:
-    #   # (pkgs.writeShellScriptBin "my-hello" ''
-    #   #   echo "Hello, ${config.home.username}!"
-    #   # '')
-  ];
+  #   # # You can also create simple shell scripts directly inside your
+  #   # # configuration. For example, this adds a command 'my-hello' to your
+  #   # # environment:
+  #   # (pkgs.writeShellScriptBin "my-hello" ''
+  #   #   echo "Hello, ${config.home.username}!"
+  #   # '')
+  # ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -161,7 +151,7 @@
   #  /etc/profiles/per-user/fangyuan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "vi";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
