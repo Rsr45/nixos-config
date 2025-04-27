@@ -18,8 +18,8 @@ in
 {
   imports = [
     ./nu.nix
-    ./fish.nix
-    ./zsh.nix
+    # ./fish.nix
+    # ./zsh.nix
     ./bash.nix
     ./starship.nix
   ];

@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -22,8 +23,8 @@
         border_size = 4;
         layout = "dwindle";
         resize_on_border = true;
-        # "col.active_border" = "rgb(282828)";
-        # "col.inactive_border" = "rgb(282828)";
+        # "col.active_border" = lib.mkForce "0x00000000";
+        # "col.inactive_border" = lib.mkForce "0x00000000";
       };
       "exec-once" = [
         # "systemctl --user enable --now hyprpolkitagent.service"

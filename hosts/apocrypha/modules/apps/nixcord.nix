@@ -2,14 +2,25 @@
   inputs,
   pkgs,
   ...
-}: {
-  imports = [inputs.nixcord.homeManagerModules.nixcord];
+}:
+{
+  imports = [ inputs.nixcord.homeManagerModules.nixcord ];
+
+  home.packages = with pkgs; [
+    vesktop
+  ];
 
   programs.nixcord = {
-    enable = true;
+    enable = false;
     discord.enable = false;
     discord.vencord.package = pkgs.vencord;
-    vesktop.enable = true;
+
+    vesktop = {
+      enable = true;
+      package = pkgs.vesktop;
+      autoscroll.enable = true;
+    };
+
     config = {
       plugins = {
         fakeNitro.enable = true;

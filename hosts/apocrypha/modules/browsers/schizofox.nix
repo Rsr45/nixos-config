@@ -39,9 +39,9 @@
 
     theme = {
       colors = {
-        background-darker = "1D2021";
-        background = "282828";
-        foreground = "D5C4A1";
+        background-darker = "05080A";
+        background = "0A1014";
+        foreground = "DCE2F7";
       };
 
       extraUserChrome = ''

@@ -15,5 +15,7 @@
     slurp # Screenshot
     osu-lazer-bin
     anyrun
+    quodlibet-full
+    pcsx2
   ];
 }
