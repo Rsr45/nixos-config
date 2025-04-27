@@ -7,27 +7,25 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../.././modules/default.nix
+    ./shared.nix
+    ./steam.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # # Bootloader
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-      };
-      efi = {
-        canTouchEfiVariables = true;
-      };
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+    };
+    efi = {
+      canTouchEfiVariables = true;
     };
   };
 
-  # # Network
   networking = {
-    hostName = "apocrypha"; # Define hostname
+    hostName = "apocrypha";
     networkmanager = {
       enable = true;
       dns = "systemd-resolved";
@@ -36,21 +34,22 @@
         "1.1.1.1"
       ];
     };
-    # nameservers = ["9.9.9.9" "1.1.1.1"];
-    # proxy = {
-    #   default = "http://user:password@proxy:port/";
-    #   noProxy = "127.0.0.1,internal.domain";
-    # };
   };
 
-  time = {
-    timeZone = "Europe/Istanbul";
-  };
+  console.keyMap = "trq";
 
-  # # Select internationalisation properties
+  time.timeZone = "Europe/Istanbul";
+
   i18n = {
-    defaultLocale = "en_US.UTF-8";
+    defaultLocale = "en_GB.UTF-8";
+    supportedLocales = [
+      "en_GB.UTF-8/UTF-8"
+      "tr_TR.UTF-8/UTF-8"
+    ];
     extraLocaleSettings = {
+      # LC_ALL = "en_GB.UTF-8"; # This overrides all other LC_* settings.
+      # LC_COLLATE = "en_GB.UTF-8";
+      # LC_CTYPE = "en_GB.UTF-8";
       LC_ADDRESS = "tr_TR.UTF-8";
       LC_IDENTIFICATION = "tr_TR.UTF-8";
       LC_MEASUREMENT = "tr_TR.UTF-8";
@@ -61,20 +60,25 @@
       LC_TELEPHONE = "tr_TR.UTF-8";
       LC_TIME = "tr_TR.UTF-8";
     };
+
+    inputMethod = {
+      enable = false;
+      type = "ibus";
+      ibus.engines = with pkgs.ibus-engines; [
+        mozc
+        hangul
+      ];
+      fcitx5.addons = with pkgs; [ fcitx5-rime ];
+      fcitx5.waylandFrontend = true;
+    };
   };
 
-  # # Configure console keymap
-  console = {
-    keyMap = "trq";
-  };
-
-  # # Drivers, Keyboard Layout, CUPS Service
   services = {
     displayManager.sddm = {
       enable = true;
       wayland.enable = true;
       autoNumlock = true;
-      theme = "${import ../../.././lib/pkgs/sddm-elegant.nix { inherit pkgs; }}";
+      theme = "${import ../.././pkgs/sddm-elegant.nix { inherit pkgs; }}";
     };
     xserver = {
       enable = true;
@@ -90,7 +94,6 @@
     };
   };
 
-  # # OpenGL, 32Bit
   hardware = {
     graphics = {
       enable = true;
@@ -106,7 +109,6 @@
     };
   };
 
-  # #
   programs = {
     adb = {
       enable = true;
@@ -117,7 +119,7 @@
     };
   };
 
-  # # Define a user account. Don't forget to set a password with ‘passwd’
+  # Define a user account. Don't forget to set a password with ‘passwd’
   users = {
     users = {
       hare = {
@@ -135,7 +137,7 @@
     };
   };
 
-  # # Home Manager
+  # Home Manager
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     backupFileExtension = "backup";
@@ -144,10 +146,8 @@
     };
   };
 
-  # # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # # Flakes, Garbage Collector, Hard Link, nixd
   nix = {
     settings = {
       experimental-features = [
@@ -166,6 +166,8 @@
       options = "--delete-older-than 30d";
     };
   };
+
+  services.xserver.windowManager.i3.enable = true;
 
   # # Hyprland Window Manager
   programs.hyprland = {
@@ -203,13 +205,13 @@
   };
 
   services.flatpak.enable = true;
-  systemd.services.flatpak-repo = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.flatpak ];
-    script = ''
-      flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    '';
-  };
+  # systemd.services.flatpak-repo = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   path = [ pkgs.flatpak ];
+  #   script = ''
+  #     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  #   '';
+  # };
 
   # # File Explorer
   programs = {

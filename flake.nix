@@ -24,7 +24,10 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixcord.url = "github:kaylorben/nixcord";
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -34,29 +37,27 @@
       ...
     }@inputs:
     let
-      system = "x86_64-linux";
+      inherit (self) outputs;
+
+      System = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+
+      Pkgs = nixpkgs.legacyPackages.${System};
+
+      lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
     in
     {
-      formatter.x86_64-linux = nixpkgs.legacyPackages."${system}".linux.nixfmt-rfc-style;
-      nixosConfigurations = {
-        apocrypha = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs system; };
-          modules = [
-            ./hosts/desktop/apocrypha/configuration.nix
-          ];
-        };
-        nixos = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs system; };
-          modules = [
-            ./hosts/vm/nixos/configuration.nix
-          ];
-        };
-        heaven = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs system; };
-          modules = [
-            ./hosts/desktop/heaven/configuration.nix
-          ];
-        };
-      };
+      formatter = System (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+
+      nixosConfigurations = builtins.listToAttrs (
+        map (host: {
+          name = host;
+          value = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs outputs lib;
+            };
+            modules = [ ./hosts/${host} ];
+          };
+        }) (builtins.attrNames (builtins.readDir ./hosts))
+      );
     };
 }
