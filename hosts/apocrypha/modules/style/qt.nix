@@ -1,7 +1,7 @@
-{ ... }:
+{ lib, ... }:
 {
   qt = {
     enable = true;
-    platformTheme.name = "gtk";
+    # platformTheme.name = lib.mkForce "qtct";
   };
 }

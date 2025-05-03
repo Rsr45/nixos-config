@@ -17,5 +17,10 @@
     anyrun
     quodlibet-full
     pcsx2
+    waylogout
+    xwayland-satellite
+    swww
+    ueberzugpp
+    gimp3
   ];
 }

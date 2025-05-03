@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     hyprpaper
     waypaper
+    hyprsunset
   ];
 
   home.file = {

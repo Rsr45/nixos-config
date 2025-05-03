@@ -1,9 +1,13 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
-  imports = [ inputs.schizofox.homeManagerModules.default ];
+  imports = [
+    inputs.schizofox.homeManagerModules.default
+    ./sh-userCss.nix
+  ];
 
   programs.schizofox = {
     enable = true;
+    # package = pkgs.floorp-unwrapped;
 
     search = {
       defaultSearchEngine = "DuckDuckGo";
@@ -14,20 +18,119 @@
         "eBay"
         "Twitter"
         "Wikipedia"
+        "nixpkgs"
       ];
+      addEngines = [
+        {
+          Name = "Nix Packages";
+          Description = "Nix Package Search";
+          Alias = "!np";
+          Method = "GET";
+          URLTemplate = "https://search.nixos.org/packages?type=packages&query={searchTerms}";
+        }
+        {
+          Name = "NixOS Wiki";
+          Description = "NixOS Wiki Search";
+          Alias = "!nw";
+          Method = "GET";
+          URLTemplate = "https://wiki.nixos.org/w/index.php?search={searchTerms}";
+        }
+      ];
+    };
+
+    misc = {
+      bookmarks = [
+        {
+          Title = "FMHY";
+          URL = "https://fmhy.net/";
+        }
+        {
+          Title = "Fitgirl";
+          URL = "https://fitgirl-repacks.site/";
+        }
+        {
+          Title = "DODI";
+          URL = "https://www.1337x.to/user/DODI/";
+        }
+        {
+          Title = "GOG";
+          URL = "https://www.gog-games.to/";
+        }
+        {
+          Title = "Xatab";
+          URL = "https://byxatab.com/";
+        }
+        {
+          Title = "Elamigos";
+          URL = "https://elamigos.site/";
+        }
+        {
+          Title = "Itch.io";
+          URL = "https://itch.io/games/new-and-popular/featured/free";
+        }
+        {
+          Title = "Myrient";
+          URL = "https://myrient.erista.me/";
+        }
+        {
+          Title = "Vimm'S Lair";
+          URL = "https://vimm.net/vault";
+        }
+        {
+          Title = "NixOS";
+          URL = "https://wiki.nixos.org/";
+          Folder = "Documentation";
+          # tags = [
+          #   "nix"
+          #   "wiki"
+          # ];
+        }
+        {
+          Title = "Home Manager";
+          URL = "https://nix-community.github.io/home-manager/options.xhtml";
+          Folder = "Documentation";
+          # tags = [
+          # tags = [
+          #   "nix"
+          #   "wiki"
+          # ];
+        }
+        {
+          Title = "Nvf";
+          URL = "https://notashelf.github.io/nvf/options.html";
+          Folder = "Documentation";
+          # tags = [
+          # tags = [
+          #   "nix"
+          # ];
+        }
+        {
+          Title = "Stylix";
+          URL = "https://stylix.danth.me/";
+          Folder = "Documentation";
+          # tags = [
+          # tags = [
+          #   "nix"
+          # ];
+        }
+      ];
+      contextMenu.enable = true;
     };
 
     extensions = {
       enableDefaultExtensions = true;
       enableExtraExtensions = true;
+      simplefox.enable = false; # use directly to customize
       darkreader.enable = true;
       extraExtensions = {
         "{531906d3-e22f-4a6c-a102-8057b88a1a63}".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/single-file/latest.xpi";
-        "DontFuckWithPaste@raim.ist".install_url =
-          "https://addons.mozilla.org/firefox/downloads/latest/don-t-fuck-with-paste/latest.xpi";
         "{3c078156-979c-498b-8990-85f7987dd929}".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/sidebery/latest.xpi";
+        "FirefoxColor@mozilla.com".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/firefox-color/latest.xpi";
+        "{d7742d87-e61d-4b78-b8a1-b469842139fa}".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
       };
     };
 
@@ -39,48 +142,10 @@
 
     theme = {
       colors = {
-        background-darker = "05080A";
-        background = "0A1014";
-        foreground = "DCE2F7";
+        background-darker = "0f0f0f";
+        background = "0f0f0f";
+        foreground = "cacaca";
       };
-
-      extraUserChrome = ''
-        /**
-        * Remove Sidebar Header
-        **/
-        #sidebar-header {
-        display: none;
-        }
-        /**
-        * Dynamic Horizontal Tabs Toolbar (with animations)
-        * sidebar.verticalTabs: false (with native horizontal tabs)
-        */
-        #main-window #TabsToolbar > .toolbar-items {
-        overflow: hidden;
-        transition: height 0.3s 0.3s !important;
-        }
-        /* Default state: Set initial height to enable animation */
-        #main-window #TabsToolbar > .toolbar-items { height: 3em !important; }
-        #main-window[uidensity="touch"] #TabsToolbar > .toolbar-items { height: 3.35em !important; }
-        #main-window[uidensity="compact"] #TabsToolbar > .toolbar-items { height: 2.7em !important; }
-        /* Hidden state: Hide native tabs strip */
-        #main-window[titlepreface*="​"] #TabsToolbar > .toolbar-items { height: 0 !important; }
-        /* Hidden state: Fix z-index of active pinned tabs */
-        #main-window[titlepreface*="​"] #tabbrowser-tabs { z-index: 0 !important; }
-        /* Hidden state: Hide window buttons in tabs-toolbar */
-        #main-window[titlepreface*="​"] #TabsToolbar .titlebar-spacer,
-        #main-window[titlepreface*="​"] #TabsToolbar .titlebar-buttonbox-container {
-        display: none !important;
-        }
-        /* [Optional] Uncomment block below to show window buttons in nav-bar (maybe, I didn't test it on non-linux-i3wm env) */
-        /* #main-window[titlepreface*="​"] #nav-bar > .titlebar-buttonbox-container,
-        #main-window[titlepreface*="​"] #nav-bar > .titlebar-buttonbox-container > .titlebar-buttonbox {
-        display: flex !important;
-        } */
-        /* [Optional] Uncomment one of the line below if you need space near window buttons */
-        /* #main-window[titlepreface*="​"] #nav-bar > .titlebar-spacer[type="pre-tabs"] { display: flex !important; } */
-        /* #main-window[titlepreface*="​"] #nav-bar > .titlebar-spacer[type="post-tabs"] { display: flex !important; } */
-      '';
     };
 
     security.sandbox.enable = true;
