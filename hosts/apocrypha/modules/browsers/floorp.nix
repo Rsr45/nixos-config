@@ -17,10 +17,8 @@
         listToAttrs [
           (extension "ublock-origin" "uBlock0@raymondhill.net")
           (extension "sidebery" "{3c078156-979c-498b-8990-85f7987dd929}")
-          (extension "don-t-fuck-with-paste" "DontFuckWithPaste@raim.ist")
           (extension "single-file" "{531906d3-e22f-4a6c-a102-8057b88a1a63}")
-          # (extension "libredirect" "7esoorv3@alefvanoon.anonaddy.me")
-          (extension "clearurls" "{74145f27-f039-47ce-a470-a662b129930a}")
+          (extension "vimium-ff" "{d7742d87-e61d-4b78-b8a1-b469842139fa}")
         ];
       # To add additional extensions, find it on addons.mozilla.org, find
       # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)

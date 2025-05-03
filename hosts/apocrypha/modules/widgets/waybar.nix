@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   programs.waybar = {
     enable = true;
     settings = {
@@ -6,12 +7,26 @@
         name = "mainBar";
         layer = "top";
         position = "top";
-        height = 30;
+        height = 28;
         spacing = 0;
         reload_style_on_change = true;
-        modules-left = ["custom/blank" "hyprland/workspaces"];
-        modules-center = ["clock"];
-        modules-right = ["tray" "wireplumber" "disk" "cpu" "memory" "custom/seperator" "network" "custom/power" "custom/blank"];
+        modules-left = [
+          "custom/blank"
+          "hyprland/workspaces"
+          "niri/workspaces"
+        ];
+        modules-center = [ "clock" ];
+        modules-right = [
+          "tray"
+          # "wireplumber"
+          # "disk"
+          # "cpu"
+          # "memory"
+          "custom/seperator"
+          "network"
+          "custom/power"
+          "custom/blank"
+        ];
 
         "custom/seperator" = {
           format = " | ";
@@ -27,6 +42,10 @@
           format = "  ";
           on-click = "wlogout";
           tooltip = false;
+        };
+
+        "niri/workspaces" = {
+          current-only = true;
         };
 
         "hyprland/workspaces" = {
@@ -51,7 +70,7 @@
           format-alt = "{:%R}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
           calendar = {
-            mode = "year";
+            mode = "month";
             mode-mon-col = 3;
             weeks-pos = "right";
             on-scroll = 1;

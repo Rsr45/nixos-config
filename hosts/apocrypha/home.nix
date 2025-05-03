@@ -80,6 +80,7 @@
   programs.gitui.enable = true;
   programs.btop.enable = true;
   programs.mpv.enable = true;
+  programs.lazygit.enable = true;
 
   services.dunst = {
     enable = true;
