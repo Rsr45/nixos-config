@@ -5,7 +5,7 @@ let
     g = "git";
     "..." = "cd ../..";
     cd = "z";
-    rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
+    rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake";
     reboot = "systemctl reboot";
     shutdown = "systemctl poweroff";
     logout = "hyprctl dispatch exit 1";
@@ -18,15 +18,23 @@ in
 {
   imports = [
     ./nu.nix
-    # ./fish.nix
-    # ./zsh.nix
+    ./fish.nix
+    ./zsh.nix
     ./bash.nix
-    ./starship.nix
   ];
 
   home = {
     shellAliases = myAliases;
     shell.enableShellIntegration = true;
+  };
+
+  programs.starship = {
+    enable = true;
+  };
+
+  programs.oh-my-posh = {
+    enable = false;
+    useTheme = "darkblood";
   };
 
   programs.eza = {

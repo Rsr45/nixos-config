@@ -10,10 +10,6 @@
 
   programs.nvf.enable = true;
   programs.nvf.settings.vim = {
-    luaConfigPre = ''
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(), { bufnr })
-    '';
-
     keymaps = [
       {
         key = "<Tab>";
@@ -22,21 +18,42 @@
       }
     ];
 
-    undoFile.enable = true;
-    useSystemClipboard = true;
     options = {
-      tabstop = 2;
-      shiftwidth = 2;
+      autoindent = true;
+      smartindent = true;
+      softtabstop = 4;
+      tabstop = 4;
+      shiftwidth = 4;
       expandtab = true;
       showmode = false;
       number = true;
       relativenumber = true;
       cursorline = true;
+      cursorlineopt = "both";
+      conceallevel = 1;
+      tm = 100;
     };
+
+    undoFile.enable = true;
+    useSystemClipboard = true;
 
     extraPlugins = {
       intellitab = {
         package = pkgs.vimPlugins.intellitab-nvim;
+      };
+    };
+
+    treesitter = {
+      enable = true;
+      indent.enable = true;
+      highlight.additionalVimRegexHighlighting = true;
+    };
+
+    diagnostics = {
+      enable = true;
+      nvim-lint.enable = true;
+      config = {
+        virtual_text = false;
       };
     };
 
@@ -45,16 +62,15 @@
       lazygit.enable = true;
     };
 
-    utility.yazi-nvim.enable = true;
-    diagnostics.nvim-lint.enable = true; # fixes lzn-auto-require can't find lint.lua
+    utility = {
+      sleuth.enable = true;
+      yazi-nvim.enable = true;
+    };
+
     git.enable = true;
     autopairs.nvim-autopairs.enable = true;
     formatter.conform-nvim.enable = true;
     dashboard.dashboard-nvim.enable = true;
-    filetree.nvimTree = {
-      enable = true;
-      openOnSetup = false;
-    };
 
     binds = {
       whichKey = {
@@ -68,7 +84,7 @@
 
     visuals = {
       indent-blankline = {
-        enable = true;
+        enable = false;
         setupOpts = {
           exclude = {
             buftypes = [
@@ -88,7 +104,6 @@
               "dashboard"
             ];
           };
-          # indent = {};
         };
       };
       nvim-web-devicons.enable = true;
@@ -119,11 +134,26 @@
       };
       borders = {
         enable = true;
-        globalStyle = "solid";
+        globalStyle = "single";
       };
       breadcrumbs.enable = true;
     };
 
+    notes = {
+      obsidian = {
+        enable = true;
+        setupOpts = {
+          completion.nvim-cmp = true;
+          workspaces = [
+            {
+              name = "Dev";
+              path = "~/Personal/Vaults/Dev";
+            }
+          ];
+        };
+      };
+    };
+    # notes.orgmode.enable = true;
     utility.oil-nvim.enable = true;
     navigation.harpoon.enable = true;
     telescope.enable = true;
@@ -134,6 +164,43 @@
         tabline = 100;
         winbar = 100;
       };
+      activeSection = {
+        a = [
+          ''
+            {
+              "mode", fmt = function(str) return str:sub(1,1) end, color = nil,
+            }
+          ''
+        ];
+        b = [
+          ''
+            {
+              "filename", color = nil, path = 1, file_status = true, newfile_status = true,
+
+              symbols = {
+                modified = '[+]',      -- Text to show when the file is modified.
+                readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+                unnamed = '[No Name]', -- Text to show for unnamed buffers.
+                newfile = '[New]',     -- Text to show for newly created file before first write
+              }
+            }
+          ''
+        ];
+        y = [
+          ''
+            {
+              "branch", color = nil
+            }
+          ''
+        ];
+        z = [
+          ''
+            {
+              'progress', 'location', color = nil
+            }
+          ''
+        ];
+      };
     };
 
     autocomplete = {
@@ -141,21 +208,32 @@
       blink-cmp = {
         enable = false;
         friendly-snippets.enable = true;
+        setupOpts = {
+          cmdline.keymap.preset = "default";
+          keymap.preset = "default";
+        };
       };
       nvim-cmp.enable = true;
     };
 
+    lsp = {
+      enable = true;
+      formatOnSave = true;
+      inlayHints.enable = true;
+      lspkind.enable = true;
+      trouble.enable = true;
+    };
+
     languages = {
       enableDAP = true;
-      # enableExtraDiagnostics = true;
+      enableExtraDiagnostics = true;
       enableFormat = true;
-      enableLSP = true;
       enableTreesitter = true;
 
       nix = {
         enable = true;
         format.type = "nixfmt";
-        lsp.server = "nixd"; # nixd has problems with breadcrumbs out of the box take a look.
+        lsp.server = "nixd";
         lsp.options = {
           nixpkgs = {
             expr = "import (builtins.getFlake \"github:Rsr45/nixos-config\").inputs.nixpkgs { }";
@@ -181,6 +259,7 @@
       ts.enable = true;
       typst.enable = true;
       vala.enable = true;
+      zig.enable = true;
     };
   };
 }

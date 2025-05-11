@@ -39,18 +39,18 @@
 
     fonts = {
       serif = {
-        package = pkgs.nerd-fonts.caskaydia-cove;
-        name = "CaskaydiaCove Nerd Font";
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font";
       };
 
       sansSerif = {
-        package = pkgs.nerd-fonts.caskaydia-cove;
-        name = "CaskaydiaCove Nerd Font";
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font";
       };
 
       monospace = {
-        package = pkgs.nerd-fonts.caskaydia-cove;
-        name = "CaskaydiaCove Nerd Font";
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font";
       };
 
       emoji = {
@@ -58,10 +58,10 @@
         name = "Noto Color Emoji";
       };
       sizes = {
-        desktop = 13;
-        popups = 13;
-        applications = 13;
-        terminal = 13;
+        desktop = 14;
+        popups = 14;
+        applications = 14;
+        terminal = 14;
       };
     };
   };
@@ -90,7 +90,10 @@
     };
   };
 
-  console.keyMap = "trq";
+  console = {
+    keyMap = "trq";
+    # useXkbConfig = true;
+  };
 
   time.timeZone = "Europe/Istanbul";
 
@@ -139,12 +142,19 @@
       autorun = true;
       videoDrivers = [ "amdgpu" ];
       xkb = {
-        layout = "tr";
-        variant = "";
+        layout = "us";
+        variant = "colemak_dh_wide_iso";
+        extraLayouts = {
+          mine = {
+            description = "Turkish Q layout {swap i and ı, ESC and CAPS}";
+            languages = [ "tur" ];
+            symbolsFile = ./custom_tr.xkb;
+          };
+        };
       };
     };
     printing = {
-      enable = true;
+      enable = false;
     };
   };
 
@@ -173,6 +183,18 @@
     };
   };
 
+  programs.bash = {
+    interactiveShellInit = ''
+      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+      then
+        shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+      fi
+    '';
+  };
+
+  programs.fish.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’
   users = {
     users = {
@@ -186,7 +208,7 @@
           "adbusers"
           "mpd"
         ];
-        shell = pkgs.nushell;
+        shell = pkgs.bash;
       };
     };
   };
@@ -309,6 +331,8 @@
       # media-session.enable = true;
     };
   };
+
+  services.suwayomi-server.enable = true;
 
   environment = {
     sessionVariables = {

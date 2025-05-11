@@ -10,8 +10,8 @@
 >
 > - **OS:** NixOS
 > - **Window Manager:** Hyprland
-> - **Shell:** Nu + Starship
-> - **Terminal:** Kitty
+> - **Shell:** Nu & Fish + Starship
+> - **Terminal:** Wezterm
 > - **Editor:** Neovim
 > - **Browser:** Schizofox & Floorp
 

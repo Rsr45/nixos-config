@@ -3,6 +3,7 @@
   imports = [
     inputs.schizofox.homeManagerModules.default
     ./sh-userCss.nix
+    # ./textfox.nix
   ];
 
   programs.schizofox = {
@@ -145,9 +146,10 @@
         background-darker = "0f0f0f";
         background = "0f0f0f";
         foreground = "cacaca";
+        primary = "ac8a8c";
       };
     };
 
-    security.sandbox.enable = true;
+    security.sandbox.enable = false; # borks downloads, specifically file path chooser thingy.
   };
 }

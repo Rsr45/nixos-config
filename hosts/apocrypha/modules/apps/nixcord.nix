@@ -10,13 +10,17 @@
     vesktop
   ];
 
+  home.file = {
+    ".config/vesktop/settings/settings.json".source = ./settings.json;
+  };
+
   programs.nixcord = {
     enable = false;
     discord.enable = false;
     discord.vencord.package = pkgs.vencord;
 
     vesktop = {
-      enable = true;
+      enable = false;
       package = pkgs.vesktop;
       autoscroll.enable = true;
     };
@@ -86,7 +90,7 @@
         showHiddenThings.enable = true;
         showMeYourName = {
           enable = true;
-          mode = "nick-user";
+          # mode = "nick-user";
         };
         showTimeoutDuration.enable = true;
         silentTyping.enable = true;

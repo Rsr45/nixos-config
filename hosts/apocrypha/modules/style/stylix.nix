@@ -18,6 +18,11 @@
 
     targets = {
       nixcord.enable = false;
+      yazi.enable = false;
+      gtk.extraCss = ''
+        // Remove rounded corners
+        window.background { border-radius: 0; }
+      '';
       nvf = {
         enable = true;
         # plugin = "mini-base16";

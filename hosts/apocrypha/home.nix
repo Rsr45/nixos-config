@@ -32,6 +32,7 @@
     createDirectories = true;
     extraConfig = {
       XDG_DEV_DIR = "${config.home.homeDirectory}/Dev";
+      XDG_PERSONAL_DIR = "${config.home.homeDirectory}/Personal";
       XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
       XDG_GAMES_DIR = "${config.home.homeDirectory}/Games";
       XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
@@ -41,31 +42,31 @@
     };
   };
   xdg.portal.enable = true;
-  # xdg = {
-  #   mimeApps = {
-  #     enable = true;
-  #     defaultApplications = {
-  #       "image/jpeg" = "feh.desktop";
-  #       "image/png" = "feh.desktop";
-  #       "image/gif" = "mpv.desktop";
-  #       "image/webp" = "feh.desktop";
-  #       "application/pdf" = "org.pwmt.zathura.desktop";
-  #       "text/html" = "floorp.desktop";
-  #       "x-scheme-handler/http" = "floorp.desktop";
-  #       "x-scheme-handler/https" = "floorp.desktop";
-  #       "x-scheme-handler/about" = "floorp.desktop";
-  #       "x-scheme-handler/unknown" = "floorp.desktop";
-  #       "inode/directory" = "nemo.desktop";
-  #       "application/x-gnome-saved-search" = "nemo.desktop";
-  #       "text/plain" = "neovide.desktop";
-  #       "application/zip" = "xarchiver.desktop";
-  #       "application/vnd.rar" = "xarchiver.desktop";
-  #       "application/x-7z-compressed" = "xarchiver.desktop";
-  #       "application/x-tar" = "xarchiver.desktop";
-  #       "application/vnd.microsoft.portable-executable" = "wine.desktop";
-  #     };
-  #   };
-  # };
+  xdg = {
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "image/jpeg" = "feh.desktop";
+        "image/png" = "feh.desktop";
+        "image/gif" = "mpv.desktop";
+        "image/webp" = "feh.desktop";
+        "application/pdf" = "org.pwmt.zathura.desktop";
+        # "text/html" = "schizofox.desktop";
+        # "x-scheme-handler/http" = "schizofox.desktop";
+        # "x-scheme-handler/https" = "schizofox.desktop";
+        # "x-scheme-handler/about" = "schizofox.desktop";
+        # "x-scheme-handler/unknown" = "schizofox.desktop";
+        "inode/directory" = "nemo.desktop";
+        "application/x-gnome-saved-search" = "nemo.desktop";
+        "text/plain" = "neovide.desktop";
+        "application/zip" = "xarchiver.desktop";
+        "application/vnd.rar" = "xarchiver.desktop";
+        "application/x-7z-compressed" = "xarchiver.desktop";
+        "application/x-tar" = "xarchiver.desktop";
+        "application/vnd.microsoft.portable-executable" = "wine.desktop";
+      };
+    };
+  };
 
   dconf = {
     enable = true;

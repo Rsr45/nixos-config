@@ -2,15 +2,19 @@
 {
   programs.schizofox.theme = {
     extraUserChrome = ''
+                  /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/urlbar_centered_text.css made available under Mozilla Public License v. 2.0
+                  See the above repository for updates as well as full license text. */
+
+                  #urlbar:not([focused]) #urlbar-input, /* ID for Firefox 70 */
+                  #urlbar:not([focused]) .urlbar-input{ text-align: center !important; }
                   /**
                   * Remove Sidebar Header
                   **/
+
                   #sidebar-header {
                     display: none;
                   }
-                  /* .urlbarView { */
-                  /*   display: none !important; */
-                  /* } */
+
                   /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/hide_tabs_toolbar.css made available under Mozilla Public License v. 2.0
                   See the above repository for updates as well as full license text. */
 

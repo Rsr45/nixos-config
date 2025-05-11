@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   gtk = {
     enable = true;
     # iconTheme = {
@@ -23,6 +24,7 @@
         "file://${config.home.homeDirectory}/Games"
         "file://${config.home.homeDirectory}/Projects"
         "file://${config.home.homeDirectory}/Dev"
+        "file://${config.home.homeDirectory}/Personal"
       ];
       # extraConfig = {
       #   gtk-application-prefer-dark-theme = 1;

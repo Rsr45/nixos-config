@@ -2,14 +2,15 @@
   # pkgs,
   # config,
   ...
-}: {
+}:
+{
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
     '';
 
-    # preferAbbrs = true;
+    preferAbbrs = true;
     # shellAbbrs = {
     #   rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
     #   reboot = "systemctl reboot";

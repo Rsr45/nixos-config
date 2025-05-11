@@ -25,7 +25,9 @@
       ];
       monitor = [ ",1920x1080@144,auto,1" ];
       input = {
-        kb_layout = "tr";
+        kb_layout = "us";
+        kb_variant = "colemak_dh_wide_iso";
+        kb_options = "caps:swapescape";
         numlock_by_default = true;
         repeat_delay = 250;
         repeat_rate = 45;
@@ -33,8 +35,8 @@
         follow_mouse = 1;
       };
       general = {
-        gaps_in = 16;
-        gaps_out = 16;
+        gaps_in = 0;
+        gaps_out = 0;
         border_size = 0;
         layout = "dwindle";
         resize_on_border = true;

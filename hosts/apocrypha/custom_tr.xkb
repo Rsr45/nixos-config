@@ -1,0 +1,15 @@
+// Turkish Q layout {swap i and ı, ESC and CAPS}
+// https://github.com/Rsr45
+partial 
+xkb_symbols "us" {
+    include "tr(basic)"
+
+    name[Group1]="Turkish (Turkey, Latin Q, Swap i and ı)";
+    key <AC11>  { type[group1] = "FOUR_LEVEL_ALPHABETIC",
+                  [          idotless,         I,     paragraph,    VoidSymbol ] };
+    key <AD08>  { type[group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+                  [  i,  Iabovedot,    apostrophe,    dead_caron ] };
+
+    key <ESC>  { [ Caps_Lock ] };
+    key <CAPS> { [ Escape ] };
+};

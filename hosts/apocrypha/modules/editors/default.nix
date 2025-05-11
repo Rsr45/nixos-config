@@ -4,6 +4,6 @@
     ./nvf.nix
     # ./nixvim.nix
     # ./zed.nix
-    # ./helix.nix
+    ./helix.nix
   ];
 }

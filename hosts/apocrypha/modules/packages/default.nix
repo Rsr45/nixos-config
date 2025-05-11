@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     ffmpeg
     ffmpegthumbnailer
+    gifski
     xclip
     wl-clipboard
     ps3iso-utils
@@ -11,16 +12,37 @@
     dunst
     libnotify
     pwvucontrol
-    grim # Screenshot
-    slurp # Screenshot
+    grim
+    slurp
     osu-lazer-bin
-    anyrun
     quodlibet-full
     pcsx2
-    waylogout
     xwayland-satellite
     swww
-    ueberzugpp
-    gimp3
+    tmux-sessionizer
+    calibre
+    dysk
+    duf
+    wev
+    rmpc
   ];
+  programs.qutebrowser = {
+    enable = true;
+    settings = {
+      colors = {
+        webpage.darkmode.enabled = true;
+      };
+      tabs = {
+        favicons.show = "never";
+        background = false;
+      };
+      auto_save.session = true;
+    };
+  };
+  programs.bat.enable = true;
+  programs.nnn.enable = true;
+  programs.ranger.enable = true;
+  programs.joshuto.enable = true;
+  programs.lf.enable = true;
+  programs.vifm.enable = true;
 }
