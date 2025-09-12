@@ -19,11 +19,12 @@
       "$mod" = "SUPER";
       "exec-once" = [
         "uwsm app -- keepassxc"
+        "uwsm app -- noctalia-shell"
         # "eww daemon; eww open bar_1"
-        "uwsm app -- waybar -c ~/.config/waybar/suckless/config.json -s ~/.config/waybar/suckless/style.css"
-        "uwsm app -- waypaper --restore --backend swww"
+        # "uwsm app -- waybar -c ~/.config/waybar/suckless/config.json -s ~/.config/waybar/suckless/style.css"
+        # "uwsm app -- waypaper --restore --backend swww"
         "uwsm app -- copyq --start-server"
-        "uwsm app -- dunst"
+        # "uwsm app -- dunst"
       ];
       monitor = [ ",1920x1080@144,auto,1" ];
       input = {
@@ -44,8 +45,8 @@
         resize_on_border = true;
       };
       decoration = {
-        rounding = 0;
-        rounding_power = 2.0;
+        rounding = 20;
+        # rounding_power = 2.0; # it is already the default so why i am i even making comments for this shit
         # active_opacity = 0.9;
         # inactive_opacity = 0.9;
         dim_inactive = false;
@@ -165,7 +166,8 @@
         "$mod+Alt, W, exec, uwsm app -- waypaper"
         # "$mod, Space, exec, uwsm app -- pkill fuzzel || fuzzel"
         "$mod, D, exec, uwsm app -- bemenu-run"
-        "$mod, Space, exec, uwsm app -- fuzzel"
+        "$mod, Space, exec, uwsm app -- noctalia-shell ipc call launcher toggle"
+        # "$mod, Space, exec, uwsm app -- fuzzel"
         "$mod, Return, exec, uwsm app -- pcmanfm-qt"
         "$mod SHIFT, Return, exec, uwsm app -- doublecmd"
         "$mod, T, exec, uwsm app -- kitty"

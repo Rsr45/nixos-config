@@ -28,10 +28,10 @@
   };
   dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   xdg.configFile = {
-    # "gtk-3.0/gtk.css".text =
-    #   "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-3.0/gtk.css');\n@import 'gtk-gruvbox.css';";
-    # "gtk-4.0/gtk.css".text =
-    #   "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-4.0/gtk.css');\n@import 'gtk-gruvbox.css';";
+    "gtk-3.0/gtk.css".text =
+      "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-3.0/gtk.css');\n@import 'gtk-colors.css';\n@import 'matugen.css';\n@import 'wallust.css';";
+    "gtk-4.0/gtk.css".text =
+      "@import url('${pkgs.adw-gtk3}/share/themes/adw-gtk3-dark/gtk-4.0/gtk.css');\n@import 'gtk-colors.css';\n@import 'matugen.css';\n@import 'wallust.css';";
     # "gtk-3.0/gtk.css".text = "@import 'gtk-gruvbox.css';";
     # "gtk-4.0/gtk.css".text = "@import 'gtk-gruvbox.css';";
     # "gtk-3.0/gtk-gruvbox.css" = {

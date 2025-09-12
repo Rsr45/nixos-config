@@ -1,12 +1,12 @@
 {
   pkgs,
   inputs,
-config,
+  config,
   ...
 }:
 {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
   ];
 
   programs.nixvim = {
@@ -21,10 +21,55 @@ config,
       number = true;
       relativenumber = true;
       cursorline = true;
-      background = "dark";
+      # background = "dark";
     };
 
-    diagnostics = {
+    colorscheme = "kanagawa";
+    colorschemes.kanagawa.enable = true;
+    colorschemes.kanagawa.settings = {
+      # colors = {
+      #   palette = {
+      #     fujiWhite = "#FFFFFF";
+      #     sumiInk0 = "#000000";
+      #   };
+      #   theme = {
+      #     all = {
+      #       ui = {
+      #         bg_gutter = "none";
+      #       };
+      #     };
+      #     dragon = {
+      #       syn = {
+      #         parameter = "yellow";
+      #       };
+      #     };
+      #     wave = {
+      #       ui = {
+      #         float = {
+      #           bg = "none";
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
+      commentStyle = {
+        italic = true;
+      };
+      compile = false;
+      dimInactive = false;
+      functionStyle = { };
+      overrides = "function(colors) return {} end";
+      terminalColors = true;
+      theme = "dragon";
+      background = {
+        dark = "dragon";
+        light = "lotus";
+      };
+      transparent = false;
+      undercurl = true;
+    };
+
+    diagnostics.settings = {
       virtual_lines = false;
       virtual_text = false;
       underline = true;
@@ -51,30 +96,24 @@ config,
       miasma-nvim
       gruvbox-material
       dracula-nvim
+      vim-moonfly-colors
+      gruvbox-nvim
     ];
 
     plugins = {
-      web-devicons.enable = true;
-      lualine = {
-        enable = true;
-      };
       notify = {
-        enable = true;
-      };
-
-      nvim-tree = {
-        enable = true;
+        enable = false;
       };
 
       which-key = {
-        enable = true;
+        enable = false;
       };
 
       intellitab.enable = true;
       comment.enable = true;
       nvim-autopairs.enable = true;
       indent-blankline = {
-        enable = false;
+        enable = true;
         settings = {
           exclude = {
             buftypes = [
@@ -93,14 +132,15 @@ config,
               "yaml"
             ];
           };
-          # indent = {
-          #   char = "│";
-          # };
-          # scope = {
-          #   show_end = false;
-          #   show_exact_scope = true;
-          #   show_start = false;
-          # };
+          indent = {
+            char = "▏";
+          };
+          scope = {
+            enabled = true;
+            show_end = false;
+            show_exact_scope = true;
+            show_start = false;
+          };
         };
       };
 
@@ -121,8 +161,8 @@ config,
                 expr = ''import ${pkgs.path} {}'';
               };
               options = {
-                  nixos.expr = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").nixosConfigurations.configname.options'';
-                  home-manager.expr = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").nixosConfigurations.${config.hostSpec.hostName}.options.home-manager.users.type.getSubOptions []'';
+                nixos.expr = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").nixosConfigurations.configname.options'';
+                home-manager.expr = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").nixosConfigurations.${config.hostSpec.hostName}.options.home-manager.users.type.getSubOptions []'';
               };
             };
           };
@@ -141,35 +181,203 @@ config,
         nixvimInjections = true;
       };
 
-      cmp = {
+      blink-cmp = {
         enable = true;
-        autoEnableSources = true;
-        settings = {
-          sources = [
-            { name = "buffer"; }
-            { name = "luasnip"; }
-            { name = "nvim_lsp"; }
-            { name = "nvim_lua"; }
-            { name = "path"; }
-            { name = "treesitter"; }
+      };
+
+      highlight-colors.enable = true;
+      highlight-colors.settings = {
+        render = "virtual";
+        virtual_symbol = "■";
+        virtual_symbol_position = "inline";
+      };
+
+      snacks.enable = true;
+      snacks.settings = {
+        statuscolumn = {
+          enabled = true;
+          left = [
+            "mark"
+            "sign"
           ];
-          mapping = {
-            "<C-Space>" = "cmp.mapping.complete()";
-            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-            "<C-e>" = "cmp.mapping.close()";
-            "<C-f>" = "cmp.mapping.scroll_docs(4)";
-            "<CR>" = "cmp.mapping.confirm({ select = true })";
-            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-            "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-          };
-          snippet = {
-            expand = ''function(args) require('luasnip').lsp_expand(args.body) end'';
-          };
+          right = [
+            "fold"
+            "git"
+          ];
+        };
+        git = {
+          enabled = true;
+        };
+        lazygit = {
+          enabled = true;
+        };
+        notifier = {
+          enabled = true;
+        };
+        image = {
+          enabled = true;
+        };
+        dashboard = {
+          enabled = false;
+        };
+        zen = {
+          enabled = true;
         };
       };
 
+      smartcolumn.enable = true;
+      flash.enable = true;
+      flash.settings = {
+        modes.char.jump_labels = true;
+      };
+      visual-multi.enable = true;
+
+      mini.enable = true;
+      mini.modules = {
+        comment = { };
+        pairs = { };
+        bracketed = { };
+        operators = { };
+        ai = { };
+        basics = { };
+        surround = {
+          mappings = {
+            add = "gza";
+            delete = "gzd";
+            find = "gzf";
+            find_left = "gzF";
+            highlight = "gzh";
+            replace = "gzr";
+            update_n_lines = "gzn";
+          };
+        };
+        icons = { };
+        statusline = { };
+        starter = { };
+        clue = {
+          triggers = [
+            # leader triggers
+            {
+              mode = "n";
+              keys = "<leader>";
+            }
+            {
+              mode = "x";
+              keys = "<leader>";
+            }
+            # # built-in completion
+            {
+              mode = "i";
+              keys = "<C-x>";
+            }
+            # # `g` key
+            {
+              mode = "n";
+              keys = "g";
+            }
+            {
+              mode = "x";
+              keys = "g";
+            }
+            # # marks
+            {
+              mode = "n";
+              keys = "\"";
+            }
+            {
+              mode = "n";
+              keys = "`";
+            }
+            {
+              mode = "x";
+              keys = "\"";
+            }
+            {
+              mode = "x";
+              keys = "`";
+            }
+            # # registers
+            {
+              mode = "n";
+              keys = "\"";
+            }
+            {
+              mode = "x";
+              keys = "\"";
+            }
+            {
+              mode = "i";
+              keys = "<C-r>";
+            }
+            {
+              mode = "c";
+              keys = "<C-r>";
+            }
+            # # window commands
+            {
+              mode = "n";
+              keys = "<C-w>";
+            }
+            # # `z` key
+            {
+              mode = "n";
+              keys = "z";
+            }
+            {
+              mode = "x";
+              keys = "z";
+            }
+          ];
+
+          clues = [
+            # Enhance this by adding descriptions for <leader> mapping groups
+            { __raw = "require('mini.clue').gen_clues.builtin_completion()"; }
+            { __raw = "require('mini.clue').gen_clues.g()"; }
+            { __raw = "require('mini.clue').gen_clues.marks()"; }
+            { __raw = "require('mini.clue').gen_clues.registers()"; }
+            { __raw = "require('mini.clue').gen_clues.windows()"; }
+            { __raw = "require('mini.clue').gen_clues.z()"; }
+          ];
+
+          window = {
+            config = {
+              border = "single";
+              width = "auto";
+            };
+            delay = 0;
+          };
+        };
+      };
+      mini.mockDevIcons = true;
+      fidget.enable = true;
       fzf-lua.enable = true;
-      harpoon.enable = true;
+      fzf-lua = {
+        keymaps = {
+          "<leader>sg" = "live_grep";
+          "<leader>sf" = "files";
+          "<leader>sr" = "resume";
+          "<leader>s." = "oldfiles";
+          "<leader>sw" = "grep_cword";
+          "<leader>ss" = "builtin";
+          "<leader>sk" = "keymaps";
+          "<leader>sh" = "helptags";
+          "<leader><leader>s" = "buffers";
+          # "<C-p>" = {
+          #   action = "git_files";
+          #   settings = {
+          #     previewers.cat.cmd = lib.getExe' pkgs.coreutils "cat";
+          #     winopts.height = 0.5;
+          #   };
+          #   options = {
+          #     silent = true;
+          #     desc = "Fzf-Lua Git Files";
+          #   };
+          # };
+        };
+
+        profile = "fzf-native";
+      };
+      # harpoon.enable = true;
       oil = {
         enable = true;
         settings = {
@@ -178,7 +386,7 @@ config,
       };
 
       telescope = {
-        enable = true;
+        enable = false;
         keymaps = {
           "<leader>f" = "find_files";
           "<leader>b" = "buffers";
@@ -215,21 +423,28 @@ config,
             ];
             center = [
               {
-                action = "Telescope oldfiles";
-                desc = "Recently Opened Files";
+                action = "FzfLua resume";
+                desc = "Resume";
                 icon = "󱪞 ";
                 key = "r";
                 key_format = "%s";
               }
               {
-                action = "Telescope find_files";
+                action = "FzfLua oldfiles";
+                desc = "Recently Opened Files";
+                icon = "󱪞 ";
+                key = ".";
+                key_format = "%s";
+              }
+              {
+                action = "FzfLua files";
                 desc = "Find Files           ";
                 icon = " ";
                 key = "f";
                 key_format = "%s";
               }
               {
-                action = "Telescope live_grep";
+                action = "FzfLua live_grep";
                 desc = "Find Words           ";
                 icon = " ";
                 key = "w";
@@ -242,7 +457,6 @@ config,
     };
     extraConfigLuaPre = ''
             -- vim.opt.background = "dark"
-            -- vim.cmd.colorscheme 'miasma'
             -- vim.cmd "let g:gruvbox_material_background = 'hard'"
             -- vim.cmd "let g:gruvbox_material_foreground = 'original'"
             -- NOTE: These 2 need to be set up before any plugins are loaded.
@@ -345,8 +559,8 @@ config,
 
       -- Keymaps for better default experience
       -- See `:help vim.keymap.set()`
-      vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = 'Moves Line Down' })
-      vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = 'Moves Line Up' })
+      vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = 'Moves Line Down' })
+      vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = 'Moves Line Up' })
       vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = 'Scroll Down' })
       vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = 'Scroll Up' })
       vim.keymap.set("n", "n", "nzzzv", { desc = 'Next Search Result' })
@@ -364,8 +578,8 @@ config,
       -- vim.cmd([[command! Q q]])
 
       -- Remap for dealing with word wrap
-      vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-      vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+      vim.keymap.set('n', '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+      vim.keymap.set('n', '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
       -- Diagnostic keymaps
       vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })

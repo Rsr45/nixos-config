@@ -28,10 +28,10 @@
       url = "github:Rsr45/nixvim-config";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim = {
-      url = "github:Rsr45/nixCats-config";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # neovim = {
+    #   url = "github:Rsr45/nixCats-config";
+    #   # inputs.nixpkgs.follows = "nixpkgs";
+    # };
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,23 +40,34 @@
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.quickshell.follows = "quickshell";
+    };
+
     quickshell = {
-      url = "github:quickshell-mirror/quickshell";
+      url = "github:outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     astal = {
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     ags = {
       url = "github:aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.astal.follows = "astal";
     };
+
     xmonad-contexts = {
       url = "github:Procrat/xmonad-contexts";
       flake = false;
     };
+
     # gauntlet = {
     #   url = "github:project-gauntlet/gauntlet/v20"; # <gauntlet_version_repository_tag>;
     #   inputs.nixpkgs.follows = "nixpkgs";

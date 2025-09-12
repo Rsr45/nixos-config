@@ -36,6 +36,7 @@
 
   home.packages = with pkgs; [
     tamzen
+    roboto
     terminus_font
     ibm-plex
     geist-font
@@ -46,6 +47,11 @@
     font-awesome
     material-symbols
     iosevka
+    # for noctalia so put it in its own file
+    gpu-screen-recorder
+    ddcutil
+    wlsunset
+    cava
   ];
 
   # is it even make a difference ???

@@ -41,7 +41,7 @@
     common/optional/typst.nix
     common/optional/pandoc.nix
 
-    common/optional/neovim.nix
+    # common/optional/neovim.nix
 
     # ========== X ==========
     #
@@ -54,13 +54,15 @@
 
     common/optional/koreader.nix
 
+    common/optional/inkscape.nix
+
     # ========== X ==========
     #
     common/optional/browsers/floorp.nix
     # common/optional/browsers/schizofox.nix
     common/optional/browsers/librewolf.nix
     # common/optional/editors/nvf.nix
-    # common/optional/editors/nixvim.nix
+    common/optional/editors/nixvim.nix
     common/optional/editors/zed.nix
     common/optional/editors/helix.nix
     common/optional/libreoffice.nix

@@ -51,14 +51,14 @@
       #   }
       # '';
       nvf = {
-        enable = true;
+        enable = false;
         plugin = "mini-base16";
       };
       kitty.enable = false;
       alacritty.enable = false;
       starship.enable = false;
       nixvim = {
-        enable = true;
+        enable = false;
         plugin = "mini.base16";
       };
       waybar.enable = false;

@@ -28,7 +28,8 @@
     duf
     wev
     rmpc
-    inputs.quickshell.packages."${system}".default
+    inputs.quickshell.packages.${system}.default
+    inputs.noctalia.packages.${system}.default
     just
     mask
     xh
