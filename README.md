@@ -1,7 +1,7 @@
 <h1 align="center">❄️ Kar ❄️</h1>
 
 <picture>
-  <img alt="P" align="right" width="400px" src="Preview.png"/>
+  <img alt="P" align="right" width="400px" src="img/1.png"/>
 </picture>
 
 > [!NOTE]
@@ -11,9 +11,8 @@
 > - **OS:** NixOS
 > - **Window Manager:** Hyprland
 > - **Shell:** Nu & Fish + Starship
-> - **Terminal:** Wezterm
+> - **Terminal:** Kitty
 > - **Editor:** Neovim
-> - **Browser:** Schizofox & Floorp
 
 ## About
 
@@ -22,8 +21,14 @@ Personal NixOS configuration which uses Flakes and Home Manager.
 <details>
     <summary>Showcase</summary>
 
-![Kar](Preview.png) ![Kar](Browser.png) ![Old](Screenshot_1.png)
-![Old](Screenshot_2.png)
+![Kar](img/2.png) ![Kar](img/3.png)
+
+<details>
+
+<details>
+    <summary>Old</summary>
+
+![Kar](img/Preview.png) ![Kar](img/Browser.png) ![Old](img/Screenshot_1.png) ![Old](img/Screenshot_2.png)
 
 </details>
 
@@ -35,5 +40,6 @@ People i got inspired by (or yoinked bits from).
 <a href="https://www.youtube.com/@vimjoyer">vimjoyer</a> •
 <a href="https://github.com/raexera">raexera</a> •
 <a href="https://github.com/fufexan">fufexan</a> •
-<a href="https://github.com/elkowar">elkowar</a>
+<a href="https://github.com/elkowar">elkowar</a> •
+<a href="https://github.com/fiffeek">fiffeek</a>
 </p>
