@@ -11,8 +11,8 @@
 
   programs.nixvim = {
     enable = true;
-    # viAlias = true;
-    # vimAlias = true;
+    viAlias = true;
+    vimAlias = true;
     opts = {
       tabstop = 2;
       shiftwidth = 2;
@@ -27,33 +27,8 @@
     colorscheme = "kanagawa";
     colorschemes.kanagawa.enable = true;
     colorschemes.kanagawa.settings = {
-      # colors = {
-      #   palette = {
-      #     fujiWhite = "#FFFFFF";
-      #     sumiInk0 = "#000000";
-      #   };
-      #   theme = {
-      #     all = {
-      #       ui = {
-      #         bg_gutter = "none";
-      #       };
-      #     };
-      #     dragon = {
-      #       syn = {
-      #         parameter = "yellow";
-      #       };
-      #     };
-      #     wave = {
-      #       ui = {
-      #         float = {
-      #           bg = "none";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
       commentStyle = {
-        italic = true;
+        italic = false;
       };
       compile = false;
       dimInactive = false;
@@ -65,7 +40,7 @@
         dark = "dragon";
         light = "lotus";
       };
-      transparent = false;
+      transparent = true;
       undercurl = true;
     };
 
@@ -82,14 +57,211 @@
     };
 
     keymaps = [
+      ## Flash
       {
-        action = "vim.lsp.buf.format()";
-        key = "<leader>lf";
+        key = "s";
+        mode = [
+          "n"
+          "x"
+          "o"
+        ];
+        action = "<cmd>lua require(\"flash\").jump()<cr>";
       }
       {
-        action = "vim.diagnostic.open_float()";
-        key = "<leader>ld";
+        key = "S";
+        mode = [
+          "n"
+          "x"
+          "o"
+        ];
+        action = "<cmd>lua require(\"flash\").treesitter()<cr>";
       }
+      {
+        key = "r";
+        mode = [
+          "o"
+        ];
+        action = "<cmd>lua require(\"flash\").remote()<cr>";
+      }
+      {
+        key = "R";
+        mode = [
+          "x"
+          "o"
+        ];
+        action = "<cmd>lua require(\"flash\").treesitter_search()<cr>";
+      }
+      {
+        key = "<C-s>";
+        mode = [
+          "c"
+        ];
+        action = "<cmd>lua require(\"flash\").toggle()<cr>";
+      }
+      ## Quality of Life
+      {
+        key = "<S-Down>";
+        mode = "v";
+        action = ":m '>+1<CR>gv=gv";
+        options.desc = "Moves Line Down";
+      }
+      {
+        key = "<S-Up>";
+        mode = "v";
+        action = ":m '<-2<CR>gv=gv";
+        options.desc = "Moves Line Up";
+      }
+      {
+        key = "<C-d>";
+        mode = "n";
+        action = "<C-d>zz";
+        options.desc = "Scroll Down";
+      }
+      {
+        key = "<C-u>";
+        mode = "n";
+        action = "<C-u>zz";
+        options.desc = "Scroll Up";
+      }
+      {
+        key = "n";
+        mode = "n";
+        action = "nzzzv";
+        options.desc = "Next Search Result";
+      }
+      {
+        key = "N";
+        mode = "n";
+        action = "Nzzzv";
+        options.desc = "Previous Search Result";
+      }
+      {
+        key = "<Down>";
+        mode = "n";
+        action = "v:count == 0 ? 'gj' : 'j'";
+        options = {
+          expr = true;
+          silent = true;
+        };
+      }
+      {
+        key = "<Up>";
+        mode = "n";
+        action = "v:count == 0 ? 'gk' : 'k'";
+        options = {
+          expr = true;
+          silent = true;
+        };
+      }
+      # ----------- Clipbord -----------------
+      {
+        key = "<leader>y";
+        mode = [
+          "n"
+          "x"
+          "v"
+        ];
+        action = "\"+y";
+        options = {
+          noremap = true;
+          silent = true;
+          desc = "Yank to clipboard";
+        };
+      }
+      {
+        key = "<leader>Y";
+        mode = [
+          "n"
+          "x"
+          "v"
+        ];
+        action = "\"+yy";
+        options = {
+          noremap = true;
+          silent = true;
+          desc = "Yank line to clipboard";
+        };
+      }
+      {
+        key = "<C-a>";
+        mode = [
+          "n"
+          "x"
+          "v"
+        ];
+        action = "gg0vG$";
+        options = {
+          noremap = true;
+          silent = true;
+          desc = "Select All";
+        };
+      }
+      {
+        key = "<leader>p";
+        mode = [
+          "n"
+          "x"
+          "v"
+        ];
+        action = "\"+p";
+        options = {
+          noremap = true;
+          silent = true;
+          desc = "Paste from clipboard";
+        };
+      }
+      {
+        key = "<C-p>";
+        mode = "i";
+        action = "<C-r><C-p>+";
+        options = {
+          noremap = true;
+          silent = true;
+          desc = "Paste from clipboard within insert mode";
+        };
+      }
+      {
+        key = "<leader>P";
+        mode = "x";
+        action = "\"_dP";
+        options = {
+          noremap = true;
+          silent = true;
+          desc = "Paste over selection without erasing unnamed register";
+        };
+      }
+      ## Buffer
+      {
+        key = "<leader><leader>[";
+        mode = "n";
+        action = "<cmd>bprev<CR>";
+        options.desc = "Previous Buffer";
+      }
+      {
+        key = "<leader><leader>]";
+        mode = "n";
+        action = "<cmd>bnext<CR>";
+        options.desc = "Next Buffer";
+      }
+      {
+        key = "<leader><leader>l";
+        mode = "n";
+        action = "<cmd>b#<CR>";
+        options.desc = "Last Buffer";
+      }
+      {
+        key = "<leader><leader>d";
+        mode = "n";
+        action = "<cmd>bdelete<CR>";
+        options.desc = "Delete Buffer";
+      }
+      ## Diagnostic
+      # {
+      #   key = "d";
+      #   mode = "n";
+      #   action = "<cmd>bdelete<CR>";
+      #   options.desc = "Delete Buffer";
+      # }
     ];
 
     extraPlugins = with pkgs.vimPlugins; [
@@ -106,12 +278,13 @@
       };
 
       which-key = {
-        enable = false;
+        enable = true;
+        settings = {
+          preset = "helix";
+        };
       };
 
       intellitab.enable = true;
-      comment.enable = true;
-      nvim-autopairs.enable = true;
       indent-blankline = {
         enable = true;
         settings = {
@@ -176,6 +349,17 @@
         enable = true;
       };
 
+      navic = {
+        enable = true;
+        luaConfig.post = "vim.o.winbar = \"%{%v:lua.require'nvim-navic'.get_location()%}\"";
+        settings = {
+          highlight = true;
+          lsp = {
+            auto_attach = true;
+          };
+        };
+      };
+
       treesitter = {
         enable = true;
         nixvimInjections = true;
@@ -218,7 +402,7 @@
           enabled = true;
         };
         dashboard = {
-          enabled = false;
+          enabled = false; # remove lazy dependent startup section
         };
         zen = {
           enabled = true;
@@ -254,99 +438,116 @@
         icons = { };
         statusline = { };
         starter = { };
-        clue = {
-          triggers = [
-            # leader triggers
-            {
-              mode = "n";
-              keys = "<leader>";
-            }
-            {
-              mode = "x";
-              keys = "<leader>";
-            }
-            # # built-in completion
-            {
-              mode = "i";
-              keys = "<C-x>";
-            }
-            # # `g` key
-            {
-              mode = "n";
-              keys = "g";
-            }
-            {
-              mode = "x";
-              keys = "g";
-            }
-            # # marks
-            {
-              mode = "n";
-              keys = "\"";
-            }
-            {
-              mode = "n";
-              keys = "`";
-            }
-            {
-              mode = "x";
-              keys = "\"";
-            }
-            {
-              mode = "x";
-              keys = "`";
-            }
-            # # registers
-            {
-              mode = "n";
-              keys = "\"";
-            }
-            {
-              mode = "x";
-              keys = "\"";
-            }
-            {
-              mode = "i";
-              keys = "<C-r>";
-            }
-            {
-              mode = "c";
-              keys = "<C-r>";
-            }
-            # # window commands
-            {
-              mode = "n";
-              keys = "<C-w>";
-            }
-            # # `z` key
-            {
-              mode = "n";
-              keys = "z";
-            }
-            {
-              mode = "x";
-              keys = "z";
-            }
-          ];
-
-          clues = [
-            # Enhance this by adding descriptions for <leader> mapping groups
-            { __raw = "require('mini.clue').gen_clues.builtin_completion()"; }
-            { __raw = "require('mini.clue').gen_clues.g()"; }
-            { __raw = "require('mini.clue').gen_clues.marks()"; }
-            { __raw = "require('mini.clue').gen_clues.registers()"; }
-            { __raw = "require('mini.clue').gen_clues.windows()"; }
-            { __raw = "require('mini.clue').gen_clues.z()"; }
-          ];
-
-          window = {
-            config = {
-              border = "single";
-              width = "auto";
-            };
-            delay = 0;
-          };
-        };
+        # clue = {
+        #   triggers = [
+        #     # leader triggers
+        #     {
+        #       mode = "n";
+        #       keys = "<leader>";
+        #     }
+        #     {
+        #       mode = "x";
+        #       keys = "<leader>";
+        #     }
+        #     # # built-in completion
+        #     {
+        #       mode = "i";
+        #       keys = "<C-x>";
+        #     }
+        #     # # `g` key
+        #     {
+        #       mode = "n";
+        #       keys = "g";
+        #     }
+        #     {
+        #       mode = "x";
+        #       keys = "g";
+        #     }
+        #     # # marks
+        #     {
+        #       mode = "n";
+        #       keys = "\"";
+        #     }
+        #     {
+        #       mode = "n";
+        #       keys = "`";
+        #     }
+        #     {
+        #       mode = "x";
+        #       keys = "\"";
+        #     }
+        #     {
+        #       mode = "x";
+        #       keys = "`";
+        #     }
+        #     # # registers
+        #     {
+        #       mode = "n";
+        #       keys = "\"";
+        #     }
+        #     {
+        #       mode = "x";
+        #       keys = "\"";
+        #     }
+        #     {
+        #       mode = "i";
+        #       keys = "<C-r>";
+        #     }
+        #     {
+        #       mode = "c";
+        #       keys = "<C-r>";
+        #     }
+        #     # # window commands
+        #     {
+        #       mode = "n";
+        #       keys = "<C-w>";
+        #     }
+        #     # # `z` key
+        #     {
+        #       mode = "n";
+        #       keys = "z";
+        #     }
+        #     {
+        #       mode = "x";
+        #       keys = "z";
+        #     }
+        #     ## bracketed
+        #     {
+        #       mode = "n";
+        #       keys = "[";
+        #     }
+        #     {
+        #       mode = "n";
+        #       keys = "]";
+        #     }
+        #     {
+        #       mode = "x";
+        #       keys = "[";
+        #     }
+        #     {
+        #       mode = "x";
+        #       keys = "]";
+        #     }
+        #   ];
+        #
+        #   clues = [
+        #     # Enhance this by adding descriptions for <leader> mapping groups
+        #     { __raw = "require('mini.clue').gen_clues.builtin_completion()"; }
+        #     { __raw = "require('mini.clue').gen_clues.g()"; }
+        #     { __raw = "require('mini.clue').gen_clues.marks()"; }
+        #     { __raw = "require('mini.clue').gen_clues.registers()"; }
+        #     { __raw = "require('mini.clue').gen_clues.windows()"; }
+        #     { __raw = "require('mini.clue').gen_clues.z()"; }
+        #   ];
+        #
+        #   window = {
+        #     config = {
+        #       border = "single";
+        #       width = "auto";
+        #     };
+        #     delay = 0;
+        #   };
+        # };
       };
       mini.mockDevIcons = true;
       fidget.enable = true;
@@ -395,7 +596,7 @@
       };
 
       dashboard = {
-        enable = true;
+        enable = false;
         settings = {
           theme = "doom";
           config = {
@@ -456,10 +657,6 @@
       };
     };
     extraConfigLuaPre = ''
-            -- vim.opt.background = "dark"
-            -- vim.cmd "let g:gruvbox_material_background = 'hard'"
-            -- vim.cmd "let g:gruvbox_material_foreground = 'original'"
-            -- NOTE: These 2 need to be set up before any plugins are loaded.
       vim.g.mapleader = ' '
       vim.g.maplocalleader = ' '
 
@@ -555,130 +752,12 @@
 
       vim.g.netrw_liststyle = 0
       vim.g.netrw_banner = 0
+
       -- [[ Basic Keymaps ]]
 
-      -- Keymaps for better default experience
-      -- See `:help vim.keymap.set()`
-      vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = 'Moves Line Down' })
-      vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = 'Moves Line Up' })
-      vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = 'Scroll Down' })
-      vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = 'Scroll Up' })
-      vim.keymap.set("n", "n", "nzzzv", { desc = 'Next Search Result' })
-      vim.keymap.set("n", "N", "Nzzzv", { desc = 'Previous Search Result' })
-
-      vim.keymap.set("n", "<leader><leader>[", "<cmd>bprev<CR>", { desc = 'Previous buffer' })
-      vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer' })
-      vim.keymap.set("n", "<leader><leader>l", "<cmd>b#<CR>", { desc = 'Last buffer' })
-      vim.keymap.set("n", "<leader><leader>d", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
-
-      -- see help sticky keys on windows
-      -- vim.cmd([[command! W w]])
-      -- vim.cmd([[command! Wq wq]])
-      -- vim.cmd([[command! WQ wq]])
-      -- vim.cmd([[command! Q q]])
-
-      -- Remap for dealing with word wrap
-      vim.keymap.set('n', '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-      vim.keymap.set('n', '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
       -- Diagnostic keymaps
-      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
       vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
       vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
-
-
-      -- kickstart.nvim starts you with this.
-      -- But it constantly clobbers your system clipboard whenever you delete anything.
-
-      -- Sync clipboard between OS and Neovim.
-      --  Remove this option if you want your OS clipboard to remain independent.
-      --  See `:help 'clipboard'`
-      -- vim.o.clipboard = 'unnamedplus'
-
-      -- You should instead use these keybindings so that they are still easy to use, but dont conflict
-      vim.keymap.set({ "v", "x", "n" }, '<leader>y', '"+y', { noremap = true, silent = true, desc = 'Yank to clipboard' })
-      vim.keymap.set({ "n", "v", "x" }, '<leader>Y', '"+yy', { noremap = true, silent = true, desc = 'Yank line to clipboard' })
-      vim.keymap.set({ "n", "v", "x" }, '<C-a>', 'gg0vG$', { noremap = true, silent = true, desc = 'Select all' })
-      vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { noremap = true, silent = true, desc = 'Paste from clipboard' })
-      vim.keymap.set('i', '<C-p>', '<C-r><C-p>+',
-          { noremap = true, silent = true, desc = 'Paste from clipboard from within insert mode' })
-      vim.keymap.set("x", "<leader>P", '"_dP',
-          { noremap = true, silent = true, desc = 'Paste over selection without erasing unnamed register' })
     '';
-    # extraConfigLua = ''
-    #   -- Make line numbers default1
-    #   vim.opt.number = true
-    #   vim.opt.relativenumber = true
-    #
-    #   -- Enable mouse mode.
-    #   vim.opt.mouse = 'a'
-    #
-    #   -- Don't show the mode.
-    #   vim.opt.showmode = false
-    #
-    #   -- Enable break indent
-    #   vim.opt.breakindent = true
-    #
-    #   -- Save undo history
-    #   vim.opt.undofile = true
-    #
-    #   -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-    #   vim.opt.ignorecase = true
-    #   vim.opt.smartcase = true
-    #
-    #   -- Keep signcolumn on by default
-    #   vim.opt.signcolumn = 'yes'
-    #
-    #   -- Decrease update time
-    #   vim.opt.updatetime = 250
-    #
-    #   -- Decrease mapped sequence wait time
-    #   -- Displays which-key popup sooner
-    #   vim.opt.timeoutlen = 300
-    #
-    #   -- Configure how new splits should be opened
-    #   vim.opt.splitright = true
-    #   vim.opt.splitbelow = true
-    #
-    #   -- Sets how neovim will display certain whitespace characters in the editor.
-    #   --  See `:help 'list'`
-    #   --  and `:help 'listchars'`
-    #   vim.opt.list = true
-    #   vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-    #
-    #   -- Preview substitutions live, as you type!
-    #   vim.opt.inccommand = 'split'
-    #
-    #   -- Show which line your cursor is on
-    #   vim.opt.cursorline = true
-    #
-    #   -- Minimal number of screen lines to keep above and below the cursor.
-    #   vim.opt.scrolloff = 10
-    #
-    #   -- [[ Basic Keymaps ]]
-    #   --  See `:help vim.keymap.set()`
-    #
-    #   -- Clear highlights on search when pressing <Esc> in normal mode
-    #   --  See `:help hlsearch`
-    #   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-    #
-    #   -- Diagnostic keymaps
-    #   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-    #
-    #   -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
-    #   -- or just use <C-\><C-n> to exit terminal mode
-    #   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-    #
-    #   -- Keybinds to make split navigation easier.
-    #   --  Use CTRL+<←↓↑→> to switch between windows
-    #   --
-    #   --  See `:help wincmd` for a list of all window commands
-    #   vim.keymap.set('n', '<C-left>', '<C-w><C-left>', { desc = 'Move focus to the left window' })
-    #   vim.keymap.set('n', '<C-right>', '<C-w><C-right>', { desc = 'Move focus to the right window' })
-    #   vim.keymap.set('n', '<C-down>', '<C-w><C-down>', { desc = 'Move focus to the lower window' })
-    #   vim.keymap.set('n', '<C-up>', '<C-w><C-up>', { desc = 'Move focus to the upper window' })
-    # '';
-    # extraConfigLuaPost = '''';
   };
 }
