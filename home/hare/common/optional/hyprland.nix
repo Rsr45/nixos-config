@@ -174,6 +174,8 @@
         "$mod SHIFT, E, exec, hyprctl dispatch exit 1"
         "Ctrl+Shift+Super, Delete, exec, systemctl reboot"
         "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff"
+        ", Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png')"
+        "$mod SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png')"
       ];
       windowrulev2 = [
         "float, class:(waypaper)"
@@ -196,8 +198,6 @@
     };
     extraConfig = ''
       # bind = SUPER, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable
-      bind = , Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png')
-      bind = $mod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png')
       # will switch to a submap called resize
       bind = $mod, R, submap, resize
 
