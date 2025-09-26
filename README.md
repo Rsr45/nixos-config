@@ -23,9 +23,6 @@ Personal NixOS configuration which uses Flakes and Home Manager.
 
 ![Kar](img/2.png) ![Kar](img/3.png)
 
-<details>
-
-<details>
     <summary>Old</summary>
 
 ![Kar](img/Preview.png) ![Kar](img/Browser.png) ![Old](img/Screenshot_1.png) ![Old](img/Screenshot_2.png)
