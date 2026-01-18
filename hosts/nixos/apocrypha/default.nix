@@ -60,6 +60,38 @@
     };
   };
 
+  # services.opensnitch = {
+  #   enable = true;
+  #   rules = {
+  #     systemd-timesyncd = {
+  #       created = "2018-04-07T14:13:27.903996051+02:00";
+  #       name = "systemd-timesyncd";
+  #       enabled = true;
+  #       action = "allow";
+  #       duration = "always";
+  #       operator = {
+  #         type = "simple";
+  #         sensitive = false;
+  #         operand = "process.path";
+  #         data = "${lib.getBin pkgs.systemd}/lib/systemd/systemd-timesyncd";
+  #       };
+  #     };
+  #     systemd-resolved = {
+  #       created = "2018-04-07T14:13:27.903996051+02:00";
+  #       name = "systemd-resolved";
+  #       enabled = true;
+  #       action = "allow";
+  #       duration = "always";
+  #       operator = {
+  #         type = "simple";
+  #         sensitive = false;
+  #         operand = "process.path";
+  #         data = "${lib.getBin pkgs.systemd}/lib/systemd/systemd-resolved";
+  #       };
+  #     };
+  #   };
+  # };
+
   networking = {
     networkmanager.enable = true;
     networkmanager.wifi.backend = "iwd";
@@ -71,6 +103,33 @@
       ];
     };
   };
+
+  programs.localsend = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  programs.kdeconnect.enable = true;
+
+  networking.nftables.enable = true;
+  # networking.firewall = {
+  #   allowedTCPPorts = [
+  #     53317
+  #   ];
+  #   allowedUDPPorts = [ 53317 ];
+  #   allowedTCPPortRanges = [
+  #     {
+  #       from = 1714;
+  #       to = 1764;
+  #     }
+  #   ];
+  #   allowedUDPPortRanges = [
+  #     {
+  #       from = 1714;
+  #       to = 1764;
+  #     }
+  #   ];
+  # };
 
   boot.loader = {
     systemd-boot = {
@@ -262,6 +321,7 @@
       xmobar
       mullvad-browser
       tor-browser
+      spotube
       firefox
       nyxt
       ungoogled-chromium
@@ -273,7 +333,7 @@
       exiftool
       fuseiso
       # # Apps
-      blender
+      # blender
       wgcf
       # inputs.nixvim-config.packages.${system}.default
       # upscayl # Image Upscaler
@@ -288,7 +348,6 @@
       # logmein-hamachi # Hamachi
       # haguichi # Hamachi Client
       anydesk # Remote Desktop Client
-      localsend # File Sharing
       # pywalfox-native
       obsidian # Note
       keepassxc
@@ -299,6 +358,7 @@
       inputs.zen-browser.packages."${system}".default
       # fum
       # miru
+      dino
       element-desktop # Matrix Client
       # fluffychat # Matrix Client
       onlyoffice-desktopeditors
@@ -331,8 +391,8 @@
       # alejandra
       nixfmt-rfc-style
       # nixfmt
-      nil
-      nixd
+      # nil
+      # nixd
       love
       lua
       luarocks

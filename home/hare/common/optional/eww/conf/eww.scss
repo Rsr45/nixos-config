@@ -1,0 +1,115 @@
+* {
+  // all: unset;
+  background:#181825;
+}
+
+window {
+  // background: #242424;
+  // color: #FFFFFF;
+  font-size: 11pt;
+  border: 2px;
+  // box-shadow: #FFFFFF 10px -10px;
+
+  & > * {
+    margin: 3px;
+  }
+  font-family: "Geist Mono";
+}
+
+// .workspace-entry {
+//   color: #8ec07c;
+// }
+.workspace-entry {
+  // &.current {
+  //   color: #C984D9;
+  // }
+  &.occupied {
+    // color: #452C27;
+  }
+}
+
+// .workspaces-widget {
+//   // background-color: #452C27;
+//   // color: #FFFFFF;
+// }
+
+// .workspaces-widget {
+//   workspace-entry {
+//     background: none;
+//     margin: 3px;
+//     padding-left: 1px;
+//     &.inactive {
+//       color: #888974;
+//     }
+//     &.active {
+//       color: #8ec07c;
+//     }
+//     &.occupied {
+//       font-size: 1.01rem;
+//     }
+//     &.empty {
+//       font-size: 0.8rem;
+//     }
+//   }
+// }
+
+.segment-top {
+  margin-top: 10px;
+}
+
+.segment-bottom {
+  margin-bottom: 10px;
+}
+
+.large-symbol {
+  font-size: 0.8em;
+}
+
+.metric {
+  // background-color: #452C27;
+  padding: 5px 2px;
+}
+.metric-icon {
+  font-family: "Font Awesome 6 Free";
+  font-size: 1em;
+}
+
+.time {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  // color: #FFFFFF;
+  // background-color: #452C27;
+}
+
+.music_popup {
+  all: unset;
+  // background-color: #452C27;
+  padding: 0px 20px;
+  margin: 0;
+}
+
+// System Tray
+menu {
+  padding: 5px 5px;
+  // background-color: #452C27;
+  >menuitem {
+    font-size: 14px;
+    padding: 2px 5px;
+    //color: $foreground;
+		&:disabled label {
+			// color: #FFFFFF;
+		}
+
+		&:hover {
+    // background-color: #452C27;
+		}
+	}
+
+	separator {
+		padding-top: 1px;
+
+		&:last-child {
+			padding: unset;
+		}
+	}
+}

@@ -5,6 +5,7 @@
     #
     common/core
     common/optional/mail.nix
+    common/optional/xdg-portal.nix
 
     # ========== X ==========
     #
@@ -21,8 +22,6 @@
     common/optional/hyprlock.nix
     common/optional/hyprpicker.nix
     common/optional/waybar.nix
-    # common/optional/swaync.nix
-    common/optional/dunst.nix
     common/optional/keepassxc.nix
     common/optional/thunderbird.nix
 
@@ -37,6 +36,7 @@
     common/optional/yt-dlp.nix
     common/optional/fastfetch.nix
     common/optional/zathura.nix
+    common/optional/superfile.nix
 
     common/optional/typst.nix
     common/optional/pandoc.nix
@@ -50,9 +50,6 @@
     common/optional/strawberry.nix
     common/optional/audacious.nix
     common/optional/nixcord.nix
-
-
-    common/optional/koreader.nix
 
     common/optional/inkscape.nix
 

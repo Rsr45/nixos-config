@@ -5,6 +5,6 @@
   ];
 
   home.sessionVariables = {
-    SAL_USE_VCLPLUGIN = "kf5";
+    SAL_USE_VCLPLUGIN = "qt6";
   };
 }

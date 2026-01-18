@@ -1,12 +1,12 @@
 {
   pkgs,
-  config,
   inputs,
   ...
 }:
 {
   home.packages = with pkgs; [
-    openmw
+    # openmw
+    rofi
     ffmpeg
     ffmpegthumbnailer
     gifski
@@ -28,8 +28,10 @@
     duf
     wev
     rmpc
+    # --- Bar/Framework ---
     inputs.quickshell.packages.${system}.default
     inputs.noctalia.packages.${system}.default
+    # --- MISC ---
     just
     mask
     xh
@@ -39,6 +41,49 @@
     xan
     uutils-coreutils
     odin
+    xournalpp
+    cmake
+    libtool
+    graphviz
+    python314
+    # --- 3DR ---
+    freecad
+    # blender
+    blender-hip
+    # --- IDE ---
+    emacs
+    # --- LSP ---
+    nixd
+    # nil
+    lua-language-server
+    clang-tools
+    gopls
+    gomodifytags
+    gotests
+    gore
+    haskell-language-server # haskell
+    haskellPackages.hoogle # haskell
+    cabal-install # haskell
+    ktlint # kotlin
+    sbcl # common-lisp
+    rust-analyzer
+    # pyflakes
+    # isort
+    # pipenv
+    # nosetests
+    # pytest
+    # --- FMT ---
+    stylua
+    ocamlformat
+    # swift-format
+    tidyp
+    jsbeautifier
+    shfmt
+    black
+    # --- Lint ---
+    stylelint
+    shellcheck
+    # --- EMU ---
     # retroarch-full
     # (retroarch.withCores (
     #   cores: with cores; [
@@ -49,11 +94,11 @@
     mednafen
     pcsx2
     # rpcs3
-    dolphin-emu
-    cemu
-    melonDS
+    # dolphin-emu
+    # cemu
+    # melonDS
     # azahar
-    flycast
+    # flycast
     libsecret
   ];
   # programs.mbsync.enable = true;

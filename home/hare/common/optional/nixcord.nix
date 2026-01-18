@@ -22,6 +22,7 @@
     config = {
       useQuickCss = true;
       themeLinks = [ "https://raw.codeberg.page/AllPurposeMat/Disblock-Origin/DisblockOrigin.theme.css" ];
+      enabledThemes = [ "midnight-matugen.css" ];
       plugins = {
         fakeNitro.enable = true;
         favoriteEmojiFirst.enable = true;
@@ -114,13 +115,13 @@
         blurNSFW.enable = true;
         biggerStreamPreview.enable = true;
         betterUploadButton.enable = true;
-        betterSettings.enable = true;
+        # betterSettings.enable = true; # no background with midnight
         betterRoleContext.enable = true;
         betterGifPicker.enable = true;
         betterGifAltText.enable = true;
         anonymiseFileNames.enable = true;
         accountPanelServerProfile.enable = true;
-        hideAttachments.enable = true;
+        # hideAttachments.enable = true;
         ignoreActivities = {
           enable = true;
           ignorePlaying = true;

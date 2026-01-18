@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+lib,
   ...
 }:
 {
@@ -21,9 +22,11 @@
         listToAttrs [
           (extension "ublock-origin" "uBlock0@raymondhill.net")
           (extension "sidebery" "{3c078156-979c-498b-8990-85f7987dd929}")
-          # (extension "single-file" "{531906d3-e22f-4a6c-a102-8057b88a1a63}")
-          # (extension "vimium-ff" "{d7742d87-e61d-4b78-b8a1-b469842139fa}")
+          (extension "vimium-ff" "{d7742d87-e61d-4b78-b8a1-b469842139fa}")
           (extension "darkreader" "addon@darkreader.org")
+          # (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}")
+          (extension "sponsorblock" "sponsorBlocker@ajay.app")
+          # (extension "tridactyl-vim" "tridactyl.vim@cmcaine.co.uk")
         ];
       # To add additional extensions, find it on addons.mozilla.org, find
       # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
@@ -44,12 +47,95 @@
         "browser.translations.automaticallyPopup" = false;
         "svg.context-properties.content.enabled" = true;
       };
+      extensions = {
+        settings = {
+          "uBlock0@raymondhill.net".settings =
+            let
+              importedLists = [
+                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/ultimate.txt"
+                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/tif.txt"
+                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/spam-tlds-ublock.txt"
+                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/dyndns.txt"
+                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/doh-vpn-proxy-bypass.txt"
+                "https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy_essentials.txt"
+                "https://raw.githubusercontent.com/yokoffing/filterlists/main/annoyance_list.txt"
+                "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt"
+                "https://raw.githubusercontent.com/yokoffing/filterlists/main/youtube_clear_view.txt"
+                "https://gitflic.ru/project/magnolia1234/bypass-paywalls-clean-filters/blob/raw?file=bpc-paywall-filter.txt&commit=05db44828fde074ac67ba5c6053c2d26c5158a5b"
+                "https://raw.githubusercontent.com/liamengland1/miscfilters/master/antipaywall.txt"
+                "https://raw.githubusercontent.com/fmhy/FMHYFilterlist/main/filterlist.txt"
+              ];
+            in
+            {
+              # userFilters = lib.concatMapStrings (x: x + "\n") [
+              #   "twitch.tv##+js(twitch-videoad)"
+              #   "||1337x.vpnonly.site"
+              # ];
+              uiAccentCustom = true;
+              uiAccentCustom0 = "#CF1D25";
+              cloudStorageEnabled = lib.mkForce false;
+              advancedUserEnabled = true;
+              userFiltersTrusted = true;
+              importedLists = importedLists;
+              externalLists = lib.concatStringsSep "\n" importedLists;
+              popupPanelSections = 31;
+              selectedFilterLists = [
+                "user-filters"
+                "ublock-filters"
+                "ublock-badware"
+                "ublock-privacy"
+                "ublock-quick-fixes"
+                "ublock-unbreak"
+                "easylist"
+                "adguard-generic"
+                "adguard-mobile"
+                "easyprivacy"
+                "LegitimateURLShortener"
+                "adguard-spyware"
+                "adguard-spyware-url"
+                "block-lan"
+                "urlhaus-1"
+                "curben-phishing"
+                "plowe-0"
+                "dpollock-0"
+                ## ----- Cookie Notices -----
+                "fanboy-cookiemonster"
+                "ublock-cookies-easylist"
+                "adguard-cookies"
+                "ublock-cookies-adguard"
+                ## ----- Social -----
+                "fanboy-social"
+                "adguard-social"
+                "fanboy-thirdparty_social"
+                ## ----- Annoyances -----
+                "easylist-chat"
+                "easylist-newsletters"
+                "easylist-notifications"
+                "easylist-annoyances"
+                "adguard-mobile-app-banners"
+                "adguard-other-annoyances"
+                "adguard-popup-overlays"
+                "adguard-widgets"
+                "ublock-annoyances"
+                "KOR-0"
+                "TUR-0"
+                "DEU-0"
+                "FRA-0"
+                "NLD-0"
+                "RUS-0"
+              ]
+              ++ importedLists;
+            };
+        };
+      };
+
       search = {
         default = "searx"; # i am an idiot. was tryng to use name rather than .{name}
         privateDefault = "searx";
         force = true;
         order = [
           "nw"
+          "no"
           "np"
         ];
         engines = {
@@ -87,6 +173,30 @@
             ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = [ "'np" ];
+          };
+          nixos-options = {
+            name = "NixOS Options";
+            definedAliases = [ "'no" ];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            urls = [
+              {
+                template = "https://search.nixos.org/options";
+                params = [
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                  {
+                    name = "channel";
+                    value = "unstable";
+                  }
+                  {
+                    name = "type";
+                    value = "packages";
+                  }
+                ];
+              }
+            ];
           };
           nixos-wiki = {
             name = "NixOS Wiki";

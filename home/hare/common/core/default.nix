@@ -97,6 +97,7 @@ in
   programs.btop.enable = true;
   programs.mpv.enable = true;
   programs.lazygit.enable = true;
+  programs.lazydocker.enable = true;
 
   nix = {
     package = lib.mkDefault pkgs.nix;

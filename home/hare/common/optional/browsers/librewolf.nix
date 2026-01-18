@@ -70,8 +70,15 @@
         "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
         "privacy.clearOnShutdown_v2.formdata" = true;
         "browser.startup.couldRestoreSession.count" = true;
-        ## ----- Misc -----
+        ## ------ Jit ------
+        "javascript.options.asmjs" = false;
+        "javascript.options.ion" = false;
+        "javascript.options.baselinejit" = false;
+        "javascript.options.jit_trustedprincipals" = true;
+        "javascript.options.wasm" = false;
+        ## ------ Misc ------
         "permissions.default.shortcuts" = 1; # https://github.com/tridactyl/tridactyl/issues/4461#issuecomment-1315958996
+        "extensions.webcompat-reporter.enabled" = false;
       };
       extensions = {
         settings = {

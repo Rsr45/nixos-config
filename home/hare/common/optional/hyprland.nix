@@ -22,7 +22,7 @@
         "uwsm app -- noctalia-shell"
         # "eww daemon; eww open bar_1"
         # "uwsm app -- waybar -c ~/.config/waybar/suckless/config.json -s ~/.config/waybar/suckless/style.css"
-        # "uwsm app -- waypaper --restore --backend swww"
+        "uwsm app -- waypaper --restore --backend swww"
         "uwsm app -- copyq --start-server"
         # "uwsm app -- dunst"
       ];
@@ -45,7 +45,7 @@
         resize_on_border = true;
       };
       decoration = {
-        rounding = 20;
+        rounding = 0;
         # rounding_power = 2.0; # it is already the default so why i am i even making comments for this shit
         # active_opacity = 0.9;
         # inactive_opacity = 0.9;
@@ -166,11 +166,11 @@
         "$mod+Alt, W, exec, uwsm app -- waypaper"
         # "$mod, Space, exec, uwsm app -- pkill fuzzel || fuzzel"
         "$mod, D, exec, uwsm app -- bemenu-run"
-        "$mod, Space, exec, uwsm app -- noctalia-shell ipc call launcher toggle"
-        # "$mod, Space, exec, uwsm app -- fuzzel"
+        # "$mod, Space, exec, uwsm app -- noctalia-shell ipc call launcher toggle"
+        "$mod, Space, exec, uwsm app -- fuzzel"
         "$mod, Return, exec, uwsm app -- pcmanfm-qt"
         "$mod SHIFT, Return, exec, uwsm app -- doublecmd"
-        "$mod, T, exec, uwsm app -- kitty"
+        "$mod, T, exec, uwsm app -- wezterm"
         "$mod SHIFT, E, exec, hyprctl dispatch exit 1"
         "Ctrl+Shift+Super, Delete, exec, systemctl reboot"
         "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff"
@@ -192,7 +192,7 @@
         "workspace: special:magic, class:org.keepassxc.KeePassXC"
       ];
       layerrule = [
-        "blur, waybar"
+        # "blur, waybar"
         # "ignorealpha x, waybar"
       ];
     };
