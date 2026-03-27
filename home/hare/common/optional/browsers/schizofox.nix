@@ -7,15 +7,13 @@
 {
   imports = [
     inputs.schizofox.homeManagerModules.default
-    ./vertical-bar.nix
+    # ./vertical-bar.nix
   ];
 
   programs.schizofox = {
     enable = true;
-    # package = pkgs.floorp-unwrapped;
-
     search = {
-      defaultSearchEngine = "DuckDuckGo";
+      defaultSearchEngine = "DuckDuckGo (HTML)";
       removeEngines = [
         "Google"
         "Bing"
@@ -39,6 +37,20 @@
           Alias = "!nw";
           Method = "GET";
           URLTemplate = "https://wiki.nixos.org/w/index.php?search={searchTerms}";
+        }
+        {
+          Name = "SearXNG";
+          Description = "SearXNG Local Search";
+          Alias = "!s";
+          Method = "GET";
+          URLTemplate = "http://localhost:8080/search?q={searchTerms}";
+        }
+        {
+          Name = "DuckDuckGo (HTML)";
+          Description = "DuckDuckGo but HTML";
+          Alias = "!s";
+          Method = "GET";
+          URLTemplate = "https://html.duckduckgo.com/html/?q={searchTerms}";
         }
       ];
     };
@@ -131,14 +143,18 @@
       };
       darkreader.enable = true;
       extraExtensions = {
-        "{531906d3-e22f-4a6c-a102-8057b88a1a63}".install_url =
-          "https://addons.mozilla.org/firefox/downloads/latest/single-file/latest.xpi";
         "{3c078156-979c-498b-8990-85f7987dd929}".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/sidebery/latest.xpi";
-        "FirefoxColor@mozilla.com".install_url =
-          "https://addons.mozilla.org/firefox/downloads/latest/firefox-color/latest.xpi";
-        "{d7742d87-e61d-4b78-b8a1-b469842139fa}".install_url =
-          "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
+        # "FirefoxColor@mozilla.com".install_url =
+        #   "https://addons.mozilla.org/firefox/downloads/latest/firefox-color/latest.xpi";
+        # "{d7742d87-e61d-4b78-b8a1-b469842139fa}".install_url =
+        #   "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
+        "tridactyl.vim@cmcaine.co.uk".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/tridactyl-vim/latest.xpi";
+        "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/violentmonkey/latest.xpi";
+        "sponsorBlocker@ajay.app".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
       };
     };
 
@@ -146,6 +162,12 @@
       "general.autoScroll" = true;
       "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
       "browser.translations.automaticallyPopup" = false;
+      "widget.use-xdg-desktop-portal.file-picker" = "1";
+      "widget.use-xdg-desktop-portal.location" = "1";
+      "widget.use-xdg-desktop-portal.mime-handler" = "1";
+      "widget.use-xdg-desktop-portal.native-messaging" = "0";
+      "widget.use-xdg-desktop-portal.open-uri" = "1";
+      "widget.use-xdg-desktop-portal.settings" = "1";
     };
 
     theme = {
@@ -158,6 +180,6 @@
       };
     };
 
-    security.sandbox.enable = false; # borks downloads, specifically file path chooser thingy.
+    security.sandbox.enable = true;
   };
 }

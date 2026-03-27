@@ -1,11 +1,32 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ ... }:
 
 {
+  programs.nixvim.keymaps = [
+    # {
+    #   key = "<leader>te";
+    #   mode = [ "n" ];
+    #   action = "<cmd>lua Snacks.explorer.open({ layout = { preset = \"default\" }})<CR>";
+    #   options.desc = "Explorer";
+    # }
+    {
+      key = "<leader>tp";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.explorer.open({ layout = { preset = \"left\" }})<CR>";
+      options.desc = "Sidebar";
+    }
+    {
+      key = "<leader>tt";
+      mode = [ "n" ];
+      action = "<cmd>lua Snacks.terminal.toggle()<CR>";
+      options.desc = "toggle terminal";
+    }
+    {
+      key = "<leader>tT";
+      mode = [ "n" ];
+      action = "<cmd>terminal<CR>";
+      options.desc = "open Terminal";
+    }
+  ];
   programs.nixvim.plugins.snacks = {
     enable = true;
     settings = {
@@ -20,15 +41,15 @@
         right = [
         ];
       };
-      indent.enabled = true;
-      git = {
-        enabled = true;
+      indent.enabled = false;
+      words = {
+        enabled = false;
       };
-      lazygit = {
+      scope = {
         enabled = true;
       };
       notifier = {
-        enabled = true;
+        enabled = false;
       };
       image = {
         enabled = true;
@@ -36,14 +57,16 @@
       zen = {
         enabled = true;
       };
-      picker = {
+      bigfile = {
         enabled = true;
-        layout = {
-          preview = "ivy";
-        };
-        preset = "ivy";
       };
-      words = {
+      quickfile = {
+        enabled = true;
+      };
+      input = {
+        enabled = true;
+      };
+      explorer = {
         enabled = true;
       };
     };

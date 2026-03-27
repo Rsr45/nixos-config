@@ -1,5 +1,34 @@
 { ... }:
 {
+  programs.nixvim.keymaps = [
+    {
+      key = "<leader>te";
+      mode = "n";
+      action = "<cmd>Oil<CR>";
+      options = {
+        noremap = true;
+        desc = "Oil Cwd";
+      };
+    }
+    {
+      key = "<leader>tE";
+      mode = "n";
+      action = "<cmd>Oil<CR>";
+      options = {
+        noremap = true;
+        desc = "Oil Root";
+      };
+    }
+    # {
+    #   key = "<leader>o/";
+    #   mode = "n";
+    #   action = "<cmd>Oil<CR>";
+    #   options = {
+    #     noremap = true;
+    #     desc = "Oil Cwd";
+    #   };
+    # }
+  ];
   programs.nixvim.plugins = {
     oil = {
       enable = true;

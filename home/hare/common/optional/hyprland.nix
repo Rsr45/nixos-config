@@ -5,11 +5,34 @@
   config,
   ...
 }:
+let
+  mkMenu =
+    menu:
+    let
+      configFile = pkgs.writeText "config.yaml" (
+        pkgs.lib.generators.toYAML { } {
+          anchor = "bottom-right";
+          # ...
+          inherit menu;
+        }
+      );
+    in
+    pkgs.writeShellScriptBin "my-menu" ''
+      exec ${pkgs.lib.getExe pkgs.wlr-which-key} ${configFile}
+    '';
+in
 {
+  # xdg.configFile."uwsm/env".source =
+  #   "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    systemd.enable = false;
+    # systemd.enable = false;
+    # package = null;
+    # portalPackage = null;
+    # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    # portalPackage =
+    #   inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     plugins = [
       # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
       # inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
@@ -18,14 +41,12 @@
     settings = {
       "$mod" = "SUPER";
       "exec-once" = [
-        "uwsm app -- keepassxc"
-        "uwsm app -- noctalia-shell"
         # "eww daemon; eww open bar_1"
-        # "uwsm app -- waybar -c ~/.config/waybar/suckless/config.json -s ~/.config/waybar/suckless/style.css"
-        "uwsm app -- waypaper --restore --backend swww"
-        "uwsm app -- copyq --start-server"
-        # "uwsm app -- dunst"
+        # "qs" # launched via sytemd through qs home module
+        "swww restore"
+        "copyq --start-server"
       ];
+      source = "colors.conf";
       monitor = [ ",1920x1080@144,auto,1" ];
       input = {
         kb_layout = "us";
@@ -39,24 +60,34 @@
       general = {
         gaps_in = 10;
         gaps_out = 10;
-        border_size = 0;
-        # "col.active_border" = lib.mkForce "rgb(${config.lib.stylix.colors.base09})";
+        # gaps_in = 0;
+        # gaps_out = 0;
+        border_size = 2;
         layout = "dwindle";
-        resize_on_border = true;
+        # resize_on_border = true;
       };
       decoration = {
         rounding = 0;
-        # rounding_power = 2.0; # it is already the default so why i am i even making comments for this shit
         # active_opacity = 0.9;
         # inactive_opacity = 0.9;
         dim_inactive = false;
         dim_strength = 0.2;
         blur = {
-          enabled = false;
-          ignore_opacity = true;
-          popups = true;
-          size = 8;
+          # enabled = true;
+          # ignore_opacity = true;
+          # popups = true;
+          # size = 8;
+          # passes = 2;
+          size = 3;
           passes = 2;
+          vibrancy = 0.1696;
+        };
+
+        shadow = {
+          enabled = true;
+          range = 4;
+          render_power = 3;
+          color = "rgba(1a1a1aee)";
         };
       };
       animations = {
@@ -99,7 +130,7 @@
       # };
       misc = {
         vfr = 1;
-        vrr = 1;
+        # vrr = 1;
         # layers_hog_mouse_focus = true
         focus_on_activate = true;
         animate_manual_resizes = false;
@@ -108,7 +139,7 @@
         swallow_regex = "(foot|kitty|org.wezfurlong.wezterm|com.mitchellh.ghostty)";
 
         disable_hyprland_logo = true;
-        new_window_takes_over_fullscreen = 2;
+        # new_window_takes_over_fullscreen = 2;
       };
       bindm = [
         "$mod, mouse:272, movewindow"
@@ -129,70 +160,92 @@
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
         "$mod, down, movefocus, d"
-        "$mod, Q, killactive,"
-        "$mod+Shift+Alt, Q, exec, hyprctl kill"
         "$mod+Shift, left, movewindow, l"
         "$mod+Shift, right, movewindow, r"
         "$mod+Shift, up, movewindow, u"
         "$mod+Shift, down, movewindow, d"
+
+        "$mod, Q, killactive,"
+        "$mod+Shift+Alt, Q, exec, hyprctl kill"
+
         "$mod+SHIFT, Space, togglefloating,"
         "$mod+ALT, F, fullscreenstate, 0 3"
         "$mod, F, fullscreen, 0"
         "$mod+SHIFT, F, fullscreen, 1"
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, 6, workspace, 6"
-        "$mod, 7, workspace, 7"
-        "$mod, 8, workspace, 8"
-        "$mod, 9, workspace, 9"
+
         "$mod, 0, workspace, 10"
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-        "$mod SHIFT, 6, movetoworkspace, 6"
-        "$mod SHIFT, 7, movetoworkspace, 7"
-        "$mod SHIFT, 8, movetoworkspace, 8"
-        "$mod SHIFT, 9, movetoworkspace, 9"
         "$mod SHIFT, 0, movetoworkspace, 10"
-        "$mod, N, togglespecialworkspace, magic"
-        "$mod SHIFT, N, movetoworkspace, special:magic"
-        # "$mod, i, togglespecialworkspace, special"
-        "$mod SHIFT, C, exec, uwsm app -- hyprpicker --a --f hex"
-        "$mod+Alt, W, exec, uwsm app -- waypaper"
-        # "$mod, Space, exec, uwsm app -- pkill fuzzel || fuzzel"
-        "$mod, D, exec, uwsm app -- bemenu-run"
-        # "$mod, Space, exec, uwsm app -- noctalia-shell ipc call launcher toggle"
-        "$mod, Space, exec, uwsm app -- fuzzel"
-        "$mod, Return, exec, uwsm app -- pcmanfm-qt"
-        "$mod SHIFT, Return, exec, uwsm app -- doublecmd"
-        "$mod, T, exec, uwsm app -- wezterm"
+
+        "$mod, N, togglespecialworkspace, special"
+        "$mod SHIFT, N, movetoworkspace, special"
+
+        ", Print, exec, ~/scripts/screenshot.sh screen"
+        "$mod SHIFT, S, exec, ~/scripts/screenshot.sh region"
+        "$mod SHIFT, C, exec, hyprpicker -a -f hex"
+        "$mod+Alt, W, exec, ~/scripts/wallpaper.sh"
+        "$mod, O, exec, ~/scripts/ocr.sh"
+        "$mod, B, exec, ~/scripts/bookmarks.sh"
+        "$mod, D, exec, ~/scripts/dmenu.sh"
+        "$mod, Space, exec, rofi -show drun || pkill rofi"
+        "$mod, Return, exec, pcmanfm-qt"
+        "$mod SHIFT, Return, exec, doublecmd"
+        "$mod, T, exec, kitty"
+        "$mod, A, exec, ~/scripts/mixer.sh"
+        # "$mod, E, exec, wezterm start --class dired -- yazi"
         "$mod SHIFT, E, exec, hyprctl dispatch exit 1"
         "Ctrl+Shift+Super, Delete, exec, systemctl reboot"
         "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff"
-        ", Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png')"
-        "$mod SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy && wl-paste > ~/Pictures/Screenshots/$(date +'Screenshot_%F_%T.png')"
-      ];
-      windowrulev2 = [
-        "float, class:(waypaper)"
-        "float, class:(com.saivert.pwvucontrol)"
-        "float, class:(xdg-desktop-portal-gtk)"
-        "float,class:(clipse)"
-        "float, workspace:9"
-        "size 622 652,class:(clipse)"
-        "size 815 600, class:(com.saivert.pwvucontrol) "
-        "size 360 660, class:(io.bassi.Amberol)"
-        "size 800 600, class:(kitty)"
-        "float, title:^(Picture-in-Picture)$"
-        "pin, title:^(Picture-in-Picture)$"
-        "workspace: special:magic, class:org.keepassxc.KeePassXC"
+        # "$mod, L, exec, hyprlock"
+        "$mod, Delete, exec, wlogout"
+        "$mod, Print, exec, wlr-which-key"
+        (
+          "$mod, G, exec, "
+          + lib.getExe (mkMenu [
+            {
+              key = "t";
+              desc = "next tab";
+              cmd = "hyprctl dispatch workspace +1";
+            }
+            {
+              key = "T";
+              desc = "prev tab";
+              cmd = "hyprctl dispatch workspace -1";
+            }
+          ])
+        )
+      ]
+      ++ (builtins.concatLists (
+        builtins.genList (
+          i:
+          let
+            ws = i + 1;
+          in
+          [
+            "$mod, code:1${toString i}, workspace, ${toString ws}"
+            "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+          ]
+        ) 9
+      ));
+      windowrule = [
+        # "float, class:(waypaper)"
+        # "float, class:(com.saivert.pwvucontrol)"
+        # "float, class:(xdg-desktop-portal-gtk)"
+        # "float,class:(clipse)"
+        # "float,class:(mixer)"
+        # "float, workspace:0"
+        # "size 622 652,class:(clipse)"
+        # "size 622 652,class:(mixer)"
+        # "size 815 600, class:(com.saivert.pwvucontrol) "
+        # "size 360 660, class:(io.bassi.Amberol)"
+        # "size 800 600, class:(kitty)"
+        # "float, title:^(Picture-in-Picture)$"
+        # "pin, title:^(Picture-in-Picture)$"
+        # "workspace special silent, class:org.keepassxc.KeePassXC"
+        # "noborder, onworkspace:w[t1]"
       ];
       layerrule = [
         # "blur, waybar"
+        # "blur, quickshell"
         # "ignorealpha x, waybar"
       ];
     };

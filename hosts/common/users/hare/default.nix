@@ -32,12 +32,12 @@ in
   #   ];
 
   # No matter what environment we are in we want these tools
-  # programs.zsh.enable = true;
-  # environment.systemPackages = [
-  #   pkgs.just
-  #   pkgs.rsync
-  # ];
+  environment.systemPackages = with pkgs; [
+    rsync
+    nushell
+  ];
 }
+
 # Import the user's personal/home configurations, unless the environment is minimal
 // lib.optionalAttrs (inputs ? "home-manager") {
   home-manager = {

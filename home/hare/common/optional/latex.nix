@@ -7,6 +7,9 @@
 
 {
   home.packages = with pkgs; [
-    texliveSmall
+    # texliveSmall
+    texliveMedium
+    texlivePackages.latexmk
+    # texliveFull
   ];
 }

@@ -15,31 +15,11 @@
           n_steps_ahead = 1;
         };
         mappings = {
-          start_jumping = "";
+          start_jumping = "S";
         };
       };
     };
-    keymaps = [
-      {
-        key = "<leader><leader>";
-        mode = [ "n" ];
-        action = "<cmd>Pick files<CR>";
-        options.desc = "Files";
-      }
-      {
-        key = "<leader>,";
-        mode = [ "n" ];
-        action = "<cmd>Pick buffers<CR>";
-        options.desc = "Buffers";
-      }
-      {
-        key = "<leader>/";
-        mode = [ "n" ];
-        action = "<cmd>Pick grep_live<CR>";
-        options.desc = "Grep";
-      }
-    ];
-    extraConfigLuaPre = ''
+    extraConfigLuaPost = ''
       local user_input_opts = function(input_fun) -- Copied
           local res = {
               spotter = function() return {} end,
@@ -67,7 +47,7 @@
           MiniJump2d.start(leaped)
       end
 
-      -- vim.keymap.set({ "n", "x" }, "s", "<Nop>", { desc = "Start 2d jumping" })
+      vim.keymap.set({ "n", "x" }, "s", "<Nop>", { desc = "Start 2d jumping" })
       -- No repeat in operator pending mode... See mini.jump2d H.apply_config.
       vim.keymap.set({ "n", "x", "o" }, "s", start, { desc = "Start 2d jumping" })
     '';

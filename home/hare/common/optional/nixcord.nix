@@ -17,12 +17,13 @@
       autoscroll.enable = true;
     };
 
-    quickCss = "@import url(\"https://croissantdunord.github.io/discord-adblock/adblock-extras.css\");\n@import url(\"https://croissantdunord.github.io/discord-adblock/adblock.css\");\n@import url(~/.config/vesktop/themes/midnight-matugen.css)";
+    quickCss = "@import url(\"https://croissantdunord.github.io/discord-adblock/adblock-extras.css\");\n@import url(\"https://croissantdunord.github.io/discord-adblock/adblock.css\");";
 
     config = {
       useQuickCss = true;
       themeLinks = [ "https://raw.codeberg.page/AllPurposeMat/Disblock-Origin/DisblockOrigin.theme.css" ];
       enabledThemes = [ "midnight-matugen.css" ];
+      autoUpdate = true;
       plugins = {
         fakeNitro.enable = true;
         favoriteEmojiFirst.enable = true;
@@ -51,21 +52,21 @@
           enable = true;
           showAtSymbol = false;
         };
-        moreCommands.enable = true;
-        moreKaomoji.enable = true;
+        # moreCommands.enable = true; #equicord required
+        # moreKaomoji.enable = true; #equicord required
         noBlockedMessages.enable = true;
         noMosaic.enable = true;
         noOnboardingDelay.enable = true;
         noPendingCount = {
           enable = true;
           hideFriendRequestsCount = false;
-          hideMessageRequestCount = false;
+          # hideMessageRequestCount = false;
         };
         noProfileThemes.enable = true;
-        noRPC.enable = true;
+        # noRPC.enable = true;
         noReplyMention.enable = true;
         noUnblockToJump.enable = true;
-        normalizeMessageLinks.enable = true;
+        # normalizeMessageLinks.enable = true; # removed/only equicord
         # nsfwGateBypass.enable = true; # removed
         permissionsViewer.enable = true;
         petpet.enable = true;
@@ -106,13 +107,13 @@
         whoReacted.enable = true;
         youtubeAdblock.enable = true;
         noTypingAnimation.enable = true;
-        clearURLs.enable = true;
+        # clearURLs.enable = true;
         # colorSighted.enable = true;
         disableCallIdle.enable = true;
         ctrlEnterSend.enable = true;
         copyFileContents.enable = true;
         callTimer.enable = true;
-        blurNSFW.enable = true;
+        # blurNSFW.enable = true;
         biggerStreamPreview.enable = true;
         betterUploadButton.enable = true;
         # betterSettings.enable = true; # no background with midnight

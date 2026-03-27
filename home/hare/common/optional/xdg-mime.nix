@@ -1,9 +1,7 @@
 { pkgs, ... }:
 let
-  # FIXME(xdg): That should use config options and just reference whatever is configured as the default
   browser = [
-    "librewolf.desktop"
-    "vivaldi.desktop"
+    "brave-browser.desktop"
   ];
   editor = [
     "neovide.desktop"
@@ -31,7 +29,6 @@ let
   ];
   filemanager = [
     "pcmanfm-qt.desktop"
-    "doublecmd.desktop"
   ];
   writer = [
     "libreoffice-writer.desktop"
@@ -57,7 +54,9 @@ let
     "libreoffice-draw.desktop"
     "onlyoffice-desktopeditors.desktop"
   ];
-  pdf = [ "org.pwmt.zathura.desktop" ];
+  pdf = [
+    "org.pwmt.zathura.desktop"
+  ];
   # Extensive list of associations here:
   # https://github.com/iggut/GamiNiX/blob/8070528de419703e13b4d234ef39f05966a7fafb/system/desktop/home-main.nix#L77
   associations = {

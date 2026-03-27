@@ -5,17 +5,18 @@
     # package = pkgs.betterbird;
     profiles.Hare = {
       isDefault = true;
-      feedAccounts.Feed = { };
+      # feedAccounts.Feed = { };
       search = {
-        default = "searx";
-        privateDefault = "searx";
+        default = "startpage";
+        privateDefault = "startpage";
         force = true;
         engines = {
-          searx = {
-            name = "SearXNG";
+          startpage = {
+            name = "Startpage";
+            definedAliases = [ "@startpage" ];
             urls = [
               {
-                template = "http://localhost:8080/search";
+                template = "https://www.startpage.com/sp/search";
                 params = [
                   {
                     name = "q";
@@ -24,8 +25,23 @@
                 ];
               }
             ];
-            definedAliases = [ "'s" ];
           };
+
+          # searx = {
+          #   name = "SearXNG";
+          #   urls = [
+          #     {
+          #       template = "http://localhost:8080/search";
+          #       params = [
+          #         {
+          #           name = "q";
+          #           value = "{searchTerms}";
+          #         }
+          #       ];
+          #     }
+          #   ];
+          #   definedAliases = [ "'s" ];
+          # };
           nix-packages = {
             name = "Nix Packages";
             urls = [

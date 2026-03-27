@@ -9,13 +9,19 @@
           main = {
             escape = "capslock";
             capslock = "esc";
-            rightalt = "backspace";
+            # rightalt = "backspace";
 
+            leftalt = "overloadt2(media, esc, 300)";
             space = "overloadt2(navigation, space, 300)";
+            "6" = "overloadt2(mouse, tab, 300)";
+
+            fn = "overloadt2(fun, delete, 300)";
+            rightalt = "overloadt2(num, backspace, 300)";
+            "9" = "overloadt2(sym, enter, 300)";
 
             "7" = "=";
             "8" = "7";
-            "9" = "8";
+            # "9" = "8";
             "0" = "9";
             minus = "0";
             equal = "minus";
@@ -92,6 +98,143 @@
             dot = "pagedown";
             slash = "pageup";
             rightshift = "end";
+          };
+          "mouse" = {
+            # left hand
+            # ------------
+            a = "meta ";
+            s = "altgr";
+            d = "control";
+            f = "shift";
+            # right hand
+            # ------------
+            u = "redo";
+            i = "paste";
+            o = "copy";
+            p = "cut";
+            leftbrace = "undo";
+            # ------------
+            k = "mouseleft";
+            l = "mousedown";
+            semicolon = "mouseup";
+            apostrophe = "mouseright";
+            # -----------
+            # comma = "home";
+            # dot = "scrolldown";
+            # slash = "scrollup";
+            # rightshift = "end";
+
+            rightalt = "leftmouse";
+            "9" = "rightmouse";
+          };
+          "media" = {
+            # left hand
+            # ------------
+            a = "meta ";
+            s = "altgr";
+            d = "control";
+            f = "shift";
+            # right hand
+            # ------------
+            u = "redo";
+            i = "paste";
+            o = "copy";
+            p = "cut";
+            leftbrace = "undo";
+            # ------------
+            k = "previoussong";
+            l = "volumedown";
+            semicolon = "volumeup";
+            apostrophe = "nextsong";
+
+            rightalt = "playpause";
+            "9" = "stopcd";
+
+            g = "toggle(game)";
+          };
+          "num" = {
+            q = "[";
+            w = "7";
+            e = "8";
+            r = "9";
+            t = "]";
+
+            a = ";";
+            s = "4";
+            d = "5";
+            f = "6";
+            g = "=";
+
+            "102nd" = "`";
+            z = "1";
+            x = "2";
+            c = "3";
+            v = "\\";
+
+            leftalt = "dot";
+            space = "0";
+            "6" = "minus";
+
+            k = "shift";
+            l = "control";
+            semicolon = "altgr";
+            apostrophe = "meta";
+          };
+          "sym" = {
+            q = "{";
+            w = "&";
+            e = "*";
+            r = "(";
+            t = "}";
+
+            a = ":";
+            s = "$";
+            d = "%";
+            f = "^";
+            g = "+";
+
+            "102nd" = "~";
+            z = "!";
+            x = "@";
+            c = "#";
+            v = "|";
+
+            leftalt = "(";
+            space = ")";
+            "6" = "_";
+
+            k = "shift";
+            l = "control";
+            semicolon = "altgr";
+            apostrophe = "meta";
+          };
+          "fun" = {
+            q = "f12";
+            w = "f7";
+            e = "f8";
+            r = "f9";
+            t = "sysrq"; # sysrq
+
+            a = "f11";
+            s = "f4";
+            d = "f5";
+            f = "f6";
+            g = "scrolllock";
+
+            "102nd" = "f10";
+            z = "f1";
+            x = "f2";
+            c = "f3";
+            v = "pause";
+
+            leftalt = "compose";
+            space = "space";
+            "6" = "tab";
+
+            k = "shift";
+            l = "control";
+            semicolon = "altgr";
+            apostrophe = "meta";
           };
           "game" = {
             space = "space";

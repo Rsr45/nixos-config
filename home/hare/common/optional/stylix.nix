@@ -4,15 +4,13 @@
   ...
 }:
 {
-  # imports = [ inputs.stylix.homeManagerModules.stylix ]; # nixosModule takes care of this, for now it seems.
-
-  stylix.targets.gtk.enable = false;
-  stylix.targets.qt.enable = false;
+  imports = [ inputs.stylix.homeModules.stylix ];
 
   stylix = {
     enable = true;
     autoEnable = false;
 
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
     # iconTheme = {
     #   enable = true;
     #   package = pkgs.papirus-icon-theme;
@@ -24,6 +22,8 @@
       nixcord.enable = false;
       yazi.enable = false;
       fish.enable = false;
+      gtk.enable = false;
+      qt.enable = false;
       # gtk.extraCss = ''
       #   * { border-radius: 0; box-shadow: none; }
       #

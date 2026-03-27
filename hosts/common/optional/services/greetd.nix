@@ -1,46 +1,22 @@
-#
-# greeter -> tuigreet https://github.com/apognu/tuigreet?tab=readme-ov-file
-# display manager -> greetd https://man.sr.ht/~kennylevinsen/greetd/
-#
-
 {
   config,
   pkgs,
-  lib,
   ...
 }:
-
-let
-  cfg = config.autoLogin;
-in
 {
-  # Declare custom options for conditionally enabling auto login
-  options.autoLogin = {
-    enable = lib.mkEnableOption "Enable automatic login";
-
-    username = lib.mkOption {
-      type = lib.types.str;
-      default = "guest";
-      description = "User to automatically login";
-    };
+  services.xserver.displayManager.startx = {
+    enable = true;
+    generateScript = true;
   };
+  services.greetd = {
+    enable = true;
+    useTextGreeter = true;
 
-  config = {
-    #    environment.systemPackages = [ pkgs.greetd.tuigreet ];
-    services.greetd = {
-      enable = true;
-
-      restart = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
-          user = "hare";
-        };
-
-        initial_session = lib.mkIf cfg.enable {
-          command = "${pkgs.hyprland}/bin/Hyprland";
-          user = "${cfg.username}";
-        };
+    restart = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions --xsessions ${config.services.displayManager.sessionData.desktops}/share/xsessions --remember --remember-user-session --asterisks --time --time-format '%I:%M %p | %a • %h | %F'";
+        user = "greeter";
       };
     };
   };

@@ -10,3 +10,35 @@ user_pref("widget.use-xdg-desktop-portal.location", 1);
 user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
 user_pref("widget.use-xdg-desktop-portal.open-uri", 1);
 user_pref("widget.use-xdg-desktop-portal.settings", 1);
+// fix sytem gtk colors
+user_pref("widget.gtk.libadwaita-colors.enabled", false);
+// set titlebar to use system decorations
+user_pref("browser.tabs.inTitlebar", 0);
+// disable the sidebar as we use sideberry and make sure it is visible by default
+user_pref("sidebar.revamp", false);
+user_pref("sidebar.visibility", "always-show")
+// customize the toolbar
+// user_pref("browser.uiCustomization.state", '{"placements":{"widget-overflow-fixed-list":["profile-manager-button","developer-button","edit-controls","print-button","characterencoding-button","email-link-button"],"unified-extensions-area":["ublock0_raymondhill_net-browser-action","sponsorblocker_ajay_app-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","addon_darkreader_org-browser-action","_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action","firefox-extension_steamdb_info-browser-action","_d07ccf11-c0cd-4938-a265-2a4d6ad01189_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"],"nav-bar":["back-button","forward-button","vertical-spacer","urlbar-container","_testpilot-containers-browser-action","reset-pbm-toolbar-button","undo-closed-tab","home-button","unified-extensions-button","bookmarks-menu-button","zoom-controls","downloads-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button"],"vertical-tabs":[],"PersonalToolbar":["personal-bookmarks"],"nora-statusbar":["screenshot-button","fullscreen-button","status-text"]},"seen":["reset-pbm-toolbar-button","developer-button","_testpilot-containers-browser-action","ublock0_raymondhill_net-browser-action","screenshot-button","addon_darkreader_org-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action","sponsorblocker_ajay_app-browser-action","firefox-extension_steamdb_info-browser-action","_d07ccf11-c0cd-4938-a265-2a4d6ad01189_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","profile-manager-button","undo-closed-tab"],"dirtyAreaCache":["nav-bar","vertical-tabs","PersonalToolbar","unified-extensions-area","TabsToolbar","toolbar-menubar","widget-overflow-fixed-list","nora-statusbar"],"currentVersion":23,"newElementCount":15}');
+user_pref("browser.uiCustomization.state", '{"placements":{"widget-overflow-fixed-list":["profile-manager-button","developer-button","edit-controls","print-button","characterencoding-button","email-link-button"],"unified-extensions-area":["_3c078156-979c-498b-8990-85f7987dd929_-browser-action","sponsorblocker_ajay_app-browser-action","ublock0_raymondhill_net-browser-action","addon_darkreader_org-browser-action","firefox-extension_steamdb_info-browser-action","_d07ccf11-c0cd-4938-a265-2a4d6ad01189_-browser-action","_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"],"nav-bar":["sidebar-button","back-button","forward-button","vertical-spacer","urlbar-container","_testpilot-containers-browser-action","reset-pbm-toolbar-button","home-button","unified-extensions-button","zoom-controls","stop-reload-button","undo-closed-tab","downloads-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button"],"vertical-tabs":[],"PersonalToolbar":["personal-bookmarks"],"nora-statusbar":["screenshot-button","fullscreen-button","status-text"]},"seen":["reset-pbm-toolbar-button","developer-button","_testpilot-containers-browser-action","ublock0_raymondhill_net-browser-action","screenshot-button","addon_darkreader_org-browser-action","firefox-extension_steamdb_info-browser-action","_3c078156-979c-498b-8990-85f7987dd929_-browser-action","_d07ccf11-c0cd-4938-a265-2a4d6ad01189_-browser-action","_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action","_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action","sponsorblocker_ajay_app-browser-action","profile-manager-button","undo-closed-tab"],"dirtyAreaCache":["nav-bar","vertical-tabs","PersonalToolbar","unified-extensions-area","TabsToolbar","toolbar-menubar","nora-statusbar","widget-overflow-fixed-list"],"currentVersion":23,"newElementCount":11}');
+
+user_pref("browser.toolbars.bookmarks.visibility", "never");
+
+
+// floorp special settings
+user_pref("userChrome.hidden.urlbar_iconbox", true);
+user_pref("userChrome.hidden.tabbar", true);
+user_pref("userChrome.hidden.sidebar_header", true);
+
+user_pref("floorp.workspaces.enabled", false);
+user_pref("floorp.panelSidebar.enabled", false);
+// home tab
+user_pref("floorp.newtab.configs", '{"components":{"topSites":false,"clock":true,"searchBar":true,"firefoxLayout":false},"background":{"type":"random","customImage":null,"fileName":null,"folderPath":null,"selectedFloorp":null,"slideshowEnabled":false,"slideshowInterval":30},"searchBar":{"searchEngine":"default"},"topSites":{"pinned":[{"url":"https://www.cube-soft.jp/","title":"Cubesoft (Sponsor)"},{"url":"https://docs.floorp.app/docs/features/","title":"Floorp Support"}],"blocked":[]}}');
+// shortcuts
+user_pref("floorp.keyboardshortcut.enabled", true);
+user_pref("floorp.keyboardshortcut.config", '{"enabled":true,"shortcuts":{"gecko-show-next-tab":{"modifiers":{"alt":false,"ctrl":true,"meta":false,"shift":false},"key":"N","action":"gecko-show-next-tab"},"gecko-show-previous-tab":{"modifiers":{"alt":false,"ctrl":true,"meta":false,"shift":false},"key":"P","action":"gecko-show-previous-tab"},"gecko-close-window":{"modifiers":{"alt":false,"ctrl":true,"meta":false,"shift":false},"key":"Q","action":"gecko-close-window"}}}');
+
+// design
+user_pref("floorp.design.configs", '{"globalConfigs":{"userInterface":"lepton","faviconColor":false,"appliedUserJs":""},"tabbar":{"tabbarStyle":"horizontal","tabbarPosition":"optimise-to-vertical-tabbar","multiRowTabBar":{"maxRowEnabled":false,"maxRow":3}},"tab":{"tabScroll":{"enabled":false,"reverse":false,"wrap":false},"tabMinHeight":30,"tabMinWidth":76,"tabPinTitle":false,"tabDubleClickToClose":false,"tabOpenPosition":-1},"uiCustomization":{"navbar":{"position":"top","searchBarTop":false},"display":{"disableFullscreenNotification":false,"deleteBrowserBorder":false},"special":{"optimizeForTreeStyleTab":false,"hideForwardBackwardButton":true,"stgLikeWorkspaces":false},"multirowTab":{"newtabInsideEnabled":false},"bookmarkBar":{"focusExpand":false,"position":"top"},"qrCode":{"disableButton":false},"disableFloorpStart":false}}');
+
+// fix restricted addons
+user_pref("extensions.quarantineIgnoredByUser.tridactyl.vim@cmcaine.co.uk", true)

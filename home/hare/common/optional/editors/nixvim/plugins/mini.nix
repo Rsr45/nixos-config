@@ -6,14 +6,41 @@
 }:
 
 {
+  programs.nixvim.keymaps = [
+    {
+      key = "<leader>ct";
+      mode = [ "n" ];
+      action = "<cmd>lua MiniTrailspace.trim()<CR>";
+      options.desc = "Trim";
+    }
+    {
+      key = "<leader>cT";
+      mode = [ "n" ];
+      action = "<cmd>lua MiniTrailspace.trim()<CR>";
+      options.desc = "Trim end";
+    }
+    {
+      key = "<leader>bd";
+      mode = "n";
+      action = "<cmd>lua MiniBufremove.delete()<CR>";
+      options.desc = "Delete Buffer";
+    }
+  ];
+
   programs.nixvim.plugins = {
     mini.enable = true;
     mini.modules = {
-      comment = { };
-      bracketed = { };
-      operators = { };
+      ## Text editing
       ai = { };
-      basics = { };
+      align = { };
+      comment = { };
+      # completion = { };
+      keymap = { };
+      move = { };
+      operators = { };
+      pairs = { };
+      # snippets = { };
+      splitjoin = { };
       surround = {
         mappings = {
           add = "gsa";
@@ -25,11 +52,27 @@
           update_n_lines = "gsn";
         };
       };
-      pairs = { };
-      # statusline = { };
-      pick = { };
-      # snippets = { };
-      # completion = { };
+      basics = { };
+      bracketed = { };
+      bufremove = { };
+      # clue = { };
+      # deps = { };
+      diff = { };
+      extra = { };
+      files = { };
+      # jump = { };
+      misc = { };
+      sessions = { };
+      visits = { };
+      cursorword = { };
+      hipatterns = { };
+      # indentscope = { };
+      notify = { };
+      # starter = {
+      #   autoopen = true;
+      # };
+      statusline = { };
+      trailspace = { };
     };
   };
 }

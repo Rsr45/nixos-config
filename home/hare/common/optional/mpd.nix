@@ -21,7 +21,8 @@
 
   home.packages = with pkgs; [
     mpc
-    ncmpcpp
-    ymuse
+    # ymuse
+    cantata
+    rmpc
   ];
 }

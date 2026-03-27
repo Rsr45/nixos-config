@@ -5,93 +5,143 @@
 }:
 {
   home.packages = with pkgs; [
+    # RSS Feed
+    # bulletty # cool but no script
+    newsboat
+    # Network/
+    # speedtest-cli
+    # bluetui
+    # impala
+    # Music
+    cmus
+    kew
+    # pulsemeeter
+    crosspipe
+    # Disk
+    ncdu
+    # Web
+    nyaa
+    lynx
+    readability-cli
     # openmw
-    rofi
+
     ffmpeg
     ffmpegthumbnailer
     gifski
+
     xclip
     wl-clipboard
     ps3iso-utils
     ps3-disc-dumper
+    kdePackages.kruler
     libnotify
     pwvucontrol
+    ## Application Launchers
+    rofi
+    # vicinae
+    python3
+    # libxml2
+    # just
+    ## Screenshot and such
     grim
+    maim
     slurp
-    osu-lazer-bin
-    quodlibet-full
+    slop
+    # OCR
+    tesseract
+    # Wall
+    inputs.thumbpick.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # osu-lazer-bin
+    audacious
+    # smassh
     xwayland-satellite
     swww
     tmux-sessionizer
-    calibre
+    # calibre
+    # disk space calc
     dysk
+    dust
     duf
+
     wev
-    rmpc
+    # rmpc
+    brave
+    wiremix
+    doxx
+    broot
+    trashy
     # --- Bar/Framework ---
-    inputs.quickshell.packages.${system}.default
-    inputs.noctalia.packages.${system}.default
+    # inputs.quickshell.packages.${system}.default
+    # inputs.noctalia.packages.${system}.default
+    quickshell
+    # inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli
     # --- MISC ---
-    just
-    mask
-    xh
-    du-dust
+    # just
+    # mask
+    # xh
+    # du-dust
     dua
-    hyperfine
-    xan
-    uutils-coreutils
-    odin
-    xournalpp
-    cmake
-    libtool
-    graphviz
-    python314
+    # hyperfine
+    # xan
+    # uutils-coreutils
+    # odin
+    # cmake
+    # libtool
+    # graphviz
+    # python314
+    imagemagick
+    # ghostscript
+    # mermaid-cli
+    # nodejs
+    # mlocate
     # --- 3DR ---
     freecad
     # blender
-    blender-hip
-    # --- IDE ---
-    emacs
+    # blender-hip set  # config.rocmSupport = true; or use pkgsRocm.blender
+    # --- Languages ---
     # --- LSP ---
-    nixd
-    # nil
-    lua-language-server
-    clang-tools
-    gopls
-    gomodifytags
-    gotests
-    gore
-    haskell-language-server # haskell
-    haskellPackages.hoogle # haskell
-    cabal-install # haskell
-    ktlint # kotlin
-    sbcl # common-lisp
-    rust-analyzer
+    # nixd
+    # lua-language-server
+    # clang-tools
+    # gopls
+    # gomodifytags
+    # gotests
+    # gore
+    # haskell-language-server # haskell
+    # haskellPackages.hoogle # haskell
+    # cabal-install # haskell
+    # ktlint # kotlin
+    # sbcl # common-lisp
+    # rust-analyzer
     # pyflakes
     # isort
     # pipenv
     # nosetests
     # pytest
     # --- FMT ---
-    stylua
-    ocamlformat
+    # stylua
+    # ocamlformat
     # swift-format
-    tidyp
-    jsbeautifier
-    shfmt
-    black
+    # tidyp
+    # jsbeautifier
+    # shfmt
+    # black
     # --- Lint ---
-    stylelint
-    shellcheck
+    # stylelint
+    # shellcheck
     # --- EMU ---
     # retroarch-full
-    # (retroarch.withCores (
-    #   cores: with cores; [
-    #   ]
-    # ))
+    (retroarch.withCores (
+      cores: with cores; [
+        beetle-psx-hw
+        pcsx2
+        ppsspp
+      ]
+    ))
     ppsspp
     # duckstation # removed
-    mednafen
+    # mednafen
     pcsx2
     # rpcs3
     # dolphin-emu
@@ -100,35 +150,34 @@
     # azahar
     # flycast
     libsecret
+    # ranger
+    # lf
+    # notes
+    basalt
+    bibiman
+    bandwhich
+    kalker
+    television
+    wiper
+    trippy
   ];
   # programs.mbsync.enable = true;
   # programs.msmtp.enable = true;
   programs = {
-    bat.enable = true;
-    nnn.enable = true;
-    ranger.enable = true;
-    joshuto.enable = true;
-    lf.enable = true;
-    gitui.enable = true;
-    zellij = {
-      enable = true;
-      # settings = {};
-    };
+    # bat.enable = true;
+    # nnn.enable = true;
+    # ranger.enable = false;
+    # joshuto.enable = true;
+    # lf.enable = true;
+    # gitui.enable = true;
+    # broot.enable = true;
+    # zellij = {
+    #   enable = true;
+    #   # settings = {};
+    # };
     ripgrep.enable = true;
     ripgrep-all.enable = true;
     fd.enable = true;
   };
-  programs.qutebrowser = {
-    enable = true;
-    settings = {
-      colors = {
-        webpage.darkmode.enabled = true;
-      };
-      tabs = {
-        favicons.show = "never";
-        background = false;
-      };
-    };
-  };
-
+  services.swww.enable = true;
 }

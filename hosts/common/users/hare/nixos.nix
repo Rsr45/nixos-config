@@ -32,6 +32,9 @@ in
         "networkmanager"
         "scanner" # for print/scan"
         "lp" # for print/scan"
+        "libvirtd"
+        "adbusers"
+        "mpd"
       ])
     ];
   };

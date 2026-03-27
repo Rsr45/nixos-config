@@ -56,9 +56,10 @@
       isDefault = true;
       extensions.force = true;
       userChrome = builtins.readFile ./remove-tab.css + builtins.readFile ./sidebar-header.css;
+      userContent = "\n@import url(extrac.css);\n";
       extraConfig =
-        builtins.replaceStrings [ "\npref(" ] [ "\nuser_pref(" ] (builtins.readFile ./phoenix.js)
-        + builtins.readFile ./preferred.js;
+        builtins.replaceStrings [ "\npref(" ] [ "\nuser_pref(" ] (builtins.readFile ../phoenix-desktop.js)
+        + builtins.readFile ../preferred.js;
       extensions = {
         settings = {
           "uBlock0@raymondhill.net".settings =

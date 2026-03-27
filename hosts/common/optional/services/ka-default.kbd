@@ -1,0 +1,356 @@
+(defalias
+  ;; Extend layer toggle on Caps Lock (tap for Caps, hold for Extend)
+  ;; ext  (tap-hold 200 200 esc (layer-toggle extend))
+
+  ;; Layer switching aliases
+  ;; lq   (layer-switch qwerty)      ;; Switch to QWERTY ISO
+  ;; lh   (layer-switch colemak-dh)  ;; Switch to Colemak-DH ISO
+  ;; lm   (layer-switch colemak-dhk) ;; Switch to Colemak-DHk ISO
+
+  ;; Common shortcuts for Extend layer
+  cpy  C-c   ;; Copy XF86Copy
+  pst  C-v   ;; Paste XF86Paste
+  cut  C-x   ;; Cut XF86Cut
+  udo  C-z   ;; Undo
+  rdo  C-y   ;; Redo
+  all  C-a   ;; Select All
+  fnd  C-f   ;; Find
+  bk   A-lft ;; Browser back
+  fw   A-rght ;; Browser forward
+
+  mwu (mwheel-up 50 120)
+  mwd (mwheel-down 50 120)
+  mwl (mwheel-left 50 120)
+  mwr (mwheel-right 50 120)
+
+  msu (movemouse-up 1 1)
+  msl (movemouse-left 1 1)
+  msd (movemouse-down 1 1)
+  msr (movemouse-right 1 1)
+
+  mau (movemouse-accel-up 1 1000 1 5)
+  mal (movemouse-accel-left 1 1000 1 5)
+  mad (movemouse-accel-down 1 1000 1 5)
+  mar (movemouse-accel-right 1 1000 1 5)
+
+  sm (setmouse 32228 32228)
+
+  fst (movemouse-speed 200)
+
+  ;; call @.tp whenever you want to enter fast typing-layer
+  .tp (hold-for-duration 55 fast)  ;; timeouts from 30 to 100 are wide spread
+  .tpw (hold-for-duration 55 fast-wider)  ;; timeouts from 30 to 100 are wide spread
+  .tpwpp (hold-for-duration 55 fast-wider-pp)  ;; timeouts from 30 to 100 are wide spread
+  .spc-typing   (multi (on-press release-vkey fast) spc) ;; expilcitly leave typing-layer when hitting `space` - this allows experimenting with higher idle timeouts
+  .spc-typingw   (multi (on-press release-vkey fast-wider) spc) ;; expilcitly leave typing-layer when hitting `space` - this allows experimenting with higher idle timeouts
+  .spc-typingwpp   (multi (on-press release-vkey fast-wider-pp) spc) ;; expilcitly leave typing-layer when hitting `space` - this allows experimenting with higher idle timeouts
+  ;; layers
+  nav (layer-while-held navigation)
+  navw (layer-while-held navigation-wider)
+  navwpp (layer-while-held navigation-wider-pp)
+  mou (layer-while-held mouse)
+  mouw (layer-while-held mouse-wider)
+  med (layer-while-held media)
+  medw (layer-while-held media-wider)
+  sym (layer-while-held symbols)
+  num (layer-while-held numbers)
+
+  cr (tap-dance 200 ( ret cmp))
+)
+
+;; (defsrc
+;;   esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12        ssrq slck pause
+;;   grv  1    2    3    4    5    6    7    8    9    0    *    -    bspc  ins  home pgup  nlck kp/  kp*  kp-
+;;   tab  q    w    e    r    t    y    u    ı    o    p    ğ    ü    ret   del  end  pgdn  kp7  kp8  kp9  kp+
+;;   caps a    s    d    f    g    h    j    k    l    ş    İ    ,                          kp4  kp5  kp6
+;;   lsft <    z    x    c    v    b    n    m    ö    ç    .    rsft            up         kp1  kp2  kp3  kprt
+;;   lctl lmet lalt           spc                 ralt rmet menu rctl       left down rght  kp0  kp.
+;; )
+
+(defsrc
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret
+  caps a    s    d    f    g    h    j    k    l    ;    '    \
+  lsft <    z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc                 ralt rmet menu rctl
+)
+
+
+
+(defvirtualkeys
+    fast    (layer-while-held typing)
+    fast-wider    (layer-while-held typing-wider)
+    fast-wider-pp    (layer-while-held typing-wider-plusplus)
+)
+
+(defvar
+  tot 220  ;; tot=time out tap
+)
+
+(deftemplate homerowmod (timeouttap timeouthold keytap keyhold)
+	(tap-hold $timeouttap $timeouthold
+		(multi $keytap  @.tp)
+		$keyhold
+	)
+)
+(deftemplate homerowmodw (timeouttap timeouthold keytap keyhold)
+	(tap-hold $timeouttap $timeouthold
+		(multi $keytap  @.tpw)
+		$keyhold
+	)
+)
+(deftemplate homerowmodwpp (timeouttap timeouthold keytap keyhold)
+	(tap-hold $timeouttap $timeouthold
+		(multi $keytap  @.tpwpp)
+		$keyhold
+	)
+)
+
+;; homerowmodfiltered is a way to force problematic bigrams to become letters not mods
+(deftemplate homerowmodfiltered (timeouttap timeouthold keytap keyhold typinglist)
+  (tap-hold-release-keys $timeouttap $timeouthold
+    (multi $keytap  @.tp)
+    $keyhold
+    $typinglist ;; Activates $keytap early if a key within $typinglist is pressed before hold activates.
+  )
+)
+(deftemplate homerowmodfilteredw (timeouttap timeouthold keytap keyhold typinglist)
+  (tap-hold-release-keys $timeouttap $timeouthold
+    (multi $keytap  @.tpw)
+    $keyhold
+    $typinglist ;; Activates $keytap early if a key within $typinglist is pressed before hold activates.
+  )
+)
+(deftemplate homerowmodfilteredwpp (timeouttap timeouthold keytap keyhold typinglist)
+  (tap-hold-release-keys $timeouttap $timeouthold
+    (multi $keytap  @.tpwpp)
+    $keyhold
+    $typinglist ;; Activates $keytap early if a key within $typinglist is pressed before hold activates.
+  )
+)
+
+ ;; (deflayermap (colemak-dh)
+ ;;   ;; define home row mods (they act as typing-layer triggers, too )
+ ;;   f (t! homerowmod $tot 160 t lsft)
+ ;;   j (t! homerowmod $tot 160 n rsft)
+ ;;   d (t! homerowmod $tot 300 s lctl)
+ ;;   k (t! homerowmod $tot 300 e rctl)
+ ;;   s (t! homerowmodfiltered $tot 400 r altgr (a)) ;; example fix of the 'as' role
+ ;;   l (t! homerowmod $tot 400 i altgr)
+ ;;   a (t! homerowmod $tot 450 a lmet)
+ ;;   ; (t! homerowmod $tot 450 o rmet)
+ ;;   ;; define each letter as typing-layer trigger
+ ;;   q (multi q @.tp) w (multi w @.tp) e (multi f @.tp) r (multi p @.tp) t (multi b @.tp) y (multi j @.tp) u (multi l @.tp) i (multi u @.tp) o (multi y @.tp) g (multi g @.tp) h (multi m @.tp) < (multi z @.tp) z (multi x @.tp) x (multi c @.tp) c (multi d @.tp) v (multi v @.tp) b @cr n (multi k @.tp) m (multi h @.tp)
+ ;;   ;; layout fixes.
+ ;;   p ;
+ ;;   ;; layers etc.
+
+ ;;   caps esc
+ ;;   spc (tap-hold 200 200 spc @nav)
+ ;;   6 (tap-hold 200 200 tab @med)
+ ;;   tab (tap-hold 200 200 tab @mou)
+ ;;   8 (tap-hold 200 200 bspc @sym)
+ ;;   9 (tap-hold 200 200 del @num)
+ ;; )
+
+(deflayermap (colemak-dh-wider-plusplus)
+  a (t! homerowmodwpp $tot 300 a lmet)
+  s (t! homerowmodfilteredwpp $tot 200 r lalt (a))
+  d (t! homerowmodfilteredwpp $tot 200 s lctl (a))
+  f (t! homerowmodwpp $tot 160 t lsft)
+
+  o (t! homerowmodwpp $tot 160 n rsft)
+  p (t! homerowmodwpp $tot 200 e rctl)
+  [ (t! homerowmodwpp $tot 200 i ralt)
+  ] (t! homerowmodwpp $tot 300 o rmet)
+
+  ;; left
+  q (multi q @.tpwpp) w (multi w @.tpwpp) e (multi f @.tpwpp) r (multi p @.tpwpp) t (multi b @.tpwpp)
+  g (multi g @.tpwpp)
+  < (multi z @.tpwpp) z (multi x @.tpwpp) x (multi c @.tpwpp) c (multi d @.tpwpp) v (multi v @.tpwpp)
+
+  ;; right
+  8 (multi j @.tpwpp) 9 (multi l @.tpwpp) 0 (multi u @.tpwpp) - (multi y @.tpwpp) = '
+  i (multi m @.tpwpp)
+  k (multi k @.tpwpp) l (multi h @.tpwpp) ; ,  ' . \ (tap-dance 200 (/ (multi lmet ssrq)))
+
+  caps esc
+  ret (tap-hold 200 200 ret @sym)
+
+  ;; thumb
+  lalt (tap-hold 200 200 esc @mouw)
+  spc (tap-hold 200 200 spc @navwpp)
+  6 (tap-hold 200 200 tab @medw)
+
+  , (tap-hold 200 200 ret @sym)
+  . (tap-hold 200 200 bspc @num)
+  / (tap-hold 200 200 del @sym)
+
+  f12 (layer-switch gaming)
+)
+(deflayermap (typing-wider-plusplus)
+                                        7 j   9 l   0 u   - y   = '
+ w w   q q   e f   r p   t b            i m   o n   p e   [ i   ] o
+ a a   s r   d s   f t   g g            k k   l h
+ < z   z x   x c   c d   v v
+ caps XX ;; key deactivations of caps,... are optional
+)
+
+
+(deflayermap (colemak-dh-wider)
+  a (t! homerowmodw $tot 300 a lmet)
+  s (t! homerowmodfilteredw $tot 200 r lalt (a)) ;; example fix of the 'as' role
+  d (t! homerowmodfilteredw $tot 200 s lctl (a))
+  f (t! homerowmodw $tot 160 t lsft)
+
+  l (t! homerowmodw $tot 160 n rsft)
+  ; (t! homerowmodw $tot 200 e rctl)
+  ' (t! homerowmodw $tot 200 i ralt)
+  \ (t! homerowmodw $tot 300 o rmet)
+
+  q (multi q @.tpw) w (multi w @.tpw) e (multi f @.tpw) r (multi p @.tpw) t (multi b @.tpw) i (multi j @.tpw) o (multi l @.tpw) p (multi u @.tpw) [ (multi y @.tpw) ] '
+  g (multi g @.tpw) k (multi m @.tpw)
+  < (multi z @.tpw) z (multi x @.tpw) x (multi c @.tpw) c (multi d @.tpw) v (multi v @.tpw)   b /    , (multi k @.tpw) . (multi h @.tpw) / (tap-dance 200 (, (multi lmet ssrq))) rsft .
+
+  caps esc
+  ret (tap-hold 200 200 ret @sym)
+
+  ;; thumb
+  lalt (tap-hold 200 200 esc @mouw)
+  spc (tap-hold 200 200 spc @navw)
+  ;; spc (tap-dance 200 ((tap-hold 200 200 spc @navw) (multi lmet ssrq)))
+  6 (tap-hold 200 200 tab @medw)
+
+  9 (tap-hold 200 200 ret @sym)
+  ralt (tap-hold 200 200 bspc @num)
+
+  f12 (layer-switch gaming)
+)
+(deflayermap (typing-wider)
+ w w   q q   e f   r p   t b            i j   o l   p u   [ y   ] '
+ a a   s r   d s   f t   g g            k m   l n   ; e   ' i   \ o
+ < z   z x   x c   c d   v v            , k   . h
+ caps XX ;; key deactivations of caps,... are optional
+)
+(deflayermap (typing)
+ a a   b b   c d   d s   e f   f t   g g   h m   i u   j n   k e   l i   m h   n k   o y   q q   r p   s r   t b   u l   v v   w w   x c   y j   z x
+ caps XX ;; key deactivations of caps,... are optional
+)
+
+
+(deflayer colemak
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    f    p    b    j    l    u    y    ;    [    ]    ret
+  caps a    r    s    t    g    m    n    e    i    o    '    \
+  lsft z    x    c    d    v    \    k    h    ,    .    /    rsft
+  lctl lmet lalt           spc                 ralt rmet cmp  rctl
+)
+
+(deflayer colemak-wide
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    f    p    b    j    l    u    y    ;    [    ]    ret
+  caps a    r    s    t    g    m    n    e    i    o    '    \
+  lsft z    x    c    d    v    \    k    h    ,    .    /    rsft
+  lctl lmet lalt           spc                 ralt rmet cmp  rctl
+)
+
+;; (deflayer extend
+;;   _       @lq  @lh  @lm  _    _    _    _    _    _    _    _    _
+;;   _       @lq  @lh  @lm  _    _    _    _    _    _    _    _    _    _
+;;   _       esc  @bk  @fnd @fw  ins  pgup home up   end  menu _    slck
+;;   _       lalt lmet lsft lctl ralt pgdn lft  down rght del  caps _    _
+;;   _     @udo @cut @cpy tab  @pst _   pgdn bspc lsft lctl menu _
+;;   _       _    _              ret            _    _    _    _
+;; )
+
+;; (deflayer extend
+;;   grv  1    2    3    4    5    6    7    8    9    0    *    -    bspc  ins  home pgup  nlck kp/  kp*  kp-
+;;   tab  q    w    e    r    t    y    u    ı    o    p    ğ    ü    ret   del  end  pgdn  kp7  kp8  kp9  kp+
+;;   caps a    s    d    f    g    h    j    k    l    ş    İ    ,                          kp4  kp5  kp6
+;;   lsft <    z    x    c    v    b    n    m    ö    ç    .    rsft            up         kp1  kp2  kp3  kprt
+;;   lctl lmet lalt           spc                 ralt rmet menu rctl       left down rght  kp0  kp.
+;; )
+
+(deflayermap (navigation)
+  y @rdo u @pst i @cpy o @cut p @udo
+  h caps j left k down l up ; rght
+  n ins m home , pgdn . pgup / end
+
+)
+(deflayermap (mouse)
+  y @rdo u @pst i @cpy o @cut p @udo
+    j @msl k @msd l @msu ; @msr
+    m @mwl , @mwd . @mwu / @mwr
+    8 mlft 9 mrgt spc mmid
+)
+(deflayermap (media)
+  h caps j left k down l up ; rght
+  n ins m home , pgdn . pgup / end
+)
+(deflayermap (numbers)
+  q [ w 7 e 8 r 9 t ]
+  a ; s 4 d 5 f 6 g =
+  < ` z 1 x 2 c 3 v \
+  lalt . spc 0 6 -
+)
+(deflayermap (symbols)
+  q S-[ w S-7 e S-8 r S-9 t S-]
+  a S-; s S-4 d S-5 f S-6 g S-=
+  < S-` z S-1 x S-2 c S-3 v S-\
+  lalt S-9 spc S-0 6 S--
+)
+(deflayermap (navigation-wider)
+  i @rdo o @pst p @cpy [ @cut ] @udo
+  k caps l left ; down ' up \ rght
+  , ins . home / pgdn rsft pgup
+)
+(deflayermap (mouse-wider)
+  y @rdo u @pst i @cpy o @cut p @udo
+    j @msl k @msd l @msu ; @msr
+    m @mwl , @mwd . @mwu / @mwr
+    8 mlft 9 mrgt spc mmid
+)
+(deflayermap (media-wider)
+  i @rdo o @pst p @cpy [ @cut ] @udo
+  k caps l prev ; voldwn ' volu \ next
+  , mute . brdwn / bru
+  ralt pp
+)
+
+(deflayermap (navigation-wider-pp)
+  7 @rdo 9 @pst 0 @cpy - @cut = @udo
+ i caps   o left   p down   [ up   ] rght
+ k ins   l home ; pgdn ' pgup \ end
+)
+(deflayermap (mouse-wider-pp)
+  y @rdo u @pst i @cpy o @cut p @udo
+    j @msl k @msd l @msu ; @msr
+    m @mwl , @mwd . @mwu / @mwr
+    8 mlft 9 mrgt spc mmid
+)
+(deflayermap (media-wider-pp)
+  i @rdo o @pst p @cpy [ @cut ] @udo
+  k caps l prev ; voldwn ' volu \ next
+  , mute . brdwn / bru
+  ralt pp
+)
+
+;; 7 j   9 l   0 u   - y   = '
+ ;;i m   o n   p e   [ i   ] o
+ ;;k k   l h
+
+;; (deflayermap (symbols)
+;;   q { w & e * r ( t }
+;;   a : s $ d % f ^ g +
+;;   < ~ z ! x @ c # v |
+;; )
+
+(deflayermap (gaming)
+  2 1  3 2  4 3  5 4  6 5  7 6  8 7  9 8  0 9  - 0
+  q tab  w q  e w  r e  t r  y t  u y   i u  o i  p o [ p
+  a lsft  s a  d s  f d  g f  h g  l h  k j  j k  ; l
+  < lctl z z  x x  c c  v v
+  f12 (layer-switch colemak-dh-wider-plusplus)
+)
+
+

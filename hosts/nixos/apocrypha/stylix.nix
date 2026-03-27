@@ -18,31 +18,31 @@
     };
 
     fonts = {
-      # serif = {
-      #   package = pkgs.inter;
-      #   name = "Inter";
-      # };
-      #
-      # sansSerif = {
-      #   package = pkgs.inter;
-      #   name = "Inter";
-      # };
-      #
-      # monospace = {
-      #   package = pkgs.nerd-fonts.iosevka;
-      #   name = "Iosevka Nerd Font";
-      # };
-      #
-      # emoji = {
-      #   package = pkgs.noto-fonts-emoji;
-      #   name = "Noto Color Emoji";
-      # };
+      serif = {
+        package = pkgs.geist-font;
+        name = "Geist";
+      };
+
+      sansSerif = {
+        package = pkgs.geist-font;
+        name = "Geist";
+      };
+
+      monospace = {
+        package = pkgs.geist-font;
+        name = "Geist Mono";
+      };
+
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
 
       sizes = {
-        desktop = 14;
-        popups = 14;
-        applications = 14;
-        terminal = 14;
+        desktop = 11;
+        popups = 11;
+        applications = 11;
+        terminal = 11;
       };
     };
   };

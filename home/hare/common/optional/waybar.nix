@@ -1,5 +1,11 @@
 { config, ... }:
 {
+  # xdg.configFile = {
+  #   "waybar" = {
+  #     source = ./waybar;
+  #     recursive = true;
+  #   };
+  # };
   programs.waybar = {
     enable = true;
     settings = {
@@ -138,6 +144,10 @@
         ];
 
         modules-right = [
+          "disk"
+          "memory"
+          "cpu"
+          "wireplumber"
           "network"
           "custom/seperator"
           "clock"
@@ -155,20 +165,20 @@
 
         "hyprland/workspaces" = {
           all-outputs = true;
-          format = "{icon}";
-          format-icons = {
-            "1" = "१";
-            "2" = "२";
-            "3" = "३";
-            "4" = "४";
-            "5" = "५";
-            "6" = "६";
-            "7" = "७";
-            "8" = "८";
-            "9" = "९";
-            "10" = "०";
-            # "10"= "१०";
-          };
+          # format = "{icon}";
+          # format-icons = {
+          #   "1" = "१";
+          #   "2" = "२";
+          #   "3" = "३";
+          #   "4" = "४";
+          #   "5" = "५";
+          #   "6" = "६";
+          #   "7" = "७";
+          #   "8" = "८";
+          #   "9" = "९";
+          #   "10" = "०";
+          #   # "10"= "१०";
+          # };
           persistent-workspaces = {
             "1" = "[]";
             "2" = "[]";

@@ -4,8 +4,8 @@
   programs.kitty = {
     enable = true;
     font = {
-      size = 10;
-      name = "Geist Mono";
+      size = 12;
+      name = "Iosevka";
       # package = pkgs.geist;
     };
     keybindings = {

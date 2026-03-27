@@ -1,12 +1,10 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
-  imports = [
-    ./lsp.nix
+  home.packages = with pkgs; [
+    emacs-gtk
+    mlocate
+    cmake
+    graphviz
   ];
 }

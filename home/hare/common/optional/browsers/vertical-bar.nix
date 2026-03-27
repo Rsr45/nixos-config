@@ -2,6 +2,7 @@
 {
   programs.schizofox.theme = {
     extraUserChrome = ''
+      @import url(extra.css);
       /**
       * Remove Sidebar Header
       **/

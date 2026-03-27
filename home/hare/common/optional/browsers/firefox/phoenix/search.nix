@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ ... }:
 {
   programs.firefox.profiles.phoenix.search = {
-    default = "startpage";
-    privateDefault = "startpage";
+    default = "ddg";
+    privateDefault = "ddg-html";
     force = true;
     order = [
       "startpage"
@@ -18,7 +18,7 @@
     engines = {
       startpage = {
         name = "Startpage";
-        icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        definedAliases = [ "@startpage" ];
         urls = [
           {
             template = "https://www.startpage.com/sp/search";
@@ -32,9 +32,28 @@
         ];
       };
 
+      ddg = {
+        name = "DuckDuckGo";
+        definedAliases = [ "@duckduckgo" ];
+        urls = [
+          {
+            template = "https://duckduckgo.com/";
+            params = [
+              {
+                name = "q";
+                value = "{searchTerms}";
+              }
+            ];
+          }
+        ];
+      };
+
       ddg-html = {
         name = "DuckDuckGo (HTML)";
-        icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        definedAliases = [
+          "@duckduckgohtml"
+          "'ddgh"
+        ];
         urls = [
           {
             template = "https://html.duckduckgo.com/html/";
@@ -65,14 +84,14 @@
             ];
           }
         ];
-        icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        # icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
         definedAliases = [ "'np" ];
       };
 
       nixos-options = {
         name = "NixOS Options";
         definedAliases = [ "'no" ];
-        icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        # icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
         urls = [
           {
             template = "https://search.nixos.org/options";
@@ -98,7 +117,7 @@
         name = "NixOS Wiki";
         urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
         # iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
-        icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        # icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
         definedAliases = [ "'nw" ];
       };
     };

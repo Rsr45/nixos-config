@@ -6,18 +6,17 @@
 }:
 {
   imports = [
-    ./pref.nix
-    ./bookmarks.nix
+    # ./bookmarks.nix
   ];
   programs.floorp = {
     enable = true;
-    package = pkgs.floorp-bin.override {
-      # See nixpkgs' firefox/wrapper.nix to check which options you can use
-      nativeMessagingHosts = with pkgs; [
-        # Tridactyl native connector
-        tridactyl-native
-      ];
-    };
+    # package = pkgs.floorp-bin.override {
+    #   # See nixpkgs' firefox/wrapper.nix to check which options you can use
+    #   nativeMessagingHosts = with pkgs; [
+    #     # Tridactyl native connector
+    #     tridactyl-native
+    #   ];
+    # };
     nativeMessagingHosts = with pkgs; [
       tridactyl-native
     ];
@@ -40,6 +39,10 @@
           (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}")
           (extension "sponsorblock" "sponsorBlocker@ajay.app")
           (extension "tridactyl-vim" "tridactyl.vim@cmcaine.co.uk")
+          (extension "styl-us" "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}")
+          (extension "view-page-archive" "{d07ccf11-c0cd-4938-a265-2a4d6ad01189}")
+          (extension "steam-database" "firefox-extension@steamdb.info")
+          (extension "augmented-steam" "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}")
         ];
       # To add additional extensions, find it on addons.mozilla.org, find
       # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
@@ -52,7 +55,90 @@
     };
     profiles.default = {
       isDefault = true;
-      userChrome = builtins.readFile ./remove-tab.css + builtins.readFile ./sidebar-header.css;
+      userChrome = builtins.readFile ./userChrome.css;
+      userContent = builtins.readFile ./userContent.css;
+      extraConfig =
+        builtins.replaceStrings [ "\npref(" ] [ "\nuser_pref(" ] (builtins.readFile ../phoenix-desktop.js)
+        + builtins.readFile ./preferred.js;
+
+      containersForce = true;
+      containers = {
+        personal = {
+          color = "blue";
+          icon = "fingerprint";
+          id = 1;
+        };
+        work = {
+          color = "orange";
+          icon = "briefcase";
+          id = 2;
+        };
+        shopping = {
+          color = "pink";
+          icon = "cart";
+          id = 3;
+        };
+        bank = {
+          color = "green";
+          icon = "dollar";
+          id = 4;
+        };
+        dangerous = {
+          color = "red";
+          icon = "fruit";
+          id = 5;
+        };
+        school = {
+          color = "yellow";
+          icon = "circle";
+          id = 6;
+        };
+        google = {
+          color = "toolbar";
+          icon = "circle";
+          id = 7;
+        };
+        youtube = {
+          color = "toolbar";
+          icon = "circle";
+          id = 8;
+        };
+        goon = {
+          color = "toolbar";
+          icon = "circle";
+          id = 9;
+        };
+        tmp = {
+          color = "toolbar";
+          icon = "circle";
+          id = 10;
+        };
+        ai = {
+          color = "toolbar";
+          icon = "circle";
+          id = 11;
+        };
+        misc = {
+          color = "toolbar";
+          icon = "circle";
+          id = 12;
+        };
+        whatsapp = {
+          color = "green";
+          icon = "circle";
+          id = 13;
+        };
+        reddit = {
+          color = "toolbar";
+          icon = "circle";
+          id = 14;
+        };
+        dev = {
+          color = "turquoise";
+          icon = "circle";
+          id = 15;
+        };
+      };
       extensions.force = true;
       extensions = {
         settings = {
@@ -62,7 +148,7 @@
                 "https://raw.githubusercontent.com/yokoffing/filterlists/main/privacy_essentials.txt"
                 "https://raw.githubusercontent.com/yokoffing/filterlists/main/annoyance_list.txt"
                 "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt"
-                "https://raw.githubusercontent.com/yokoffing/filterlists/main/youtube_clear_view.txt"
+                # "https://raw.githubusercontent.com/yokoffing/filterlists/main/youtube_clear_view.txt"
                 "https://raw.githubusercontent.com/liamengland1/miscfilters/master/antipaywall.txt"
 
                 ## ----- Privacy -----
@@ -86,21 +172,63 @@
 
                 "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/yt-neuter.txt"
                 "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/filters/sponsorblock.txt"
+                "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/filters/noview.txt"
               ];
             in
             {
-              # userFilters = lib.concatMapStrings (x: x + "\n") [
-              #   "twitch.tv##+js(twitch-videoad)"
-              #   "||1337x.vpnonly.site"
-              # ];
               uiAccentCustom = true;
               uiAccentCustom0 = "#CF1D25";
               cloudStorageEnabled = lib.mkForce false;
               advancedUserEnabled = true;
               userFiltersTrusted = true;
+              popupPanelSections = 31;
               importedLists = importedLists;
               externalLists = lib.concatStringsSep "\n" importedLists;
-              popupPanelSections = 31;
+              hostnameSwitchesString = ''
+                no-large-media: behind-the-scene false
+                no-csp-reports: * true
+              '';
+              dynamicFilteringString = ''
+                behind-the-scene * * noop
+                behind-the-scene * 1p-script noop
+                behind-the-scene * 3p noop
+                behind-the-scene * 3p-frame noop
+                behind-the-scene * 3p-script noop
+                behind-the-scene * image noop
+                behind-the-scene * inline-script noop
+                * * 3p-frame block
+                * challenges.cloudflare.com * noop
+                * www.google.com * noop
+                * www.gstatic.com * noop
+                * hcaptcha.com * noop
+                * recaptcha.net * noop
+                x.com twitter.com * noop
+                twitter.com x.com * noop
+              '';
+              user-filters = ''
+                *$font,third-party
+                xn--*
+                xn--*$doc,popup,frame
+                ||doubleclick.net^$important
+                ||google-analytics.com^$important
+                ||facebook.com^$important,third-party
+                ||facebook.net^$important,third-party
+                ||linkedin.com^$important,third-party
+                ||instagram.com^$important,third-party
+                ||tiktok.com^$important,third-party
+                ||twitter.com^$third-party,domain=~x.com
+                ||x.com^$third-party
+                ||gravatar.com^$important,third-party
+                ||accounts.google.com^$third-party,domain=~chromium.org|~gstatic.com|~googleusercontent.com|~youtube.com
+                ||appleid.apple.com^$third-party,domain=~appleid.cdn-apple.com
+                ||appleid.cdn-apple.com^$third-party,domain=~appleid.apple.com
+                ||challenges.cloudflare.com^$third-party
+                @@||challenges.cloudflare.com/cdn-cgi/challenge-platform/$third-party,script,frame
+                ||www.google.com^$third-party,subdocument
+                @@||www.google.com/recaptcha/$third-party,subdocument
+                ||www.gstatic.com^$third-party,script
+                @@||www.gstatic.com/recaptcha/$third-party,script
+              '';
               selectedFilterLists = [
                 "user-filters"
                 "ublock-filters"
@@ -157,23 +285,29 @@
               ]
               ++ importedLists;
             };
+
+          # "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}".settings = {
+          #   styles = lib.importJSON.packages.catppuccin-userstyles;
+          # };
         };
       };
 
       search = {
-        default = "htmlddg";
-        privateDefault = "Startpage";
+        default = "brave";
+        privateDefault = "startpage";
         force = true;
         order = [
-          "htmlddg"
-          "Startpage"
           "ddg"
+          "brave"
+          "startpage"
+          "htmlddg"
           "nixos-wiki"
           "nixos-options"
           "nix-packages"
           "google"
           "bing"
         ];
+
         engines = {
           searx = {
             name = "SearchXNG";
@@ -189,6 +323,20 @@
               }
             ];
             definedAliases = [ "'s" ];
+          };
+          brave = {
+            name = "Brave";
+            urls = [
+              {
+                template = "https://search.brave.com/search";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
           };
           htmlddg = {
             name = "DuckDuckGo (HTML)";

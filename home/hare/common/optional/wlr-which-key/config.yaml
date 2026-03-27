@@ -1,0 +1,150 @@
+# Theming
+# font: Noto Sans 12
+background: "#282828"
+color: "#fbf1c7"
+border: "#8ec07c"
+separator: " : "
+border_width: 2
+corner_r: 0
+padding: 15 # Defaults to corner_r
+# rows_per_column: 5 # No limit by default
+column_padding: 25 # Defaults to padding
+
+# Anchor and margin
+anchor: bottom-right # One of center, left, right, top, bottom, bottom-left, top-left, etc.
+# Only relevant when anchor is not center
+margin_right: 0
+margin_bottom: 10
+margin_left: 0
+margin_top: 10
+
+# namespace to use for the layer shell surface
+# namespace: "wlr_which_key"
+
+# Permits key bindings that conflict with compositor key bindings.
+# Default is `false`.
+inhibit_compositor_keyboard_shortcuts: true
+
+# Try to guess the correct keyboard layout to use. Default is `false`.
+auto_kbd_layout: true
+
+menu:
+  - key: "p"
+    desc: Power
+    submenu:
+      - key: "s"
+        desc: Sleep
+        cmd: systemctl suspend
+      - key: "r"
+        desc: Reboot
+        cmd: reboot
+      - key: "o"
+        desc: Off
+        cmd: poweroff
+  - key: "r"
+    desc: Run
+    submenu:
+      - key: "r"
+        # cmd: rofi -show drun
+        cmd: kitty --override initial_window_width=55c --override initial_window_height=15c --class otter -e otter-launcher
+        desc: launcher
+      - key: "t"
+        cmd: kitty
+        desc: Terminal
+      - key: "f"
+        cmd: floorp
+        desc: Floorp
+      - key: "k"
+        cmd: keepassxc
+        desc: KeePassXC
+      - key: "e"
+        cmd: dolphin
+        desc: Dolphin
+      - key: "b"
+        cmd: ~/scripts/bookmarks.sh
+        desc: Bookmarks
+      - key: "c"
+        cmd: copyq show
+        desc: clipboard
+  - key: "s"
+    desc: Screen
+    submenu:
+      - key: "s"
+        cmd: niri msg action screenshot
+        desc: Screenshot section
+      - key: "f"
+        cmd: niri msg action screenshot-screen
+        desc: Screenshot FullScreen
+      - key: "o"
+        cmd: ~/scripts/ocr.sh
+        desc: ocr
+      - key: "c"
+        cmd: hyprpicker
+        desc: colorpicker
+  - key: "q"
+    desc: close window
+    cmd: niri msg action close-window
+  # - key: "f"
+  #   desc: fakefullscreen
+  #   cmd: niri msg action toggle-windowed-fullscreen
+  - key: "f"
+    desc: fullscreen
+    cmd: niri msg action maximize-column
+  - key: "F"
+    desc: fullscreen
+    cmd: niri msg action fullscreen-window
+  - key: ","
+    desc: switch windows
+    cmd: kitty --class windows -e ~/scripts/switchws.sh
+  - key: "g"
+    desc: Go
+    submenu:
+      - key: "t"
+        cmd: niri msg action focus-workspace-down
+        desc: nexttab
+      - key: "T"
+        cmd: niri msg action focus-workspace-up
+        desc: prevTab
+  - key: "["
+    desc: backward
+    submenu:
+      - key: "b"
+        cmd: niri msg action focus-column-left-or-last
+        desc: prev window
+      - key: "B"
+        cmd: niri msg action focus-column-first
+        desc: first window
+  - key: "]"
+    desc: forward
+    submenu:
+      - key: "b"
+        cmd: niri msg action focus-column-right-or-first
+        desc: next window
+      - key: "B"
+        cmd: niri msg action focus-column-last
+        desc: last window
+  - key: o
+    desc: overlay
+    cmd: niri msg action toggle-overview
+
+  # - key: "l"
+  #   desc: Laptop Screen
+  #   submenu:
+  #     - key: "t"
+  #       desc: Toggle On/Off
+  #       cmd: toggle-laptop-display.sh
+  #     - key: "s"
+  #       desc: Scale
+  #       submenu:
+  #         - key: "1"
+  #           desc: Set Scale to 1.0
+  #           cmd: wlr-randr --output eDP-1 --scale 1
+  #         - key: "2"
+  #           desc: Set Scale to 1.1
+  #           cmd: wlr-randr --output eDP-1 --scale 1.1
+  #         - key: "3"
+  #           desc: Set Scale to 1.2
+  #           cmd: wlr-randr --output eDP-1 --scale 1.2
+  #         - key: "4"
+  #           desc: Set Scale to 1.3
+  #           cmd: wlr-randr --output eDP-1 --scale 1.3

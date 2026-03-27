@@ -26,16 +26,18 @@
 
       # ========== Optional Configs ==========
       "hosts/common/optional/services/greetd.nix"
-      "hosts/common/optional/services/searxng.nix"
-      "hosts/common/optional/services/keyd.nix"
+      "hosts/common/optional/services/kanata.nix"
+      "hosts/common/optional/services/locate.nix"
       "hosts/common/optional/audio.nix"
-      "hosts/common/optional/sway.nix"
-      # "hosts/common/optional/plymouth.nix"
-      "hosts/common/optional/protonvpn.nix"
       "hosts/common/optional/firejail.nix"
+      "hosts/common/optional/plymouth.nix"
+      "hosts/common/optional/wm/hyprland.nix"
+      "hosts/common/optional/wm/niri.nix"
+      "hosts/common/optional/wm/i3.nix"
+      "hosts/common/optional/wm/awesome.nix"
     ])
     # ========== Apocrypha Specific ========
-    ./stylix.nix
+    # ./stylix.nix
     ./shared.nix
     ./steam.nix
   ];
@@ -60,48 +62,21 @@
     };
   };
 
-  # services.opensnitch = {
-  #   enable = true;
-  #   rules = {
-  #     systemd-timesyncd = {
-  #       created = "2018-04-07T14:13:27.903996051+02:00";
-  #       name = "systemd-timesyncd";
-  #       enabled = true;
-  #       action = "allow";
-  #       duration = "always";
-  #       operator = {
-  #         type = "simple";
-  #         sensitive = false;
-  #         operand = "process.path";
-  #         data = "${lib.getBin pkgs.systemd}/lib/systemd/systemd-timesyncd";
-  #       };
-  #     };
-  #     systemd-resolved = {
-  #       created = "2018-04-07T14:13:27.903996051+02:00";
-  #       name = "systemd-resolved";
-  #       enabled = true;
-  #       action = "allow";
-  #       duration = "always";
-  #       operator = {
-  #         type = "simple";
-  #         sensitive = false;
-  #         operand = "process.path";
-  #         data = "${lib.getBin pkgs.systemd}/lib/systemd/systemd-resolved";
-  #       };
-  #     };
-  #   };
-  # };
-
   networking = {
     networkmanager.enable = true;
     networkmanager.wifi.backend = "iwd";
     networkmanager = {
-      dns = "systemd-resolved";
-      insertNameservers = [
-        "9.9.9.9"
-        "1.1.1.1"
-      ];
+      # dns = "systemd-resolved";
+      # insertNameservers = [
+      #   "9.9.9.9"
+      #   "1.1.1.1"
+      # ];
     };
+    # nameservers = [
+    #   "127.0.0.1"
+    #   "::1"
+    # ];
+    # dhcpcd.extraConfig = "nohook resolv.conf";
   };
 
   programs.localsend = {
@@ -143,7 +118,11 @@
     systemd.enable = true;
   };
 
+  boot.tmp.cleanOnBoot = true;
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  services.logind.settings.Login.HandlePowerKey = "poweroff";
 
   services = {
     xserver = {
@@ -161,20 +140,6 @@
           };
         };
       };
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-        config = builtins.readFile ./xmonad.hs;
-        ghcArgs = [
-          "-hidir /tmp" # place interface files in /tmp, otherwise ghc tries to write them to the nix store
-          "-odir /tmp" # place object files in /tmp, otherwise ghc tries to write them to the nix store
-          "-i${inputs.xmonad-contexts}" # tell ghc to search in the respective nix store path for the module
-        ];
-        extraPackages = haskellPackages: [
-          haskellPackages.xmonad-contrib
-          haskellPackages.monad-logger
-        ];
-      };
     };
     clamav = {
       updater.enable = true;
@@ -191,63 +156,23 @@
       enable32Bit = true;
       # extraPackages = with pkgs; [mesa libva libvdpau-va-gl vulkan-loader vulkan-validation-layers mesa.opencl];
     };
-    amdgpu.amdvlk = {
-      enable = true;
-      support32Bit.enable = true;
-    };
     xone = {
       enable = true;
     };
   };
 
   programs = {
-    adb.enable = true;
+    # adb.enable = true; # use android-tools
     appimage = {
       enable = true;
       binfmt = true;
     };
-    bash.interactiveShellInit = ''
-      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-      then
-        shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-      fi
-    '';
-    fish.enable = true;
-    uwsm.enable = true;
-    hyprland = {
-      enable = true;
-      xwayland.enable = true;
-      withUWSM = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage =
-        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    };
-    niri.enable = true;
     thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         thunar-archive-plugin
         thunar-volman
       ];
-    };
-  };
-
-  # should not be required as it is set in users/hare
-  users = {
-    users = {
-      hare = {
-        isNormalUser = true;
-        description = "Hare";
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-          "libvirtd"
-          "adbusers"
-          "mpd"
-        ];
-        shell = lib.mkForce pkgs.nushell;
-      };
     };
   };
 
@@ -257,14 +182,51 @@
         "nix-command"
         "flakes"
       ];
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
   };
 
+  documentation = {
+    dev.enable = true;
+    man.cache.enable = true;
+    nixos.includeAllModules = true;
+  };
+
+  # environment.pathsToLink = [
+  #   "/share/xdg-desktop-portal"
+  #   "/share/applications"
+  # ];
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
+    # wlr.enable = true;
+    # extraPortals = lib.mkForce [
+    #   pkgs.kdePackages.xdg-desktop-portal-kde
+    #   pkgs.xdg-desktop-portal-termfilechooser
+    # ];
+    # config = {
+    #   common = {
+    #     default = [
+    #       "kde"
+    #     ];
+    #     "org.freedesktop.impl.portal.FileChooser" = [
+    #       "termfilechooser"
+    #     ];
+    #   };
+    #   #   pantheon = {
+    #   #     default = [
+    #   #       "pantheon"
+    #   #       "gtk"
+    #   #     ];
+    #   #     "org.freedesktop.impl.portal.Secret" = [
+    #   #       "gnome-keyring"
+    #   #     ];
+    #   #   };
+    #   #   x-cinnamon = {
+    #   #     default = [
+    #   #       "xapp"
+    #   #       "gtk"
+    #   #     ];
+    #   #   };
+    # };
   };
 
   security = {
@@ -298,6 +260,11 @@
     systemPackages = with pkgs; [
       home-manager
       # # Archive Managers and Compression
+      kdePackages.ark
+      kdePackages.kdenlive
+      # kdePackages.dolphin
+      # kdePackages.dolphin-plugins
+      findutils
       p7zip
       rar
       zip
@@ -306,27 +273,22 @@
       xarchiver
       peazip
       pcmanfm-qt
-      doublecmd
-      alacritty
-      git-credential-keepassxc
+      # doublecmd
+      # git-credential-keepassxc # using ssh with keepassxc as the agent
       age
       sops
-      gowall
-      picard
-      sherlock-launcher
+      picard # music brainz tagger
+      # sherlock-launcher
       lutgen
+      gowall
       clamav
-      argyllcms
+      # argyllcms # color management on x11
       keyd
-      xmobar
-      mullvad-browser
-      tor-browser
-      spotube
-      firefox
-      nyxt
-      ungoogled-chromium
+      # xmobar
+      # tor-browser
+      # ungoogled-chromium
       # libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
-      filezilla
+      # filezilla
       # # Utils
       discordchatexporter-cli
       nix-prefetch-git
@@ -347,57 +309,68 @@
       qbittorrent # Torrent Clien
       # logmein-hamachi # Hamachi
       # haguichi # Hamachi Client
-      anydesk # Remote Desktop Client
+      # anydesk # Remote Desktop Client
       # pywalfox-native
       obsidian # Note
       keepassxc
-      rxvt-unicode
-      dmenu
+      # rxvt-unicode
+      # dmenu
       # ungoogled-chromium
       # floorp
-      inputs.zen-browser.packages."${system}".default
+      # inputs.zen-browser.packages."${system}".default
       # fum
       # miru
-      dino
-      element-desktop # Matrix Client
+      # dino
+      gajim
+      android-tools
+      # element-desktop # Matrix Client
       # fluffychat # Matrix Client
       onlyoffice-desktopeditors
       # libreoffice-fresh
+      (aspellWithDicts (
+        dicts: with dicts; [
+          en
+          en-computers
+          en-science
+          tr
+        ]
+      ))
       hunspell
       hunspellDicts.tr_TR
       hunspellDicts.en_US
-      jdk # Java
+      # jdk # Java
       jdk17 # Java 17
-      jdk8 # Java 8
+      # jdk8 # Java 8
       # neovim
       neovide # Neovim GUI
       # btop # Resource Monitoring
       # # Language Server, Libraries, Compilers
-      glib
-      glibc
-      libgcc
-      gcc
-      ncurses
-      zig
-      clang
-      rustc
-      cargo
+      # glib
+      # glibc
+      # libgcc
+      # gcc
+      # ncurses
+      # zig
+      # clang
+      # rustc
+      # cargo
       # rust-analyzer
       # rustfmt
       # dotnet-sdk_8
       # dotnet-sdk_9
-      go
-      vala
+      # go
+      # vala
       # alejandra
-      nixfmt-rfc-style
-      # nixfmt
+      # nixfmt-rfc-style
+      nixfmt
       # nil
       # nixd
-      love
-      lua
-      luarocks
+      # love
+      # lua
+      # luarocks
+      man-pages
       # # Wine
-      wineWowPackages.staging
+      wineWow64Packages.staging
       winetricks
       protontricks
       protonup-qt
@@ -443,27 +416,29 @@
       #   ];
       # })
       # # DOOM
-      gzdoom # DOOM Source Port.
-      chocolate-doom # DOOM Source Port.
-      crispy-doom # DOOM Source Port.
-      woof-doom # DOOM Source Port.
-      dsda-doom # DOOM Source Port.
-      dsda-launcher # DSDA-DOOM Launcher.
-      eternity # DOOM Source Port.
+      # gzdoom # DOOM Source Port.
+      # chocolate-doom # DOOM Source Port.
+      # crispy-doom # DOOM Source Port.
+      # woof-doom # DOOM Source Port.
+      # dsda-doom # DOOM Source Port.
+      # dsda-launcher # DSDA-DOOM Launcher.
+      # eternity # DOOM Source Port.
     ];
   };
 
   fonts.fontDir.enable = true;
   fonts.enableDefaultPackages = true;
   fonts.packages = with pkgs; [
-    dejavu_fonts
-    nerd-fonts.symbols-only
-    nerd-fonts.iosevka
-    nerd-fonts.fira-code
-    iosevka
-    inter
-    overpass
+    # dejavu_fonts
+    # nerd-fonts.symbols-only
+    # nerd-fonts.iosevka
+    # nerd-fonts.fira-code
+    # iosevka
+    # inter
+    # overpass
   ];
+  fonts.fontconfig.enable = true;
+  fonts.fontconfig.useEmbeddedBitmaps = true;
 
   system.stateVersion = "24.11";
 }

@@ -1,7 +1,45 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
 
-  programs.yazi.enable = true;
+  programs.yazi = {
+    enable = true;
+    enableNushellIntegration = true;
+    shellWrapperName = "yy";
+    plugins = {
+      git = pkgs.yaziPlugins.git;
+      full-border = pkgs.yaziPlugins.full-border;
+      jump-to-char = pkgs.yaziPlugins.jump-to-char;
+    };
+    initLua = ./init.lua;
+    keymap = {
+      # input.prepend_keymap = [
+      #   { run = "close"; on = [ "<C-q>" ]; }
+      #   { run = "close --submit"; on = [ "<Enter>" ]; }
+      #   { run = "escape"; on = [ "<Esc>" ]; }
+      #   { run = "backspace"; on = [ "<Backspace>" ]; }
+      # ];
+      mgr.prepend_keymap = [
+        {
+          run = "plugin jump-to-char";
+          on = [ "f" ];
+        }
+        # { run = "quit"; on = [ "q" ]; }
+        # { run = "close"; on = [ "<C-q>" ]; }
+      ];
+    };
+    settings = {
+      log = {
+        enabled = false;
+      };
+      mgr = {
+        show_hidden = false;
+        sort_by = "alphabetical";
+        sort_dir_first = true;
+        sort_reverse = false;
+        linemode = "size";
+      };
+    };
+  };
 
   # home.file = {
   #   ".config/yazi/theme.toml".text = ''

@@ -2,6 +2,7 @@
   inputs,
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -9,13 +10,54 @@
     inlayHints.enable = true;
     keymaps = [
       {
+        key = "<leader>cr";
+        lspBufAction = "rename";
+        options.desc = "Rename";
+      }
+      {
         key = "<leader>ca";
         lspBufAction = "code_action";
+        options.desc = "Code Action";
+      }
+      {
+        key = "<leader>gd";
+        lspBufAction = "definition";
+        options.desc = "Goto Definition";
+      }
+      {
+        key = "<leader>gD";
+        lspBufAction = "references";
+        options.desc = "Goto References";
+      }
+      {
+        key = "<leader>gI";
+        lspBufAction = "implementation";
+        options.desc = "Goto Implementation";
+      }
+      {
+        key = "K";
+        lspBufAction = "hover";
+        options.desc = "Hover Documentation";
+      }
+      {
+        key = "<C-k>";
+        lspBufAction = "signature_help";
+        options.desc = "Signature Documentation";
+      }
+      {
+        key = "<leader>cx";
+        action.__raw = "function() if vim.fn.getloclist(0, {winid=1}).winid ~= 0 then vim.cmd('lclose') else vim.diagnostic.setloclist() end end";
+        options.desc = "Diagnostic List";
+      }
+      {
+        key = "<leader>e";
+        action = "vim.diagnostic.open_float";
+        options.desc = "Floating Diagnostic Message";
       }
     ];
     servers = {
       "*" = {
-        settings = {
+        config = {
           capabilities = {
             textDocument = {
               semanticTokens = {
@@ -31,7 +73,7 @@
 
       clangd = {
         enable = true;
-        settings = {
+        config = {
           cmd = [
             "clangd"
             "--background-index"
@@ -50,8 +92,9 @@
       # nil_ls.enable = true;
       nixd = {
         enable = true;
-        settings = {
+        config = {
           formatting.command = [ "nixfmt" ];
+          diagnostic.suppress = [ "sema-escaping-with" ];
           nixpkgs = {
             expr = ''import ${pkgs.path} {}'';
           };
@@ -62,13 +105,60 @@
         };
       };
 
-      tinymist.enable = true;
-      lua_ls.enable = true;
-      ts_ls.enable = true;
-      rust_analyzer.enable = true;
+      tinymist = {
+        enable = true;
+        config = {
+          formatterMode = "typstyle";
+        };
+      };
+
+      texlab = {
+        enable = true;
+        config = {
+        };
+      };
+
+      lua_ls = {
+        enable = true;
+        config = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT";
+            };
+            formatters = {
+              ignoreComments = true;
+            };
+            signatureHelp = {
+              enabled = true;
+            };
+            diagnostics = {
+              globals = [
+                "nixCats"
+                "vim"
+              ];
+              disable = [ "missing-fields" ];
+            };
+            telemetry = {
+              enabled = false;
+            };
+          };
+        };
+      };
+      gopls.enable = false;
+      ts_ls.enable = false;
+      rust_analyzer.enable = false;
       bashls.enable = true;
-      ocamllsp.enable = true;
+      fish_lsp.enable = true;
+      nushell.enable = true;
+      ocamllsp.enable = false;
       pyright.enable = true;
+      ruff.enable = true;
+      cssls.enable = true;
+      # jsonls.enable = true;
+      qmlls.enable = true;
+      # marksman.enable = true;
+      # markdown_oxide.enable = true;
+      hyprls.enable = true;
     };
   };
 }

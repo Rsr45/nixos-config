@@ -1,7 +1,7 @@
 <h1 align="center">❄️ Kar ❄️</h1>
 
 <picture>
-  <img alt="P" align="right" width="400px" src="img/1.png"/>
+  <img alt="P" align="right" width="400px" src="img/qsNew.png"/>
 </picture>
 
 > [!NOTE]
@@ -10,7 +10,7 @@
 >
 > - **OS:** NixOS
 > - **Window Manager:** Hyprland
-> - **Shell:** Nu & Fish + Starship
+> - **Shell:** Fish
 > - **Terminal:** Kitty
 > - **Editor:** Neovim
 
@@ -21,7 +21,7 @@ Personal NixOS configuration which uses Flakes and Home Manager.
 <details>
     <summary>Showcase</summary>
 
-![Kar](img/2.png) ![Kar](img/3.png)
+![Kar](img/qs2.png)![Kar](img/qsBrow.png)![Kar](img/qs1.png)![Kar](img/qsNew.png)
 
 </details>
 

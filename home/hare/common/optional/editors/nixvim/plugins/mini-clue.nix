@@ -6,8 +6,9 @@
 }:
 
 {
-  programs.nixvim.plugins.mini.modules = {
-    clue = {
+  programs.nixvim.plugins.mini-clue = {
+    enable = true;
+    settings = {
       triggers = [
         # leader triggers
         {
@@ -31,6 +32,15 @@
         {
           mode = "x";
           keys = "g";
+        }
+        # # `s` key
+        {
+          mode = "n";
+          keys = "s";
+        }
+        {
+          mode = "x";
+          keys = "s";
         }
         # # marks
         {

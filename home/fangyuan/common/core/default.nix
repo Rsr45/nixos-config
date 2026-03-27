@@ -46,11 +46,11 @@ in
     sessionVariables = {
       FLAKE = "$HOME/src/nix/nix-config";
       SHELL = "zsh";
-      TERM = "kitty";
-      TERMINAL = "kitty";
-      VISUAL = "nvim";
-      EDITOR = "nvim";
-      MANPAGER = "batman"; # see ./cli/bat.nix
+      TERM = "wezterm";
+      TERMINAL = "wezterm";
+      VISUAL = "vim";
+      EDITOR = "vim";
+      MANPAGER = "vi";
     };
     preferXdgDirectories = true; # whether to make programs use XDG directories whenever supported
 

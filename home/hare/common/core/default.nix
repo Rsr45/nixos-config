@@ -18,22 +18,24 @@ in
     ])
     ./${platform}.nix
     ./xdg.nix
+    ./cursor.nix
     ./wezterm.nix
-    ./urxvt.nix
+    # ./urxvt.nix
     ./gtk.nix
     ./qt.nix
-    # ./zsh
-    # ./nixvim
-    # ./bash.nix
+    ./bash.nix
+    ./fish.nix
     ./bat.nix
     # ./btop.nix
     # ./direnv.nix
     # ./fonts.nix
     # ./git.nix
-    # ./kitty.nix
+    ./kitty.nix
     # ./screen.nix
     # ./ssh.nix
-    # ./zoxide.nix
+    ./zoxide.nix
+    ./eza.nix
+    ./starship.nix
   ];
 
   inherit hostSpec;
@@ -49,11 +51,11 @@ in
     ];
     sessionVariables = {
       FLAKE = "$HOME/nixos-config";
-      SHELL = "nu";
-      TERM = "wezterm";
-      TERMINAL = "wezterm";
-      VISUAL = "vim";
-      EDITOR = "vim";
+      SHELL = "fish";
+      TERM = "kitty";
+      TERMINAL = "kitty";
+      VISUAL = "nvim";
+      EDITOR = "nvim";
       # MANPAGER = "batman";
     };
     preferXdgDirectories = true;
@@ -72,7 +74,7 @@ in
       fzf # fuzzy search
       jq # json pretty printer and manipulator
       nix-tree # nix package tree viewer
-      neofetch # fancier system info than pfetch
+      fastfetch # fancier system info than pfetch
       ncdu # TUI disk usage
       pciutils
       pfetch # system info

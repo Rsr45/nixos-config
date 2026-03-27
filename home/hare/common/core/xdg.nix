@@ -5,15 +5,16 @@
     userDirs = {
       enable = true;
       createDirectories = true;
+      setSessionVariables = true;
       extraConfig = {
-        XDG_DEV_DIR = "${config.home.homeDirectory}/Dev";
-        XDG_PERSONAL_DIR = "${config.home.homeDirectory}/Personal";
-        XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
-        XDG_GAMES_DIR = "${config.home.homeDirectory}/Games";
-        XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
-        XDG_WALLPAPERS_DIR = "${config.xdg.userDirs.pictures}/Wallpapers";
-        XDG_YOUTUBEMUSIC_DIR = "${config.xdg.userDirs.music}/Youtube";
-        XDG_YOUTUBE_DIR = "${config.xdg.userDirs.videos}/Youtube";
+        DEV = "${config.home.homeDirectory}/Dev";
+        PERSONAL = "${config.home.homeDirectory}/Personal";
+        PROJECTS = "${config.home.homeDirectory}/Projects";
+        GAMES = "${config.home.homeDirectory}/Games";
+        SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
+        WALLPAPERS = "${config.xdg.userDirs.pictures}/Wallpapers";
+        YOUTUBEMUSIC = "${config.xdg.userDirs.music}/Youtube";
+        YOUTUBE = "${config.xdg.userDirs.videos}/Youtube";
       };
     };
   };

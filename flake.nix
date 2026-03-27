@@ -28,10 +28,10 @@
       url = "github:Rsr45/nixvim-config";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # neovim = {
-    #   url = "github:Rsr45/nixCats-config";
-    #   # inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    neovim = {
+      url = "github:Rsr45/nixCats-config";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,13 +44,17 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      # inputs.quickshell.follows = "quickshell";
     };
 
-    quickshell = {
-      url = "github:outfoxxed/quickshell";
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # quickshell = {
+    #   url = "github:outfoxxed/quickshell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     astal = {
       url = "github:aylur/astal";
@@ -67,6 +71,8 @@
       url = "github:Procrat/xmonad-contexts";
       flake = false;
     };
+
+    thumbpick.url = "github:soliprem/thumbpick";
 
     # gauntlet = {
     #   url = "github:project-gauntlet/gauntlet/v20"; # <gauntlet_version_repository_tag>;
