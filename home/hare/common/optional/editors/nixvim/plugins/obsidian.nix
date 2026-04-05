@@ -102,12 +102,20 @@
                     string.char(math.random(65, 90)) ..
                     string.char(math.random(65, 90)) ..
                     "-" ..
+                    folder_prefix ..
+                    "-" ..
                     title:gsub(" ", "_"):gsub("[^A-Za-z0-9_-]", ""):lower()
             else
                 -- If title is nil, just add 4 random uppercase letters to the suffix.
-                for _ = 1, 4 do
-                    suffix = suffix .. string.char(math.random(65, 90)) .. "-"
-                end
+                -- for _ = 1, 4 do
+                    suffix = suffix ..
+                    string.char(math.random(65, 90)) ..
+                    string.char(math.random(65, 90)) ..
+                    string.char(math.random(65, 90)) ..
+                    string.char(math.random(65, 90)) ..
+                    "-" ..
+                    folder_prefix
+                -- end
             end
             -- return tostring(os.time()) .. "-" .. suffix
             return tostring(os.date("%Y%m%d%H%M")) .. "-" .. suffix

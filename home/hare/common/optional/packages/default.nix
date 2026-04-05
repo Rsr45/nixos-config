@@ -38,6 +38,8 @@
     pwvucontrol
     ## Application Launchers
     rofi
+    warp
+    fsel
     # vicinae
     python3
     # libxml2
@@ -139,6 +141,13 @@
         ppsspp
       ]
     ))
+    (heroic.override {
+      extraPkgs =
+        pkgs': with pkgs'; [
+          gamescope
+          gamemode
+        ];
+    })
     ppsspp
     # duckstation # removed
     # mednafen
@@ -180,4 +189,16 @@
     fd.enable = true;
   };
   services.swww.enable = true;
+  programs.lutris = {
+    enable = true;
+    defaultWinePackage = pkgs.proton-ge-bin;
+    protonPackages = with pkgs; [ proton-ge-bin ];
+    extraPackages = with pkgs; [
+      mangohud
+      winetricks
+      gamescope
+      gamemode
+      umu-launcher
+    ];
+  };
 }

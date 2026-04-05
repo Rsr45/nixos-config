@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   services = {
     mpd = {
@@ -10,7 +10,8 @@
         }
       '';
 
-      network.listenAddress = "any"; # if you want to allow non-localhost connections
+      # network.listenAddress = "any"; # if you want to allow non-localhost connections
+      musicDirectory = "${config.xdg.userDirs.music}";
     };
     mpd-discord-rpc.enable = false;
     mpd-mpris = {

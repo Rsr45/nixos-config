@@ -27,6 +27,7 @@
       # ========== Optional Configs ==========
       "hosts/common/optional/services/greetd.nix"
       "hosts/common/optional/services/kanata.nix"
+      "hosts/common/optional/services/searxng.nix"
       "hosts/common/optional/services/locate.nix"
       "hosts/common/optional/audio.nix"
       "hosts/common/optional/firejail.nix"
@@ -375,29 +376,9 @@
       protontricks
       protonup-qt
       # # Launchers and some utils
-      (heroic.override {
-        extraPkgs = pkgs: [
-          gamescope
-          gamemode
-        ];
-      })
-      gamemode
-      gamescope
       mangohud
       prismlauncher
       steamcmd
-      (lutris.override {
-        extraPkgs = pkgs: [
-          # List package dependencies here
-          gamescope
-          gamemode
-        ];
-        extraLibraries = pkgs: [
-          # List library dependencies here
-          gamescope
-          gamemode
-        ];
-      })
       # # Emulation
       # ppsspp # PSP
       # duckstation # PSX

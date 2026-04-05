@@ -66,6 +66,9 @@ menu:
       - key: "c"
         cmd: copyq show
         desc: clipboard
+      - key: "n"
+        cmd: obsidian
+        desc: Obsidian
   - key: "s"
     desc: Screen
     submenu:

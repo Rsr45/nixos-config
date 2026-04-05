@@ -78,6 +78,10 @@
     #   url = "github:project-gauntlet/gauntlet/v20"; # <gauntlet_version_repository_tag>;
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
+    omnisearch = {
+      url = "git+https://git.bwaaa.monster/omnisearch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

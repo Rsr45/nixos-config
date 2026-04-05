@@ -56,8 +56,10 @@
 
     # ========== X ==========
     #
-    common/optional/browsers/firefox
+    # common/optional/browsers/firefox
     common/optional/browsers/floorp
+    common/optional/browsers/brave.nix
+    common/optional/browsers/vivaldi.nix
     common/optional/libreoffice.nix
 
     # ========== X ==========

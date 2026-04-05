@@ -43,6 +43,7 @@ in
       "exec-once" = [
         # "eww daemon; eww open bar_1"
         # "qs" # launched via sytemd through qs home module
+        "waybar"
         "swww restore"
         "copyq --start-server"
       ];
@@ -230,18 +231,16 @@ in
         # "float, class:(waypaper)"
         # "float, class:(com.saivert.pwvucontrol)"
         # "float, class:(xdg-desktop-portal-gtk)"
-        # "float,class:(clipse)"
-        # "float,class:(mixer)"
+        "float on, size 622 652, stay_focused on, match:class ^(mixer)$"
         # "float, workspace:0"
-        # "size 622 652,class:(clipse)"
-        # "size 622 652,class:(mixer)"
         # "size 815 600, class:(com.saivert.pwvucontrol) "
         # "size 360 660, class:(io.bassi.Amberol)"
         # "size 800 600, class:(kitty)"
-        # "float, title:^(Picture-in-Picture)$"
+        "float on, match:title ^(Picture-in-Picture)$"
         # "pin, title:^(Picture-in-Picture)$"
         # "workspace special silent, class:org.keepassxc.KeePassXC"
         # "noborder, onworkspace:w[t1]"
+        "float on, size 622 652, stay_focused on, match:class ^(com.github.hluk.copyq)$"
       ];
       layerrule = [
         # "blur, waybar"

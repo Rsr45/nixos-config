@@ -10,7 +10,7 @@
         DEV = "${config.home.homeDirectory}/Dev";
         PERSONAL = "${config.home.homeDirectory}/Personal";
         PROJECTS = "${config.home.homeDirectory}/Projects";
-        GAMES = "${config.home.homeDirectory}/Games";
+        GAMES = "${config.home.homeDirectory}/games";
         SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
         WALLPAPERS = "${config.xdg.userDirs.pictures}/Wallpapers";
         YOUTUBEMUSIC = "${config.xdg.userDirs.music}/Youtube";

@@ -2915,6 +2915,7 @@ pref("network.cookie.maxageCap", 15552000);
 // Instead, stick to the default [NO-ANDROID] [NO-MAIL]
 // This can lead to cross contamination for those who keep separate containers exclusively for specific websites [NO-ANDROID] [NO-MAIL]
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1874599#c8 [NO-ANDROID] [NO-MAIL]
+// CHECK TODO
 pref("browser.link.force_default_user_context_id_for_external_opens", true); // [NO-ANDROID] [NO-MAIL]
 
 /// Prevent sharing identifying information if a remote AutoConfig is being used
@@ -3647,10 +3648,6 @@ pref("apz.allow_zooming_out", true);
 /// Allow the use of custom CSS by default [NO-ANDROID]
 pref("toolkit.legacyUserProfileCustomizations.stylesheets", true); // [NO-ANDROID]
 
-/// Always display the Bookmarks toolbar by default [NO-ANDROID] [NO-MAIL]
-// https://support.mozilla.org/kb/bookmarks-toolbar-display-favorite-websites [NO-ANDROID] [NO-MAIL]
-pref("browser.toolbars.bookmarks.visibility", "always"); // [NO-ANDROID] [NO-MAIL]
-
 /// Always load bookmarks in new tabs by default [NO-ANDROID] [NO-MAIL]
 pref("browser.tabs.loadBookmarksInTabs", true); // [NO-ANDROID] [NO-MAIL]
 
@@ -3687,11 +3684,11 @@ pref("general.autoScroll", true); // [HIDDEN - Android] [DEFAULT - non-Android/U
 pref("browser.backup.preferences.ui.enabled", true); // [NO-ANDROID] [NO-MAIL]
 
 /// Enable + customize the new Sidebar by default [NO-ANDROID] [NO-MAIL]
-pref("browser.toolbarbuttons.introduced.sidebar-button", false); // [NO-ANDROID] [NO-MAIL] Prevents Sidebar from automatically opening and closing on first launch - also needs `browser.uiCustomization.state`
-pref("sidebar.backupState", '{"command":"","launcherWidth":0,"launcherExpanded":false,"launcherVisible":false}'); // [NO-ANDROID] [NO-MAIL] Hide by default
-pref("sidebar.main.tools", "bookmarks,syncedtabs,history"); // [NO-ANDROID] [NO-MAIL] Removes AI Chat, adds Bookmarks
-pref("sidebar.revamp", true); // [NO-ANDROID] [NO-MAIL] [DEFAULT - Nightly]
-pref("sidebar.visibility", "hide-sidebar"); // [NO-ANDROID] [NO-MAIL] Hide by default
+// pref("browser.toolbarbuttons.introduced.sidebar-button", false); // [NO-ANDROID] [NO-MAIL] Prevents Sidebar from automatically opening and closing on first launch - also needs `browser.uiCustomization.state`
+// pref("sidebar.backupState", '{"command":"","launcherWidth":0,"launcherExpanded":false,"launcherVisible":false}'); // [NO-ANDROID] [NO-MAIL] Hide by default
+// pref("sidebar.main.tools", "bookmarks,syncedtabs,history"); // [NO-ANDROID] [NO-MAIL] Removes AI Chat, adds Bookmarks
+// pref("sidebar.revamp", true); // [NO-ANDROID] [NO-MAIL] [DEFAULT - Nightly]
+// pref("sidebar.visibility", "hide-sidebar"); // [NO-ANDROID] [NO-MAIL] Hide by default
 
 /// Enable developer options for `about:profiling`
 pref("devtools.performance.aboutprofiling.has-developer-options", true);

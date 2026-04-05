@@ -57,9 +57,308 @@
       isDefault = true;
       userChrome = builtins.readFile ./userChrome.css;
       userContent = builtins.readFile ./userContent.css;
-      extraConfig =
-        builtins.replaceStrings [ "\npref(" ] [ "\nuser_pref(" ] (builtins.readFile ../phoenix-desktop.js)
-        + builtins.readFile ./preferred.js;
+      settings = {
+
+        ## Updates
+        "app.update.checkInstallTime.days" = 0;
+        "app.update.badgeWaitTime" = 0;
+        "app.update.notifyDuringDownload" = true;
+        "app.update.promptWaitTime" = 0;
+        "extensions.systemAddon.update.enabled" = true;
+        "extensions.update.autoUpdateDefault" = true;
+        "extensions.update.enabled" = true;
+        "app.update.background.interval" = 3600;
+        "app.update.interval" = 3600;
+        "extensions.update.interval" = 3600;
+        "services.settings.poll_interval" = 3600;
+        "extensions.checkUpdateSecurity" = true;
+
+        ## Privacy
+        "privacy.query_stripping.strip_list" =
+          "__hsfp __hssc __hstc __s _bhlid _branch_match_id _branch_referrer _gl _hsenc _kx _openstat at_recipient_id at_recipient_list bbeml bsft_clkid bsft_uid dclid et_rid fb_action_ids fb_comment_id fbclid gbraid gclid guce_referrer guce_referrer_sig hsCtaTracking igshid irclickid mc_eid mkt_tok ml_subscriber ml_subscriber_hash msclkid mtm_cid oft_c oft_ck oft_d oft_id oft_ids oft_k oft_lk oft_sk oly_anon_id oly_enc_id pk_cid rb_clickid s_cid sc_customer sc_eh sc_uid srsltid ss_email_id twclid unicorn_click_id vero_conv vero_id vgo_ee wbraid wickedid yclid ymclid ysclid";
+        # "privacy.query_stripping.allow_list" = "urldefense.com";
+
+        "permissions.isolateBy.userContext" = true;
+        "privacy.antitracking.isolateContentScriptResources" = true;
+        "network.cookie.maxageCap" = 15552000;
+        "autoadmin.append_emailaddr" = false;
+        "privacy.dynamic_firstparty.limitForeign" = true;
+        "network.http.referer.defaultPolicy.trackers" = 1;
+        "network.http.referer.defaultPolicy.trackers.pbmode" = 1;
+        "privacy.query_stripping.strip_on_share.enabled" = true;
+        "network.http.referer.XOriginTrimmingPolicy" = 2;
+
+        ## JIT
+        "javascript.options.ion" = false;
+        "javascript.options.baselinejit" = false;
+        "javascript.options.jit_trustedprincipals" = true;
+        "javascript.options.wasm" = false;
+        "javascript.options.asmjs" = false;
+        "mathml.disabled" = true;
+        "gfx.font_rendering.graphite.enabled" = false;
+        "gfx.font_rendering.opentype_svg.enabled" = false;
+        "network.http.referer.XOriginPolicy" = 2;
+        ## ETP
+        "browser.contentblocking.category" = "strict";
+        "privacy.antitracking.enableWebcompat" = false;
+        ## RFP
+        "privacy.resistFingerprinting" = true;
+        "privacy.resistFingerprinting.pbmode" = true;
+        "privacy.window.maxInnerWidth" = 1600;
+        "privacy.window.maxInnerHeight" = 900;
+        ## DOH & HTTPS
+        "dom.security.https_only_mode" = true;
+        "network.trr.mode" = 3;
+        "network.trr.custom_uri" = "https://dns10.quad9.net/dns-query";
+        "network.trr.uri" = "https://dns10.quad9.net/dns-query";
+
+        # "layout.css.prefers-color-scheme.content-override" = 2;
+        # "" = "";
+        # General
+        "browser.aboutConfig.showWarning" = false;
+
+        "extensions.quarantineIgnoredByUser.tridactyl.vim@cmcaine.co.uk" = true;
+        "general.autoScroll" = true;
+        "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
+        "browser.translations.automaticallyPopup" = false;
+
+        "svg.context-properties.content.enabled" = true;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
+        "widget.use-xdg-desktop-portal.location" = 1;
+        "widget.use-xdg-desktop-portal.mime-handler" = 1;
+        "widget.use-xdg-desktop-portal.open-uri" = 1;
+        "widget.use-xdg-desktop-portal.settings" = 1;
+
+        "widget.gtk.libadwaita-colors.enabled" = false;
+        "browser.tabs.inTitlebar" = 0;
+
+        "sidebar.revamp" = false;
+        "sidebar.visibility" = "hide-sidebar";
+        "browser.toolbars.bookmarks.visibility" = "never";
+
+        "userChrome.hidden.urlbar_iconbox" = true;
+        "userChrome.hidden.tabbar" = true;
+        "userChrome.hidden.sidebar_header" = true;
+        "floorp.workspaces.enabled" = false;
+        "floorp.panelSidebar.enabled" = false;
+
+        "floorp.keyboardshortcut.enabled" = true;
+        "floorp.keyboardshortcut.config" = builtins.toJSON {
+          "enabled" = true;
+          "shortcuts" = {
+            "gecko-show-next-tab" = {
+              "modifiers" = {
+                "alt" = false;
+                "ctrl" = true;
+                "meta" = false;
+                "shift" = false;
+              };
+              "key" = "N";
+              "action" = "gecko-show-next-tab";
+            };
+            "gecko-show-previous-tab" = {
+              "modifiers" = {
+                "alt" = false;
+                "ctrl" = true;
+                "meta" = false;
+                "shift" = false;
+              };
+
+              "key" = "P";
+              "action" = "gecko-show-previous-tab";
+            };
+
+            "gecko-close-window" = {
+              "modifiers" = {
+                "alt" = false;
+                "ctrl" = true;
+                "meta" = false;
+                "shift" = false;
+              };
+              "key" = "Q";
+              "action" = "gecko-close-window";
+            };
+          };
+        };
+
+        "floorp.newtab.configs" = builtins.toJSON {
+          "components" = {
+            "topSites" = false;
+            "clock" = true;
+            "searchBar" = true;
+            "firefoxLayout" = false;
+          };
+          "background" = {
+            "type" = "random";
+            "customImage" = null;
+            "fileName" = null;
+            "folderPath" = null;
+            "selectedFloorp" = null;
+            "slideshowEnabled" = false;
+            "slideshowInterval" = 30;
+          };
+          "searchBar" = {
+            "searchEngine" = "default";
+          };
+          "topSites" = {
+            "pinned" = [
+              {
+                "url" = "https=//www.cube-soft.jp/";
+                "title" = "Cubesoft (Sponsor)";
+              }
+              {
+                "url" = "https=//docs.floorp.app/docs/features/";
+                "title" = "Floorp Support";
+              }
+            ];
+            "blocked" = [ ];
+          };
+        };
+
+        "floorp.design.configs" = builtins.toJSON {
+          globalConfigs = {
+            userInterface = "lepton";
+            faviconColor = false;
+            appliedUserJs = "";
+          };
+
+          tabbar = {
+            tabbarStyle = "horizontal";
+            tabbarPosition = "optimise-to-vertical-tabbar";
+            multiRowTabBar = {
+              maxRowEnabled = false;
+              maxRow = 3;
+            };
+          };
+
+          tab = {
+            tabScroll = {
+              enabled = false;
+              reverse = false;
+              wrap = false;
+            };
+            tabMinHeight = 30;
+            tabMinWidth = 76;
+            tabPinTitle = false;
+            tabDubleClickToClose = false;
+            tabOpenPosition = -1;
+          };
+
+          uiCustomization = {
+            navbar = {
+              position = "top";
+              searchBarTop = false;
+            };
+
+            display = {
+              disableFullscreenNotification = false;
+              deleteBrowserBorder = false;
+            };
+
+            special = {
+              optimizeForTreeStyleTab = true;
+              hideForwardBackwardButton = true;
+              stgLikeWorkspaces = false;
+            };
+
+            multirowTab = {
+              newtabInsideEnabled = false;
+            };
+
+            bookmarkBar = {
+              focusExpand = false;
+              position = "top";
+            };
+
+            qrCode = {
+              disableButton = false;
+            };
+          };
+        };
+
+        "browser.uiCustomization.state" = builtins.toJSON {
+          placements = {
+            widget-overflow-fixed-list = [
+              "developer-button"
+              "edit-controls"
+              "email-link-button"
+              "characterencoding-button"
+              "zoom-controls"
+            ];
+
+            unified-extensions-area = [
+              "addon_darkreader_org-browser-action"
+              "_3c078156-979c-498b-8990-85f7987dd929_-browser-action"
+              "sponsorblocker_ajay_app-browser-action"
+              "_d07ccf11-c0cd-4938-a265-2a4d6ad01189_-browser-action"
+              "firefox-extension_steamdb_info-browser-action"
+              "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action"
+              "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
+            ];
+
+            nav-bar = [
+              "sidebar-button"
+              "back-button"
+              "forward-button"
+              "vertical-spacer"
+              "urlbar-container"
+              "_testpilot-containers-browser-action"
+              "reset-pbm-toolbar-button"
+              "stop-reload-button"
+              "downloads-button"
+              "ublock0_raymondhill_net-browser-action"
+              "unified-extensions-button"
+            ];
+
+            toolbar-menubar = [ "menubar-items" ];
+            TabsToolbar = [
+              "tabbrowser-tabs"
+              "new-tab-button"
+            ];
+            vertical-tabs = [ ];
+            PersonalToolbar = [ "personal-bookmarks" ];
+            nora-statusbar = [
+              "screenshot-button"
+              "fullscreen-button"
+              "status-text"
+            ];
+          };
+          seen = [
+            "reset-pbm-toolbar-button"
+            "developer-button"
+            "_testpilot-containers-browser-action"
+            "ublock0_raymondhill_net-browser-action"
+            "screenshot-button"
+            "addon_darkreader_org-browser-action"
+            "_d07ccf11-c0cd-4938-a265-2a4d6ad01189_-browser-action"
+            "_3c078156-979c-498b-8990-85f7987dd929_-browser-action"
+            "firefox-extension_steamdb_info-browser-action"
+            "_aecec67f-0d10-4fa7-b7c7-609a2db280cf_-browser-action"
+            "_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action"
+            "sponsorblocker_ajay_app-browser-action"
+            "profile-manager-button"
+            "undo-closed-tab"
+          ];
+          dirtyAreaCache = [
+            "nav-bar"
+            "vertical-tabs"
+            "PersonalToolbar"
+            "unified-extensions-area"
+            "TabsToolbar"
+            "toolbar-menubar"
+            "nora-statusbar"
+            "widget-overflow-fixed-list"
+          ];
+          currentVersion = 23;
+          newElementCount = 10;
+        };
+      };
+
+      # extraConfig = builtins.replaceStrings [ "\npref(" ] [ "\nuser_pref(" ] (
+      #   builtins.readFile ../phoenix-desktop.js
+      # );
 
       containersForce = true;
       containers = {
@@ -154,25 +453,34 @@
                 ## ----- Privacy -----
                 "https://badblock.celenity.dev/abp/click-tracking.txt"
                 "https://raw.githubusercontent.com/yokoffing/filterlists/main/block_third_party_fonts.txt"
+                "https://raw.githubusercontent.com/yokoffing/filterlists/main/click2load.txt"
 
                 ## ----- Malware -----
                 "https://badblock.celenity.dev/abp/unsafe.txt"
                 "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Dandelion%20Sprout's%20Anti-Malware%20List.txt"
                 "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/dyndns.txt"
                 "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/spam-tlds-ublock.txt"
-                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/tif.txt"
+                # "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/tif.txt"
+                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/tif.mini.txt"
                 "https://raw.githubusercontent.com/fmhy/FMHYFilterlist/main/filterlist.txt"
 
                 ## ----- Multipurpose -----
                 "https://badblock.celenity.dev/abp/badblock_plus.txt"
-                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/ultimate.txt"
+                # "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/ultimate.txt"
+                "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/ultimate.mini.txt"
 
                 ## ----- Annoyances -----
                 "https://gitflic.ru/project/magnolia1234/bypass-paywalls-clean-filters/blob/raw?file=bpc-paywall-filter.txt"
 
                 "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/yt-neuter.txt"
                 "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/filters/sponsorblock.txt"
-                "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/filters/noview.txt"
+                # "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/filters/noview.txt"
+
+                ## Browse functions
+                "https://codeberg.org/celenity/BadBlock/raw/branch/pages/hardened/block-webrtc.txt"
+                # "https://codeberg.org/celenity/BadBlock/raw/branch/pages/hardened/unbreak-webrtc.txt"
+                "https://codeberg.org/celenity/BadBlock/raw/branch/pages/hardened/block-webgpu.txt"
+                # "https://codeberg.org/celenity/BadBlock/raw/branch/pages/hardened/unbreak-webgpu.txt"
               ];
             in
             {
@@ -182,11 +490,26 @@
               advancedUserEnabled = true;
               userFiltersTrusted = true;
               popupPanelSections = 31;
+              hiddenSettings = {
+                autoCommentFilterTemplate = "{{date}} {{origin}} {{url}}";
+                autoUpdateDelayAfterLaunch = 10;
+                disableWebAssembly = true;
+                filterAuthorMode = true;
+                updateAssetBypassBrowserCache = true;
+              };
               importedLists = importedLists;
               externalLists = lib.concatStringsSep "\n" importedLists;
               hostnameSwitchesString = ''
                 no-large-media: behind-the-scene false
                 no-csp-reports: * true
+                no-scripting: * true
+                no-scripting: www.youtube.com false
+                no-scripting: chatgpt.com false
+                no-scripting: ubs.ikc.edu.tr false
+                no-scripting: localhost false
+                no-scripting: www.reddit.com false
+                no-scripting: www.deepl.com false
+                no-scripting: github.com false
               '';
               dynamicFilteringString = ''
                 behind-the-scene * * noop
@@ -204,6 +527,8 @@
                 * recaptcha.net * noop
                 x.com twitter.com * noop
                 twitter.com x.com * noop
+
+                www.a101.com.tr identitytoolkit.googleapis.com * allow
               '';
               user-filters = ''
                 *$font,third-party
@@ -293,10 +618,11 @@
       };
 
       search = {
-        default = "brave";
-        privateDefault = "startpage";
+        default = "searx";
+        privateDefault = "ddg";
         force = true;
         order = [
+          "searx"
           "ddg"
           "brave"
           "startpage"
@@ -322,7 +648,7 @@
                 ];
               }
             ];
-            definedAliases = [ "'s" ];
+            definedAliases = [ "!s" ];
           };
           brave = {
             name = "Brave";

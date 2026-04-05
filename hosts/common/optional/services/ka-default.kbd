@@ -50,8 +50,10 @@
   navwpp (layer-while-held navigation-wider-pp)
   mou (layer-while-held mouse)
   mouw (layer-while-held mouse-wider)
+  mouwpp (layer-while-held mouse-wider-pp)
   med (layer-while-held media)
   medw (layer-while-held media-wider)
+  medwpp (layer-while-held media-wider-pp)
   sym (layer-while-held symbols)
   num (layer-while-held numbers)
 
@@ -178,9 +180,9 @@
   ret (tap-hold 200 200 ret @sym)
 
   ;; thumb
-  lalt (tap-hold 200 200 esc @mouw)
+  lalt (tap-hold 200 200 esc @medwpp)
   spc (tap-hold 200 200 spc @navwpp)
-  6 (tap-hold 200 200 tab @medw)
+  6 (tap-hold 200 200 tab @mouwpp)
 
   , (tap-hold 200 200 ret @sym)
   . (tap-hold 200 200 bspc @num)
@@ -319,20 +321,20 @@
 
 (deflayermap (navigation-wider-pp)
   7 @rdo 9 @pst 0 @cpy - @cut = @udo
- i caps   o left   p down   [ up   ] rght
- k ins   l home ; pgdn ' pgup \ end
+  i caps   o left   p down   [ up   ] rght
+  k ins   l home ; pgdn ' pgup \ end
+  , ret . bspc / del
 )
 (deflayermap (mouse-wider-pp)
-  y @rdo u @pst i @cpy o @cut p @udo
-    j @msl k @msd l @msu ; @msr
-    m @mwl , @mwd . @mwu / @mwr
-    8 mlft 9 mrgt spc mmid
+  7 @rdo 9 @pst 0 @cpy - @cut = @udo
+         o @msl   p @msd   [ @msu   ] @msr
+         l @mwl ; @mwd ' @mwu \ @mwr
+  , mlft . mrgt / mmid
 )
 (deflayermap (media-wider-pp)
-  i @rdo o @pst p @cpy [ @cut ] @udo
-  k caps l prev ; voldwn ' volu \ next
-  , mute . brdwn / bru
-  ralt pp
+  ;; 7 @rdo 9 @pst 0 @cpy - @cut = @udo
+         o prev   p voldwn   [ volu   ] next
+  , pp . pp / mute
 )
 
 ;; 7 j   9 l   0 u   - y   = '
