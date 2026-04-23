@@ -41,7 +41,28 @@
           show_hidden = true;
         };
         columns = [
-          "permissions"
+          {
+            __unkeyed = "permissions";
+            highlight.__raw = ''
+              function(permission_str)
+                local hls = {}
+                for i = 1, #permission_str do
+                    local char = permission_str:sub(i, i)
+                    table.insert(hls, {
+                        ({
+                            ['-'] = 'NonText',
+                            ['r'] = 'DiagnosticSignWarn',
+                            ['w'] = 'DiagnosticSignError',
+                            ['x'] = 'DiagnosticSignOk',
+                        })[char],
+                        i - 1,
+                        i
+                    })
+                end
+                return hls
+              end
+            '';
+          }
           "size"
           "mtime"
           "icon"

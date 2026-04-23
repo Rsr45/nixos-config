@@ -9,6 +9,7 @@
     # ========== X ==========
     #
     common/core/qt.nix
+    common/core/kvantum.nix
     common/optional/gtk.nix
     common/optional/matugen/matugen.nix
     common/optional/wallust.nix
@@ -22,7 +23,9 @@
     common/optional/hyprpicker.nix
     common/optional/waybar.nix
     common/optional/keepassxc.nix
+    common/optional/mail.nix
     common/optional/thunderbird.nix
+    common/optional/neomutt.nix
     common/optional/dunst.nix
     common/optional/quickshell.nix
     common/optional/wlr-which.nix

@@ -24,7 +24,7 @@
       include = "./generated-colors.conf";
       # text_composition_strategy = "legacy";
       confirm_os_window_close = "0";
-      window_padding_width = "0";
+      window_padding_width = "6";
       placement_strategy = "center";
       shell = "fish";
       notify_on_cmd_finish = "unfocused";

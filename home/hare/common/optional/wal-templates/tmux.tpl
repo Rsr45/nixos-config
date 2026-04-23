@@ -1,0 +1,5 @@
+set -g @matugen_secondary '{{ color2 }}'
+set -g @matugen_surface '{{ background }}'
+set -g @matugen_primary '{{ color4 }}'
+set -g @matugen_inverse_surface '{{ color9 }}'
+set -g @matugen_inverse_on_surface '{{ color10 }}'

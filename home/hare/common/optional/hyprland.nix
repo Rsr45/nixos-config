@@ -43,8 +43,9 @@ in
       "exec-once" = [
         # "eww daemon; eww open bar_1"
         # "qs" # launched via sytemd through qs home module
-        "waybar"
-        "swww restore"
+        # "waybar"
+        "waybar -c ~/.config/waybar/waybar_block_1/config.jsonc -s ~/.config/waybar/waybar_block_1/style.css"
+        "awww restore"
         "copyq --start-server"
       ];
       source = "colors.conf";

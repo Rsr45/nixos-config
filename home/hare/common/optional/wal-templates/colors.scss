@@ -1,0 +1,80 @@
+$primary: {{ color4 }};
+$onPrimary: {{ background }};
+$primaryContainer: {{ color4 | darken(0.4) }};
+$onPrimaryContainer: {{ background }};
+$secondary: {{ color1 }};
+$onSecondary: {{ background }};
+$secondaryContainer: {{ color1 }};
+$onSecondaryContainer: {{ background }};
+$tertiary: {{ color5 }};
+$tertiaryFixed: {{ color5 }};
+$onTertiary: {{ background }};
+$tertiaryContainer:{{ color5 }};
+$error:{{ color10 }};
+$onError:{{ background }};
+$errorContainer:{{ color2 }};
+$onErrorContainer:{{ background }};
+$colorbarbg:{{ background }};
+$background:{{ background }};
+$onBackground:{{ foreground }};
+$surface:{{ background }};
+$surfaceDim:{{ background | darken(0.3) }};
+$surfaceBright:{{ background | lighten(0.3) }};
+$onSurface:{{ foreground }};
+$surfaceVariant:{{ background | lighten(0.1) }};
+$onSurfaceVariant:{{ color4 }};
+$outline:{{ cursor }};
+$shadow:#000000;
+$inverseSurface:{{ cursor }};
+$inverseOnSurface:{{ cursor }};
+$inversePrimary:{{ cursor }};
+$button:{{ background }};
+$buttonDim:{{ background | darken(0.1) }};
+$buttonColor:{{ color4 }};
+$buttonColorDim:{{ color4 | darken(0.1) }};
+$borderDark:{{ background | darken(0.3) }};
+$borderLight:{{ background | lighten(0.3) }};
+$borderColorDark:{{ color4 | darken(0.3) }};
+$borderColorLight:{{ color4 | lighten(0.3) }};
+$inputField:{{ background | darken(0.3) }};
+
+.primary { color: $primary; }
+.onPrimary { color: $onPrimary; }
+.primaryContainer { color: $primaryContainer; }
+.onPrimaryContainer { color: $onPrimaryContainer; }
+.secondary { color: $secondary; }
+.onSecondary { color: $onSecondary; }
+.secondaryContainer { color: $secondaryContainer; }
+.onSecondaryContainer { color: $onSecondaryContainer; }
+.tertiary { color: $tertiary; }
+.tertiaryFixed { color: $tertiaryFixed; }
+.onTertiary { color: $onTertiary; }
+.tertiaryContainer { color: $tertiaryContainer; }
+.onTertiaryContainer { color: $tertiaryContainer; }
+.error { color: $error; }
+.onError { color: $onError; }
+.errorContainer { color: $errorContainer; }
+.onErrorContainer { color: $onErrorContainer; }
+.colorbarbg { color: $background; }
+.background { color: $background; }
+.onBackground { color: $onBackground; }
+.surface { color: $surface; }
+.surfaceDim { color: $surfaceDim; }
+.surfaceBright { color: $surfaceBright; }
+.onSurface { color: $onSurface; }
+.surfaceVariant { color: $surfaceVariant; }
+.onSurfaceVariant { color: $onSurfaceVariant; }
+.outline { color: $outline; }
+.shadow { color: $shadow; }
+.inverseSurface { color: $inverseSurface; }
+.inverseOnSurface { color: $inverseOnSurface; }
+.inversePrimary { color: $inversePrimary; }
+.button { color: $button }
+.buttonDim { color: $buttonDim }
+.buttonColor { color: $buttonColor }
+.buttonColorDim { color: $buttonColorDim }
+.borderDark { color: $borderDark }
+.borderLight { color: $borderLight }
+.borderColorDark { color: $borderColorDark }
+.borderColorLight { color: $borderColorLight }
+.inputField { color: $inputField }

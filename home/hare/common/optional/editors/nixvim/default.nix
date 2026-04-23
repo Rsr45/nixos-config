@@ -34,6 +34,8 @@
       inccommand = "split";
       spell = false;
       shell = "bash";
+      winborder = "bold";
+      laststatus = 3;
     };
 
     globals = {
@@ -78,11 +80,6 @@
     plugins = {
       conform-nvim.enable = true;
 
-      noice = {
-        enable = false;
-        settings = { };
-      };
-
       trouble.enable = true;
 
       # intellitab.enable = true;
@@ -119,6 +116,11 @@
               menu = {
                 auto_show = true;
               };
+            };
+          };
+          completion = {
+            menu = {
+              border = "bold";
             };
           };
         };

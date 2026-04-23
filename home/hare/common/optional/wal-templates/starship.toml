@@ -1,0 +1,48 @@
+format = '''
+$directory$git_branch$rust$python$c$cpp$odin$ocaml
+$character'''
+
+right_format = '''$time'''
+
+palette = 'colors'
+
+[palettes.colors]
+color1 = '{{color1}}'
+color2 = '{{color2}}'
+color3 = '{{color3}}'
+color4 = '{{color4}}'
+color5 = '{{color5}}'
+color6 = '{{color6}}'
+color7 = '{{color7}}'
+color8 = '{{color8}}'
+color9 = '{{color9}}'
+
+# Prompt symbols 
+[character]
+success_symbol = "[>](color9 bold)"
+error_symbol = "[>](@{error})"
+vicmd_symbol = "[>](#f9e2af)"
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+
+[python]
+symbol = 'python '
+# pyenv_version_name = true
+# pyenv_prefix = 'venv'
+
+[c]
+symbol = "holy-c "
+
+[cpp]
+symbol = "c++ "
+
+[rust]
+symbol = "rust "
+
+[odin]
+symbol = "odin "
+
+[ocaml]
+symbol = "ocaml "

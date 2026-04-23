@@ -1,0 +1,1023 @@
+/*///////////////////////////////////////////////////////////////////////////////////////\
+
+FF Ultima:         https://github.com/soulhotel/FF-ULTIMA
+File Desc:         Gruvbox Color Scheme
+
+All of these Variables - Control the color everywhere
+Detailed customization - Overwriting existing variables
+Applying variables further to create the Theme
+Custom Icons
+
+\////////////////////////////////////////////////////////////////////////////////////////*/
+
+/* All of these Variables - Control the color everywhere. For light mode and dark mode. Allowing most/all customization to be done in one place */
+
+@media (prefers-color-scheme: dark) { :root {
+    --uc-browser-color:      {{ background }};
+    --uc-bg-color-lit:      {{ background | lighten(0.09) }};
+    --uc-text:               {{ foreground }};
+    --uc-layered-background: {{ background | darken(0.2) }};
+    --uc-navbar-background:  var(--toolbar-bgcolor);
+    --uc-urlbar-background:  var(--uc-layered-background);
+    --uc-urlbar-border:      {{ background | lighten(0.1) }};
+    --uc-findbar-background: var(--uc-layered-background);
+    --uc-sidebar-background: var(--uc-layered-background);
+    --uc-tabsbar-background: var(--uc-browser-color);
+    --uc-tab-background:     transparent;
+    --uc-tab-selected:       {{ color4 }};
+    --uc-tab-selected-border:       {{ color4 | darken(0.2) }};
+    --uc-tab-selected-text:  {{ background }};
+    --uc-button-selected:    {{ color4 }};
+    --uc-button-selected-text:  {{ background }};
+    --uc-button-red:         color-mix(in srgb, #f54e4e 40%, var(--uc-accent-color-4));
+    --uc-context-menu:       var(--uc-layered-background);
+    --uc-panel-background:   {{ background }};
+    --uc-panel-border:       {{ color4 }};
+    --uc-panel-border-2:     {{ color4 }};
+    --uc-accent-color-1:     {{ color1 }};
+    --uc-accent-color-1-darker:     {{ color1 | darken(0.2) }};
+    --uc-accent-color-2:     {{ color2 }};
+    --uc-accent-color-3:     {{ color3 }};
+    --uc-accent-color-4:     {{ color4 }};
+    --uc-accent-color-4-darker:       {{ color4 | darken(0.2) }};
+    --uc-accent-color-5:     {{ color5 }};
+    --uc-accent-color-6:     {{ color6 }};
+    --uc-transparent:        rgba(0,0,0,0);
+    --uc-box-shadow:         0.15rem 0.4rem 0.2rem -0.1rem rgba(0,0,0,0.3);
+    --uc-box-shadow-panel:   0.15rem 0.4rem 0.2rem -0.1rem rgba(25,25,25,0.4);
+    --uc-button-border-radius: 0px;
+    --uc-tab-border-radius: 0px;
+}}
+
+@media (prefers-color-scheme: light) { :root {
+    --uc-browser-color:      {{ background }};
+    --uc-text:               {{ foreground }};
+    --uc-layered-background: {{ background | darken(0.2) }};
+    --uc-navbar-background:  var(--toolbar-bgcolor);
+    --uc-urlbar-background:  var(--uc-layered-background);
+    --uc-findbar-background: var(--uc-layered-background);
+    --uc-sidebar-background: var(--uc-layered-background);
+    --uc-tabsbar-background: var(--uc-browser-color);
+    --uc-tab-background:     transparent;
+    --uc-tab-selected:       {{ background | darken(0.2) }};
+    --uc-tab-selected-text:  var(--uc-accent-color-3);
+    --uc-button-selected:    rgba(114, 155, 170,0.2);
+    --uc-button-red:         #f54e4e;
+    --uc-context-menu:       rgb(230, 225, 225);
+    --uc-panel-background:   rgb(230, 225, 225);
+    --uc-panel-border:       rgb(230, 225, 225);
+    --uc-panel-border-2:     rgba(66, 40, 40, 0.5);
+    --uc-accent-color-1:     rgb(72, 136, 141);
+    --uc-accent-color-2:     pink;
+    --uc-accent-color-3:     rgb(89, 53, 34);
+    --uc-accent-color-4:     {{ color4}};
+    --uc-accent-color-5:     {{ color5}};
+    --uc-accent-color-6:     {{ color6}};
+    --uc-accent-color-7:     rgb(243, 182, 221);
+    --uc-accent-color-8:     rgb(55, 55, 105);
+    --uc-transparent:        rgba(0,0,0,0);
+    --uc-box-shadow: 0.1rem 0.3rem 0.4rem -0.1rem rgba(125,125,125,0.7);
+    --uc-box-shadow-panel: 0.1rem 0.3rem 0.4rem -0.1rem rgba(125,125,125,0.3);
+    --uc-button-border-radius: 0px;
+}}
+
+
+/* Detailed customization - Overwriting existing variables. Everything below applies the custom variables to elements of the Browser, with some adjustments. */
+
+#main-window:not([lwtheme]) {
+    --toolbar-bgcolor: var(--uc-browser-color) !important;
+    --inactive-titlebar-opacity: 1 !important;
+    --toolbar-bgcolor: var(--uc-browser-color) !important;
+    --lwt-accent-color-inactive: var(--lwt-accent-color) !important;
+    --uc-tabs-lwt: color-mix(in srgb, var(--lwt-accent-color) 75%, #000);
+    --uc-sb-lwt: color-mix(in srgb, var(--lwt-accent-color) 75%, #000);
+    --toolbox-non-lwt-bgcolor-inactive: ActiveCaption !important;
+    --toolbox-non-lwt-textcolor-inactive: CaptionText !important;
+    --tab-selected-bgcolor: var(--uc-tab-selected) !important;
+    --tab-selected-textcolor: var(--uc-tab-selected-text) !important;
+    --tab-hover-background-color: var(--uc-tab-selected) !important;
+    --tab-loading-fill: var(--uc-accent-color-1) !important;
+    --button-background-color-ghost-hover: var(--uc-button-selected) !important;
+    --button-background-color: var(--uc-button-selected) !important;
+    --button-background-color-hover: var(--uc-button-selected) !important;
+    --button-background-color-active: var(--uc-button-selected) !important;
+    --button-hover-bgcolor: var(--uc-button-selected) !important;
+    --toolbarbutton-hover-background: var(--uc-button-selected) !important;
+    --button-active-bgcolor: var(--uc-button-selected) !important;
+    --toolbarbutton-active-background: var(--uc-button-selected) !important;
+    --button-primary-bgcolor: var(--uc-accent-color-1) !important;
+    --button-primary-hover-bgcolor: var(--uc-accent-color-1) !important;
+    --buttons-destructive-hover-bgcolor: #9d1c1c;  /*red*/
+    --buttons-destructive-active-bgcolor: var(--uc-button-red); /*red*/
+    --toolbarbutton-icon-fill: var(--uc-text) !important; /*toolbar button color*/
+    --toolbar-field-background-color: var(--uc-accent-color-4) !important;
+    --toolbar-field-border-color: var(--uc-accent-color-3) !important;
+    --toolbar-field-focus-border-color: var(--uc-accent-color-4) !important;
+    --urlbarView-result-button-selected-color: var(--uc-text) !important;
+    --urlbarView-result-button-selected-background-color: var(--uc-button-selected) !important;
+    --urlbarView-highlight-background: var(--uc-button-selected) !important;
+    --urlbarView-hover-background: var(--uc-button-selected) !important;
+    --urlbar-box-hover-bgcolor: var(--uc-button-selected) !important;
+    --urlbar-box-hover-text-color: var(--uc-text) !important;
+    --urlbar-icon-border-radius: var(--uc-button-border-radius) !important;
+    --arrowpanel-menuitem-border-radius: var(--uc-button-border-radius) !important;
+    --arrowpanel-border-radius: var(--uc-all-border-radius);
+    --toolbarbutton-border-radius: var(--uc-button-border-radius) !important;
+    --arrowpanel-menuitem-border-radius: var(--uc-button-border-radius) !important;
+    --menuitem-border-radius: var(--uc-button-border-radius) !important;
+    --button-border-radius: var(--uc-button-border-radius) !important;
+    --toolbarbutton-border-radius: var(--uc-button-border-radius) !important;
+    --toolbar-field-color: var(--uc-text) !important;
+    --toolbar-field-focus-color: var(--uc-text) !important;
+    --toolbar-color: var(--uc-text) !important;
+    --toolbar-field-color: var(--uc-text) !important;
+    --toolbar-field-focus-color: var(--uc-text) !important;
+    --sidebar-text-color: var(--uc-text) !important;
+    --arrowpanel-background: var(--uc-panel-background) !important;
+    --arrowpanel-border-color: var(--uc-panel-border-ii) !important;
+    --arrowpanel-color: var(--uc-text) !important;
+    --newtab-background-color: var(--uc-tabsbar-background) !important;
+    --panel-background: var(--uc-panel-background) !important;
+    --panel-item-hover-bgcolor: var(--uc-button-selected) !important;
+    --panel-banner-item-hover-bgcolor: var(--uc-button-selected) !important;
+    --short-notification-background: var(--uc-accent-color-2) !important;
+    --panel-border-color: var(--uc-panel-border) !important;
+    --organizer-toolbar-background: var(--uc-accent-color-4) !important;
+    --organizer-pane-background: var(--uc-accent-color-4) !important;
+    --organizer-content-background: var(--uc-accent-color-4) !important;
+    --organizer-hover-background: var(--uc-accent-color-4) !important;
+    --organizer-selected-background: var(--uc-button-selected) !important;
+    --organizer-focus-selected-color: var(--uc-button-selected) !important;
+    --organizer-outline-color: rgb(0,221,255) !important;
+    --organizer-toolbar-field-background: var(--uc-accent-color-4) !important;
+    --organizer-toolbar-field-background-focused: var(--uc-accent-color-1) !important;
+    --content-select-background-image: none !important;
+} 
+
+
+/* Applying variables  further to create the Theme --------------------------------*/
+
+/* If a section is empty, that means the style is defaulting to chrome/theme/ffu-internal-appearance.css */
+
+/* Main window adjustments ----------------------------------------*/
+
+#nav-bar {height: 30px !important; }
+
+/* Url bar with bg color with accent border */
+
+#urlbar[open] {
+    box-shadow: var(--uc-box-shadow) !important;
+}
+#urlbar:is([focused="true"], [open]) > #urlbar-background,
+#urlbar:is([focused="true"], [open]) > .urlbar-background,
+#searchbar:focus-within {
+    background-color: var(--uc-browser-color) !important;
+    border-radius: var(--uc-button-border-radius) !important;
+    box-shadow: none !important;
+    border-color: var(--uc-browser-color) !important;
+}
+#urlbar-background,
+.urlbar-background, #searchbar {
+    color: var(--uc-text) !important;
+    background-color: var(--uc-browser-color) !important;
+    border-radius: var(--uc-button-border-radius) !important;
+    box-shadow: none !important;
+    border: 2px solid !important;
+    border-color: var(--uc-browser-color) !important;
+}
+#urlbar[open] > #urlbar-background,
+#urlbar[open] > .urlbar-background {
+    border: 2px solid;
+    border-color: var(--uc-tab-selected) !important;
+}
+#urlbar[breakout][breakout-extend] {
+    background-color: transparent !important;
+    border-radius: var(--uc-button-border-radius);
+}
+#urlbar-zoom-button {
+    background-color: var(--uc-button-selected) !important;
+    margin-top: 3px !important;
+}
+.urlbarView-row {
+    color: var(--uc-text) !important;
+}
+.urlbarView-row[selected],
+.urlbarView-row:hover {
+    background-color: var(--uc-urlbar-background) !important;
+    border: 2px solid var(--uc-urlbar-border) !important;
+    color: var(--uc-accent-color-4) !important;
+}
+#urlbar[focused]:not([suppress-focus-border]) > #urlbar-background,
+#urlbar[focused]:not([suppress-focus-border]) > .urlbar-background {
+    outline-color: color-mix(in srgb, var(--uc-accent-color-4) 10%, transparent)  !important;
+}
+
+#urlbar-searchmode-switcher.searchmode-switcher {
+    background-color: var(--uc-browser-color) !important;
+}
+#urlbar-searchmode-switcher.searchmode-switcher[selected] {
+    background-color: var(--uc-browser-color) !important;
+}
+
+/* button fg */
+#QRCodeGeneratePageAction,
+#urlbar-searchmode-switcher,
+#urlbar-go-button,
+#picture-in-picture-button,
+#tracking-protection-icon-container,
+#identity-permission-box,
+#identity-icon,
+#identity-icon-label,
+#reader-mode-button,
+#star-button-box {
+    color: var(--uc-text) !important;
+}
+
+/* button hover */
+#QRCodeGeneratePageAction:hover,
+#urlbar-go-button:hover,
+#picture-in-picture-button:hover,
+#tracking-protection-icon-container:hover,
+#identity-permission-box:hover,
+#identity-icon:hover,
+#identity-icon-label:hover,
+#identity-icon-box:hover,
+#reader-mode-button:hover,
+#translations-button.urlbar-page-action:hover,
+#ssbPageAction-image:hover,
+#star-button-box:hover {
+    color: var(--uc-button-selected-text) !important;
+    fill: var(--uc-button-selected-text) !important;
+}
+
+toolbarbutton:hover {
+    color: var(--uc-button-selected-text) !important;
+    fill: var(--uc-button-selected-text) !important;
+    outline: 2px solid var(--uc-tab-selected-border) !important;
+    outline-offset: -1px !important;
+}
+toolbarbutton:hover .toolbarbutton-text {
+    color: var(--uc-button-selected-text) !important;
+}
+#QRCodeGeneratePageAction[open],
+#urlbar-go-button[open],
+#picture-in-picture-button[open],
+#tracking-protection-icon-container[open],
+#identity-permission-box[open],
+#identity-icon[open],
+#identity-icon-label[open],
+#identity-icon-box[open],
+#reader-mode-button[open],
+#translations-button.urlbar-page-action[open],
+#ssbPageAction-image[open],
+#star-button-box[open] {
+    color: var(--uc-button-selected-text) !important;
+    fill: var(--uc-button-selected-text) !important;
+}
+
+toolbarbutton[open] {
+    color: var(--uc-button-selected-text) !important;
+    fill: var(--uc-button-selected-text) !important;
+    outline: 2px solid var(--uc-tab-selected-border) !important;
+    outline-offset: -1px !important;
+}
+toolbarbutton[open] .toolbarbutton-text {
+    color: var(--uc-button-selected-text) !important;
+}
+
+#appMenu-popup panelmultiview {
+    outline: 2px solid var(--uc-button-selected-text) !important;
+    /* outline-offset: -1px !important; */
+}
+
+#appMenu-popup {
+    outline: 2px solid var(--uc-button-selected) !important;
+    outline-offset: -5px !important;
+}
+#widget-overflow panelmultiview {
+    outline: 2px solid var(--uc-button-selected) !important;
+    outline-offset: -1px !important;
+}
+#trustpanel-popup panelmultiview {
+     outline: 2px solid var(--uc-button-selected) !important;
+    outline-offset: -1px !important;
+}
+
+#urlbar-searchmode-switcher {
+    display: none !important;
+}
+
+#identity-icon-box {
+    background-color: var(--uc-browser-color) !important;
+}
+
+#translations-button.urlbar-page-action {
+    color: var(--uc-text) !important;
+}
+
+#QRCodeGeneratePageAction {
+    border-radius: 0px !important;
+}
+
+/* urlbar */
+
+#urlbar-input, #urlbar-input-container {
+    color: var(--uc-text) !important;
+}
+
+#urlbar:not([focused="true"]) #urlbar-input {
+    color: var(--uc-text) !important;
+}
+
+/* #urlbar-zoom-button { */
+/*     color: var(--uc-text) !important; */
+/*     display: flex !important; */
+/* } */
+
+
+/* #zoom-reset-button.toolbarbutton-1.toolbarbutton-combined { */
+/*     display: none !important; */
+/*     color: var(--uc-text) !important; */
+/* } */
+
+/* Show border only when hovered */
+/* toolbarbutton:hover { */
+/*     fill: var(--uc-text) !important; */
+/*     outline: 2px solid var(--uc-tab-selected) !important; */
+/*     outline-offset: -2px !important; */
+/* } */
+
+/* #back-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #back-button.toolbarbutton-1.chromeclass-toolbar-additional[open], */
+/* #forward-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #forward-button.toolbarbutton-1.chromeclass-toolbar-additional[open], */
+#reload-button.toolbarbutton-1:hover,
+#reload-button.toolbarbutton-1[open],
+#stop-button.toolbarbutton-1:hover,
+#stop-button.toolbarbutton-1[open],
+#home-button.toolbarbutton-1.chromeclass-toolbar-additional:hover,
+#home-button.toolbarbutton-1.chromeclass-toolbar-additional[open],
+#unified-extensions-button.toolbarbutton-1.chromeclass-toolbar-additional:hover,
+#unified-extensions-button.toolbarbutton-1.chromeclass-toolbar-additional[open],
+#bookmarks-menu-button.toolbarbutton-1.chromeclass-toolbar-additional.subviewbutton-nav:hover,
+#bookmarks-menu-button.toolbarbutton-1.chromeclass-toolbar-additional.subviewbutton-nav[open],
+#zoom-out-button:hover,
+#zoom-in-button:hover,
+#fullscreen-button.toolbarbutton-1.chromeclass-toolbar-additional:hover,
+#fullscreen-button.toolbarbutton-1.chromeclass-toolbar-additional[open],
+/* #PanelUI-menu-button.toolbarbutton-1:hover, */
+/* #PanelUI-menu-button.toolbarbutton-badge-stack:hover, */
+/* #PanelUI-menu-button.toolbarbutton-1[open], */
+#nav-bar-overflow-button.toolbarbutton-1.chromeclass-toolbar-additional:hover,
+#nav-bar-overflow-button.toolbarbutton-1.chromeclass-toolbar-additional[open] {
+    /* margin-top: 4px !important; */
+    /* margin-bottom: 4px !important; */
+    /* outline: 2px solid var(--uc-tab-selected) !important; */
+    /* outline-offset: -2px !important; */
+    /* border: 2px solid var(--uc-tab-selected) !important; */
+    color: var(--uc-button-selected-text) !important;
+    fill: var(--uc-button-selected-text) !important;
+
+}
+
+/* #reload-button.toolbarbutton-1:hover, */
+/* #stop-button.toolbarbutton-1:hover, */
+/* #home-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #unified-extensions-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #bookmarks-menu-button.toolbarbutton-1.chromeclass-toolbar-additional.subviewbutton-nav:hover, */
+/* #zoom-out-button:hover, */
+/* #zoom-in-button:hover, */
+/* #fullscreen-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #nav-bar-overflow-button.toolbarbutton-1.chromeclass-toolbar-additional:hover { */
+/*     fill: var(--uc-text) !important; */
+/*     margin-top: 4px !important; */
+/*     margin-bottom: 4px !important; */
+/*     outline: 2px solid var(--uc-tab-selected) !important; */
+/*     outline-offset: -2px !important; */
+/* } */
+
+/* #tabs-newtab-button.toolbarbutton-1:hover { */
+/*     fill: var(--uc-text) !important; */
+/*     margin-top: 4px !important; */
+/*     margin-bottom: 4px !important; */
+/*     outline: 2px solid var(--uc-tab-selected) !important; */
+/*     outline-offset: -2px !important; */
+/* } */
+
+
+
+/* Green ✔ */
+.urlbar-input-container[pageproxystate="valid"]:has(#identity-box:is(.verifiedDomain, .verifiedIdentity)) #trust-icon-container {
+  fill: light-dark(#12bc00, #12bc00) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+/* Bright green ✔ */
+.urlbar-input-container[pageproxystate="valid"]:has(#identity-box.mixedActiveBlocked) #trust-icon-container:not(.inactive:not(.insecure)) {
+  list-style-image: url("data:image/svg+xml;base64,PCEtLSBUaGlzIFNvdXJjZSBDb2RlIEZvcm0gaXMgc3ViamVjdCB0byB0aGUgdGVybXMgb2YgdGhlIE1vemlsbGEgUHVibGljDQogICAtIExpY2Vuc2UsIHYuIDIuMC4gSWYgYSBjb3B5IG9mIHRoZSBNUEwgd2FzIG5vdCBkaXN0cmlidXRlZCB3aXRoIHRoaXMNCiAgIC0gZmlsZSwgWW91IGNhbiBvYnRhaW4gb25lIGF0IGh0dHBzOi8vbW96aWxsYS5vcmcvTVBMLzIuMC8uIC0tPg0KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJjb250ZXh0LWZpbGwiIGZpbGwtb3BhY2l0eT0iY29udGV4dC1maWxsLW9wYWNpdHkiPg0KICA8cGF0aCBkPSJNOC4wMDAwNCAxNkM3LjU3MDA0IDE2IDcuMTQwMDQgMTUuODkgNi43NjAwNCAxNS42N0M1LjEyMDA0IDE0Ljc0IDMuNjEwMDQgMTMuMzEgMi41MDAwNCAxMS42NEMxLjkzMDA0IDEwLjc4IDEuNTMwMDQgOS43MyAxLjMxMDA0IDguNTNMMC43NTAwNDEgNS41MUMwLjU1MDA0MSA0LjQ0IDEuMDYwMDQgMy4zOCAyLjAyMDA0IDIuODZMNi43NTAwNCAwLjNDNy40OTAwNCAtMC4xIDguMzgwMDQgLTAuMSA5LjEyMDA0IDAuM0wxMy45NyAyLjkxQzE0LjkzIDMuNDMgMTUuNDQgNC40OSAxNS4yNCA1LjU3TDE0LjY5IDguNTRDMTQuNDcgOS43NCAxNC4wNyAxMC43OCAxMy41IDExLjY0QzEyLjQgMTMuMzEgMTAuODkgMTQuNzUgOS4yNDAwNCAxNS42OEM4Ljg2MDA0IDE1LjkgOC40MzAwNCAxNi4wMSA4LjAwMDA0IDE2LjAxVjE2Wk03Ljk0MDA0IDEuNUM3Ljc4MDA0IDEuNSA3LjYxMDA0IDEuNTQgNy40NjAwNCAxLjYyTDIuNzQwMDQgNC4xOEMyLjM2MDA0IDQuMzkgMi4xNTAwNCA0LjgxIDIuMjMwMDQgNS4yNEwyLjc5MDA0IDguMjZDMi45ODAwNCA5LjI2IDMuMzAwMDQgMTAuMTMgMy43NjAwNCAxMC44MkM0LjczMDA0IDEyLjMgNi4wNjAwNCAxMy41NiA3LjUwMDA0IDE0LjM3QzcuODEwMDQgMTQuNTQgOC4xOTAwNCAxNC41NCA4LjUwMDA0IDE0LjM3QzkuOTQwMDQgMTMuNTUgMTEuMjcgMTIuMjkgMTIuMjUgMTAuODFDMTIuNzEgMTAuMTIgMTMuMDMgOS4yNiAxMy4yMiA4LjI2TDEzLjc3IDUuMjlDMTMuODUgNC44NiAxMy42NSA0LjQzIDEzLjI2IDQuMjNMOC40MTAwNCAxLjYyQzguMjYwMDQgMS41NCA4LjEwMDA0IDEuNSA3Ljk0MDA0IDEuNVoiLz4NCiAgPHBhdGggZmlsbD0iIzRDRTY5OSIgZD0iTTcuNjM5OTQgMTAuMjIwMkM3LjQ0OTk0IDEwLjIyMDIgNy4yNTk5NCAxMC4xNTAyIDcuMTA5OTQgMTAuMDAwMkw0LjkzOTk0IDcuODMwMjFMNS45OTk5NCA2Ljc3MDIyTDcuNjM5OTQgOC40MTAyMUwxMC41Nzk5IDUuNDcwMjFMMTEuNjM5OSA2LjUzMDIyTDguMTY5OTQgMTAuMDAwMkM4LjAxOTk0IDEwLjE1MDIgNy44Mjk5NCAxMC4yMjAyIDcuNjM5OTQgMTAuMjIwMloiLz4NCjwvc3ZnPg==") !important;
+  fill: light-dark(#12bc00, #12bc00) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+/* Red */
+.urlbar-input-container[pageproxystate="valid"]:has(#identity-box.notSecure) #trust-icon-container {
+  fill: light-dark(#12bc00, #12bc00) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+/* Cyan */
+/*.urlbar-input-container[pageproxystate="valid"]:has(#identity-box.chromeUI) #trust-icon-container {
+  fill: #009acd !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+} */
+
+/* Deepskyblue */
+.urlbar-input-container[pageproxystate="valid"]:has(#identity-box.localResource) #trust-icon-container:not(.file) {
+  fill: light-dark(deepskyblue, deepskyblue) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+#identity-box[pageproxystate="valid"].chromeUI #identity-icon,
+.site-information-popup[connection="chrome"] .identity-popup-security-connection {
+  list-style-image: url(chrome://devtools/skin/images/browsers/firefox.svg) !important;
+  fill: light-dark(rgba(0, 191, 255, .9), rgba(0, 191, 255, .9)) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+/* Blue-green */
+.urlbar-input-container[pageproxystate="valid"]:has(#identity-box.extensionPage) #trust-icon-container {
+  fill: light-dark(#14b9ac, #14b9ac) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+#identity-box[pageproxystate="valid"].extensionPage #identity-icon,
+.site-information-popup[connection="extension"] .identity-popup-security-connection {
+  list-style-image: url(chrome://mozapps/skin/extensions/extension.svg) !important;
+  fill: light-dark(#14b9ac, #14b9ac) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+/* Purple */
+/*#identity-icon {
+  list-style-image: url(chrome://global/skin/icons/info.svg) !important;
+  fill: light-dark(#cf1aff, #cf1aff) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+#identity-box[pageproxystate="invalid"] {
+  #identity-icon {
+    list-style-image: url(chrome://global/skin/icons/search-glass.svg) !important;
+    fill: unset !important;
+    fill-opacity: initial !important;
+  }
+} */
+
+/* Gold */
+.urlbar-input-container[pageproxystate="valid"]:has(#identity-box:is(
+ .weakCipher, 
+ .mixedDisplayContent, 
+ .mixedDisplayContentLoadedActiveBlocked, 
+ .certUserOverridden, 
+ .certErrorPage
+)) #trust-icon-container {
+    fill: #e5c100 !important;
+    -moz-context-properties: fill, fill-opacity !important;
+    fill-opacity: 1 !important;
+}
+
+/* Ochre */
+.urlbar-input-container[pageproxystate="valid"]:has(#identity-box.unknownIdentity) #trust-icon-container {
+  fill: #cc7722 !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+/* Yellow Orange ✔ (Trackers blocked) */
+.urlbar-input-container[pageproxystate="valid"]:has(#tracking-protection-icon-box:not([hasException])[active]) #trust-icon-container {
+  list-style-image: url("data:image/svg+xml;base64,PCEtLSBUaGlzIFNvdXJjZSBDb2RlIEZvcm0gaXMgc3ViamVjdCB0byB0aGUgdGVybXMgb2YgdGhlIE1vemlsbGEgUHVibGljDQogICAtIExpY2Vuc2UsIHYuIDIuMC4gSWYgYSBjb3B5IG9mIHRoZSBNUEwgd2FzIG5vdCBkaXN0cmlidXRlZCB3aXRoIHRoaXMNCiAgIC0gZmlsZSwgWW91IGNhbiBvYnRhaW4gb25lIGF0IGh0dHBzOi8vbW96aWxsYS5vcmcvTVBMLzIuMC8uIC0tPg0KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJjb250ZXh0LWZpbGwiIGZpbGwtb3BhY2l0eT0iY29udGV4dC1maWxsLW9wYWNpdHkiPg0KICA8cGF0aCBkPSJNOC4wMDAwNCAxNkM3LjU3MDA0IDE2IDcuMTQwMDQgMTUuODkgNi43NjAwNCAxNS42N0M1LjEyMDA0IDE0Ljc0IDMuNjEwMDQgMTMuMzEgMi41MDAwNCAxMS42NEMxLjkzMDA0IDEwLjc4IDEuNTMwMDQgOS43MyAxLjMxMDA0IDguNTNMMC43NTAwNDEgNS41MUMwLjU1MDA0MSA0LjQ0IDEuMDYwMDQgMy4zOCAyLjAyMDA0IDIuODZMNi43NTAwNCAwLjNDNy40OTAwNCAtMC4xIDguMzgwMDQgLTAuMSA5LjEyMDA0IDAuM0wxMy45NyAyLjkxQzE0LjkzIDMuNDMgMTUuNDQgNC40OSAxNS4yNCA1LjU3TDE0LjY5IDguNTRDMTQuNDcgOS43NCAxNC4wNyAxMC43OCAxMy41IDExLjY0QzEyLjQgMTMuMzEgMTAuODkgMTQuNzUgOS4yNDAwNCAxNS42OEM4Ljg2MDA0IDE1LjkgOC40MzAwNCAxNi4wMSA4LjAwMDA0IDE2LjAxVjE2Wk03Ljk0MDA0IDEuNUM3Ljc4MDA0IDEuNSA3LjYxMDA0IDEuNTQgNy40NjAwNCAxLjYyTDIuNzQwMDQgNC4xOEMyLjM2MDA0IDQuMzkgMi4xNTAwNCA0LjgxIDIuMjMwMDQgNS4yNEwyLjc5MDA0IDguMjZDMi45ODAwNCA5LjI2IDMuMzAwMDQgMTAuMTMgMy43NjAwNCAxMC44MkM0LjczMDA0IDEyLjMgNi4wNjAwNCAxMy41NiA3LjUwMDA0IDE0LjM3QzcuODEwMDQgMTQuNTQgOC4xOTAwNCAxNC41NCA4LjUwMDA0IDE0LjM3QzkuOTQwMDQgMTMuNTUgMTEuMjcgMTIuMjkgMTIuMjUgMTAuODFDMTIuNzEgMTAuMTIgMTMuMDMgOS4yNiAxMy4yMiA4LjI2TDEzLjc3IDUuMjlDMTMuODUgNC44NiAxMy42NSA0LjQzIDEzLjI2IDQuMjNMOC40MTAwNCAxLjYyQzguMjYwMDQgMS41NCA4LjEwMDA0IDEuNSA3Ljk0MDA0IDEuNVoiLz4NCiAgPHBhdGggZmlsbD0iI2U2YjAwMCIgZD0iTTcuNjM5OTQgMTAuMjIwMkM3LjQ0OTk0IDEwLjIyMDIgNy4yNTk5NCAxMC4xNTAyIDcuMTA5OTQgMTAuMDAwMkw0LjkzOTk0IDcuODMwMjFMNS45OTk5NCA2Ljc3MDIyTDcuNjM5OTQgOC40MTAyMUwxMC41Nzk5IDUuNDcwMjFMMTEuNjM5OSA2LjUzMDIyTDguMTY5OTQgMTAuMDAwMkM4LjAxOTk0IDEwLjE1MDIgNy44Mjk5NCAxMC4yMjAyIDcuNjM5OTQgMTAuMjIwMloiLz4NCjwvc3ZnPg==") !important;
+  fill: light-dark(#12bc00, #12bc00) !important;
+  -moz-context-properties: fill, fill-opacity !important;
+  fill-opacity: 1 !important;
+}
+
+/* Red */
+  #trust-icon-container {
+    &:where(.insecure) {
+      list-style-image: url(chrome://browser/skin/trust-icon-insecure.svg) !important;
+      /* fill: light-dark(#12bc00, #12bc00) !important; */
+      -moz-context-properties: fill, fill-opacity !important;
+      fill- fill-opacity: 1 !important;
+    }
+    
+/* Green */
+    &.secure {
+      list-style-image: url(chrome://browser/skin/trust-icon-active.svg) !important;
+      /* fill: light-dark(#12bc00, #12bc00) !important; */
+      -moz-context-properties: fill, fill-opacity !important;
+      fill-opacity: 1 !important;
+    }
+    
+/* Orange x (Tracking Protection is off) */
+    &.inactive:not(.insecure) {
+      /* list-style-image: url(chrome://browser/skin/trust-icon-disabled.svg); */
+      list-style-image: url("data:image/svg+xml;base64,PCEtLSBUaGlzIFNvdXJjZSBDb2RlIEZvcm0gaXMgc3ViamVjdCB0byB0aGUgdGVybXMgb2YgdGhlIE1vemlsbGEgUHVibGljDQogICAtIExpY2Vuc2UsIHYuIDIuMC4gSWYgYSBjb3B5IG9mIHRoZSBNUEwgd2FzIG5vdCBkaXN0cmlidXRlZCB3aXRoIHRoaXMNCiAgIC0gZmlsZSwgWW91IGNhbiBvYnRhaW4gb25lIGF0IGh0dHBzOi8vbW96aWxsYS5vcmcvTVBMLzIuMC8uIC0tPg0KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJjb250ZXh0LWZpbGwiIGZpbGwtb3BhY2l0eT0iY29udGV4dC1maWxsLW9wYWNpdHkiPg0KICA8cGF0aCBmaWxsPSIjRkY1OTAwIiBkPSJNOC4wMDM3OCA2LjkzOTE1TDkuOTQ4MjkgNC45OTQ2M0wxMS4wMDkgNi4wNTUyOUw5LjA2NDQ0IDcuOTk5OEwxMS4wMDkgOS45NDQzMkw5Ljk0ODI5IDExLjAwNUw4LjAwMzc4IDkuMDYwNDdMNi4wNjYyOCAxMC45OThMNS4wMDU2MiA5LjkzNzNMNi45NDMxMiA3Ljk5OThMNS4wMDU2MiA2LjA2MjNMNi4wNjYyOCA1LjAwMTY0TDguMDAzNzggNi45MzkxNVoiLz4NCiAgPHBhdGggZD0iTTguMDAwMDQgMTZDNy41NzAwNCAxNiA3LjE0MDA0IDE1Ljg5IDYuNzYwMDQgMTUuNjdDNS4xMjAwNCAxNC43NCAzLjYxMDA0IDEzLjMxIDIuNTAwMDQgMTEuNjRDMS45MzAwNCAxMC43OCAxLjUzMDA0IDkuNzMgMS4zMTAwNCA4LjUzTDAuNzUwMDQxIDUuNTFDMC41NTAwNDEgNC40NCAxLjA2MDA0IDMuMzggMi4wMjAwNCAyLjg2TDYuNzUwMDQgMC4zQzcuNDkwMDQgLTAuMSA4LjM4MDA0IC0wLjEgOS4xMjAwNCAwLjNMMTMuOTcgMi45MUMxNC45MyAzLjQzIDE1LjQ0IDQuNDkgMTUuMjQgNS41N0wxNC42OSA4LjU0QzE0LjQ3IDkuNzQgMTQuMDcgMTAuNzggMTMuNSAxMS42NEMxMi40IDEzLjMxIDEwLjg5IDE0Ljc1IDkuMjQwMDQgMTUuNjhDOC44NjAwNCAxNS45IDguNDMwMDQgMTYuMDEgOC4wMDAwNCAxNi4wMVYxNlpNNy45NDAwNCAxLjVDNy43ODAwNCAxLjUgNy42MTAwNCAxLjU0IDcuNDYwMDQgMS42MkwyLjc0MDA0IDQuMThDMi4zNjAwNCA0LjM5IDIuMTUwMDQgNC44MSAyLjIzMDA0IDUuMjRMMi43OTAwNCA4LjI2QzIuOTgwMDQgOS4yNiAzLjMwMDA0IDEwLjEzIDMuNzYwMDQgMTAuODJDNC43MzAwNCAxMi4zIDYuMDYwMDQgMTMuNTYgNy41MDAwNCAxNC4zN0M3LjgxMDA0IDE0LjU0IDguMTkwMDQgMTQuNTQgOC41MDAwNCAxNC4zN0M5Ljk0MDA0IDEzLjU1IDExLjI3IDEyLjI5IDEyLjI1IDEwLjgxQzEyLjcxIDEwLjEyIDEzLjAzIDkuMjYgMTMuMjIgOC4yNkwxMy43NyA1LjI5QzEzLjg1IDQuODYgMTMuNjUgNC40MyAxMy4yNiA0LjIzTDguNDEwMDQgMS42MkM4LjI2MDA0IDEuNTQgOC4xMDAwNCAxLjUgNy45NDAwNCAxLjVaIi8+DQo8L3N2Zz4=") !important;
+      fill: light-dark(#12bc00, #12bc00) !important;
+      -moz-context-properties: fill, fill-opacity !important;
+      fill-opacity: 1 !important;
+    }
+    
+/* Orange ! */
+    &.warning {
+      /* list-style-image: url(chrome://browser/skin/trust-icon-warning.svg) !important; */
+      list-style-image: url("data:image/svg+xml;base64,PCEtLSBUaGlzIFNvdXJjZSBDb2RlIEZvcm0gaXMgc3ViamVjdCB0byB0aGUgdGVybXMgb2YgdGhlIE1vemlsbGEgUHVibGljDQogICAtIExpY2Vuc2UsIHYuIDIuMC4gSWYgYSBjb3B5IG9mIHRoZSBNUEwgd2FzIG5vdCBkaXN0cmlidXRlZCB3aXRoIHRoaXMNCiAgIC0gZmlsZSwgWW91IGNhbiBvYnRhaW4gb25lIGF0IGh0dHBzOi8vbW96aWxsYS5vcmcvTVBMLzIuMC8uIC0tPg0KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSJjb250ZXh0LWZpbGwiIGZpbGwtb3BhY2l0eT0iY29udGV4dC1maWxsLW9wYWNpdHkiPg0KICA8cGF0aCBkPSJNOC4wMDAwNCAxNkM3LjU3MDA0IDE2IDcuMTQwMDQgMTUuODkgNi43NjAwNCAxNS42N0M1LjEyMDA0IDE0Ljc0IDMuNjEwMDQgMTMuMzEgMi41MDAwNCAxMS42NEMxLjkzMDA0IDEwLjc4IDEuNTMwMDQgOS43MyAxLjMxMDA0IDguNTNMMC43NTAwNDEgNS41MUMwLjU1MDA0MSA0LjQ0IDEuMDYwMDQgMy4zOCAyLjAyMDA0IDIuODZMNi43NTAwNCAwLjNDNy40OTAwNCAtMC4xIDguMzgwMDQgLTAuMSA5LjEyMDA0IDAuM0wxMy45NyAyLjkxQzE0LjkzIDMuNDMgMTUuNDQgNC40OSAxNS4yNCA1LjU3TDE0LjY5IDguNTRDMTQuNDcgOS43NCAxNC4wNyAxMC43OCAxMy41IDExLjY0QzEyLjQgMTMuMzEgMTAuODkgMTQuNzUgOS4yNDAwNCAxNS42OEM4Ljg2MDA0IDE1LjkgOC40MzAwNCAxNi4wMSA4LjAwMDA0IDE2LjAxVjE2Wk03Ljk0MDA0IDEuNUM3Ljc4MDA0IDEuNSA3LjYxMDA0IDEuNTQgNy40NjAwNCAxLjYyTDIuNzQwMDQgNC4xOEMyLjM2MDA0IDQuMzkgMi4xNTAwNCA0LjgxIDIuMjMwMDQgNS4yNEwyLjc5MDA0IDguMjZDMi45ODAwNCA5LjI2IDMuMzAwMDQgMTAuMTMgMy43NjAwNCAxMC44MkM0LjczMDA0IDEyLjMgNi4wNjAwNCAxMy41NiA3LjUwMDA0IDE0LjM3QzcuODEwMDQgMTQuNTQgOC4xOTAwNCAxNC41NCA4LjUwMDA0IDE0LjM3QzkuOTQwMDQgMTMuNTUgMTEuMjcgMTIuMjkgMTIuMjUgMTAuODFDMTIuNzEgMTAuMTIgMTMuMDMgOS4yNiAxMy4yMiA4LjI2TDEzLjc3IDUuMjlDMTMuODUgNC44NiAxMy42NSA0LjQzIDEzLjI2IDQuMjNMOC40MTAwNCAxLjYyQzguMjYwMDQgMS41NCA4LjEwMDA0IDEuNSA3Ljk0MDA0IDEuNVoiLz4NCiAgPHBhdGggZmlsbD0iI0ZGNTkwMCIgZD0iTTcuMjUgNC41SDguNzVWOC41SDcuMjVWNC41WiIvPg0KICA8cGF0aCBmaWxsPSIjRkY1OTAwIiBkPSJNNy4yNSAxMEg4Ljc1VjExLjVINy4yNVYxMFoiLz4NCjwvc3ZnPg==") !important;
+      fill: light-dark(#12bc00, #12bc00) !important;
+      -moz-context-properties: fill, fill-opacity !important;
+      fill-opacity: 1 !important;
+    }
+    
+/* Blue-purple */
+    &.file {
+      list-style-image: url(chrome://global/skin/icons/page-portrait.svg) !important;
+      fill: light-dark(#3f00ff, #8b66ff) !important;
+      -moz-context-properties: fill, fill-opacity !important;
+      fill-opacity: 1 !important;
+    }
+  }
+
+/* Remove unnecessarily long button labels to make them more compact */
+#identity-box > #identity-icon-box > #identity-icon-label {
+  display: none !important;
+}
+
+#identity-box > #identity-icon-box > #identity-icon {
+  margin-inline-start: -2px !important;
+  margin-inline-end: -2px !important;
+}
+
+#trust-icon-container > #trust-label {
+  display: none !important;
+}
+
+/* Set the button's background color to match the address bar */
+.identity-box-button,
+#trust-icon-container,
+#tracking-protection-icon-container {
+  outline: var(--toolbarbutton-outline) !important;
+  outline-offset: var(--toolbarbutton-outline-offset) !important;
+  background-color: transparent !important;
+
+  &:hover:not([open="true"]) {
+    background-color: var(--urlbar-box-hover-bgcolor) !important;
+    outline-color: var(--toolbarbutton-hover-outline-color) !important;
+  }
+
+  &:hover:active,
+  &[open="true"] {
+    background-color: var(--urlbar-box-active-bgcolor) !important;
+    outline-color: var(--toolbarbutton-active-outline-color) !important;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-outline) !important;
+    outline-offset: var(--focus-outline-inset) !important;
+  }
+}
+
+
+/* URL Bar BG with accent color --------------------------------------------------------*/
+
+/* #urlbar[open] { */
+/*     box-shadow: var(--uc-box-shadow) !important; */
+/* } */
+/* #urlbar:is([focused="true"], [open]) > #urlbar-background, */
+/* #urlbar:is([focused="true"], [open]) > .urlbar-background, */
+/* #searchbar:focus-within { */
+/*     background-color: var(--uc-tab-selected) !important; */
+/*     border-radius: var(--uc-button-border-radius) !important; */
+/*     box-shadow: var(--uc-box-shadow) !important; */
+/*     border-color: var(--uc-tab-selected-border) !important; */
+/* } */
+/* #urlbar-background, */
+/* .urlbar-background, #searchbar { */
+/*     color: var(--uc-tab-selected-text) !important; */
+/*     background-color: var(--uc-tab-selected) !important; */
+/*     border-radius: var(--uc-button-border-radius) !important; */
+/*     box-shadow: var(--uc-box-shadow) !important; */
+/*     border: 2px solid !important; */
+/*     border-color: var(--uc-tab-selected-border) !important; */
+/* } */
+/* #urlbar[open] > #urlbar-background, */
+/* #urlbar[open] > .urlbar-background { */
+/*     border: 2px solid; */
+/*     border-color: var(--uc-tab-selected-border) !important; */
+/* } */
+/* #urlbar[breakout][breakout-extend] { */
+/*     background-color: transparent !important; */
+/*     border-radius: var(--uc-button-border-radius); */
+/* } */
+/* #urlbar-zoom-button { */
+/*     background-color: var(--uc-button-selected) !important; */
+/*     margin-top: 3px !important; */
+/* } */
+/* .urlbarView-row { */
+/*     color: var(--uc-tab-selected-text) !important; */
+/* } */
+/* .urlbarView-row[selected], */
+/* .urlbarView-row:hover { */
+/*     background-color: var(--uc-urlbar-background) !important; */
+/*     border: 2px solid var(--uc-urlbar-border) !important; */
+/*     color: var(--uc-accent-color-4) !important; */
+/* } */
+/* #urlbar[focused]:not([suppress-focus-border]) > #urlbar-background, */
+/* #urlbar[focused]:not([suppress-focus-border]) > .urlbar-background { */
+/*     outline-color: color-mix(in srgb, var(--uc-accent-color-4) 10%, transparent)  !important; */
+/* } */
+/**/
+/* #QRCodeGeneratePageAction, */
+/* #urlbar-searchmode-switcher, */
+/* #urlbar-go-button, */
+/* #picture-in-picture-button, */
+/* #tracking-protection-icon-container, */
+/* #identity-permission-box, */
+/* #identity-icon, */
+/* #identity-icon-label, */
+/* #reader-mode-button, */
+/* #star-button-box { */
+/*     color: var(--uc-tab-selected-text) !important; */
+/*     /* background-color: var(--uc-accent-color-4) !important; */ */
+/* } */
+/**/
+/* #identity-icon-box { */
+/*     background-color: var(--uc-tab-selected) !important; */
+/* } */
+/**/
+/* #urlbar-input, #urlbar-input-container { */
+/*     color: var(--uc-tab-selected-text) !important; */
+/* } */
+/**/
+/* #urlbar:not([focused="true"]) #urlbar-input { */
+/*     color: var(--uc-tab-selected-text) !important; */
+/* } */
+/**/
+/* #urlbar-zoom-button { */
+/*     color: var(--uc-tab-selected-text) !important; */
+/*     display: flex !important; */
+/* } */
+/**/
+/* #translations-button.urlbar-page-action { */
+/*     color: var(--uc-tab-selected-text) !important; */
+/* } */
+/**/
+/* #zoom-reset-button.toolbarbutton-1.toolbarbutton-combined { */
+/*     display: none !important; */
+/*     color: var(--uc-text) !important; */
+/* } */
+/**/
+/* /* Show border only when hovered */ */
+/* /* toolbarbutton:hover { */ */
+/* /*     fill: var(--uc-tab-selected-text) !important; */ */
+/* /*     outline: 2px solid var(--uc-tab-selected-border) !important; */ */
+/* /*     outline-offset: -2px !important; */ */
+/* /* } */ */
+/**/
+/* /* #back-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */ */
+/* /* #back-button.toolbarbutton-1.chromeclass-toolbar-additional[open], */ */
+/* /* #forward-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */ */
+/* /* #forward-button.toolbarbutton-1.chromeclass-toolbar-additional[open], */ */
+/* #reload-button.toolbarbutton-1:hover, */
+/* #reload-button.toolbarbutton-1[open], */
+/* #stop-button.toolbarbutton-1:hover, */
+/* #stop-button.toolbarbutton-1[open], */
+/* #home-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #home-button.toolbarbutton-1.chromeclass-toolbar-additional[open], */
+/* #unified-extensions-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #unified-extensions-button.toolbarbutton-1.chromeclass-toolbar-additional[open], */
+/* #bookmarks-menu-button.toolbarbutton-1.chromeclass-toolbar-additional.subviewbutton-nav:hover, */
+/* #bookmarks-menu-button.toolbarbutton-1.chromeclass-toolbar-additional.subviewbutton-nav[open], */
+/* #zoom-out-button:hover, */
+/* #zoom-in-button:hover, */
+/* #fullscreen-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #fullscreen-button.toolbarbutton-1.chromeclass-toolbar-additional[open], */
+/* /* #PanelUI-menu-button.toolbarbutton-1:hover, */ */
+/* /* #PanelUI-menu-button.toolbarbutton-badge-stack:hover, */ */
+/* /* #PanelUI-menu-button.toolbarbutton-1[open], */ */
+/* #nav-bar-overflow-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #nav-bar-overflow-button.toolbarbutton-1.chromeclass-toolbar-additional[open] { */
+/*     margin-top: 4px !important; */
+/*     margin-bottom: 4px !important; */
+/*     outline: 2px solid var(--uc-tab-selected-border) !important; */
+/*     outline-offset: -2px !important; */
+/* } */
+/**/
+/* #reload-button.toolbarbutton-1:hover, */
+/* #stop-button.toolbarbutton-1:hover, */
+/* #home-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #unified-extensions-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #bookmarks-menu-button.toolbarbutton-1.chromeclass-toolbar-additional.subviewbutton-nav:hover, */
+/* #zoom-out-button:hover, */
+/* #zoom-in-button:hover, */
+/* #fullscreen-button.toolbarbutton-1.chromeclass-toolbar-additional:hover, */
+/* #nav-bar-overflow-button.toolbarbutton-1.chromeclass-toolbar-additional:hover { */
+/*     fill: var(--uc-tab-selected-text) !important; */
+/*     margin-top: 4px !important; */
+/*     margin-bottom: 4px !important; */
+/*     outline: 2px solid var(--uc-tab-selected-border) !important; */
+/*     outline-offset: -2px !important; */
+/* } */
+/**/
+/* #tabs-newtab-button.toolbarbutton-1:hover { */
+/*     fill: var(--uc-tab-selected-text) !important; */
+/*     margin-top: 4px !important; */
+/*     margin-bottom: 4px !important; */
+/*     outline: 2px solid var(--uc-tab-selected-border) !important; */
+/*     outline-offset: -2px !important; */
+/* } */
+/**/
+/* /* #PanelUI-menu-button.toolbarbutton-1[open] { */ */
+/* /*     margin-right: 8px !important; */ */
+/* /* } */ */
+/**/
+/* /* Show border when clicked / pressed */ */
+/* /* toolbarbutton:active, */ */
+/* /* toolbarbutton[open="true"] { */ */
+/* /*     outline: 2px solid var(--uc-tab-selected-border) !important; */ */
+/* /*     outline-offset: -2px !important; */ */
+/* /* } */ */
+/**/
+/* /* optional inset variant */ */
+/* /* toolbarbutton:active, */ */
+/* /* toolbarbutton[open], */ */
+/* /* toolbarbutton[checked="true"] { */ */
+/* /*     box-shadow: inset 0 0 0 2px var(--uc-tab-selected-border) !important; */ */
+/* /* } */ */
+/**/
+
+/* Bookmark Bar ---------------------------------------------------*/
+toolbarbutton.bookmark-item:not(.subviewbutton) {
+&:not([disabled], [open]):hover {
+    color: var(--uc-tab-selected-text) !important;
+    outline: 2px solid var(--uc-tab-selected-border) !important;
+    outline-offset: -2px !important;
+}}
+
+#PlacesChevron:hover {
+    fill: var(--uc-tab-selected-text) !important;
+    outline: 2px solid var(--uc-tab-selected-border) !important;
+    outline-offset: -2px !important;
+}
+
+/* Find bar -------------------------------------------------------*/
+
+/* #main-window:not([lwtheme]), #main-window[lwtheme] { */
+/*     & .findbar-textbox { */
+/*         background-color: var(--uc-findbar-background) !important; */
+/*         color: var(--uc-text) !important; */
+/*         box-shadow: var(--uc-box-shadow); */
+/*     } */
+/*     & .findbar-textbox:focus { */
+/*         background-color: var(--uc-findbar-background) !important; */
+/*     } */
+/* } */
+/* /* positioning */ */
+/**/
+/* .browserContainer > findbar { */
+/*     border-top: 0px !important; */
+/*     padding-block: 2px !important; */
+/*     background-color: var(--uc-browser-color) !important; */
+/*     z-index:2; */
+/* } */
+/* @media (prefers-color-scheme: light) { */
+/*     #main-window[lwtheme] { */
+/*         findbar { */
+/*             background: var(--lwt-accent-color) !important; */
+/*         } */
+/*     } */
+/* } */
+/* .findbar-container { */
+/*     height: 38px !important; */
+/*     padding-bottom: 4px !important; */
+/*     margin-top:-2px; */
+/* } */
+/* .findbar-textbox { */
+/*     width: 27vw !important; */
+/*     padding-bottom: 9px !important; */
+/*     padding-top: 8px !important; */
+/*     border: 0px !important; */
+/*     border-radius: var(--uc-button-border-radius) !important; */
+/*     box-shadow: var(--uc-box-shadow); */
+/* } */
+/* .findbar-closebutton { */
+/*     border-radius: var(--uc-button-border-radius) !important; */
+/*     width: 33px !important; */
+/*     margin: -2px 8px 7px auto !important; */
+/*     box-shadow: var(--uc-box-shadow); */
+/* } */
+
+
+/* Sidebars -------------------------------------------------------*/
+
+/*sidebar check boxes*/
+#input {
+    accent-color: var(--uc-accent-color-5) !important;
+}
+.sidebar-panel .text-link, .sidebar-panel a, .sidebar-panel ::part(support-link),
+.customize-group .text-link, .customize-group a, .customize-group ::part(support-link) {
+    color: var(--uc-accent-color-1) !important;
+}
+
+/* Tabs -----------------------------------------------------------*/
+
+/* tabs - selected tabs */
+.tab-label-container[selected] {
+    color: var(--uc-tab-selected-text) !important;
+}
+.tab-background[selected] {
+    border: 2px solid var(--uc-tab-selected-border) !important;
+}
+.tab-background[multiselected] {
+    outline-color: var(--uc-accent-color-1) !important;
+    outline-offset: 0px !important;
+}
+.tab-background[multiselected] { @media (prefers-color-scheme: light) {
+    outline-color: var(--uc-accent-color-2) !important;
+    /* outline-offset: none !important; */
+}}
+/* tabs - pinned tabs */
+.tab-label-container[pinned] {
+    color: var(--uc-accent-color-8) !important;
+}
+.tabbrowser-tab[pinned=""] .tab-background,
+.tabbrowser-tab[pinned="true"] .tab-background {
+    background-color: var(--uc-button-selected) !important;
+    border: 2px solid var(--uc-tab-selected-border) !important;
+}
+.tabbrowser-tab:not([selected]):hover .tab-background {
+    border: 2px solid var(--uc-tab-selected-border) !important;
+}
+.tab-label-container:not([selected]):hover {
+    fill: var(--uc-tab-selected-text) !important;
+    color: var(--uc-tab-selected-text) !important;
+}
+
+/* Button Adjustments ---------------------------------------------*/
+
+.toolbarbutton-text {
+    color: var(--uc-text);
+}
+#nav-bar .toolbarbutton-1,
+#nav-bar .toolbarbutton-text {
+    color: var(--uc-text) !important;
+}
+
+/* Hide sidebar button in the main toolbar */
+#sidebar-button,
+#sidebar-button[open],
+#sidebar-button[checked] {
+    display: none !important;
+}
+
+/* Hide the vertical-tabs sidebar toggle button (newer Firefox versions) */
+#vertical-tabs-button,
+#tabbrowser-arrowscrollbox-periphery-button {
+    display: none !important;
+}
+
+/* Hide the sidebar header buttons if UI changes */
+#sidebar-header,
+#sidebar-header > * {
+    display: none !important;
+}
+
+/* Popups/Menus ---------------------------------------------------*/
+
+
+/* Context Menu ---------------------------------------------------*/
+
+menupopup:not(#ContentSelectDropdownPopup), panel:not(.autoscroller) {
+    color-scheme: light dark;
+    --panel-background: var(--uc-context-menu) !important;
+    --panel-border-radius: var(--uc-button-border-radius) !important;
+    --panel-border-width: 2px !important;
+    --panel-border-color: var(--uc-panel-border-2) !important;
+    --panel-color: var(--uc-text) !important;
+}
+menupopup {--panel-shadow:none !important;}
+menuitem:hover {
+    background-color: var(--uc-button-selected) !important;
+    --panel-color: var(--uc-button-selected-text) !important;
+    color: var(--uc-button-selected-text) !important;
+    border-radius: 0px !important;
+    outline: 2px solid var(--uc-tab-selected-border) !important;
+    outline-offset: -2px !important;
+}
+menu:where([_moz-menuactive="true"]:not([disabled="true"])),
+menuitem:where([_moz-menuactive="true"]:not([disabled="true"])){
+    background-color: var(--uc-button-selected) !important;
+    color: var(--uc-button-selected-text) !important;
+    outline: 2px solid var(--uc-tab-selected-border) !important;
+    outline-offset: -2px !important;
+}
+
+.menupopup-arrowscrollbox:not([part="arrowscrollbox"]),
+.menupopup-arrowscrollbox[exportparts="scrollbox: arrowscrollbox-scrollbox"] {
+    border-radius: 0px !important;
+    border: 2px solid var(--uc-accent-color-4) !important;
+}
+
+#main-window[lwtheme] {
+menupopup, panel:not(.autoscroller) {
+    color-scheme: light dark;
+    --panel-background: var(--lwt-accent-color) !important;
+    --panel-color: color-mix(in srgb, var(--lwt-text-color) 75%, var(--lwt-accent-color)) !important;
+    --panel-shadow: none !important;
+}
+}
+#contentAreaContextMenu, #placesContext, #placesContext_open_newcontainertab_popup {
+    --panel-background: var(--uc-context-menu) !important;
+    --panel-border-radius: var(--uc-button-border-radius) !important;
+    --panel-border-color: var(--uc-panel-border-2) !important;
+    --panel-color: var(--uc-text) !important;
+    --panel-shadow: none !important;
+    menupopup {--panel-shadow:none !important;}
+    menuitem:hover {
+        background-color: var(--uc-button-selected) !important;
+        color: var(--uc-button-selected-text) !important;
+        border-radius: 0px !important;
+    }
+    menu:where([_moz-menuactive="true"]:not([disabled="true"])),
+    menuitem:where([_moz-menuactive="true"]:not([disabled="true"])){
+        background-color: var(--uc-button-selected) !important;
+        color: var(--uc-button-selected-text) !important;
+    }
+}
+
+/* PiP Video Player ----------------------------------------------------------------------------------------- */
+
+/*seek bar progress bar*/
+#scrubber::-moz-range-progress {
+    background-color: var(--uc-accent-color-1) !important;
+} #scrubber::-moz-range-thumb {
+    background-color: var(--uc-accent-color-1) !important;
+    border: 3px solid var(--uc-accent-color-1) !important;
+}
+/*close and PIP buttons are hovered*/
+#close, #unpip {
+    background-color: var(--uc-tab-background) !important;
+    fill: var(--uc-text) !important;
+}
+#close:is(:hover, :focus-visible), #unpip:is(:hover, :focus-visible) {
+    background-color: var(--uc-accent-color-1) !important;
+    outline: 2px solid var(--uc-accent-color-1-darker) !important;
+    fill: var(--uc-tab-selected-text) !important;
+}
+/*remove rounded corners*/
+.player-holder #browser { border-radius: var(--uc-button-border-radius) !important; }
+.control-button, .control-item { border-radius: var(--uc-button-border-radius) !important; }
+
+/* keep audio slider visible */
+@media (width <= 630px) {
+    #audio-scrubber {
+        display: block !important;
+        position: fixed !important;
+        bottom: 38px !important;
+        right: 122px !important;
+        transform: translateX(-50%) !important;
+    }
+}
+@media (width <= 580px) {
+    #audio-scrubber {
+        display: block !important;
+        position: fixed !important;
+        top: 25px !important;
+        left: 50vw !important;
+        transform: translateX(-50%) !important;
+    }
+}
+@media (width <= 290px) {
+    #audio-scrubber {
+        display: block !important;
+        position: fixed !important;
+        top: 16% !important;
+        left: 50vw !important;
+        transform: translateX(-50%) !important;
+    }
+}
+
+.letterboxing {
+    --letterboxing-bgcolor: var(--uc-browser-color) !important;
+}
+
+/* Custom Icons ---------------------------------------------------*/
+
+
+
+

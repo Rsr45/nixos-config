@@ -57,7 +57,7 @@
     audacious
     # smassh
     xwayland-satellite
-    swww
+    awww
     tmux-sessionizer
     # calibre
     # disk space calc
@@ -65,6 +65,7 @@
     dust
     duf
 
+    microsoft-edge
     wev
     # rmpc
     brave
@@ -133,14 +134,6 @@
     # stylelint
     # shellcheck
     # --- EMU ---
-    # retroarch-full
-    (retroarch.withCores (
-      cores: with cores; [
-        beetle-psx-hw
-        pcsx2
-        ppsspp
-      ]
-    ))
     (heroic.override {
       extraPkgs =
         pkgs': with pkgs'; [
@@ -149,18 +142,20 @@
         ];
     })
     ppsspp
-    # duckstation # removed
-    # mednafen
     pcsx2
+    uzdoom
+    crispy-doom # # use thi or dsda or woof>>
+    dsda-doom
+    woof-doom
+    eternity
+
     # rpcs3
     # dolphin-emu
     # cemu
     # melonDS
     # azahar
-    # flycast
     libsecret
-    # ranger
-    # lf
+
     # notes
     basalt
     bibiman
@@ -188,7 +183,8 @@
     ripgrep-all.enable = true;
     fd.enable = true;
   };
-  services.swww.enable = true;
+  services.awww.enable = true;
+
   programs.lutris = {
     enable = true;
     defaultWinePackage = pkgs.proton-ge-bin;
@@ -200,5 +196,31 @@
       gamemode
       umu-launcher
     ];
+  };
+
+  programs.retroarch = {
+    enable = true;
+    cores = {
+      mgba.enable = true; # Uses pkgs.libretro.mgba
+      snes9x = {
+        enable = true;
+        package = pkgs.libretro.snes9x2010;
+      };
+      swanstation.enable = true;
+      beetle-psx-hw.enable = true;
+      beetle-psx.enable = true;
+      flycast.enable = true;
+    };
+    settings = {
+      menu_driver = "xmb";
+      savestate_auto_index = "true";
+      sort_savefiles_by_content_enable = "true";
+      sort_savefiles_enable = "true";
+      sort_savestates_by_content_enable = "true";
+      sort_savestates_enable = "true";
+    };
+  };
+  programs.prismlauncher = {
+    enable = true;
   };
 }

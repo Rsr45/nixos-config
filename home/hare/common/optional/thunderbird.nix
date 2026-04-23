@@ -1,13 +1,13 @@
-{ pkgs, ... }:
+{ ... }:
 {
   programs.thunderbird = {
     enable = true;
     # package = pkgs.betterbird;
-    profiles.Hare = {
+    profiles.default = {
       isDefault = true;
       # feedAccounts.Feed = { };
       search = {
-        default = "startpage";
+        default = "searx";
         privateDefault = "startpage";
         force = true;
         engines = {
@@ -26,51 +26,21 @@
               }
             ];
           };
-
-          # searx = {
-          #   name = "SearXNG";
-          #   urls = [
-          #     {
-          #       template = "http://localhost:8080/search";
-          #       params = [
-          #         {
-          #           name = "q";
-          #           value = "{searchTerms}";
-          #         }
-          #       ];
-          #     }
-          #   ];
-          #   definedAliases = [ "'s" ];
-          # };
-          nix-packages = {
-            name = "Nix Packages";
+          searx = {
+            name = "SearXNG";
             urls = [
               {
-                template = "https://search.nixos.org/packages";
+                template = "http://localhost:8080/search";
                 params = [
                   {
-                    name = "type";
-                    value = "packages";
-                  }
-                  {
-                    name = "query";
+                    name = "q";
                     value = "{searchTerms}";
                   }
                 ];
               }
             ];
-
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = [ "'np" ];
+            definedAliases = [ "'s" ];
           };
-
-          nixos-wiki = {
-            name = "NixOS Wiki";
-            urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
-            iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
-            definedAliases = [ "'nw" ];
-          };
-
           bing.metaData.hidden = true;
         };
       };

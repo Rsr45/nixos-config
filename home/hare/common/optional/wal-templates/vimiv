@@ -1,0 +1,20 @@
+[STYLE]
+base00 = {{background}}
+base01 = {{background}}
+base02 = {{background | darken(0.2)}}
+base03 = {{color4}}
+base04 = {{color4}}
+base05 = {{color6}}
+base06 = {{color4}}
+base0b = {{color11}}
+base0d = {{background | lighten(0.1)}}
+base0e = {{color14}}
+base0f = {{color15}}
+
+base07 = {{color7}}
+base08 = {{color8}}
+base09 = {{color4}}
+base0a = {{color10}}
+base0c = {{color12}}
+
+font = 11pt Monospace

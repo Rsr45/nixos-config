@@ -71,7 +71,7 @@
       # starter = {
       #   autoopen = true;
       # };
-      statusline = { };
+      # statusline = { };
       trailspace = { };
     };
   };

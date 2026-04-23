@@ -1,0 +1,109 @@
+        @-moz-document regexp("^moz-extension://.*?/sidebar/sidebar.html") {
+
+          :root {
+            --bg: {{ background }};
+            --fg: {{ foreground }};
+            --surface: {{ background | darken(0.3) }};
+            --bg-alt: {{ background | darken(0.2) }};
+            --bg-alt-2: {{ background | lighten(0.2) }};
+            --accent: var(--color4);
+            --border: var(--color4);
+            --color4: {{color4}};
+            /* --border: rgba({{ color4 | strip}},0); */
+          }
+
+          #root.root {--general-border-radius: 0px !important;}
+          #root.root {--general-margin: 5px !important;}
+
+
+          #root.root {--toolbar-el-overlay-selected-border: var(--color4) !important;}
+          #root.root {--toolbar-el-overlay-active-border: var(--color4) !important;}
+          #root.root {--frame-el-overlay-selected-border: var(--color4) !important;}
+          #root.root {--active-el-shadow: 0.15rem 0.4rem 0.2rem -0.1rem rgba(0,0,0,0.3), inset 0 0 0 2px var(--color4) !important;}
+
+          #root.root {--scroll-progress-bg: var(--color4)!important;}
+          #root.root {--border: var(--color4)!important;}
+          #root.root {--windows-popup-window-border: var(--color4)!important;}
+          #root.root {--accent: var(--color4)!important;}
+          #root.root {--nav-btn-accent: var(--color4)!important;}
+
+          #root.root {--ctx-menu-fg: var(--fg)!important;}
+          #root.root {--active-el-fg: var(--fg)!important;}
+          #root.root {--ctx-menu-shadow: var(--fg)!important;}
+          #root.root {--popup-fg: var(--fg)!important;}
+          #root.root {--bookmarks-node-activated-fg: var(--fg)!important;}
+          #root.root {--tabs-activated-fg: var(--fg)!important;}
+          #root.root {--tabs-normal-fg: var(--fg)!important;}
+          #root.root {--nav-btn-fg: var(--fg)!important;}
+          #root.root {--frame-fg: var(--fg)!important;}
+          #root.root {--frame-el-fg: var(--fg)!important;}
+          #root.root {--toolbar-fg: var(--fg)!important;}
+          #root.root {--notification-fg: var(--fg)!important;}
+
+          #root.root {--toolbar-bg: var(--bg)!important;}
+
+          #root.root {--frame-el-bg: var(--surface)!important;}
+
+
+          #root.root {--frame-bg: var(--surface)!important;}
+
+          #root.root {--tabs-normal-bg: var(--bg)!important;}
+          #root.root {--ctx-menu-separator: var(--bg)!important;}
+          #root.root {--active-el-bg: var(--bg)!important;}
+          #root.root {--notification-bg: var(--bg)!important;}
+          #root.root {--popup-bg: var(--bg)!important;}
+
+          #root.root {--tabs-activated-bg: var(--bg)!important;}
+          #root.root {--ctx-menu-bg: var(--bg)!important;}
+          #root.root {--toolbar-el-overlay-active-bg: var(--bg)!important;}
+        }
+
+        @-moz-document regexp("^moz-extension://.*?/sidebery/group.html") {
+
+          :root {
+            --bg: {{ background }};
+            --fg: {{ foreground }};
+            --surface: {{ background | darken(0.3) }};
+            --accent: var(--color4);
+            --border: var(--color4);
+            --color4: {{color4}};
+          }
+
+          #root.root {--general-border-radius: 0px !important;}
+
+          #root.root {--toolbar-el-overlay-selected-border: var(--border) !important;}
+          #root.root {--toolbar-el-overlay-active-border: var(--border) !important;}
+          #root.root {--frame-el-overlay-selected-border: var(--border) !important;}
+
+          #root.root {--scroll-progress-bg: var(--accent)!important;}
+          #root.root {--border: var(--accent)!important;}
+          #root.root {--windows-popup-window-border: var(--accent)!important;}
+          #root.root {--accent: var(--accent)!important;}
+          #root.root {--nav-btn-accent: var(--accent)!important;}
+
+          #root.root {--ctx-menu-fg: var(--fg)!important;}
+          #root.root {--active-el-fg: var(--fg)!important;}
+          #root.root {--ctx-menu-shadow: var(--fg)!important;}
+          #root.root {--popup-fg: var(--fg)!important;}
+          #root.root {--bookmarks-node-activated-fg: var(--fg)!important;}
+          #root.root {--tabs-activated-fg: var(--fg)!important;}
+          #root.root {--tabs-normal-fg: var(--fg)!important;}
+          #root.root {--nav-btn-fg: var(--fg)!important;}
+          #root.root {--frame-fg: var(--fg)!important;}
+          #root.root {--frame-el-fg: var(--fg)!important;}
+          #root.root {--toolbar-fg: var(--fg)!important;}
+          #root.root {--notification-fg: var(--fg)!important;}
+
+          #root.root {--frame-el-bg: var(--bg)!important;}
+          #root.root {--toolbar-bg: var(--bg)!important;}
+          #root.root {--tabs-normal-bg: var(--bg)!important;}
+          #root.root {--ctx-menu-separator: var(--bg)!important;}
+          #root.root {--frame-bg: var(--bg)!important;}
+          #root.root {--active-el-bg: var(--bg)!important;}
+          #root.root {--notification-bg: var(--bg)!important;}
+          #root.root {--popup-bg: var(--bg)!important;}
+
+          #root.root {--tabs-activated-bg: var(--surface)!important;}
+          #root.root {--ctx-menu-bg: var(--surface)!important;}
+          #root.root {--toolbar-el-overlay-active-bg: var(--surface)!important;}
+        }

@@ -1,0 +1,9 @@
+custom_color_contrast 0.3
+custom_color_mode_empty_background_color {{background | darken(0.2)}}
+page_separator_color {{background | darken(0.2)}}
+page_separator_width 10
+custom_background_color {{background}}
+custom_text_color {{foreground}}
+search_highlight_color {{color3}}
+status_bar_color {{color4}}
+status_bar_text_color {{background}}

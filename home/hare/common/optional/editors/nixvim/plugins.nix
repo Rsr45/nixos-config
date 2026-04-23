@@ -5,11 +5,15 @@
 
 {
   imports = [
+    ./plugins/noice.nix
+    ./plugins/edgy.nix
+    ./plugins/lualine.nix
     ./plugins/mini.nix
     ./plugins/mini-clue.nix
     # ./plugins/mini-jump2d.nix
     ./plugins/flash.nix
-    ./plugins/picker.nix
+    # ./plugins/picker.nix
+    ./plugins/snacks-picker.nix
     ./plugins/oil.nix
     ./plugins/snacks.nix
     ./plugins/obsidian.nix

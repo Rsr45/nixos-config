@@ -224,6 +224,18 @@
         #   on-click = "wezterm start -e nmtui";
         # };
 
+        "disk" = {
+          format = "󰋊 {percentage_used}% ";
+        };
+
+        "cpu" = {
+          format = " {usage}% ";
+        };
+
+        "memory" = {
+          format = " {percentage}% ";
+        };
+
         "tray" = {
           spacing = 0;
         };
@@ -259,14 +271,41 @@
 
     style = ''
       @import "colors.css";
-      @import "add.css";
 
       * {
         border: none;
         border-radius: 0;
-        padding: 1px 2px 1px 2px;
-        font-family: "${config.stylix.fonts.monospace.name}";
-        font-size: 11pt;
+        font-family: "Iosevka, Symbols Nerd Font Propo";
+        font-size: 12pt;
+      }
+
+      window#waybar {
+        background: @background;
+      }
+
+      tooltip {
+        background-color: @bg-lighter;
+        border: 2px solid @background;
+      }
+
+      #workspaces button {
+      	padding: 0 2px;
+        color: @foreground;
+      }
+
+      #workspaces button.active {
+      	padding: 0 2px;
+        color: @accent;
+      }
+
+      #workspaces button.urgent {
+      	padding: 0 2px;
+        background-color: @color1;
+      }
+
+      #cpu.critical,
+      #memory.critical {
+       color: #c14a4a;
       }
     '';
   };

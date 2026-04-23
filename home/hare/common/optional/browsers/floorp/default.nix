@@ -8,6 +8,12 @@
   imports = [
     # ./bookmarks.nix
   ];
+
+  xdg.configFile = {
+    "tridactyl/tridactylrc" = {
+      source = ./tridactylrc;
+    };
+  };
   programs.floorp = {
     enable = true;
     # package = pkgs.floorp-bin.override {
@@ -141,6 +147,7 @@
         "userChrome.hidden.urlbar_iconbox" = true;
         "userChrome.hidden.tabbar" = true;
         "userChrome.hidden.sidebar_header" = true;
+        "userChrome.centered.urlbar" = true;
         "floorp.workspaces.enabled" = false;
         "floorp.panelSidebar.enabled" = false;
 
@@ -303,9 +310,19 @@
               "back-button"
               "forward-button"
               "vertical-spacer"
+              "customizableui-special-spring12"
+              "customizableui-special-spring13"
+              "customizableui-special-spring17"
+              "customizableui-special-spring18"
+              "customizableui-special-spring20"
+              "customizableui-special-spring21"
               "urlbar-container"
               "_testpilot-containers-browser-action"
               "reset-pbm-toolbar-button"
+              "customizableui-special-spring24"
+              "customizableui-special-spring23"
+              "customizableui-special-spring15"
+              "customizableui-special-spring14"
               "stop-reload-button"
               "downloads-button"
               "ublock0_raymondhill_net-browser-action"
@@ -352,7 +369,7 @@
             "widget-overflow-fixed-list"
           ];
           currentVersion = 23;
-          newElementCount = 10;
+          newElementCount = 24;
         };
       };
 
@@ -437,6 +454,11 @@
           icon = "circle";
           id = 15;
         };
+        norway = {
+          color = "red";
+          icon = "circle";
+          id = 16;
+        };
       };
       extensions.force = true;
       extensions = {
@@ -503,13 +525,26 @@
                 no-large-media: behind-the-scene false
                 no-csp-reports: * true
                 no-scripting: * true
+
+                no-scripting: localhost false
+                no-scripting: 192.168.1.1 false
+
                 no-scripting: www.youtube.com false
                 no-scripting: chatgpt.com false
-                no-scripting: ubs.ikc.edu.tr false
-                no-scripting: localhost false
                 no-scripting: www.reddit.com false
                 no-scripting: www.deepl.com false
+
                 no-scripting: github.com false
+                no-scripting: gitlab.com false
+                no-scripting: search.nixos.org false
+
+                no-scripting: ubs.ikc.edu.tr false
+                no-scripting: ide.ikcu.edu.tr false
+                no-scripting: ikcu.edu.tr false
+                no-scripting: sbbf.ikcu.edu.tr false
+                no-scripting: fmhy.net false
+                no-scripting: scispace.com false
+                no-scripting: refseek.com false
               '';
               dynamicFilteringString = ''
                 behind-the-scene * * noop
@@ -648,7 +683,7 @@
                 ];
               }
             ];
-            definedAliases = [ "!s" ];
+            definedAliases = [ "@s" ];
           };
           brave = {
             name = "Brave";
@@ -663,6 +698,7 @@
                 ];
               }
             ];
+            definedAliases = [ "@b" ];
           };
           htmlddg = {
             name = "DuckDuckGo (HTML)";
@@ -696,11 +732,11 @@
               }
             ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = [ "'np" ];
+            definedAliases = [ "@np" ];
           };
           nixos-options = {
             name = "NixOS Options";
-            definedAliases = [ "'no" ];
+            definedAliases = [ "@no" ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             urls = [
               {
@@ -726,7 +762,7 @@
             name = "NixOS Wiki";
             urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
             iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
-            definedAliases = [ "'nw" ];
+            definedAliases = [ "@nw" ];
           };
         };
       };

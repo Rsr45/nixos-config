@@ -80,6 +80,29 @@
     # dhcpcd.extraConfig = "nohook resolv.conf";
   };
 
+  i18n.extraLocaleSettings = {
+    # LC_ALL = "en_US.UTF-8"; # This overrides all other LC_* settings.
+    ## US no reason to change
+    # LC_CTYPE = "en_US.UTF8";
+    LC_MESSAGES = "en_US.UTF-8";
+    ## EU Metric units , universal etc
+    LC_MEASUREMENT = "en_IE.UTF-8";
+    LC_TIME = "en_IE.UTF-8";
+    LC_PAPER = "tr_TR.UTF-8";
+    # Localized
+    LC_ADDRESS = "tr_TR.UTF-8";
+    LC_MONETARY = "tr_TR.UTF-8";
+    LC_NAME = "tr_TR.UTF-8";
+    LC_NUMERIC = "tr_TR.UTF-8";
+    LC_TELEPHONE = "tr_TR.UTF-8";
+    LC_IDENTIFICATION = "tr_TR.UTF-8";
+    LC_COLLATE = "tr_TR.UTF-8";
+  };
+
+  ## Disable Telemetry
+  services.userdbd.enable = lib.mkForce false;
+  # systemd.package = pkgs.systemd.override { withUserDb = false; }; ## cant be bothered to recompile
+
   programs.localsend = {
     enable = true;
     openFirewall = true;
@@ -88,24 +111,25 @@
   programs.kdeconnect.enable = true;
 
   networking.nftables.enable = true;
-  # networking.firewall = {
-  #   allowedTCPPorts = [
-  #     53317
-  #   ];
-  #   allowedUDPPorts = [ 53317 ];
-  #   allowedTCPPortRanges = [
-  #     {
-  #       from = 1714;
-  #       to = 1764;
-  #     }
-  #   ];
-  #   allowedUDPPortRanges = [
-  #     {
-  #       from = 1714;
-  #       to = 1764;
-  #     }
-  #   ];
-  # };
+  networking.firewall = {
+    enable = lib.mkForce true;
+    # allowedTCPPorts = [
+    #   53317
+    # ];
+    # allowedUDPPorts = [ 53317 ];
+    # allowedTCPPortRanges = [
+    #   {
+    #     from = 1714;
+    #     to = 1764;
+    #   }
+    # ];
+    # allowedUDPPortRanges = [
+    #   {
+    #     from = 1714;
+    #     to = 1764;
+    #   }
+    # ];
+  };
 
   boot.loader = {
     systemd-boot = {
@@ -373,49 +397,21 @@
       # # Wine
       wineWow64Packages.staging
       winetricks
-      protontricks
+      # protontricks
       protonup-qt
       # # Launchers and some utils
       mangohud
-      prismlauncher
       steamcmd
-      # # Emulation
-      # ppsspp # PSP
-      # duckstation # PSX
-      # pcsx2 # PS2
-      # rpcs3 # PS3
-      # shadps4 # PS4
-      # ryujinx # Switch
-      # (retroarch.override {
-      #   cores = with libretro; [
-      #     genesis-plus-gx
-      #     snes9x # SNES
-      #     beetle-psx-hw # PSX
-      #     ppsspp # PSP
-      #     flycast # Dreamcast
-      #     picodrive
-      #   ];
-      # })
-      # # DOOM
-      # gzdoom # DOOM Source Port.
-      # chocolate-doom # DOOM Source Port.
-      # crispy-doom # DOOM Source Port.
-      # woof-doom # DOOM Source Port.
-      # dsda-doom # DOOM Source Port.
-      # dsda-launcher # DSDA-DOOM Launcher.
-      # eternity # DOOM Source Port.
     ];
   };
+
+  ## Font
 
   fonts.fontDir.enable = true;
   fonts.enableDefaultPackages = true;
   fonts.packages = with pkgs; [
-    # dejavu_fonts
-    # nerd-fonts.symbols-only
-    # nerd-fonts.iosevka
-    # nerd-fonts.fira-code
-    # iosevka
-    # inter
+    iosevka
+    inter
     # overpass
   ];
   fonts.fontconfig.enable = true;

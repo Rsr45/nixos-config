@@ -1,0 +1,13 @@
+* {
+    bg:     {{ background }};
+    background:     {{ background }};
+    background-alt:     {{ background | lighten(0.1) }};
+    border:     {{ background | darken(0.2) }};
+    fg:     {{ foreground }};
+    foreground:     {{ foreground }};
+    selected:     {{ color3 }};
+    active:     {{ color4 }};
+    urgent:     {{ color6 }};
+    accent: {{ color4 }};
+    mauve:  {{ color6 }};
+}
