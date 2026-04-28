@@ -12,6 +12,15 @@
   pkgs,
   ...
 }:
+let
+  StateDirectory = "dnscrypt-proxy";
+  blocklist_base = builtins.readFile inputs.oisd;
+  extraBlocklist = "";
+  blocklist_txt = pkgs.writeText "blocklist.txt" ''
+    ${extraBlocklist}
+    ${blocklist_base}
+  '';
+in
 {
   imports = lib.flatten [
     # ============ Hardware Configs ==========
@@ -28,14 +37,14 @@
       "hosts/common/optional/services/greetd.nix"
       "hosts/common/optional/services/kanata.nix"
       "hosts/common/optional/services/searxng.nix"
-      "hosts/common/optional/services/locate.nix"
+      # "hosts/common/optional/services/locate.nix"
       "hosts/common/optional/audio.nix"
-      "hosts/common/optional/firejail.nix"
-      "hosts/common/optional/plymouth.nix"
+      # "hosts/common/optional/firejail.nix"
+      # "hosts/common/optional/plymouth.nix"
       "hosts/common/optional/wm/hyprland.nix"
-      "hosts/common/optional/wm/niri.nix"
-      "hosts/common/optional/wm/i3.nix"
-      "hosts/common/optional/wm/awesome.nix"
+      # "hosts/common/optional/wm/niri.nix"
+      # "hosts/common/optional/wm/i3.nix"
+      # "hosts/common/optional/wm/awesome.nix"
     ])
     # ========== Apocrypha Specific ========
     # ./stylix.nix
@@ -57,6 +66,9 @@
     secrets = {
       searx-secret = { };
       hare-password = { };
+      # dnscrypt-cert-key = {
+      #   # restartUnits = [ "dnscrypt-proxy.service" ];
+      # };
       # nextcloud-admin = {
       #   owner = "nextcloud";
       # };
@@ -68,10 +80,10 @@
     networkmanager.wifi.backend = "iwd";
     networkmanager = {
       # dns = "systemd-resolved";
-      # insertNameservers = [
-      #   "9.9.9.9"
-      #   "1.1.1.1"
-      # ];
+      insertNameservers = [
+        "127.0.0.1"
+        "::1"
+      ];
     };
     # nameservers = [
     #   "127.0.0.1"
@@ -109,6 +121,59 @@
   };
 
   programs.kdeconnect.enable = true;
+
+  networking.nameservers = [
+    "127.0.0.1"
+    "::1"
+  ];
+  networking.resolvconf.enable = pkgs.lib.mkForce false;
+  networking.dhcpcd.extraConfig = "nohook resolv.conf";
+  networking.networkmanager.dns = "none";
+  services.resolved.enable = false;
+
+  services.dnscrypt-proxy = {
+    enable = true;
+    settings = {
+      # ipv6_servers = true;
+      require_dnssec = true;
+      require_nolog = true;
+      require_nofilter = true;
+      query_log.file = "/var/log/dnscrypt-proxy/query.log";
+
+      sources.public-resolvers = {
+        urls = [
+          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
+          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
+        ];
+        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+
+        cache_file = "/var/lib/dnscrypt-proxy/public-resolvers.md";
+      };
+
+      # blocked_names.blocked_names_file = blocklist_txt;
+
+      ## fuck it it should work but somehow dnscrypt is not launching
+      # local_doh = {
+      #   listen_addresses = [ "127.0.0.1:3000" ];
+      #   path = "/dns-query";
+      #   cert_file = config.sops.secrets.dnscrypt-cert-key.path;
+      #   cert_key_file = config.sops.secrets.dnscrypt-cert-key.path;
+      # };
+      #
+      # monitoring_ui = {
+      #   enabled = true;
+      #   username = "admin";
+      #   password = "admin";
+      #   listen_address = "127.0.0.1:8079";
+      #   privacy_level = 1;
+      # };
+
+      # server_names = [ "adguard-dns-doh" ];
+    };
+  };
+
+  # services.dnscrypt-proxy.settings.systemd.services.dnscrypt-proxy.serviceConfig.StateDirectory =
+  #   StateDirectory;
 
   networking.nftables.enable = true;
   networking.firewall = {
@@ -296,12 +361,13 @@
       unrar
       unzip
       xarchiver
-      peazip
       pcmanfm-qt
       # doublecmd
       # git-credential-keepassxc # using ssh with keepassxc as the agent
       age
       sops
+      mkcert
+      openssl
       picard # music brainz tagger
       # sherlock-launcher
       lutgen
@@ -314,6 +380,7 @@
       # ungoogled-chromium
       # libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
       # filezilla
+      firefox-devedition
       # # Utils
       discordchatexporter-cli
       nix-prefetch-git
@@ -343,6 +410,7 @@
       # ungoogled-chromium
       # floorp
       # inputs.zen-browser.packages."${system}".default
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       # fum
       # miru
       # dino
@@ -381,8 +449,6 @@
       # cargo
       # rust-analyzer
       # rustfmt
-      # dotnet-sdk_8
-      # dotnet-sdk_9
       # go
       # vala
       # alejandra

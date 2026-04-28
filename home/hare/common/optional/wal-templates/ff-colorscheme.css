@@ -161,7 +161,10 @@ Custom Icons
 
 /* Main window adjustments ----------------------------------------*/
 
-#nav-bar {height: 30px !important; }
+#nav-bar {height: 30px !important;
+ font-size: 12pt !important;
+        font-family: Iosevka !important;
+}
 
 /* Url bar with bg color with accent border */
 
@@ -1015,6 +1018,52 @@ menupopup, panel:not(.autoscroller) {
 .letterboxing {
     --letterboxing-bgcolor: var(--uc-browser-color) !important;
 }
+
+
+
+
+/* Find bar */
+    /* Show searchbox at the top */
+    .browserContainer > findbar {
+        order: -1;
+        height: 30px !important;
+        /* font-size: 10px !important; */
+        font-family: Iosevka !important;
+        border-radius: var(--toolbarbutton-border-radius) !important;
+    }
+
+    /* Limit the searchbox width */
+    .browserContainer > findbar .findbar-textbox {
+        max-width: 200px;
+        font-size: 12pt !important;
+        font-family: Iosevka !important;
+        /* height: 20px !important; */
+        border-radius: var(--toolbarbutton-border-radius) !important;
+        border: solid 0px !important;
+    }
+
+    /* Improve searchbox visibility and look */
+    .found-matches {
+        border-radius: var(--toolbarbutton-border-radius) !important;
+        /* height: 20px !important; */
+        font-size: 12pt !important;
+        font-family: Iosevka !important;
+        /* border-radius: var(--toolbarbutton-border-radius) !important; */
+        /* border: solid 2px var(--uc-accent-color-2) !important; */
+/*         background-color: var(--uc-accent-color-4) !important; */
+        /* @media (prefers-color-scheme: light) { */
+        /*     background-color: color-mix(in srgb,  var(--uc-accent-color-2) 30%, transparent) !important; */
+        /*     border: solid 2px color-mix(in srgb,  var(--uc-accent-color-2) 30%, transparent) !important; */
+        /* } */
+        /* padding-right: 10px !important; */
+        /* padding-left: 10px !important; */
+        /* /* line-height: 1.7 !important; */ */
+        /* font-weight: 600 !important; */
+    }
+
+
+
+
 
 /* Custom Icons ---------------------------------------------------*/
 

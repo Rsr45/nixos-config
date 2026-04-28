@@ -50,7 +50,7 @@
     # ========== X ==========
     #
     common/optional/mpd.nix
-    common/optional/spotify.nix
+    # common/optional/spotify.nix
     # common/optional/strawberry.nix
     common/optional/audacious.nix
     common/optional/nixcord.nix

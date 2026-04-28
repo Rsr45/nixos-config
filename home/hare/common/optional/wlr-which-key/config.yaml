@@ -69,6 +69,9 @@ menu:
       - key: "n"
         cmd: obsidian
         desc: Obsidian
+      - key: "w"
+        cmd: ~/Downloads/change_wallpaper.sh
+        desc: Wallpaper
   - key: "s"
     desc: Screen
     submenu:

@@ -65,7 +65,6 @@
     dust
     duf
 
-    microsoft-edge
     wev
     # rmpc
     brave

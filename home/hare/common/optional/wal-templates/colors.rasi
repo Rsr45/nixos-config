@@ -10,4 +10,16 @@
     urgent:     {{ color6 }};
     accent: {{ color4 }};
     mauve:  {{ color6 }};
+    yellow:  {{ color6 }};
+
+color1:  {{color1 }};
+color1-darker:  {{color1 | darken(0.1) }};
+color2:  {{color2 }};
+color2-darker:  {{color2 | darken(0.1) }};
+color3:  {{color3 }};
+color3-darker:  {{color3 | darken(0.1) }};
+color4:  {{color4 }};
+color4-darker:  {{color4 | darken(0.1) }};
+color5:  {{color5 }};
+color5-darker:  {{color5 | darken(0.1) }};
 }

@@ -18,7 +18,9 @@
       inputs.hyprland.follows = "hyprland";
     };
     schizofox.url = "github:schizofox/schizofox";
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    # zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zen-browser.url = "github:youwen5/zen-browser-flake";
+    # zen-browser.inputs.nixpkgs.follows = "nixpkgs";
     nvf.url = "github:notashelf/nvf";
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -28,44 +30,44 @@
       url = "github:Rsr45/nixvim-config";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim = {
-      url = "github:Rsr45/nixCats-config";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # neovim = {
+    #   url = "github:Rsr45/nixCats-config";
+    #   # inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    # spicetify-nix = {
+    #   url = "github:Gerg-L/spicetify-nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     nixcord = {
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # noctalia = {
+    #   url = "github:noctalia-dev/noctalia-shell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    #
+    # caelestia-shell = {
+    #   url = "github:caelestia-dots/shell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # quickshell = {
     #   url = "github:outfoxxed/quickshell";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    astal = {
-      url = "github:aylur/astal";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    ags = {
-      url = "github:aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.astal.follows = "astal";
-    };
+    # astal = {
+    #   url = "github:aylur/astal";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    #
+    # ags = {
+    #   url = "github:aylur/ags";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs.astal.follows = "astal";
+    # };
 
     xmonad-contexts = {
       url = "github:Procrat/xmonad-contexts";
@@ -81,6 +83,11 @@
     omnisearch = {
       url = "git+https://git.bwaaa.monster/omnisearch";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    oisd = {
+      url = "https://big.oisd.nl/domainswild";
+      flake = false;
     };
   };
 
@@ -101,7 +108,7 @@
       lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
     in
     {
-      formatter = System (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = System (system: nixpkgs.legacyPackages.${system}.nixfmt);
 
       nixosConfigurations = builtins.listToAttrs (
         map (host: {
