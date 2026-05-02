@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,32 +45,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # noctalia = {
-    #   url = "github:noctalia-dev/noctalia-shell";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    #
-    # caelestia-shell = {
-    #   url = "github:caelestia-dots/shell";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
-    # quickshell = {
-    #   url = "github:outfoxxed/quickshell";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
-    # astal = {
-    #   url = "github:aylur/astal";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    #
-    # ags = {
-    #   url = "github:aylur/ags";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    #   inputs.astal.follows = "astal";
-    # };
-
     xmonad-contexts = {
       url = "github:Procrat/xmonad-contexts";
       flake = false;
@@ -76,15 +52,12 @@
 
     thumbpick.url = "github:soliprem/thumbpick";
 
-    # gauntlet = {
-    #   url = "github:project-gauntlet/gauntlet/v20"; # <gauntlet_version_repository_tag>;
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     omnisearch = {
       url = "git+https://git.bwaaa.monster/omnisearch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ## Blocklists
     oisd = {
       url = "https://big.oisd.nl/domainswild";
       flake = false;

@@ -9,14 +9,11 @@
     # bulletty # cool but no script
     newsboat
     # Network/
-    # speedtest-cli
     # bluetui
     # impala
     # Music
     cmus
     kew
-    # pulsemeeter
-    crosspipe
     # Disk
     ncdu
     # Web
@@ -40,10 +37,7 @@
     rofi
     warp
     fsel
-    # vicinae
     python3
-    # libxml2
-    # just
     ## Screenshot and such
     grim
     maim
@@ -51,15 +45,11 @@
     slop
     # OCR
     tesseract
-    # Wall
-    inputs.thumbpick.packages.${pkgs.stdenv.hostPlatform.system}.default
-    # osu-lazer-bin
     audacious
-    # smassh
     xwayland-satellite
+
     awww
     tmux-sessionizer
-    # calibre
     # disk space calc
     dysk
     dust
@@ -67,10 +57,9 @@
 
     wev
     # rmpc
-    brave
     wiremix
-    doxx
-    broot
+    # doxx
+    # broot
     trashy
     # --- Bar/Framework ---
     # inputs.quickshell.packages.${system}.default
@@ -101,37 +90,6 @@
     freecad
     # blender
     # blender-hip set  # config.rocmSupport = true; or use pkgsRocm.blender
-    # --- Languages ---
-    # --- LSP ---
-    # nixd
-    # lua-language-server
-    # clang-tools
-    # gopls
-    # gomodifytags
-    # gotests
-    # gore
-    # haskell-language-server # haskell
-    # haskellPackages.hoogle # haskell
-    # cabal-install # haskell
-    # ktlint # kotlin
-    # sbcl # common-lisp
-    # rust-analyzer
-    # pyflakes
-    # isort
-    # pipenv
-    # nosetests
-    # pytest
-    # --- FMT ---
-    # stylua
-    # ocamlformat
-    # swift-format
-    # tidyp
-    # jsbeautifier
-    # shfmt
-    # black
-    # --- Lint ---
-    # stylelint
-    # shellcheck
     # --- EMU ---
     (heroic.override {
       extraPkgs =
@@ -140,13 +98,13 @@
           gamemode
         ];
     })
-    ppsspp
-    pcsx2
-    uzdoom
-    crispy-doom # # use thi or dsda or woof>>
-    dsda-doom
-    woof-doom
-    eternity
+    # ppsspp
+    # pcsx2
+    # uzdoom
+    # crispy-doom # # use thi or dsda or woof>>
+    # dsda-doom
+    # woof-doom
+    # eternity
 
     # rpcs3
     # dolphin-emu
@@ -156,13 +114,13 @@
     libsecret
 
     # notes
-    basalt
-    bibiman
-    bandwhich
+    # basalt
+    # bibiman
+    # bandwhich
     kalker
-    television
-    wiper
-    trippy
+    # television
+    # wiper
+    # trippy
   ];
   # programs.mbsync.enable = true;
   # programs.msmtp.enable = true;
@@ -185,7 +143,7 @@
   services.awww.enable = true;
 
   programs.lutris = {
-    enable = true;
+    enable = false; # openldap wait for fix
     defaultWinePackage = pkgs.proton-ge-bin;
     protonPackages = with pkgs; [ proton-ge-bin ];
     extraPackages = with pkgs; [
@@ -220,6 +178,6 @@
     };
   };
   programs.prismlauncher = {
-    enable = true;
+    enable = false;
   };
 }

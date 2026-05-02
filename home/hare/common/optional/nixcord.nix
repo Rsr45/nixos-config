@@ -7,12 +7,12 @@
   imports = [ inputs.nixcord.homeModules.default ];
 
   programs.nixcord = {
-    enable = true;
+    enable = false;
     discord.enable = false;
     # discord.vencord.package = pkgs.vencord;
 
     vesktop = {
-      enable = true;
+      enable = false;
       # package = pkgs.vesktop;
       autoscroll.enable = true;
     };
@@ -110,7 +110,7 @@
         # clearURLs.enable = true;
         # colorSighted.enable = true;
         disableCallIdle.enable = true;
-        ctrlEnterSend.enable = true;
+        # ctrlEnterSend.enable = true;
         copyFileContents.enable = true;
         callTimer.enable = true;
         # blurNSFW.enable = true;

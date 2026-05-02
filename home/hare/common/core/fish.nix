@@ -35,7 +35,8 @@
       edit = "nvim";
       y = "yazi";
       doom = "~/doom-emacs/bin/doom";
-      rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
+      rebuild-impure = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
+      rebuild = "sudo nixos-rebuild switch --show-trace --flake .#apocrypha";
       cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";
 
       mus = "yt-dlp -x --audio-quality 0 --embed-thumbnail --convert-thumbnails png --add-metadata --parse-metadata \"playlist_index:%(track_number)s\" -o \"${config.xdg.userDirs.music}/%(artists,uploader,channel)s/%(release_date>%Y,upload_date>%Y|Unknown)s_%(artists,uploader,channel)s_%(album|Unknown)s/%(track_number,playlist_index|NA)s_%(artists,uploader,channel)s_%(title).200B.%(ext)s\" --restrict-filenames --trim-filenames \"182\"";

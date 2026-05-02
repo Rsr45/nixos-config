@@ -1,8 +1,8 @@
 #############################################################
-#
-#  Apocrypha - Main Desktop
-#  NixOS running on Ryzen 7 2700X, RX Vega 56, 16 GB RAM
-#
+#                                                           #
+#  Apocrypha - Main Desktop                                 #
+#  NixOS running on Ryzen 7 2700X, RX Vega 56, 16 GB RAM    #
+#                                                           #
 #############################################################
 
 {
@@ -12,15 +12,6 @@
   pkgs,
   ...
 }:
-let
-  StateDirectory = "dnscrypt-proxy";
-  blocklist_base = builtins.readFile inputs.oisd;
-  extraBlocklist = "";
-  blocklist_txt = pkgs.writeText "blocklist.txt" ''
-    ${extraBlocklist}
-    ${blocklist_base}
-  '';
-in
 {
   imports = lib.flatten [
     # ============ Hardware Configs ==========
@@ -32,6 +23,10 @@ in
     (map lib.custom.relativeToRoot [
       # ========== Required Configs ==========
       "hosts/common/core"
+
+      # ========== Network Configs ==========
+      "hosts/common/optional/services/adguardhome.nix"
+      "hosts/common/optional/services/dnscrypt-proxy.nix"
 
       # ========== Optional Configs ==========
       "hosts/common/optional/services/greetd.nix"
@@ -80,16 +75,11 @@ in
     networkmanager.wifi.backend = "iwd";
     networkmanager = {
       # dns = "systemd-resolved";
-      insertNameservers = [
-        "127.0.0.1"
-        "::1"
-      ];
+      # insertNameservers = [
+      #   "127.0.0.1"
+      #   "::1"
+      # ];
     };
-    # nameservers = [
-    #   "127.0.0.1"
-    #   "::1"
-    # ];
-    # dhcpcd.extraConfig = "nohook resolv.conf";
   };
 
   i18n.extraLocaleSettings = {
@@ -121,59 +111,6 @@ in
   };
 
   programs.kdeconnect.enable = true;
-
-  networking.nameservers = [
-    "127.0.0.1"
-    "::1"
-  ];
-  networking.resolvconf.enable = pkgs.lib.mkForce false;
-  networking.dhcpcd.extraConfig = "nohook resolv.conf";
-  networking.networkmanager.dns = "none";
-  services.resolved.enable = false;
-
-  services.dnscrypt-proxy = {
-    enable = true;
-    settings = {
-      # ipv6_servers = true;
-      require_dnssec = true;
-      require_nolog = true;
-      require_nofilter = true;
-      query_log.file = "/var/log/dnscrypt-proxy/query.log";
-
-      sources.public-resolvers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
-        ];
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-
-        cache_file = "/var/lib/dnscrypt-proxy/public-resolvers.md";
-      };
-
-      # blocked_names.blocked_names_file = blocklist_txt;
-
-      ## fuck it it should work but somehow dnscrypt is not launching
-      # local_doh = {
-      #   listen_addresses = [ "127.0.0.1:3000" ];
-      #   path = "/dns-query";
-      #   cert_file = config.sops.secrets.dnscrypt-cert-key.path;
-      #   cert_key_file = config.sops.secrets.dnscrypt-cert-key.path;
-      # };
-      #
-      # monitoring_ui = {
-      #   enabled = true;
-      #   username = "admin";
-      #   password = "admin";
-      #   listen_address = "127.0.0.1:8079";
-      #   privacy_level = 1;
-      # };
-
-      # server_names = [ "adguard-dns-doh" ];
-    };
-  };
-
-  # services.dnscrypt-proxy.settings.systemd.services.dnscrypt-proxy.serviceConfig.StateDirectory =
-  #   StateDirectory;
 
   networking.nftables.enable = true;
   networking.firewall = {
@@ -272,14 +209,23 @@ in
         "nix-command"
         "flakes"
       ];
+      # substituters = [
+      #   "http://binarycache.example.com"
+      #   "https://nix-community.cachix.org"
+      #   "https://cache.nixos.org/"
+      # ];
+      # trusted-public-keys = [
+      #   "binarycache.example.com-1:dsafdafDFW123fdasfa123124FADSAD"
+      #   "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      # ];
     };
   };
 
-  documentation = {
-    dev.enable = true;
-    man.cache.enable = true;
-    nixos.includeAllModules = true;
-  };
+  # documentation = {
+  #   dev.enable = true;
+  #   man.cache.enable = true;
+  #   nixos.includeAllModules = false;
+  # };
 
   # environment.pathsToLink = [
   #   "/share/xdg-desktop-portal"
@@ -332,6 +278,11 @@ in
   #   '';
   # };
 
+  # /etc/opt/edge/policies/managed/managed.json
+
+  environment.etc."opt/edge/policies/managed/managed.json".source = ./managed.json;
+  environment.etc."opt/edge/policies/recommended/recommended.json".source = ./recommended.json;
+
   environment = {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -366,26 +317,25 @@ in
       # git-credential-keepassxc # using ssh with keepassxc as the agent
       age
       sops
-      mkcert
-      openssl
-      picard # music brainz tagger
+      # mkcert
+      # openssl
+      # picard # music brainz tagger
       # sherlock-launcher
-      lutgen
-      gowall
+      # lutgen
+      # gowall
       clamav
       # argyllcms # color management on x11
-      keyd
       # xmobar
       # tor-browser
       # ungoogled-chromium
       # libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
       # filezilla
-      firefox-devedition
+      microsoft-edge
       # # Utils
-      discordchatexporter-cli
+      # discordchatexporter-cli
       nix-prefetch-git
       exiftool
-      fuseiso
+      # fuseiso
       # # Apps
       # blender
       wgcf
@@ -410,7 +360,7 @@ in
       # ungoogled-chromium
       # floorp
       # inputs.zen-browser.packages."${system}".default
-      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       # fum
       # miru
       # dino

@@ -41,8 +41,10 @@
 
     common/optional/typst.nix
     common/optional/pandoc.nix
+    ## ========= Editors =========
     common/optional/editors/nixvim
     # common/optional/editors/nvf
+    common/optional/editors/helix
     common/optional/editors/emacs
 
     common/optional/direnv.nix
@@ -53,7 +55,7 @@
     # common/optional/spotify.nix
     # common/optional/strawberry.nix
     common/optional/audacious.nix
-    common/optional/nixcord.nix
+    # common/optional/nixcord.nix
 
     common/optional/inkscape.nix
 
@@ -61,8 +63,11 @@
     #
     # common/optional/browsers/firefox
     common/optional/browsers/floorp
-    common/optional/browsers/brave.nix
-    common/optional/browsers/vivaldi.nix
+    common/optional/browsers/librewolf
+    # common/optional/browsers/brave.nix
+    # common/optional/browsers/vivaldi.nix
+    # common/optional/browsers/chrome.nix
+    # common/optional/browsers/ms-edge.nix
     common/optional/libreoffice.nix
 
     # ========== X ==========

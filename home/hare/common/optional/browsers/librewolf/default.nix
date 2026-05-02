@@ -6,19 +6,19 @@
   ];
   programs.librewolf = {
     enable = true;
-    package = pkgs.librewolf.override {
-      # See nixpkgs' firefox/wrapper.nix to check which options you can use
-      nativeMessagingHosts = with pkgs; [
-        # Gnome shell native connector
-        # gnome-browser-connector
-        # Tridactyl native connector
-        tridactyl-native
-        pywalfox-native
-      ];
-    };
+    # package = pkgs.librewolf.override {
+    #   # See nixpkgs' firefox/wrapper.nix to check which options you can use
+    #   nativeMessagingHosts = with pkgs; [
+    #     # Gnome shell native connector
+    #     # gnome-browser-connector
+    #     # Tridactyl native connector
+    #     tridactyl-native
+    #     pywalfox-native
+    #   ];
+    # };
     nativeMessagingHosts = with pkgs; [
       tridactyl-native
-      pywalfox-native
+      # pywalfox-native
     ];
     policies = {
       ExtensionSettings =
@@ -33,13 +33,13 @@
           };
         in
         listToAttrs [
-          (extension "ublock-origin" "uBlock0@raymondhill.net")
-          (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}")
-          (extension "sponsorblock" "sponsorBlocker@ajay.app")
-          (extension "sidebery" "{3c078156-979c-498b-8990-85f7987dd929}")
-          (extension "darkreader" "addon@darkreader.org")
+          # (extension "ublock-origin" "uBlock0@raymondhill.net")
+          # (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}")
+          # (extension "sponsorblock" "sponsorBlocker@ajay.app")
+          # (extension "sidebery" "{3c078156-979c-498b-8990-85f7987dd929}")
+          # (extension "darkreader" "addon@darkreader.org")
           (extension "tridactyl-vim" "tridactyl.vim@cmcaine.co.uk")
-          (extension "pywalfox" "pywalfox@frewacom.org") # same as keepass
+          # (extension "pywalfox" "pywalfox@frewacom.org") # same as keepass
           # (extension "keepassxc-browser" "keepassxc-browser@keepassxc.org") # firejail setup needed
         ];
       # To add additional extensions, find it on addons.mozilla.org, find
@@ -55,11 +55,11 @@
     profiles.default = {
       isDefault = true;
       extensions.force = true;
-      userChrome = builtins.readFile ./remove-tab.css + builtins.readFile ./sidebar-header.css;
-      userContent = "\n@import url(extrac.css);\n";
-      extraConfig =
-        builtins.replaceStrings [ "\npref(" ] [ "\nuser_pref(" ] (builtins.readFile ../phoenix-desktop.js)
-        + builtins.readFile ../preferred.js;
+      # userChrome = builtins.readFile ./remove-tab.css + builtins.readFile ./sidebar-header.css;
+      # userContent = "\n@import url(extrac.css);\n";
+      # extraConfig =
+      #   builtins.replaceStrings [ "\npref(" ] [ "\nuser_pref(" ] (builtins.readFile ../phoenix-desktop.js)
+      #   + builtins.readFile ../preferred.js;
       extensions = {
         settings = {
           "uBlock0@raymondhill.net".settings =
@@ -206,241 +206,8 @@
             };
         };
       };
-      search = {
-        default = "htmlddg";
-        # privateDefault = "searx";
-        force = true;
-        order = [
-          "s"
-          "nw"
-          "no"
-          "np"
-        ];
-        engines = {
-          searx = {
-            name = "SearXNG";
-            urls = [
-              {
-                template = "http://localhost:8080/search";
-                params = [
-                  {
-                    name = "q";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            definedAliases = [ "'s" ];
-          };
-          htmlddg = {
-            name = "DuckDuckGo (HTML)";
-            urls = [
-              {
-                template = "https://html.duckduckgo.com/html/";
-                params = [
-                  {
-                    name = "q";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-          };
-          nix-packages = {
-            name = "Nix Packages";
-            urls = [
-              {
-                template = "https://search.nixos.org/packages";
-                params = [
-                  {
-                    name = "type";
-                    value = "packages";
-                  }
-                  {
-                    name = "query";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = [ "'np" ];
-          };
-          nixos-options = {
-            name = "NixOS Options";
-            definedAliases = [ "'no" ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            urls = [
-              {
-                template = "https://search.nixos.org/options";
-                params = [
-                  {
-                    name = "query";
-                    value = "{searchTerms}";
-                  }
-                  {
-                    name = "channel";
-                    value = "unstable";
-                  }
-                  {
-                    name = "type";
-                    value = "packages";
-                  }
-                ];
-              }
-            ];
-          };
-          nixos-wiki = {
-            name = "NixOS Wiki";
-            urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
-            iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
-            definedAliases = [ "'nw" ];
-          };
-        };
-      };
-      bookmarks = {
-        force = true;
-        settings = [
-          {
-            name = "Wikipedia";
-            tags = [ "wiki" ];
-            keyword = "wiki";
-            url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go";
-          }
-          {
-            name = "FMHY";
-            url = "https://fmhy.net/";
-          }
-          {
-            name = "VirusTotal";
-            url = "https://www.virustotal.com/gui/home/upload";
-          }
-          {
-            name = "HaveIBeenPWND";
-            url = "https://haveibeenpwned.com/";
-          }
-          {
-            name = "Speedtest";
-            url = "https://librespeed.org/";
-          }
-          {
-            name = "Speedtest";
-            url = "https://fast.com/";
-          }
-          {
-            name = "JustDeleteMe";
-            url = "https://justdeleteme.xyz/";
-          }
-          {
-            name = "UrlVoid";
-            url = "https://www.urlvoid.com/";
-          }
-          {
-            name = "Urlscan";
-            url = "https://urlscan.io/";
-          }
-          {
-            name = "Trendmicro";
-            url = "https://global.sitesafety.trendmicro.com/";
-          }
-          {
-            name = "PrivacySpy";
-            url = "https://privacyspy.org/";
-          }
-          {
-            name = "Triage";
-            url = "https://tria.ge/";
-          }
-          {
-            name = "Cuckoo";
-            url = "https://cuckoo.cert.ee/";
-          }
-          {
-            name = "Documentations";
-            toolbar = false;
-            bookmarks = [
-              {
-                name = "NixOS";
-                url = "https://wiki.nixos.org/";
-                tags = [
-                  "nix"
-                  "wiki"
-                ];
-              }
-              {
-                name = "Home Manager";
-                url = "https://nix-community.github.io/home-manager/options.xhtml";
-                tags = [
-                  "nix"
-                  "wiki"
-                ];
-              }
-              {
-                name = "NixVim";
-                url = "https://nix-community.github.io/nixvim/";
-                tags = [
-                  "nix"
-                  "wiki"
-                ];
-              }
-              {
-                name = "Nvf";
-                url = "https://notashelf.github.io/nvf/options.html";
-                tags = [
-                  "nix"
-                  "wiki"
-                ];
-              }
-              {
-                name = "Stylix";
-                url = "https://stylix.danth.me/";
-                tags = [
-                  "nix"
-                  "wiki"
-                ];
-              }
-            ];
-          }
-          {
-            name = "Games";
-            toolbar = false;
-            bookmarks = [
-              {
-                name = "Fitgirl";
-                url = "https://fitgirl-repacks.site/";
-              }
-              {
-                name = "DODI";
-                url = "https://www.1337x.to/user/DODI/";
-              }
-              {
-                name = "GOG";
-                url = "https://www.gog-games.to/";
-              }
-              {
-                name = "Xatab";
-                url = "https://byxatab.com/";
-              }
-              {
-                name = "Elamigos";
-                url = "https://elamigos.site/";
-              }
-              {
-                name = "Itch.io";
-                url = "https://itch.io/games/new-and-popular/featured/free";
-              }
-              {
-                name = "Myrient";
-                url = "https://myrient.erista.me/";
-              }
-              {
-                name = "Vimm's Lair";
-                url = "https://vimm.net/vault";
-              }
-            ];
-          }
-        ];
-      };
+
+      search = import ../search.nix { inherit pkgs; };
     };
   };
 }

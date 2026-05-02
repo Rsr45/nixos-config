@@ -155,10 +155,10 @@
       ruff.enable = true;
       cssls.enable = true;
       # jsonls.enable = true;
-      qmlls.enable = true;
+      # qmlls.enable = true;
       # marksman.enable = true;
       # markdown_oxide.enable = true;
-      hyprls.enable = true;
+      # hyprls.enable = true;
     };
   };
 }
