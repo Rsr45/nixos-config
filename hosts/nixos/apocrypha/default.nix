@@ -151,6 +151,16 @@
 
   services.logind.settings.Login.HandlePowerKey = "poweroff";
 
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+      options = [ "discard" ];
+    }
+  ];
+  # boot.zswap.enable = true;
+  systemd.oomd.enable = true;
+
   services = {
     xserver = {
       enable = true;
