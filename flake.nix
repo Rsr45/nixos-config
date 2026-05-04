@@ -44,7 +44,7 @@
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
     xmonad-contexts = {
       url = "github:Procrat/xmonad-contexts";
       flake = false;
