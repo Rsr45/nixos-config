@@ -1,6 +1,6 @@
 {...}: {
   programs.yt-dlp = {
-    enable = false;
+    enable = true;
     # settings = {
     #   output = "${config.home.homeDirectory}/Videos/Youtube";
     # };

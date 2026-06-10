@@ -19,14 +19,14 @@ in
 
     (map lib.custom.relativeToRoot [
       "modules/common"
-      # "modules/hosts/common"
-      # "modules/hosts/${platform}"
       "hosts/common/core/${platform}.nix"
-      # "hosts/common/core/sops.nix" # Core because it's used for backups, mail
-      # "hosts/common/core/ssh.nix"
-      #"hosts/common/core/services" #not used yet
+      "hosts/common/core/sops.nix"
+      "hosts/common/users/admin"
+      "hosts/common/users/admin/${platform}.nix"
       "hosts/common/users/hare"
       "hosts/common/users/hare/${platform}.nix"
+      "hosts/common/users/vahlok"
+      "hosts/common/users/vahlok/${platform}.nix"
     ])
   ];
 
@@ -34,6 +34,8 @@ in
   # ========== Core Host Specifications ==========
   #
   hostSpec = {
+    adminUserName = "admin";
+    secondUserName = "vahlok";
     username = "hare"; # edit it so it is easier for multiple user machine setup
     handle = "Rsr45";
     # inherit (inputs.nix-secrets)
@@ -46,12 +48,9 @@ in
 
   networking.hostName = config.hostSpec.hostName;
 
-  # System-wide packages, in case we log in as root
-  environment.systemPackages = [ pkgs.openssh ];
+  # environment.systemPackages = [ pkgs.openssh ];
 
-  # Force home-manager to use global packages
   home-manager.useGlobalPkgs = true;
-  # If there is a conflict file that is backed up, use this extension
   home-manager.backupFileExtension = "bk";
   home-manager.useUserPackages = true;
 
@@ -87,7 +86,6 @@ in
       max-free = 1000000000; # 1GB
 
       trusted-users = [ "@wheel" ];
-      # Deduplicate and optimize nix store
       auto-optimise-store = true;
       warn-dirty = false;
 
@@ -99,14 +97,4 @@ in
       ];
     };
   };
-
-  #
-  # ========== Basic Shell Enablement ==========
-  #
-  # On darwin it's important this is outside home-manager
-  # programs.zsh = {
-  #   enable = true;
-  #   enableCompletion = true;
-  #   promptInit = "source ''${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-  # };
 }

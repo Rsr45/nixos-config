@@ -12,6 +12,15 @@ let
       configFile = pkgs.writeText "config.yaml" (
         pkgs.lib.generators.toYAML { } {
           anchor = "bottom-right";
+          background = "#${config.lib.stylix.colors.base00}";
+          color = "#${config.lib.stylix.colors.base05}";
+          border = "#${config.lib.stylix.colors.base04}";
+          separator = " : ";
+          border_width = 2;
+          corner_r = 0;
+          padding = 15; # Defaults to corner_r
+          column_padding = 25; # Defaults to padding
+
           # ...
           inherit menu;
         }
@@ -27,9 +36,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    # systemd.enable = false;
-    # package = null;
-    # portalPackage = null;
+    systemd.enable = false;
     # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     # portalPackage =
     #   inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
@@ -42,18 +49,31 @@ in
       "$mod" = "SUPER";
       "exec-once" = [
         # "eww daemon; eww open bar_1"
-        # "qs" # launched via sytemd through qs home module
+        # "uwsm app -- qs -d --config ${config.xdg.configHome}/qs-dwm" # launched via sytemd through qs home module
+        "uwsm app -- noctalia-shell"
+        # "uwsm app -- awww restore" # use noctalia-shell
+        ## Fix Soteria Polkit Agent
+        "uwsm app -- dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_ID"
         # "waybar"
-        "waybar -c ~/.config/waybar/waybar_block_1/config.jsonc -s ~/.config/waybar/waybar_block_1/style.css"
-        "awww restore"
-        "copyq --start-server"
+        # "waybar -c ~/.config/waybar/waybar_block_1/config.jsonc -s ~/.config/waybar/waybar_block_1/style.css"
+        # "waybar -c ~/.config/waybar/suckless_underline/config.jsonc -s ~/.config/waybar/suckless_underline/style.css"
+        # "copyq --start-server"
       ];
-      source = "colors.conf";
+      source = [
+        "colors.conf"
+        # cool but wlr-which-key and such implementation is better tbh like
+        # i already have vim ff etc all in modal mode no need for the wm aswell
+        # "hyprvim/init.conf"
+        # "hyprvim/extras/hyprland-basics/keymap.conf"
+      ];
       monitor = [ ",1920x1080@144,auto,1" ];
       input = {
-        kb_layout = "us";
-        # kb_variant = "colemak_dh_wide_iso";
+        kb_layout = "us,secondcoming";
+
+        kb_options = "compose:menu";
+        kb_variant = ",colemak_dh_iso";
         numlock_by_default = true;
+        resolve_binds_by_sym = 1;
         repeat_delay = 660;
         repeat_rate = 25;
         accel_profile = "flat";
@@ -69,13 +89,13 @@ in
         # resize_on_border = true;
       };
       decoration = {
-        rounding = 0;
+        rounding = 12;
         # active_opacity = 0.9;
         # inactive_opacity = 0.9;
         dim_inactive = false;
         dim_strength = 0.2;
         blur = {
-          # enabled = true;
+          enabled = false;
           # ignore_opacity = true;
           # popups = true;
           # size = 8;
@@ -89,7 +109,7 @@ in
           enabled = true;
           range = 4;
           render_power = 3;
-          color = "rgba(1a1a1aee)";
+          # color = "rgba(1a1a1aee)";
         };
       };
       animations = {
@@ -148,32 +168,34 @@ in
         "$mod, mouse:273, resizewindow"
       ];
       bindel = [
-        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86AudioRaiseVolume, exec, uwsm app -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioLowerVolume, exec, uwsm app -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
       bindl = [
-        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ", XF86AudioPlay, exec, playerctl play-pause"
-        ", XF86AudioPrev, exec, playerctl previous"
-        ", XF86AudioNext, exec, playerctl next"
+        ", XF86AudioMute, exec, uwsm app -- wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioPlay, exec, uwsm app -- playerctl play-pause"
+        ", XF86AudioPrev, exec, uwsm app -- playerctl previous"
+        ", XF86AudioNext, exec, uwsm app -- playerctl next"
       ];
       bind = [
         "$mod, left, movefocus, l"
+        "$mod, k, movefocus, l"
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
         "$mod, down, movefocus, d"
         "$mod+Shift, left, movewindow, l"
+        "$mod+Shift, k, movewindow, l"
         "$mod+Shift, right, movewindow, r"
         "$mod+Shift, up, movewindow, u"
         "$mod+Shift, down, movewindow, d"
 
         "$mod, Q, killactive,"
-        "$mod+Shift+Alt, Q, exec, hyprctl kill"
+        "$mod+Shift+Alt, Q, exec, uwsm app -- hyprctl kill"
 
         "$mod+SHIFT, Space, togglefloating,"
         "$mod+ALT, F, fullscreenstate, 0 3"
         "$mod, F, fullscreen, 0"
-        "$mod+SHIFT, F, fullscreen, 1"
+        "$mod, M, fullscreen, 1"
 
         "$mod, 0, workspace, 10"
         "$mod SHIFT, 0, movetoworkspace, 10"
@@ -181,40 +203,43 @@ in
         "$mod, N, togglespecialworkspace, special"
         "$mod SHIFT, N, movetoworkspace, special"
 
-        ", Print, exec, ~/scripts/screenshot.sh screen"
-        "$mod SHIFT, S, exec, ~/scripts/screenshot.sh region"
-        "$mod SHIFT, C, exec, hyprpicker -a -f hex"
-        "$mod+Alt, W, exec, ~/scripts/wallpaper.sh"
-        "$mod, O, exec, ~/scripts/ocr.sh"
-        "$mod, B, exec, ~/scripts/bookmarks.sh"
-        "$mod, D, exec, ~/scripts/dmenu.sh"
-        "$mod, Space, exec, rofi -show drun || pkill rofi"
-        "$mod, Return, exec, pcmanfm-qt"
-        "$mod SHIFT, Return, exec, doublecmd"
-        "$mod, T, exec, kitty"
-        "$mod, A, exec, ~/scripts/mixer.sh"
+        ", Print, exec, uwsm app -- bash -c 'FILE='$HOME/Pictures/Screenshots/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png'; grim - | tee '$FILE' | wl-copy --type image/png'"
+        "$mod SHIFT, S, exec, uwsm app -- bash -c 'FILE='$HOME/Pictures/Screenshots/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png'; grim -g '$(slurp)' - | tee '$FILE' | wl-copy --type image/png'"
+
+        "$mod SHIFT, C, exec, uwsm app -- hyprpicker -a -f hex"
+        "$mod+Alt, W, exec, uwsm app -- noctalia-shell ipc call wallpaper toggle"
+        "$mod, O, exec, uwsm app -- ~/scripts/ocr.sh"
+        "$mod, B, exec, uwsm app -- ~/scripts/bookmarks.sh"
+        "$mod, D, exec, uwsm app -- bemenu-run"
+        # "$mod, Space, exec, rofi -show drun || pkill rofi"
+        "$mod, Space, exec, uwsm app -- vicinae toggle"
+        "$mod, Return, exec, uwsm app -- dolphin"
+        "$mod, T, exec, uwsm app -- wezterm"
+        "$mod, A, exec, uwsm app -- ~/scripts/mixer.sh"
         # "$mod, E, exec, wezterm start --class dired -- yazi"
-        "$mod SHIFT, E, exec, hyprctl dispatch exit 1"
-        "Ctrl+Shift+Super, Delete, exec, systemctl reboot"
-        "Ctrl+Shift+Alt+Super, Delete, exec, systemctl poweroff || loginctl poweroff"
-        # "$mod, L, exec, hyprlock"
-        "$mod, Delete, exec, wlogout"
-        "$mod, Print, exec, wlr-which-key"
-        (
-          "$mod, G, exec, "
-          + lib.getExe (mkMenu [
-            {
-              key = "t";
-              desc = "next tab";
-              cmd = "hyprctl dispatch workspace +1";
-            }
-            {
-              key = "T";
-              desc = "prev tab";
-              cmd = "hyprctl dispatch workspace -1";
-            }
-          ])
-        )
+        "$mod, L, exec, uwsm app -- noctalia-shell ipc call lockScreen lock"
+        "$mod, Delete, exec, uwsm app -- noctalia-shell ipc call sessionMenu toggle"
+        # "$mod, Print, exec, uwsm app -- wlr-which-key"
+        # (
+        #   "$mod, G, exec, "
+        #   + lib.getExe (mkMenu [
+        #     {
+        #       key = "t";
+        #       desc = "next tab";
+        #       cmd = "hyprctl dispatch workspace +1";
+        #     }
+        #     {
+        #       key = "T";
+        #       desc = "prev tab";
+        #       cmd = "hyprctl dispatch workspace -1";
+        #     }
+        #     {
+        #       key = "o";
+        #       desc = "Off";
+        #       cmd = "poweroff";
+        #     }
+        #   ])
+        # )
       ]
       ++ (builtins.concatLists (
         builtins.genList (
@@ -240,13 +265,15 @@ in
         "float on, match:title ^(Picture-in-Picture)$"
         # "pin, title:^(Picture-in-Picture)$"
         # "workspace special silent, class:org.keepassxc.KeePassXC"
-        # "noborder, onworkspace:w[t1]"
+        # "border_size 0, match:workspace w[t1]"
         "float on, size 622 652, stay_focused on, match:class ^(com.github.hluk.copyq)$"
       ];
       layerrule = [
         # "blur, waybar"
         # "blur, quickshell"
         # "ignorealpha x, waybar"
+        "blur on, ignore_alpha 0, match:namespace vicinae"
+        "no_anim on, match:namespace vicinae"
       ];
     };
     extraConfig = ''

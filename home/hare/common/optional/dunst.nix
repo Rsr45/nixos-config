@@ -1,9 +1,4 @@
-{ pkgs, ... }:
-{
-  home.packages = with pkgs; [
-    dunst
-  ];
-
+{...}: {
   services.dunst = {
     enable = true;
     settings = {
@@ -15,7 +10,6 @@
         corner_radius = "0";
         gap_size = "8";
         frame_width = "2";
-        font = "Geist Mono 11";
       };
     };
   };

@@ -6,6 +6,7 @@
   ...
 }:
 {
+  programs.nixvim.plugins.lspconfig.enable = true;
   programs.nixvim.lsp = {
     inlayHints.enable = true;
     keymaps = [
@@ -18,6 +19,10 @@
         key = "<leader>ca";
         lspBufAction = "code_action";
         options.desc = "Code Action";
+      }{
+        key = "<leader>cf";
+        lspBufAction = "format";
+        options.desc = "Format";
       }
       {
         key = "<leader>gd";
@@ -49,11 +54,11 @@
         action.__raw = "function() if vim.fn.getloclist(0, {winid=1}).winid ~= 0 then vim.cmd('lclose') else vim.diagnostic.setloclist() end end";
         options.desc = "Diagnostic List";
       }
-      {
-        key = "<leader>e";
-        action = "vim.diagnostic.open_float";
-        options.desc = "Floating Diagnostic Message";
-      }
+      # {
+      #   key = "<leader>e";
+      #   action = "vim.diagnostic.open_float";
+      #   options.desc = "Floating Diagnostic Message";
+      # }
     ];
     servers = {
       "*" = {

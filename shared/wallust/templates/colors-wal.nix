@@ -1,0 +1,30 @@
+{ config, ... }:
+''
+  {
+    "wallpaper": "/nix/store/4fan0av5dr1d1msm2f3zngpgpdhhwhdk-hm_walcolorschemes/base16-gruvbox-medium-dark.json",
+    "alpha": "100",
+    "special": {
+      "background": "#${config.lib.stylix.colors.base00}",
+      "foreground": "#${config.lib.stylix.colors.base05}",
+      "cursor": "#${config.lib.stylix.colors.base05}"
+    },
+    "colors": {
+      "color0": "#${config.lib.stylix.colors.base00}",
+      "color1": "#${config.lib.stylix.colors.base0A}",
+      "color2": "#${config.lib.stylix.colors.base0B}",
+      "color3": "#${config.lib.stylix.colors.base0C}",
+      "color4": "#${config.lib.stylix.colors.base0D}",
+      "color5": "#${config.lib.stylix.colors.base0E}",
+      "color6": "#${config.lib.stylix.colors.base0F}",
+      "color7": "#${config.lib.stylix.colors.base05}",
+      "color8": "#${config.lib.stylix.colors.base03}",
+      "color9": "#${config.lib.stylix.colors.base0A}",
+      "color10": "#${config.lib.stylix.colors.base0B}",
+      "color11": "#${config.lib.stylix.colors.base0C}",
+      "color12": "#${config.lib.stylix.colors.base0D}",
+      "color13": "#${config.lib.stylix.colors.base0E}",
+      "color14": "#${config.lib.stylix.colors.base0F}",
+      "color15": "#${config.lib.stylix.colors.base07}"
+    }
+  }
+''

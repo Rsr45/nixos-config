@@ -6,6 +6,7 @@
       vicious
       luarocks
       luadbi-mysql
+      awesome-wm-widgets
     ];
   };
 }

@@ -2,18 +2,18 @@
 {
   programs.nixvim.keymaps = [
     {
-      key = "<leader>te";
+      key = "<leader>e";
       mode = "n";
       action = "<cmd>Oil<CR>";
       options = {
         noremap = true;
-        desc = "Oil Cwd";
+        desc = "Oil";
       };
     }
     {
-      key = "<leader>tE";
+      key = "<leader>E";
       mode = "n";
-      action = "<cmd>Oil<CR>";
+      action = "<cmd>Oil .<CR>";
       options = {
         noremap = true;
         desc = "Oil Root";
@@ -34,9 +34,9 @@
       enable = true;
       settings = {
         use_default_keymaps = true;
-        win_options = {
-          signcolumn = "yes:2";
-        };
+        # win_options = {
+        #   signcolumn = "yes:2";
+        # };
         view_options = {
           show_hidden = true;
         };
@@ -70,6 +70,6 @@
       };
     };
 
-    oil-git-status.enable = true;
+    # oil-git-status.enable = true;
   };
 }

@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    inputs.spicetify-nix.homeManagerModules.default
+    inputs.spicetify-nix.homeManagerModules.spicetify
   ];
 
   programs.spicetify =
@@ -21,17 +21,24 @@
         adblock
         hidePodcasts
         shuffle # shuffle+ (special characters are sanitized out of extension names)
+        keyboardShortcut
+        powerBar
+        fullAlbumDate
+        oldCoverClick
+        sideHide
+        aiBandBlocker
+        autoSkipVideo
       ];
 
-      enabledCustomApps = with spicePkgs.apps; [
-        newReleases
-        ncsVisualizer
-      ];
-
-      enabledSnippets = with spicePkgs.snippets; [
-        rotatingCoverart
-        pointer
-      ];
+      # enabledCustomApps = with spicePkgs.apps; [
+      #   newReleases
+      #   ncsVisualizer
+      # ];
+      #
+      # enabledSnippets = with spicePkgs.snippets; [
+      #   rotatingCoverart
+      #   pointer
+      # ];
 
       # theme = {
       #   # Name of the theme
@@ -55,7 +62,7 @@
       #   overwriteAssets = false;
       #   additonalCss = "@import url('${config.xdg.configHome}/spicetify/colors.css');";
       # };
-      theme = spicePkgs.themes.text;
+      # theme = spicePkgs.themes.text;
       # colorScheme = "Throwback";
     };
 }

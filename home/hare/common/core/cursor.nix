@@ -8,22 +8,22 @@ in
     gtk.enable = true;
     x11 = {
       enable = true;
-      defaultCursor = name;
+      # defaultCursor = name;
     };
     hyprcursor = {
       enable = true;
-      size = 24;
+      # size = 24;
     };
-    sway.enable = true;
+    # sway.enable = true;
     dotIcons.enable = true;
-    package = package;
-    name = name;
-    size = 24;
+    # package = package;
+    # name = name;
+    # size = 24;
   };
 
-  gtk.cursorTheme = {
-    package = package;
-    name = name;
-    size = 24;
-  };
+  # gtk.cursorTheme = {
+  #   # package = package;
+  #   # name = name;
+  #   # size = 24;
+  # };
 }

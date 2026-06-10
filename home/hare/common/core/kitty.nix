@@ -3,11 +3,11 @@
   home.packages = [ pkgs.kitty ];
   programs.kitty = {
     enable = true;
-    font = {
-      size = 12;
-      name = "Iosevka";
-      # package = pkgs.geist;
-    };
+    # font = {
+    #   size = 12;
+    #   name = "Iosevka";
+    #   # package = pkgs.geist;
+    # };
     keybindings = {
       # XF86Copy (0x1008ff57)
       "0x1008ff57" = " copy_to_clipboard";
@@ -21,7 +21,7 @@
       # "end" = "scroll_end";
     };
     settings = {
-      include = "./generated-colors.conf";
+      # include = "./generated-colors.conf"; # using stylix my boi again just like the old times
       # text_composition_strategy = "legacy";
       confirm_os_window_close = "0";
       window_padding_width = "6";

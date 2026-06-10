@@ -1,25 +1,28 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   xdg.portal = {
     enable = lib.mkForce true;
     extraPortals = lib.mkForce [
-      pkgs.xdg-desktop-portal-termfilechooser
-      pkgs.lxqt.xdg-desktop-portal-lxqt
       pkgs.kdePackages.xdg-desktop-portal-kde
+      pkgs.xdg-desktop-portal-hyprland
     ];
     config = {
       common = {
         default = [
+          "hyprland"
           "kde"
         ];
         "org.freedesktop.impl.portal.FileChooser" = [
-          "termfilechooser"
+          "kde"
         ];
       };
     };
   };
-  xdg.configFile."xdg-desktop-portal-termfilechooser" = {
-    source = ./termfilechooser;
-    recursive = true;
-  };
+  # xdg.configFile."xdg-desktop-portal-termfilechooser" = {
+  #   source = ./termfilechooser;
+  #   recursive = true;
+  # };
 }

@@ -5,10 +5,10 @@
 }:
 {
   programs = {
-    starship.enableFishIntegration = false;
+    starship.enableFishIntegration = true;
     carapace.enableFishIntegration = false;
     zoxide.enableFishIntegration = true;
-    eza.enableFishIntegration = true;
+    eza.enableFishIntegration = false;
     kitty.shellIntegration.enableFishIntegration = true;
   };
 
@@ -17,6 +17,7 @@
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
       set -g fish_transient_prompt 1
+      set -g fish_key_bindings fish_vi_key_bindings
     '';
 
     # bind -M insert ctrl-space complete
@@ -31,10 +32,11 @@
       ci = "zi";
       v = "~/scripts/view.sh";
       view = "~/scripts/view.sh";
-      e = "nvim";
+      e = "emacs -nw";
+      ec = "emacsclient -nw";
       edit = "nvim";
       y = "yazi";
-      doom = "~/doom-emacs/bin/doom";
+      doom = "${config.xdg.configHome}/emacs/bin/doom";
       rebuild-impure = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
       rebuild = "sudo nixos-rebuild switch --show-trace --flake .#apocrypha";
       cs2-1080 = "gamescope -w 1080 -h 1080 -r 144 -S stretch --force-grab-cursor steam";

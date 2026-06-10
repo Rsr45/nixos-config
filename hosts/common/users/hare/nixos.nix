@@ -11,19 +11,16 @@ let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 
   # Decrypt password to /run/secrets-for-users/ so it can be used to create the user
-  sopsHashedPasswordFile = lib.optionalString (
-    !config.hostSpec.isMinimal
-  ) config.sops.secrets."passwords/${hostSpec.username}".path;
+  sopsHashedPasswordFile = config.sops.secrets."passwords/${hostSpec.username}".path;
 in
 {
-  users.mutableUsers = false; # Only allow declarative credentials; Required for password to be set via sops during system activation!
+  users.mutableUsers = false;
   users.users.${hostSpec.username} = {
     home = "/home/${hostSpec.username}";
     isNormalUser = true;
-    hashedPasswordFile = "/home/hare/Personal/passwd.txt"; # Blank if sops is not working.
+    hashedPasswordFile = sopsHashedPasswordFile;
 
     extraGroups = lib.flatten [
-      "wheel"
       (ifTheyExist [
         "audio"
         "video"
@@ -35,6 +32,7 @@ in
         "libvirtd"
         "adbusers"
         "mpd"
+        "wireshark"
       ])
     ];
   };

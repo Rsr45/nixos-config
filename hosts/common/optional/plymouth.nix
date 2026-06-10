@@ -7,10 +7,10 @@
     ];
     plymouth = {
       enable = true;
-      theme = lib.mkForce "red_loader";
-      themePackages = [
-        (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "red_loader" ]; })
-      ];
+      # theme = lib.mkForce "red_loader";
+      # themePackages = [
+      #   (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "red_loader" ]; })
+      # ];
     };
     consoleLogLevel = 0;
   };

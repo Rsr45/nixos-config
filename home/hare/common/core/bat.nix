@@ -5,7 +5,6 @@
     config = {
       # Git modifications and file header (but no grid)
       style = "changes,header";
-      theme = "gruvbox-dark";
     };
     extraPackages = with pkgs.bat-extras; [
       batgrep

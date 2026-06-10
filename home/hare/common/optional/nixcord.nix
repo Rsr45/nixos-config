@@ -7,24 +7,39 @@
   imports = [ inputs.nixcord.homeModules.default ];
 
   programs.nixcord = {
-    enable = false;
+    enable = true;
     discord.enable = false;
     # discord.vencord.package = pkgs.vencord;
 
     vesktop = {
-      enable = false;
-      # package = pkgs.vesktop;
+      enable = true;
       autoscroll.enable = true;
     };
 
-    quickCss = "@import url(\"https://croissantdunord.github.io/discord-adblock/adblock-extras.css\");\n@import url(\"https://croissantdunord.github.io/discord-adblock/adblock.css\");";
+    equibop = {
+      enable = true;
+      settings = {
+        MINIMIZE_TO_TRAY = false;
+        TRAY = false;
+      };
+    };
+
+    dorion.enable = true;
+
+    # quickCss = "@import url(https://codeberg.org/ridge/Discord-Adblock/raw/branch/main/discord-adblock.css);\n@import url(https://codeberg.org/ridge/Discord-CSS-Tweaks/raw/branch/main/discord-css-tweaks.css);";
+    quickCss = import ./nixcord-quickcss.nix;
 
     config = {
       useQuickCss = true;
-      themeLinks = [ "https://raw.codeberg.page/AllPurposeMat/Disblock-Origin/DisblockOrigin.theme.css" ];
-      enabledThemes = [ "midnight-matugen.css" ];
       autoUpdate = true;
       plugins = {
+        # must have
+        BlurNSFW.enable = true;
+        # anonymiseFileNames.enable = true;
+        silentTyping.enable = true;
+        hideMedia.enable = true;
+
+        # good to have
         fakeNitro.enable = true;
         favoriteEmojiFirst.enable = true;
         favoriteGifSearch.enable = true;
@@ -54,14 +69,14 @@
         };
         # moreCommands.enable = true; #equicord required
         # moreKaomoji.enable = true; #equicord required
-        noBlockedMessages.enable = true;
-        noMosaic.enable = true;
-        noOnboardingDelay.enable = true;
-        noPendingCount = {
-          enable = true;
-          hideFriendRequestsCount = false;
-          # hideMessageRequestCount = false;
-        };
+        # noBlockedMessages.enable = true;
+        # noMosaic.enable = true;
+        # noOnboardingDelay.enable = true;
+        # noPendingCount = {
+        #   enable = true;
+        #   hideFriendRequestsCount = false;
+        #   # hideMessageRequestCount = false;
+        # };
         noProfileThemes.enable = true;
         # noRPC.enable = true;
         noReplyMention.enable = true;
@@ -91,12 +106,11 @@
           # mode = "nick-user";
         };
         showTimeoutDuration.enable = true;
-        silentTyping.enable = true;
-        spotifyControls.enable = true;
-        spotifyCrack.enable = true;
-        spotifyShareCommands.enable = true;
+        # spotifyControls.enable = true;
+        # spotifyCrack.enable = true;
+        # spotifyShareCommands.enable = true;
         startupTimings.enable = true;
-        typingIndicator.enable = true;
+        # typingIndicator.enable = true;
         typingTweaks.enable = true;
         unlockedAvatarZoom.enable = true;
         unsuppressEmbeds.enable = true;
@@ -104,30 +118,65 @@
         validReply.enable = true;
         validUser.enable = true;
         voiceChatDoubleClick.enable = true;
-        whoReacted.enable = true;
-        youtubeAdblock.enable = true;
+        # whoReacted.enable = true;
+        # youtubeAdblock.enable = true;
         noTypingAnimation.enable = true;
         # clearURLs.enable = true;
         # colorSighted.enable = true;
-        disableCallIdle.enable = true;
+        # disableCallIdle.enable = true;
         # ctrlEnterSend.enable = true;
-        copyFileContents.enable = true;
-        callTimer.enable = true;
-        # blurNSFW.enable = true;
-        biggerStreamPreview.enable = true;
-        betterUploadButton.enable = true;
+        # copyFileContents.enable = true;
+        # callTimer.enable = true;
+        # biggerStreamPreview.enable = true;
+        # betterUploadButton.enable = true;
         # betterSettings.enable = true; # no background with midnight
-        betterRoleContext.enable = true;
-        betterGifPicker.enable = true;
-        betterGifAltText.enable = true;
+        # betterRoleContext.enable = true;
+        # betterGifPicker.enable = true;
+        # betterGifAltText.enable = true;
+        # accountPanelServerProfile.enable = true;
+        # ignoreActivities = {
+        #   enable = true;
+        #   ignorePlaying = true;
+        #   ignoreWatching = true;
+        # };
+
+        blockKrisp.enable = true;
+        # altKrispSwitch.enable = true;
         anonymiseFileNames.enable = true;
-        accountPanelServerProfile.enable = true;
-        # hideAttachments.enable = true;
-        ignoreActivities = {
+        autoZipper.enable = true;
+        betterBlockedUsers.enable = true;
+        betterCommands.enable = true;
+        cleanChannelName.enable = true;
+        equibopStreamFixes.enable = true;
+        declutter = {
           enable = true;
-          ignorePlaying = true;
-          ignoreWatching = true;
+          removeAvatarDecoration = true;
+          removeNameplate = true;
+          removeProfileEffect = true;
+          removeClanTag = true;
+          alwaysShowUsername = true;
+          removeShopAboveDM = true;
+          removeQuestsAboveDM = true;
+          removeServerBoostInfo = true;
+          removeBillingSettings = true;
+          removeGiftButton = true;
+          removeUnavailableEmojiPicker = true;
+          removeAudioMenus = true;
+          removeButtonTooltips = true;
         };
+        exportMessages.enable = true;
+        keyboardNavigation.enable = true;
+        questify = {
+          enable = true;
+          disableQuestsEverything = true;
+        };
+        channelBadges = {
+          enable = true;
+          showTextBadge = false;
+          showVoiceBadge = false;
+        };
+        globalBadges.enable = true;
+        betterInvites.enable = true;
       };
     };
   };

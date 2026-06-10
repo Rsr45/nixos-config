@@ -5,26 +5,30 @@
       {
         key = "<leader>gg";
         mode = "n";
-        action = "<cmd>Neogit<CR>";
+        action = "<cmd>Git<CR>";
         options = {
-          desc = "Open Neogit";
+          desc = "Git";
         };
       }
       {
-        key = "<leader>tg";
-        mode = [ "n" ];
-        action = "<cmd>lua Snacks.lazygit.open()<CR>";
-        options.desc = "Lazygit";
+        key = "<leader>gp";
+        mode = "n";
+        action = "<cmd>Git push<CR>";
+        options = {
+          desc = "Push";
+        };
+      }
+      {
+        key = "<leader>ga";
+        mode = "n";
+        action = "<cmd>Git add %:p<CR>";
+        options = {
+          desc = "Add";
+        };
       }
     ];
     plugins = {
-      neogit.enable = true;
-      snacks.settings = {
-        lazygit.enabled = true;
-        git.enabled = true;
-      };
       fugitive.enable = true;
-      gitsigns.enable = false;
       mini-git.enable = true;
     };
   };

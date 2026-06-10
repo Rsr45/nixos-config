@@ -8,9 +8,18 @@
 {
   options.hostSpec = {
     # Data variables that don't dictate configuration settings
+    adminUserName = lib.mkOption {
+      type = lib.types.str;
+      default = "admin";
+      description = "System administrator user name";
+    };
     username = lib.mkOption {
       type = lib.types.str;
-      description = "The username of the host";
+      description = "The Main users of the host";
+    };
+    secondUserName = lib.mkOption {
+      type = lib.types.str;
+      description = "The Second users name";
     };
     hostName = lib.mkOption {
       type = lib.types.str;

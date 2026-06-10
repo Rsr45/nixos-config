@@ -6,8 +6,8 @@
       settings = {
         # org_agenda_files = "~/orgfiles/**/*";
         # org_default_notes_file = "~/orgfiles/refile.org";
-        org_agenda_files = "~/Personal/Notes/**/*";
-        org_default_notes_file = "~/Personal/Notes/refile.org";
+        org_agenda_files = "~/Documents/Notes/**/*";
+        org_default_notes_file = "~/Documents/Notes/refile.org";
         org_adapt_indentation = false;
         org_startup_indented = true;
       };
@@ -43,7 +43,7 @@
     # require('org-bullets').setup()
     extraConfigLua = ''
       require('org-roam').setup({
-          directory = '~/Personal/Notes/roam',
+          directory = '~/Documents/Notes/roam',
       })
 
 

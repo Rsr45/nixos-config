@@ -5,15 +5,15 @@
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
     gtk3 = {
       bookmarks = [
-        "file://${config.home.homeDirectory}/Documents"
-        "file://${config.home.homeDirectory}/Downloads"
-        "file://${config.home.homeDirectory}/Music"
-        "file://${config.home.homeDirectory}/Pictures"
-        "file://${config.home.homeDirectory}/Videos"
-        "file://${config.home.homeDirectory}/Games"
-        "file://${config.home.homeDirectory}/Projects"
-        "file://${config.home.homeDirectory}/Dev"
-        "file://${config.home.homeDirectory}/Personal"
+        "file://${config.xdg.userDirs.documents}"
+        "file://${config.xdg.userDirs.download}"
+        "file://${config.xdg.userDirs.music}"
+        "file://${config.xdg.userDirs.pictures}"
+        "file://${config.xdg.userDirs.videos}"
+        "file://${config.xdg.userDirs.extraConfig.GAMES}"
+        "file://${config.xdg.userDirs.extraConfig.PROJECTS}"
+        "file://${config.xdg.userDirs.extraConfig.DEV}"
+        "file://${config.xdg.userDirs.extraConfig.PERSONAL}"
       ];
     };
   };

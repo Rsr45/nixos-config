@@ -10,7 +10,7 @@
         favicons.show = "never";
         background = false;
       };
-      url.searchengines = "{\"DEFAULT\":\"https://html.duckduckgo.com/html/?q={}\"}";
+      # url.searchengines = "{\"DEFAULT\":\"https://html.duckduckgo.com/html/?q={}\"}";
       content.blocking = {
         enabled = true;
         hosts.block_subdomains = true;

@@ -14,10 +14,10 @@
         "<C-u>"
       ];
     };
-    config = {
-      "background_color" = "1.0 1.0 1.0";
-      "text_highlight_color" = "1.0 0.0 0.0";
-      "source" = "${config.xdg.configHome}/sioyek/colors";
-    };
+    # config = {
+    #   "background_color" = "1.0 1.0 1.0";
+    #   "text_highlight_color" = "1.0 0.0 0.0";
+    #   "source" = "${config.xdg.configHome}/sioyek/colors";
+    # };
   };
 }

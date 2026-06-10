@@ -1,8 +1,11 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.thunderbird = {
     enable = true;
     # package = pkgs.betterbird;
+    nativeMessagingHosts = with pkgs; [
+      pywalfox-native
+    ];
     profiles.default = {
       isDefault = true;
       # feedAccounts.Feed = { };

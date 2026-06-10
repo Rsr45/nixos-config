@@ -4,7 +4,6 @@
 #  NixOS running on Ryzen 7 2700X, RX Vega 56, 16 GB RAM    #
 #                                                           #
 #############################################################
-
 {
   inputs,
   lib,
@@ -16,35 +15,37 @@
   imports = lib.flatten [
     # ============ Hardware Configs ==========
     ./hardware-configuration.nix
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-gpu-amd
-    # inputs.hardware.nixosModules.common-pc-ssd
+    inputs.hardware.nixosModules.common-cpu-amd
+    inputs.hardware.nixosModules.common-gpu-amd
+    inputs.hardware.nixosModules.common-pc-ssd
 
     (map lib.custom.relativeToRoot [
       # ========== Required Configs ==========
       "hosts/common/core"
+      "shared/hosts/coreutils"
 
       # ========== Network Configs ==========
       "hosts/common/optional/services/adguardhome.nix"
       "hosts/common/optional/services/dnscrypt-proxy.nix"
+      "hosts/common/optional/services/syncthing.nix"
 
       # ========== Optional Configs ==========
       "hosts/common/optional/services/greetd.nix"
       "hosts/common/optional/services/kanata.nix"
       "hosts/common/optional/services/searxng.nix"
-      # "hosts/common/optional/services/locate.nix"
+      # "hosts/common/optional/services/ollama.nix"
       "hosts/common/optional/audio.nix"
       # "hosts/common/optional/firejail.nix"
-      # "hosts/common/optional/plymouth.nix"
+      "hosts/common/optional/plymouth.nix"
       "hosts/common/optional/wm/hyprland.nix"
+      "hosts/common/optional/wm/sway.nix"
       # "hosts/common/optional/wm/niri.nix"
       # "hosts/common/optional/wm/i3.nix"
-      # "hosts/common/optional/wm/awesome.nix"
+      "hosts/common/optional/wm/awesome.nix"
+      "shared/hosts/steam"
     ])
     # ========== Apocrypha Specific ========
-    # ./stylix.nix
-    ./shared.nix
-    ./steam.nix
+    ./stylix.nix
   ];
 
   # ========== Host Specification ==========
@@ -53,22 +54,7 @@
     hostName = "apocrypha";
   };
 
-  sops = {
-    defaultSopsFile = "/home/hare/nixos-config/secrets.yaml";
-    validateSopsFiles = false;
-    age.keyFile = "/home/hare/.config/sops/age/keys.txt";
-
-    secrets = {
-      searx-secret = { };
-      hare-password = { };
-      # dnscrypt-cert-key = {
-      #   # restartUnits = [ "dnscrypt-proxy.service" ];
-      # };
-      # nextcloud-admin = {
-      #   owner = "nextcloud";
-      # };
-    };
-  };
+  # security.run0.enableSudoAlias = true;
 
   networking = {
     networkmanager.enable = true;
@@ -111,6 +97,91 @@
   };
 
   programs.kdeconnect.enable = true;
+
+  security = {
+    # alias sudo = 'run0'
+    run0.enableSudoAlias = true;
+    polkit.enable = true;
+    soteria.enable = true;
+    # Disable sudo
+    sudo.enable = false;
+    wrappers = {
+      su.enable = lib.mkForce false;
+      sudoedit.enable = lib.mkForce false;
+      sg.enable = lib.mkForce false;
+      # fusermount.enable = lib.mkForce false;
+      # fusermount3.enable = lib.mkForce false;
+      pkexec.setuid = lib.mkForce false;
+      newgrp.setuid = lib.mkForce false;
+      newgidmap.setuid = lib.mkForce false;
+      newuidmap.setuid = lib.mkForce false;
+      # `mount` Needed for `fileSystems.options`
+      # mount.enable = lib.mkForce false;
+      # Optional: if you disable mount, disable umount as well
+      # umount.enable = lib.mkForce false;
+    };
+    # Or hyprlock, required for swaylock to accept your password
+    pam.services.swaylock = {
+      text = ''
+        auth include login
+        account include login
+        password include login
+        session include login
+      '';
+    };
+  };
+
+  systemd.coredump.enable = false;
+
+  security = {
+    protectKernelImage = true;
+    # lockKernelModules = false; # this breaks iptables, wireguard, and virtd
+
+    # force-enable the Page Table Isolation (PTI) Linux kernel feature
+    forcePageTableIsolation = true;
+
+    # User namespaces are required for sandboxing.
+    # this means you cannot set `"user.max_user_namespaces" = 0;` in sysctl
+    allowUserNamespaces = true;
+
+    # Disable unprivileged user namespaces, unless containers are enabled
+    unprivilegedUsernsClone = config.virtualisation.containers.enable;
+    allowSimultaneousMultithreading = true;
+  };
+
+  services.chrony = {
+    enable = true;
+    enableNTS = true;
+    servers = [
+      "time.cloudflare.com iburst nts"
+      "ntppool1.time.nl iburst nts"
+      "nts.netnod.se iburst nts"
+      "ptbtime1.ptb.de iburst nts"
+      "time.dfm.dk iburst nts"
+      "time.cifelli.xyz iburst nts"
+    ];
+    # havent worked out the kinks yet
+    #  extraConfig = ''
+    #      minsources 3
+    #      authselectmode require
+
+    #      # EF
+    #      dscp 46
+
+    #      driftfile /var/lib/chrony/drift
+    #      dumpdir /var/lib/chrony
+    #      ntsdumpdir /var/lib/chrony
+
+    #      leapseclist /usr/share/zoneinfo/leap-seconds.list
+    #      makestep 1.0 3
+
+    #      rtconutc
+
+    #      cmdport 0
+
+    #      noclientlog
+    #  '';
+  };
 
   networking.nftables.enable = true;
   networking.firewall = {
@@ -158,7 +229,9 @@
       options = [ "discard" ];
     }
   ];
-  # boot.zswap.enable = true;
+
+  boot.zswap.enable = true;
+
   systemd.oomd.enable = true;
 
   services = {
@@ -168,19 +241,38 @@
       videoDrivers = [ "amdgpu" ];
       xkb = {
         layout = "us";
-        # variant = "colemak_dh_wide_iso";
+        # variant = ""; # using kanata, keyd etc.
+        options = "grp:alt_shift_toggle,compose:menu";
         extraLayouts = {
           mine = {
             description = "Turkish Q layout {swap i and ı, ESC and CAPS}";
             languages = [ "tur" ];
             symbolsFile = ./custom_tr.xkb;
           };
+          secondcoming = {
+            description = "US Layout (Turkish Letters and Nordrassil)";
+            languages = [ "us" ];
+            symbolsFile = ./us_TR.xkb;
+          };
         };
       };
     };
     clamav = {
       updater.enable = true;
-      daemon.enable = false;
+      daemon.enable = true;
+      updater.frequency = 12;
+      scanner = {
+        enable = true;
+        # 4:00 AM
+        interval = "*-*-* 04:00:00";
+        scanDirectories = [
+          "/home"
+          "/var/lib"
+          "/tmp"
+          "/etc"
+          "/var/tmp"
+        ];
+      };
     };
     gvfs.enable = true;
     tumbler.enable = true;
@@ -197,7 +289,13 @@
       enable = true;
     };
   };
+  hardware.amdgpu.initrd.enable = true;
+  nixpkgs.config.rocmSupport = true;
+  hardware.amdgpu.opencl.enable = true;
+  services.lact.enable = true;
+  hardware.amdgpu.overdrive.enable = true;
 
+  nixpkgs.config.allowUnfree = true;
   programs = {
     # adb.enable = true; # use android-tools
     appimage = {
@@ -237,48 +335,24 @@
   #   nixos.includeAllModules = false;
   # };
 
-  # environment.pathsToLink = [
-  #   "/share/xdg-desktop-portal"
-  #   "/share/applications"
-  # ];
   xdg.portal = {
     enable = true;
     # wlr.enable = true;
-    # extraPortals = lib.mkForce [
-    #   pkgs.kdePackages.xdg-desktop-portal-kde
-    #   pkgs.xdg-desktop-portal-termfilechooser
-    # ];
-    # config = {
-    #   common = {
-    #     default = [
-    #       "kde"
-    #     ];
-    #     "org.freedesktop.impl.portal.FileChooser" = [
-    #       "termfilechooser"
-    #     ];
-    #   };
-    #   #   pantheon = {
-    #   #     default = [
-    #   #       "pantheon"
-    #   #       "gtk"
-    #   #     ];
-    #   #     "org.freedesktop.impl.portal.Secret" = [
-    #   #       "gnome-keyring"
-    #   #     ];
-    #   #   };
-    #   #   x-cinnamon = {
-    #   #     default = [
-    #   #       "xapp"
-    #   #       "gtk"
-    #   #     ];
-    #   #   };
-    # };
   };
 
-  security = {
-    polkit.enable = true;
-    soteria.enable = true;
-  };
+  # systemd.user.services.polkit-kde-agent = {
+  #   description = "polkit-kde-agent";
+  #   wantedBy = ["graphical-session.target"];
+  #   wants = ["graphical-session.target"];
+  #   after = ["graphical-session.target"];
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
+  #     Restart = "on-failure";
+  #     RestartSec = 1;
+  #     TimeoutStopSec = 10;
+  #   };
+  # };
 
   # systemd.services.flatpak-repo = {
   #   wantedBy = [ "multi-user.target" ];
@@ -288,12 +362,11 @@
   #   '';
   # };
 
-  # /etc/opt/edge/policies/managed/managed.json
-
-  environment.etc."opt/edge/policies/managed/managed.json".source = ./managed.json;
-  environment.etc."opt/edge/policies/recommended/recommended.json".source = ./recommended.json;
+  # environment.etc."opt/edge/policies/managed/managed.json".source = ./managed.json;
+  # environment.etc."opt/edge/policies/recommended/recommended.json".source = ./recommended.json;
 
   environment = {
+    localBinInPath = true;
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
       ADW_DISABLE_PORTAL = "1";
@@ -302,84 +375,43 @@
       RUSTICL_ENABLE = "radeonsi";
       ROC_ENABLE_PRE_VEGA = "1";
       DOTNET_CLI_TELEMETRY_OPTOUT = "1";
-      # GTK_IM_MODULE = "ibus";
-      # QT_IM_MODULE = "ibus";
-      # XMODIFIERS = "@im=ibus";
-      # MANPAGER = "bat";
-      # PAGER = "bat";
     };
     systemPackages = with pkgs; [
       home-manager
-      # # Archive Managers and Compression
-      kdePackages.ark
-      kdePackages.kdenlive
-      # kdePackages.dolphin
-      # kdePackages.dolphin-plugins
-      findutils
-      p7zip
-      rar
-      zip
-      unrar
-      unzip
-      xarchiver
-      pcmanfm-qt
-      # doublecmd
-      # git-credential-keepassxc # using ssh with keepassxc as the agent
       age
       sops
-      # mkcert
-      # openssl
-      # picard # music brainz tagger
-      # sherlock-launcher
-      # lutgen
-      # gowall
-      clamav
-      # argyllcms # color management on x11
-      # xmobar
-      # tor-browser
-      # ungoogled-chromium
-      # libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
-      # filezilla
-      microsoft-edge
-      # # Utils
-      # discordchatexporter-cli
       nix-prefetch-git
-      exiftool
-      # fuseiso
-      # # Apps
-      # blender
-      wgcf
-      # inputs.nixvim-config.packages.${system}.default
+      hydra-check
+      # # Defaults
+      clamav
+      lynis
+      kdePackages.ark
+      kdePackages.kdenlive
+      kdePackages.dolphin
+      kdePackages.dolphin-plugins
+      kdePackages.gwenview
+      vlc
+      vlc-bittorrent
+      qbittorrent
+      vim
+
+
+      kitty # must have term so we are not locked out in any wm
+      foot
+      alacritty
+
+      # lutgen # change colors of wallpapers
+      # gowall # change colors of wallpapers
       # upscayl # Image Upscaler
-      # vesktop # Discord Client
-      # teamspeak_client # Teamspeak Client
-      # teamspeak5_client # Teamspeak Client
+      # libsForQt5.qt5.qtgraphicaleffects # # Dependency for sddm theme(s).
+      exiftool
+      wgcf # cloudflare warp vpn/dns based account and wg conf creator
       feh # Image Viewer
       mpv # Video Player
-      vlc # Video Player
-      vlc-bittorrent
-      qbittorrent # Torrent Clien
-      # logmein-hamachi # Hamachi
-      # haguichi # Hamachi Client
-      # anydesk # Remote Desktop Client
-      # pywalfox-native
-      obsidian # Note
       keepassxc
-      # rxvt-unicode
-      # dmenu
-      # ungoogled-chromium
-      # floorp
-      # inputs.zen-browser.packages."${system}".default
-      # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-      # fum
-      # miru
-      # dino
       gajim
       android-tools
-      # element-desktop # Matrix Client
-      # fluffychat # Matrix Client
       onlyoffice-desktopeditors
-      # libreoffice-fresh
       (aspellWithDicts (
         dicts: with dicts; [
           en
@@ -391,54 +423,59 @@
       hunspell
       hunspellDicts.tr_TR
       hunspellDicts.en_US
-      # jdk # Java
       jdk17 # Java 17
-      # jdk8 # Java 8
-      # neovim
-      neovide # Neovim GUI
-      # btop # Resource Monitoring
-      # # Language Server, Libraries, Compilers
-      # glib
-      # glibc
-      # libgcc
-      # gcc
-      # ncurses
-      # zig
-      # clang
-      # rustc
-      # cargo
-      # rust-analyzer
-      # rustfmt
-      # go
-      # vala
-      # alejandra
-      # nixfmt-rfc-style
-      nixfmt
-      # nil
-      # nixd
-      # love
-      # lua
-      # luarocks
-      man-pages
-      # # Wine
-      wineWow64Packages.staging
-      winetricks
-      # protontricks
-      protonup-qt
-      # # Launchers and some utils
-      mangohud
-      steamcmd
+
+      # To make kde work on non kde
+      kdePackages.kde-cli-tools
+      (pkgs.writeTextFile {
+        name = "minimal-applications-menu";
+        text = ''
+          <!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"
+           "http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">
+
+          <Menu>
+            <Name>Applications</Name>
+
+            <!-- Search the default directories for .desktop files.
+                 I.e. the /applications subdirectory of each entry in
+                 $XDG_DATA_DIRS
+            -->
+            <DefaultAppDirs/>
+
+            <!-- Menus and submenus can use localized names as well as icons
+                 by referring to a .directory file. This configuration does
+                 not use them, but add it to the search for future-proofing.
+            -->
+            <DefaultDirectoryDirs/>
+
+            <!-- Add every .desktop entry in the search result to this
+                 menu.
+            -->
+            <Include><All/></Include>
+
+            <!-- List submenus before normal .desktop files in the menu. -->
+            <DefaultLayout>
+              <Merge type="menus"/>
+              <Merge type="files" />
+            </DefaultLayouts>
+
+            <!-- Applications can add their own menu entries in
+                 menus/applications-merged/. This will cause them to
+                 be merged into this menu.
+            -->
+            <DefaultMergeDirs/>
+          </Menu>
+        '';
+        destination = "/etc/xdg/menus/applications.menu";
+      })
     ];
   };
-
-  ## Font
 
   fonts.fontDir.enable = true;
   fonts.enableDefaultPackages = true;
   fonts.packages = with pkgs; [
-    iosevka
-    inter
-    # overpass
+    ubuntu-sans
+    ubuntu-sans-mono
   ];
   fonts.fontconfig.enable = true;
   fonts.fontconfig.useEmbeddedBitmaps = true;

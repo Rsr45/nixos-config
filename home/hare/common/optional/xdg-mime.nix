@@ -1,38 +1,45 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   browser = [
-    "brave-browser.desktop"
+    "helium.desktop"
+    "floorp.desktop"
   ];
   editor = [
     "neovide.desktop"
-    "nixCats.desktop"
+    # "nixCats.desktop"
     "helix.desktop"
+    "emacs.desktop"
   ];
   video = [
     "vlc.desktop"
-    "mpv.desktop"
   ];
   audio = [
     "audacious.desktop"
-    "org.strawberrymusicplayer.strawberry.desktop"
   ];
   image = [
-    "vimiv.desktop"
-    "feh.desktop"
+    "org.kde.gwenview.desktop"
   ];
-  ebook = [ "calibre-ebook-viewer.desktop" ];
+  svg =
+    [
+      "inkscape.desktop"
+    ]
+    ++ image;
+  ebook = [
+    "sioyek.desktop"
+  ];
+  pdf = [
+    "sioyek.desktop"
+  ];
   archive = [
-    "xarchiver.desktop"
-    "peazip.desktop"
-    "peazip-extract.desktop"
-    "peazip-add-to-archive.desktop"
+    "org.kde.ark.desktop"
   ];
   filemanager = [
-    "pcmanfm-qt.desktop"
+    "org.kde.dolphin.desktop"
+  ];
+  ms-doc = [
+    "onlyoffice-desktopeditors.desktop"
   ];
   writer = [
     "libreoffice-writer.desktop"
-    "onlyoffice-desktopeditors.desktop"
   ];
   spreadsheet = [
     "libreoffice-calc.desktop"
@@ -54,13 +61,9 @@ let
     "libreoffice-draw.desktop"
     "onlyoffice-desktopeditors.desktop"
   ];
-  pdf = [
-    "org.pwmt.zathura.desktop"
-  ];
   # Extensive list of associations here:
   # https://github.com/iggut/GamiNiX/blob/8070528de419703e13b4d234ef39f05966a7fafb/system/desktop/home-main.nix#L77
   associations = {
-
     "inode/directory" = filemanager;
     "application/x-gnome-saved-search" = filemanager;
 
@@ -122,6 +125,8 @@ let
     "image/gif" = image;
     "image/webp" = image;
 
+    "svg+xml" = svg;
+
     "text/csv" = spreadsheet;
     "application/vnd.ms-excel" = spreadsheet;
     "application/vnd.ms-powerpoint" = slidedeck;
@@ -138,12 +143,14 @@ let
     "application/vnd.oasis.opendocument.text-master" = writer;
     "application/vnd.oasis.opendocument.text-template" = writer;
     "application/vnd.oasis.opendocument.text-web" = writer;
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation" = slidedeck;
-    "application/vnd.openxmlformats-officedocument.presentationml.template" = slidedeck;
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = spreadsheet;
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.template" = spreadsheet;
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = writer;
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.template" = writer;
+
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation" = ms-doc;
+    "application/vnd.openxmlformats-officedocument.presentationml.template" = ms-doc;
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = ms-doc;
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.template" = ms-doc;
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = ms-doc;
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.template" = ms-doc;
+
     "application/vnd.stardivision.calc" = spreadsheet;
     "application/vnd.stardivision.draw" = draw;
     "application/vnd.stardivision.impress" = slidedeck;
@@ -174,8 +181,7 @@ let
       "calibre-gui.desktop"
     ];
   };
-in
-{
+in {
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = associations;

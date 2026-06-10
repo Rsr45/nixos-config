@@ -5,17 +5,17 @@
 }:
 {
 
-  home.packages = with pkgs; [
-    zed-editor
-  ];
+  # home.packages = with pkgs; [
+  #   zed-editor
+  # ];
   programs.zed-editor = {
-    enable = false;
-    extensions = [
-      "nix"
-      "toml"
-      "elixir"
-      "make"
-    ];
+    enable = true;
+    # extensions = [
+    #   "nix"
+    #   "toml"
+    #   "elixir"
+    #   "make"
+    # ];
 
     ## everything inside of these brackets are Zed options.
     # userSettings = {

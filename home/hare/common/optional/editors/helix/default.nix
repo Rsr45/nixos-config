@@ -9,7 +9,7 @@
         cursor-shape = {
           normal = "block";
           insert = "bar";
-          # select = "underline";
+          select = "underline";
         };
         cursorline = true;
         # whitespace.characters = {

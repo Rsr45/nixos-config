@@ -34,7 +34,6 @@ in
   # No matter what environment we are in we want these tools
   environment.systemPackages = with pkgs; [
     rsync
-    nushell
   ];
 }
 

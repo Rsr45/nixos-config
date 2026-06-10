@@ -11,7 +11,7 @@
     };
 
     eza = {
-      enableBashIntegration = true;
+      enableBashIntegration = false;
     };
 
     zoxide = {

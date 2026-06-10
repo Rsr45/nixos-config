@@ -34,12 +34,12 @@
       ai = { };
       align = { };
       comment = { };
-      # completion = { };
+      completion = { };
       keymap = { };
       move = { };
       operators = { };
       pairs = { };
-      # snippets = { };
+      snippets = { };
       splitjoin = { };
       surround = {
         mappings = {
@@ -55,12 +55,13 @@
       basics = { };
       bracketed = { };
       bufremove = { };
-      # clue = { };
+      clue = { };
       # deps = { };
       diff = { };
       extra = { };
       files = { };
       # jump = { };
+      # jump2d = { };
       misc = { };
       sessions = { };
       visits = { };
@@ -68,10 +69,10 @@
       hipatterns = { };
       # indentscope = { };
       notify = { };
-      # starter = {
-      #   autoopen = true;
-      # };
-      # statusline = { };
+      starter = {
+        autoopen = true;
+      };
+      statusline = { };
       trailspace = { };
     };
   };

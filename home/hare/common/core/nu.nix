@@ -7,7 +7,7 @@
     };
 
     starship = {
-      enableNushellIntegration = true;
+      enableNushellIntegration = false;
     };
 
     eza = {
@@ -25,12 +25,14 @@
       cd = "z";
       cdi = "zi";
       ci = "zi";
-      rebuild = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
-      v = "vimiv";
-      view = "vimiv";
+      v = "~/scripts/view.sh";
+      view = "~/scripts/view.sh";
       e = "nvim";
       edit = "nvim";
       y = "yazi";
+      doom = "${config.xdg.configHome}/emacs/bin/doom";
+      rebuild-impure = "sudo nixos-rebuild switch --show-trace --option eval-cache false --impure --flake .#apocrypha";
+      rebuild = "sudo nixos-rebuild switch --show-trace --flake .#apocrypha";
     };
 
     settings = {
@@ -38,9 +40,9 @@
       buffer_editor = "vi";
     };
 
+    # $env.TRANSIENT_PROMPT_COMMAND = ^starship module character
     envFile.text = ''
       $env.CARAPACE_BRIDGES = 'fish,inshellisense'
-      $env.TRANSIENT_PROMPT_COMMAND = ^starship module character
     '';
 
     configFile.text = ''

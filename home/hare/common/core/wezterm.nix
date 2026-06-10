@@ -6,20 +6,13 @@
       -- This will hold the configuration.
       local config = wezterm.config_builder()
 
-      config.default_prog = { '${lib.getExe pkgs.nushell}', '-l' }
-      config.font_size = 12
-      config.font = wezterm.font_with_fallback({
-          {
-              family = "Iosevka",
-              weight = "Regular",
-          }
-      })
+      config.default_prog = { '${lib.getExe pkgs.fish}', '-l' }
 
       config.window_padding = {
-          left = 0,
-          right = 0,
-          top = 0,
-          bottom = 0,
+          left = 5,
+          right = 5,
+          top = 10,
+          bottom = 10,
       }
 
       config.window_content_alignment = {
@@ -27,7 +20,6 @@
           vertical = 'Center',
       }
 
-      config.color_scheme = 'wallust'
       config.automatically_reload_config = true
 
       config.hide_tab_bar_if_only_one_tab = true

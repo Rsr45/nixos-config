@@ -25,6 +25,7 @@ in
     ./qt.nix
     ./bash.nix
     ./fish.nix
+    ./nu.nix
     ./bat.nix
     # ./btop.nix
     # ./direnv.nix
@@ -52,8 +53,8 @@ in
     sessionVariables = {
       FLAKE = "$HOME/nixos-config";
       SHELL = "fish";
-      TERM = "kitty";
-      TERMINAL = "kitty";
+      TERM = "foot";
+      TERMINAL = "foot";
       VISUAL = "nvim";
       EDITOR = "nvim";
       # MANPAGER = "batman";

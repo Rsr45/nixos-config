@@ -12,7 +12,7 @@ local themes_path = "~/.config/awesome/themes/"
 
 local theme = {}
 
-theme.font          = "mono 8"
+theme.font          = "Iosevka 12"
 
 theme.bg_normal     = "{{background}}"
 theme.bg_focus      = "{{color4}}"
@@ -21,18 +21,18 @@ theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "{{foreground}}"
-theme.fg_focus      = "{{foreground}}"
+theme.fg_focus      = "{{background}}"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(1)
-theme.border_normal = "{{background}}"
-theme.border_focus  = "{{background | darken(0.3)}}"
+theme.border_width  = dpi(2)
+theme.border_normal = "{{background | darken(0.3)}}"
+theme.border_focus  = "{{color4}}"
 theme.border_marked = "#91231c"
 
 theme.titlebar_bg_focus = "{{background | darken(0.3)}}"
-theme.tasklist_bg_focus = "{{background | darken(0.3)}}"
+theme.tasklist_bg_focus = "{{color4}}"
 
 -- There are other variable sets
 -- overriding the default one when

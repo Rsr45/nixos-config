@@ -2,36 +2,36 @@
 {
   programs.nixvim.keymaps = [
     ## Code
-    {
-      key = "<leader>cf";
-      mode = [
-        "n"
-        "v"
-      ];
-      action.__raw = ''
-        function()
-          require("conform").format({
-            lsp_fallback = true,
-            async = true,
-            timeout_ms = 1000,
-          })
-        end
-      '';
-      options.desc = "Format Buffer/Region";
-    }
-    {
-      key = "<leader>cx";
-      mode = [ "n" ];
-      action.__raw = "function() if vim.fn.getloclist(0, {winid=1}).winid ~= 0 then vim.cmd('lclose') else vim.diagnostic.setloclist() end end";
-      options.desc = "Diagnostic List";
-    }
+    # {
+    #   key = "<leader>cf";
+    #   mode = [
+    #     "n"
+    #     "v"
+    #   ];
+    #   action.__raw = ''
+    #     function()
+    #       require("conform").format({
+    #         lsp_fallback = true,
+    #         async = true,
+    #         timeout_ms = 1000,
+    #       })
+    #     end
+    #   '';
+    #   options.desc = "Format Buffer/Region";
+    # }
+    # {
+    #   key = "<leader>cx";
+    #   mode = [ "n" ];
+    #   action.__raw = "function() if vim.fn.getloclist(0, {winid=1}).winid ~= 0 then vim.cmd('lclose') else vim.diagnostic.setloclist() end end";
+    #   options.desc = "Diagnostic List";
+    # }
     ## File
-    {
-      key = "<leader>fs";
-      mode = [ "n" ];
-      action = "<cmd>update<CR>";
-      options.desc = "Save file";
-    }
+    # {
+    #   key = "<leader>fs";
+    #   mode = [ "n" ];
+    #   action = "<cmd>update<CR>";
+    #   options.desc = "Save file";
+    # }
     ## Quality of Life
     {
       key = "<leader>tl";
@@ -129,20 +129,6 @@
       };
     }
     {
-      key = "<C-a>";
-      mode = [
-        "n"
-        "x"
-        "v"
-      ];
-      action = "gg0vG$";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Select All";
-      };
-    }
-    {
       key = "<leader>p";
       mode = [
         "n"
@@ -156,16 +142,16 @@
         desc = "Paste from clipboard";
       };
     }
-    {
-      key = "<C-p>";
-      mode = "i";
-      action = "<C-r><C-p>+";
-      options = {
-        noremap = true;
-        silent = true;
-        desc = "Paste from clipboard within insert mode";
-      };
-    }
+    # {
+    #   key = "<C-p>";
+    #   mode = "i";
+    #   action = "<C-r><C-p>+";
+    #   options = {
+    #     noremap = true;
+    #     silent = true;
+    #     desc = "Paste from clipboard within insert mode";
+    #   };
+    # }
     {
       key = "<leader>P";
       mode = "x";

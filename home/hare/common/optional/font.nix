@@ -1,35 +1,35 @@
 { pkgs, ... }:
 {
-  gtk.font = {
-    package = pkgs.geist-font;
-    name = "Geist";
-    size = 12;
-  };
+  # gtk.font = {
+  #   package = pkgs.geist-font;
+  #   name = "Geist";
+  #   size = 12;
+  # };
 
-  qt = {
-    qt5ctSettings = {
-      Appearance = {
-        style = "kvantum";
-        icon_theme = "Papirus-Dark";
-        standar_dialogs = "xdgdesktopportal";
-      };
-      Fonts = {
-        fixed = "\"Iosevka,12\"";
-        general = "\"Geist,12\"";
-      };
-    };
-    qt6ctSettings = {
-      Appearance = {
-        style = "kvantum";
-        icon_theme = "Papirus-Dark";
-        standar_dialogs = "xdgdesktopportal";
-      };
-      Fonts = {
-        fixed = "\"Iosevka,12\"";
-        general = "\"Geist,12\"";
-      };
-    };
-  };
+  # qt = {
+  #   qt5ctSettings = {
+  #     Appearance = {
+  #       style = "kvantum";
+  #       icon_theme = "Papirus-Dark";
+  #       standar_dialogs = "xdgdesktopportal";
+  #     };
+  #     Fonts = {
+  #       fixed = "\"Iosevka,12\"";
+  #       general = "\"Geist,12\"";
+  #     };
+  #   };
+  #   qt6ctSettings = {
+  #     Appearance = {
+  #       style = "kvantum";
+  #       icon_theme = "Papirus-Dark";
+  #       standar_dialogs = "xdgdesktopportal";
+  #     };
+  #     Fonts = {
+  #       fixed = "\"Iosevka,12\"";
+  #       general = "\"Geist,12\"";
+  #     };
+  #   };
+  # };
 
   fonts.fontconfig = {
     enable = true;
@@ -108,6 +108,9 @@
     noto-fonts-cjk-serif
     noto-fonts-color-emoji
     papirus-icon-theme
+    source-code-pro
+    roboto-mono
+    fira-code
   ];
 
   # is it even make a difference ???
