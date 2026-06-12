@@ -24,10 +24,21 @@
       "hosts/common/core"
       "shared/hosts/coreutils"
 
+      # ========== Virtualisation ==========
+      "hosts/common/optional/virtualisation/qemu.nix"
+
       # ========== Network Configs ==========
-      "hosts/common/optional/services/adguardhome.nix"
+      # "hosts/common/optional/services/adguardhome.nix"
       "hosts/common/optional/services/dnscrypt-proxy.nix"
+      # "hosts/common/optional/services/opensnitch.nix"
       "hosts/common/optional/services/syncthing.nix"
+
+      # ========== DE/WM Configs ==========
+      "hosts/common/optional/wm/hyprland.nix"
+      "hosts/common/optional/wm/niri.nix"
+      "hosts/common/optional/wm/sway.nix"
+      # "hosts/common/optional/wm/i3.nix"
+      # "hosts/common/optional/wm/awesome.nix"
 
       # ========== Optional Configs ==========
       "hosts/common/optional/services/greetd.nix"
@@ -37,11 +48,6 @@
       "hosts/common/optional/audio.nix"
       # "hosts/common/optional/firejail.nix"
       "hosts/common/optional/plymouth.nix"
-      "hosts/common/optional/wm/hyprland.nix"
-      "hosts/common/optional/wm/sway.nix"
-      # "hosts/common/optional/wm/niri.nix"
-      # "hosts/common/optional/wm/i3.nix"
-      "hosts/common/optional/wm/awesome.nix"
       "shared/hosts/steam"
     ])
     # ========== Apocrypha Specific ========
@@ -54,18 +60,9 @@
     hostName = "apocrypha";
   };
 
-  # security.run0.enableSudoAlias = true;
-
   networking = {
     networkmanager.enable = true;
     networkmanager.wifi.backend = "iwd";
-    networkmanager = {
-      # dns = "systemd-resolved";
-      # insertNameservers = [
-      #   "127.0.0.1"
-      #   "::1"
-      # ];
-    };
   };
 
   i18n.extraLocaleSettings = {
@@ -99,11 +96,8 @@
   programs.kdeconnect.enable = true;
 
   security = {
-    # alias sudo = 'run0'
     run0.enableSudoAlias = true;
     polkit.enable = true;
-    soteria.enable = true;
-    # Disable sudo
     sudo.enable = false;
     wrappers = {
       su.enable = lib.mkForce false;
@@ -121,6 +115,14 @@
       # umount.enable = lib.mkForce false;
     };
     # Or hyprlock, required for swaylock to accept your password
+    pam.services.hyprlock = {
+      text = ''
+        auth include login
+        account include login
+        password include login
+        session include login
+      '';
+    };
     pam.services.swaylock = {
       text = ''
         auth include login
@@ -183,25 +185,11 @@
     #  '';
   };
 
-  networking.nftables.enable = true;
+  networking.nftables = {
+    enable = true;
+  };
   networking.firewall = {
     enable = lib.mkForce true;
-    # allowedTCPPorts = [
-    #   53317
-    # ];
-    # allowedUDPPorts = [ 53317 ];
-    # allowedTCPPortRanges = [
-    #   {
-    #     from = 1714;
-    #     to = 1764;
-    #   }
-    # ];
-    # allowedUDPPortRanges = [
-    #   {
-    #     from = 1714;
-    #     to = 1764;
-    #   }
-    # ];
   };
 
   boot.loader = {
@@ -250,6 +238,7 @@
             symbolsFile = ./custom_tr.xkb;
           };
           secondcoming = {
+            ## TODO: make i based on us but add alpha layer locale keys, more apt to call it kanata base layout
             description = "US Layout (Turkish Letters and Nordrassil)";
             languages = [ "us" ];
             symbolsFile = ./us_TR.xkb;
@@ -280,20 +269,24 @@
   };
 
   hardware = {
+    amdgpu = {
+      initrd = {
+        enable = true;
+      };
+    };
     graphics = {
       enable = true;
       enable32Bit = true;
-      # extraPackages = with pkgs; [mesa libva libvdpau-va-gl vulkan-loader vulkan-validation-layers mesa.opencl];
     };
     xone = {
       enable = true;
     };
   };
-  hardware.amdgpu.initrd.enable = true;
-  nixpkgs.config.rocmSupport = true;
-  hardware.amdgpu.opencl.enable = true;
-  services.lact.enable = true;
-  hardware.amdgpu.overdrive.enable = true;
+  #FIXME: one of these slows everything check it out though i do not need aYthing of the sort for now but ehh
+  # nixpkgs.config.rocmSupport = true;
+  # hardware.amdgpu.opencl.enable = true;
+  # services.lact.enable = true;
+  # hardware.amdgpu.overdrive.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   programs = {
@@ -337,30 +330,8 @@
 
   xdg.portal = {
     enable = true;
-    # wlr.enable = true;
+    wlr.enable = true;
   };
-
-  # systemd.user.services.polkit-kde-agent = {
-  #   description = "polkit-kde-agent";
-  #   wantedBy = ["graphical-session.target"];
-  #   wants = ["graphical-session.target"];
-  #   after = ["graphical-session.target"];
-  #   serviceConfig = {
-  #     Type = "simple";
-  #     ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
-  #     Restart = "on-failure";
-  #     RestartSec = 1;
-  #     TimeoutStopSec = 10;
-  #   };
-  # };
-
-  # systemd.services.flatpak-repo = {
-  #   wantedBy = [ "multi-user.target" ];
-  #   path = [ pkgs.flatpak ];
-  #   script = ''
-  #     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-  #   '';
-  # };
 
   # environment.etc."opt/edge/policies/managed/managed.json".source = ./managed.json;
   # environment.etc."opt/edge/policies/recommended/recommended.json".source = ./recommended.json;
@@ -394,7 +365,7 @@
       vlc-bittorrent
       qbittorrent
       vim
-
+      tor-browser
 
       kitty # must have term so we are not locked out in any wm
       foot
@@ -471,14 +442,16 @@
     ];
   };
 
-  fonts.fontDir.enable = true;
-  fonts.enableDefaultPackages = true;
-  fonts.packages = with pkgs; [
-    ubuntu-sans
-    ubuntu-sans-mono
-  ];
-  fonts.fontconfig.enable = true;
-  fonts.fontconfig.useEmbeddedBitmaps = true;
+  fonts = {
+    fontDir.enable = true;
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      ubuntu-sans
+      ubuntu-sans-mono
+    ];
+    fontconfig.enable = true;
+    fontconfig.useEmbeddedBitmaps = true;
+  };
 
   system.stateVersion = "24.11";
 }

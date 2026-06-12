@@ -28,10 +28,9 @@
     common/optional/keepassxc.nix
     common/optional/mail.nix
     common/optional/thunderbird.nix
-    common/optional/neomutt.nix
     common/optional/quickshell.nix
     common/optional/noctalia.nix
-    common/optional/eww
+    # common/optional/eww
     common/optional/wlr-which.nix
     common/optional/kdeconnect.nix
 

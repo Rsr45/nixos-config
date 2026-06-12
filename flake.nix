@@ -81,17 +81,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia-v4 = {
+      url = "github:noctalia-dev/noctalia/legacy-v4";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     thumbpick.url = "github:soliprem/thumbpick";
 
     omnisearch = {
       url = "git+https://git.bwaaa.monster/omnisearch";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    ## Blocklists
-    oisd = {
-      url = "https://big.oisd.nl/domainswild";
-      flake = false;
     };
   };
 

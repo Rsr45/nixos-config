@@ -34,7 +34,7 @@
       autoUpdate = true;
       plugins = {
         # must have
-        BlurNSFW.enable = true;
+        blurNsfw.enable = true;
         # anonymiseFileNames.enable = true;
         silentTyping.enable = true;
         hideMedia.enable = true;
@@ -91,7 +91,7 @@
         replaceGoogleSearch = {
           enable = true;
           customEngineName = "DuckDuckGo";
-          customEngineURL = "https://duckduckgo.com/";
+          customEngineUrl = "https://duckduckgo.com/";
         };
         revealAllSpoilers.enable = true;
         reverseImageSearch.enable = true;
@@ -155,8 +155,8 @@
           removeProfileEffect = true;
           removeClanTag = true;
           alwaysShowUsername = true;
-          removeShopAboveDM = true;
-          removeQuestsAboveDM = true;
+          removeShopAboveDm = true;
+          removeQuestsAboveDm = true;
           removeServerBoostInfo = true;
           removeBillingSettings = true;
           removeGiftButton = true;

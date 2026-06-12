@@ -38,14 +38,15 @@ sops.secrets =
       flavor = "gmail.com";
       # passwordCommand = "secret-tool lookup email efe54676@gmail.com";
       passwordCommand = "cat ${config.sops.secrets."mail/efe54676".path}"; # even  work??
-      mbsync = {
-        enable = true;
-        create = "maildir";
-      };
-      msmtp.enable = true;
+      # mbsync = {
+      #   enable = true;
+      #   create = "maildir";
+      # };
+      # msmtp.enable = true;
+      # use thunder bird as oath is better and i cant be bothered to generate for all 39 of my mails app apssword or something
       thunderbird.enable = true;
-      neomutt.enable = true;
-      meli.enable = true;
+      # neomutt.enable = true;
+      # meli.enable = true;
     };
     "efe45676@gmail.com" = {
       realName = "Muhittin Efe Kaygısız";
@@ -53,14 +54,14 @@ sops.secrets =
       flavor = "gmail.com";
       passwordCommand = "cat ${config.sops.secrets."mail/efe45676".path}";
       # passwordCommand = "secret-tool lookup email efe45676@gmail.com";
-      mbsync = {
-        enable = true;
-        create = "maildir";
-      };
-      msmtp.enable = true;
+      # mbsync = {
+      #   enable = true;
+      #   create = "maildir";
+      # };
+      # msmtp.enable = true;
       thunderbird.enable = true;
-      neomutt.enable = true;
-      meli.enable = true;
+      # neomutt.enable = true;
+      # meli.enable = true;
     };
   };
 }

@@ -37,7 +37,7 @@
           # (extension "view-page-archive" "{d07ccf11-c0cd-4938-a265-2a4d6ad01189}")
           # (extension "steam-database" "firefox-extension@steamdb.info")
           # (extension "augmented-steam" "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}")
-          # (extension "libredirect" "7esoorv3@alefvanoon.anonaddy.me")
+          (extension "libredirect" "7esoorv3@alefvanoon.anonaddy.me")
         ];
       # To add additional extensions, find it on addons.mozilla.org, find
       # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)

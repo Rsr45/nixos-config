@@ -15,18 +15,17 @@
     # bluetui
     # impala
     # Music
-    cmus
-    kew
+    # cmus
+    # kew
     # Disk
-    ncdu
+    # ncdu
     # Web
-    nyaa
-    lynx
+    # nyaa
+    # lynx
     # elinks # build error
-    links2
-    gcc
-    nyxt
-    readability-cli
+    # links2
+    # gcc
+    # readability-cli
     # openmw
 
     lm_sensors
@@ -39,7 +38,6 @@
     wl-clipboard
     ps3iso-utils
     ps3-disc-dumper
-    kdePackages.kruler
     libnotify
     pwvucontrol
     ## Application Launchers
@@ -158,8 +156,6 @@
       tmux switch-client -t $selected_name
     '')
   ];
-  # programs.mbsync.enable = true;
-  # programs.msmtp.enable = true;
   programs = {
     # bat.enable = true;
     nnn.enable = true;
@@ -305,7 +301,7 @@
         providers = {
           applications = {
             preferences = {
-              launchPrefix = "uwsm app --";
+              # launchPrefix = "uwsm app --";
             };
           };
         };

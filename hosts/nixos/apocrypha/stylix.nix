@@ -3,6 +3,12 @@
   imports = [
     inputs.stylix.nixosModules.stylix
   ];
+
+  hostSpec = {
+    cornerRadius = 0;
+    cornerRadiusRatio = 0;
+  };
+
   stylix = {
     enable = true;
     autoEnable = false;

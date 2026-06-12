@@ -5,7 +5,7 @@
 }: {
   xdg.portal = {
     enable = lib.mkForce true;
-    extraPortals = lib.mkForce [
+    extraPortals = [
       pkgs.kdePackages.xdg-desktop-portal-kde
       pkgs.xdg-desktop-portal-hyprland
     ];

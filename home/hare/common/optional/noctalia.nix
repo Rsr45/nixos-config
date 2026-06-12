@@ -7,64 +7,12 @@
 {
   # import the home manager module
   imports = [
-    inputs.noctalia.homeModules.default
+    inputs.noctalia-v4.homeModules.default
   ];
 
   # configure options
   programs.noctalia-shell = {
     enable = true;
-    # settings = {
-    #   # configure noctalia here
-    #   bar = {
-    #     density = "compact";
-    #     position = "right";
-    #     showCapsule = false;
-    #     widgets = {
-    #       left = [
-    #         {
-    #           id = "ControlCenter";
-    #           useDistroLogo = true;
-    #         }
-    #         {
-    #           id = "Network";
-    #         }
-    #         {
-    #           id = "Bluetooth";
-    #         }
-    #       ];
-    #       center = [
-    #         {
-    #           hideUnoccupied = false;
-    #           id = "Workspace";
-    #           labelMode = "none";
-    #         }
-    #       ];
-    #       right = [
-    #         {
-    #           alwaysShowPercentage = false;
-    #           id = "Battery";
-    #           warningThreshold = 30;
-    #         }
-    #         {
-    #           formatHorizontal = "HH:mm";
-    #           formatVertical = "HH mm";
-    #           id = "Clock";
-    #           useMonospacedFont = true;
-    #           usePrimaryColor = true;
-    #         }
-    #       ];
-    #     };
-    #   };
-    #   general = {
-    #     avatarImage = "${config.home.homeDirectory}/.face";
-    #     radiusRatio = 0.2;
-    #   };
-    #   location = {
-    #     monthBeforeDay = true;
-    #     name = "Menemen, Türkiye";
-    #   };
-    # };
-
     settings = {
       settingsVersion = 59;
       bar = {
@@ -85,7 +33,7 @@
         marginVertical = 4;
         marginHorizontal = 4;
         frameThickness = 8;
-        frameRadius = 12;
+        frameRadius = config.hostSpec.cornerRadius;
         outerCorners = true;
         hideOnOverview = false;
         displayMode = "always_visible";
@@ -253,10 +201,10 @@
         showScreenCorners = false;
         forceBlackScreenCorners = false;
         scaleRatio = 1;
-        radiusRatio = 0.2;
-        iRadiusRatio = 1;
-        boxRadiusRatio = 1;
-        screenRadiusRatio = 1;
+        radiusRatio = config.hostSpec.cornerRadiusRatio; # container radius # should create a seperate mkoption because it actualy looks good with round corners man
+        iRadiusRatio = config.hostSpec.cornerRadiusRatio; # input radius
+        boxRadiusRatio = 1; # dont know
+        screenRadiusRatio = config.hostSpec.cornerRadiusRatio; # prob
         animationSpeed = 1;
         animationDisabled = false;
         compactLockScreen = false;
@@ -668,6 +616,7 @@
           0
           1
           2
+          3
         ];
         monitors = [ ];
       };
@@ -777,7 +726,6 @@
         ];
       };
     };
-
     # this may also be a string or a path to a JSON file.
   };
 }

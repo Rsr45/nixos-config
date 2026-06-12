@@ -1,5 +1,5 @@
 (defwidget bar [screen]
-  (centerbox :orientation "v" 
+  (centerbox :orientation "v"
     (box :class "segment-top"
          :valign "start"
       (top :screen screen))

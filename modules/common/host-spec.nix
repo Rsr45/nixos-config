@@ -25,6 +25,16 @@
       type = lib.types.str;
       description = "The hostname of the host";
     };
+    cornerRadius = lib.mkOption {
+      type = lib.types.int;
+      default = 12;
+      description = "Border corner radius";
+    };
+    cornerRadiusRatio = lib.mkOption {
+      type = lib.types.int;
+      default = 0;
+      description = "Ratio on a scale of 2 to 1 to 0 used in noctalia for now";
+    };
     email = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       description = "The email of the user";

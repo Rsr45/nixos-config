@@ -37,6 +37,7 @@ in
     enable = true;
     xwayland.enable = true;
     systemd.enable = false;
+    configType = "hyprlang";
     # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     # portalPackage =
     #   inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
@@ -53,7 +54,7 @@ in
         "uwsm app -- noctalia-shell"
         # "uwsm app -- awww restore" # use noctalia-shell
         ## Fix Soteria Polkit Agent
-        "uwsm app -- dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_ID"
+        # "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_ID" # supposed to be set up by uwsm so use them without uwsm
         # "waybar"
         # "waybar -c ~/.config/waybar/waybar_block_1/config.jsonc -s ~/.config/waybar/waybar_block_1/style.css"
         # "waybar -c ~/.config/waybar/suckless_underline/config.jsonc -s ~/.config/waybar/suckless_underline/style.css"
@@ -61,17 +62,13 @@ in
       ];
       source = [
         "colors.conf"
-        # cool but wlr-which-key and such implementation is better tbh like
-        # i already have vim ff etc all in modal mode no need for the wm aswell
-        # "hyprvim/init.conf"
-        # "hyprvim/extras/hyprland-basics/keymap.conf"
       ];
       monitor = [ ",1920x1080@144,auto,1" ];
       input = {
-        kb_layout = "us,secondcoming";
+        kb_layout = "us";
 
         kb_options = "compose:menu";
-        kb_variant = ",colemak_dh_iso";
+        # kb_variant = "";
         numlock_by_default = true;
         resolve_binds_by_sym = 1;
         repeat_delay = 660;
@@ -89,7 +86,7 @@ in
         # resize_on_border = true;
       };
       decoration = {
-        rounding = 12;
+        rounding = config.hostSpec.cornerRadius;
         # active_opacity = 0.9;
         # inactive_opacity = 0.9;
         dim_inactive = false;
@@ -151,7 +148,7 @@ in
       #   };
       # };
       misc = {
-        vfr = 1;
+        # vfr = 1;
         # vrr = 1;
         # layers_hog_mouse_focus = true
         focus_on_activate = true;

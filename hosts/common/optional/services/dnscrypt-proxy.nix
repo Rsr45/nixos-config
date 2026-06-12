@@ -6,12 +6,6 @@
 }:
 let
   StateDirectory = "dnscrypt-proxy";
-  blocklist_base = builtins.readFile inputs.oisd;
-  extraBlocklist = "";
-  blocklist_txt = pkgs.writeText "blocklist.txt" ''
-    ${extraBlocklist}
-    ${blocklist_base}
-  '';
 in
 {
 
@@ -23,7 +17,7 @@ in
   networking.resolvconf.enable = lib.mkForce false;
   networking.dhcpcd.extraConfig = "nohook resolv.conf";
   networking.networkmanager.dns = "none";
-  services.resolved.enable = false;
+  services.resolved.enable = lib.mkForce false;
 
   services.dnscrypt-proxy = {
     enable = true;
@@ -44,7 +38,12 @@ in
         cache_file = "/var/lib/dnscrypt-proxy/public-resolvers.md";
       };
 
-      # blocked_names.blocked_names_file = blocklist_txt;
+      disabled_server_names = [
+        "cloudflare"
+      ];
+      bootstrap_resolvers = [
+        "9.9.9.11:53"
+      ];
 
       ## fuck it it should work but somehow dnscrypt is not launching
       # local_doh = {
@@ -63,10 +62,9 @@ in
       # };
 
       # server_names = [ "adguard-dns-doh" ];
-      listen_addresses = [ "127.0.0.1:5335" ];
+      # listen_addresses = [ "127.0.0.1:5335" ];
+      # listen_addresses = [ "0.0.0.0:53" ];
     };
   };
-  # services.dnscrypt-proxy.settings.systemd.services.dnscrypt-proxy.serviceConfig.StateDirectory =
-  #   StateDirectory;
-
+  systemd.services.dnscrypt-proxy.serviceConfig.StateDirectory = StateDirectory;
 }
