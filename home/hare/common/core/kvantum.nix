@@ -20,7 +20,7 @@
       cp ${kvconfig} "$directory/myBase16Kvantum.kvconfig"
       cp ${svg} "$directory/myBase16Kvantum.svg"
     '';
-myKvantumPackage = let
+  myKvantumPackage = let
     kvconfig = config.lib.stylix.colors {
       template = ./kvconfig.mustache;
       extension = ".kvconfig";

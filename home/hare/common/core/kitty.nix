@@ -1,6 +1,5 @@
-{ pkgs, ... }:
-{
-  home.packages = [ pkgs.kitty ];
+{...}: {
+  # home.packages = [ pkgs.kitty-termi ];
   programs.kitty = {
     enable = true;
     # font = {
@@ -22,7 +21,7 @@
     };
     settings = {
       # include = "./generated-colors.conf"; # using stylix my boi again just like the old times
-      # text_composition_strategy = "legacy";
+      text_composition_strategy = "legacy";
       confirm_os_window_close = "0";
       window_padding_width = "6";
       placement_strategy = "center";

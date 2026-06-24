@@ -21,6 +21,7 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
@@ -94,39 +95,36 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      sops-nix,
-      ...
-    }@inputs:
-    let
-      inherit (self) outputs;
+  outputs = {
+    self,
+    nixpkgs,
+    sops-nix,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
 
-      System = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+    System = nixpkgs.lib.genAttrs ["x86_64-linux"];
 
-      Pkgs = nixpkgs.legacyPackages.${System};
+    Pkgs = nixpkgs.legacyPackages.${System};
 
-      lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
-    in
-    {
-      formatter = System (system: nixpkgs.legacyPackages.${system}.nixfmt);
+    lib = nixpkgs.lib.extend (self: super: {custom = import ./lib {inherit (nixpkgs) lib;};});
+  in {
+    formatter = System (system: nixpkgs.legacyPackages.${system}.nixfmt);
 
-      nixosConfigurations = builtins.listToAttrs (
-        map (host: {
-          name = host;
-          value = nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              inherit inputs outputs lib;
-              isDarwin = false;
-            };
-            modules = [
-              ./hosts/nixos/${host}
-              sops-nix.nixosModules.sops
-            ];
+    nixosConfigurations = builtins.listToAttrs (
+      map (host: {
+        name = host;
+        value = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs lib;
+            isDarwin = false;
           };
-        }) (builtins.attrNames (builtins.readDir ./hosts/nixos))
-      );
-    };
+          modules = [
+            ./hosts/nixos/${host}
+            sops-nix.nixosModules.sops
+          ];
+        };
+      }) (builtins.attrNames (builtins.readDir ./hosts/nixos))
+    );
+  };
 }

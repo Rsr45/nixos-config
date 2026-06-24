@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   browser = [
     "helium.desktop"
     "floorp.desktop"
@@ -184,11 +188,7 @@
 in {
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
-  xdg.mimeApps.defaultApplications = associations;
-  xdg.mimeApps.associations.removed = removals;
-  xdg.mimeApps.associations.added = associations;
-
-  home.packages = with pkgs; [
-    handlr-regex # better xdg-open for desktop apps says mr.emergentmind
-  ];
+  xdg.mimeApps.defaultApplications = lib.mkForce associations;
+  xdg.mimeApps.associations.removed = lib.mkForce removals;
+  xdg.mimeApps.associations.added = lib.mkForce associations;
 }

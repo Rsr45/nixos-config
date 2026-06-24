@@ -17,7 +17,7 @@ Rectangle {
 	TimeDate {}
         Workspaces {}
         Window {}
-        Submap {}
+        // Submap {}
         SysTray {}
     }
 }

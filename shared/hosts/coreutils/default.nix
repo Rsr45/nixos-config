@@ -18,7 +18,6 @@
     ripgrep
     sharutils
     stow
-    toybox
     util-linux
     xdg-utils
 

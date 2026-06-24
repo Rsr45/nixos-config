@@ -51,7 +51,7 @@ in
       "exec-once" = [
         # "eww daemon; eww open bar_1"
         # "uwsm app -- qs -d --config ${config.xdg.configHome}/qs-dwm" # launched via sytemd through qs home module
-        "uwsm app -- noctalia-shell"
+        # "uwsm app -- noctalia-shell"
         # "uwsm app -- awww restore" # use noctalia-shell
         ## Fix Soteria Polkit Agent
         # "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_ID" # supposed to be set up by uwsm so use them without uwsm
@@ -200,22 +200,25 @@ in
         "$mod, N, togglespecialworkspace, special"
         "$mod SHIFT, N, movetoworkspace, special"
 
-        ", Print, exec, uwsm app -- bash -c 'FILE='$HOME/Pictures/Screenshots/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png'; grim - | tee '$FILE' | wl-copy --type image/png'"
-        "$mod SHIFT, S, exec, uwsm app -- bash -c 'FILE='$HOME/Pictures/Screenshots/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png'; grim -g '$(slurp)' - | tee '$FILE' | wl-copy --type image/png'"
+        # ", Print, exec, uwsm app -- bash -c 'FILE='$HOME/Pictures/Screenshots/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png'; grim - | tee '$FILE' | wl-copy --type image/png'"
+        # "$mod SHIFT, S, exec, uwsm app -- bash -c 'FILE='$HOME/Pictures/Screenshots/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png'; grim -g '$(slurp)' - | tee '$FILE' | wl-copy --type image/png'"
+        # ", Print, exec, noctalia msg screenshot-fullscreen all"
+        # "$mod SHIFT, S, exec, noctalia msg screenshot-region"
+        # "$mod, W, exec, noctalia msg panel-toggle wallpaper"
+        # "$mod SHIFT, L, exec, noctalia msg session lock"
+        # "$mod, Delete, exec, noctalia msg panel-toggle session"
+        # "$mod, Home, exec, noctalia msg panel-toggle control-center"
 
         "$mod SHIFT, C, exec, uwsm app -- hyprpicker -a -f hex"
-        "$mod+Alt, W, exec, uwsm app -- noctalia-shell ipc call wallpaper toggle"
         "$mod, O, exec, uwsm app -- ~/scripts/ocr.sh"
         "$mod, B, exec, uwsm app -- ~/scripts/bookmarks.sh"
         "$mod, D, exec, uwsm app -- bemenu-run"
         # "$mod, Space, exec, rofi -show drun || pkill rofi"
-        "$mod, Space, exec, uwsm app -- vicinae toggle"
+        "$mod, Space, exec, vicinae toggle"
         "$mod, Return, exec, uwsm app -- dolphin"
         "$mod, T, exec, uwsm app -- wezterm"
         "$mod, A, exec, uwsm app -- ~/scripts/mixer.sh"
         # "$mod, E, exec, wezterm start --class dired -- yazi"
-        "$mod, L, exec, uwsm app -- noctalia-shell ipc call lockScreen lock"
-        "$mod, Delete, exec, uwsm app -- noctalia-shell ipc call sessionMenu toggle"
         # "$mod, Print, exec, uwsm app -- wlr-which-key"
         # (
         #   "$mod, G, exec, "

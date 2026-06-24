@@ -10,8 +10,7 @@
   config,
   pkgs,
   ...
-}:
-{
+}: {
   imports = lib.flatten [
     # ============ Hardware Configs ==========
     ./hardware-configuration.nix
@@ -23,30 +22,28 @@
       # ========== Required Configs ==========
       "hosts/common/core"
       "shared/hosts/coreutils"
+      "hosts/common/optional/audio.nix"
+      "hosts/common/optional/services/kanata.nix"
+
+      # ========== Security/Hardening ==========
+      # "hosts/common/optional/security"
 
       # ========== Virtualisation ==========
       "hosts/common/optional/virtualisation/qemu.nix"
 
       # ========== Network Configs ==========
-      # "hosts/common/optional/services/adguardhome.nix"
       "hosts/common/optional/services/dnscrypt-proxy.nix"
-      # "hosts/common/optional/services/opensnitch.nix"
+
+
       "hosts/common/optional/services/syncthing.nix"
 
       # ========== DE/WM Configs ==========
-      "hosts/common/optional/wm/hyprland.nix"
-      "hosts/common/optional/wm/niri.nix"
       "hosts/common/optional/wm/sway.nix"
-      # "hosts/common/optional/wm/i3.nix"
-      # "hosts/common/optional/wm/awesome.nix"
+      "hosts/common/optional/wm/hyprland.nix"
 
       # ========== Optional Configs ==========
       "hosts/common/optional/services/greetd.nix"
-      "hosts/common/optional/services/kanata.nix"
       "hosts/common/optional/services/searxng.nix"
-      # "hosts/common/optional/services/ollama.nix"
-      "hosts/common/optional/audio.nix"
-      # "hosts/common/optional/firejail.nix"
       "hosts/common/optional/plymouth.nix"
       "shared/hosts/steam"
     ])
@@ -60,10 +57,31 @@
     hostName = "apocrypha";
   };
 
-  networking = {
-    networkmanager.enable = true;
-    networkmanager.wifi.backend = "iwd";
+  # ========== Custom Modules ==========
+  modules.security.memoryAllocator = {
+    enable = false;
+    provider = "graphene-hardened";
   };
+
+  networking = {
+    networkmanager = {
+      enable = true;
+      wifi = {
+        backend = "iwd";
+        scanRandMacAddress = true;
+        macAddress = "random";
+      };
+    };
+  };
+
+  # fileSystems."/home/youruser/.cache" = {
+  #   device = "none";
+  #   fsType = "tmpfs";
+  #   options = [
+  #     "size=4G"
+  #     "mode=777"
+  #   ];
+  # };
 
   i18n.extraLocaleSettings = {
     # LC_ALL = "en_US.UTF-8"; # This overrides all other LC_* settings.
@@ -84,9 +102,8 @@
     LC_COLLATE = "tr_TR.UTF-8";
   };
 
-  ## Disable Telemetry
   services.userdbd.enable = lib.mkForce false;
-  # systemd.package = pkgs.systemd.override { withUserDb = false; }; ## cant be bothered to recompile
+  # systemd.package = pkgs.systemd.override { withUserDb = false; };
 
   programs.localsend = {
     enable = true;
@@ -134,22 +151,27 @@
   };
 
   systemd.coredump.enable = false;
+  security.pam.loginLimits = [
+    {
+      domain = "*"; # Applies to all users/sessions
+      type = "-"; # Set both soft and hard limits
+      item = "core"; # The soft/hard limit item
+      value = "0"; # Core dumps size is limited to 0 (effectively disabled)
+    }
+  ];
 
-  security = {
-    protectKernelImage = true;
-    # lockKernelModules = false; # this breaks iptables, wireguard, and virtd
-
+  # security = {
     # force-enable the Page Table Isolation (PTI) Linux kernel feature
-    forcePageTableIsolation = true;
+    # forcePageTableIsolation = true;
 
     # User namespaces are required for sandboxing.
     # this means you cannot set `"user.max_user_namespaces" = 0;` in sysctl
-    allowUserNamespaces = true;
+    # allowUserNamespaces = true;
 
     # Disable unprivileged user namespaces, unless containers are enabled
-    unprivilegedUsernsClone = config.virtualisation.containers.enable;
-    allowSimultaneousMultithreading = true;
-  };
+    # unprivilegedUsernsClone = config.virtualisation.containers.enable;
+    # allowSimultaneousMultithreading = true;
+  # };
 
   services.chrony = {
     enable = true;
@@ -185,12 +207,8 @@
     #  '';
   };
 
-  networking.nftables = {
-    enable = true;
-  };
-  networking.firewall = {
-    enable = lib.mkForce true;
-  };
+  networking.nftables.enable = true;
+  networking.firewall.enable = lib.mkForce true;
 
   boot.loader = {
     systemd-boot = {
@@ -214,10 +232,9 @@
     {
       device = "/var/lib/swapfile";
       size = 16 * 1024;
-      options = [ "discard" ];
+      options = ["discard"];
     }
   ];
-
   boot.zswap.enable = true;
 
   systemd.oomd.enable = true;
@@ -226,7 +243,7 @@
     xserver = {
       enable = true;
       autorun = true;
-      videoDrivers = [ "amdgpu" ];
+      videoDrivers = ["amdgpu"];
       xkb = {
         layout = "us";
         # variant = ""; # using kanata, keyd etc.
@@ -234,13 +251,13 @@
         extraLayouts = {
           mine = {
             description = "Turkish Q layout {swap i and ı, ESC and CAPS}";
-            languages = [ "tur" ];
+            languages = ["tur"];
             symbolsFile = ./custom_tr.xkb;
           };
           secondcoming = {
             ## TODO: make i based on us but add alpha layer locale keys, more apt to call it kanata base layout
             description = "US Layout (Turkish Letters and Nordrassil)";
-            languages = [ "us" ];
+            languages = ["us"];
             symbolsFile = ./us_TR.xkb;
           };
         };
@@ -248,10 +265,10 @@
     };
     clamav = {
       updater.enable = true;
-      daemon.enable = true;
       updater.frequency = 12;
+      daemon.enable = false;
       scanner = {
-        enable = true;
+        enable = false;
         # 4:00 AM
         interval = "*-*-* 04:00:00";
         scanDirectories = [
@@ -290,7 +307,6 @@
 
   nixpkgs.config.allowUnfree = true;
   programs = {
-    # adb.enable = true; # use android-tools
     appimage = {
       enable = true;
       binfmt = true;
@@ -353,6 +369,7 @@
       sops
       nix-prefetch-git
       hydra-check
+      nix-du
       # # Defaults
       clamav
       lynis
@@ -367,7 +384,8 @@
       vim
       tor-browser
 
-      kitty # must have term so we are not locked out in any wm
+      dnsutils
+      kitty
       foot
       alacritty
 
@@ -382,19 +400,9 @@
       keepassxc
       gajim
       android-tools
-      onlyoffice-desktopeditors
-      (aspellWithDicts (
-        dicts: with dicts; [
-          en
-          en-computers
-          en-science
-          tr
-        ]
-      ))
       hunspell
       hunspellDicts.tr_TR
       hunspellDicts.en_US
-      jdk17 # Java 17
 
       # To make kde work on non kde
       kdePackages.kde-cli-tools

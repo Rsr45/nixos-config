@@ -14,7 +14,7 @@
     #   package = pkgs.adw-gtk3;
     #   name = "adw-gtk3-dark";
     # };
-    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+    # gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
     gtk3 = {
       extraConfig = {
         gtk-application-prefer-dark-theme = 1;

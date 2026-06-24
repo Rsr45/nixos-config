@@ -8,24 +8,39 @@ let
   StateDirectory = "dnscrypt-proxy";
 in
 {
+  networking = {
+    nameservers = [
+      "127.0.0.1"
+      "::1"
+    ];
 
-  networking.nameservers = [
-    "127.0.0.1"
-    "::1"
-  ];
+    dhcpcd = {
+      extraConfig = "nohook resolv.conf";
+    };
 
-  networking.resolvconf.enable = lib.mkForce false;
-  networking.dhcpcd.extraConfig = "nohook resolv.conf";
-  networking.networkmanager.dns = "none";
+    networkmanager = {
+      dns = "none";
+    };
+
+    resolvconf = {
+      enable = true;
+      useLocalResolver = true;
+    };
+  };
+
   services.resolved.enable = lib.mkForce false;
 
   services.dnscrypt-proxy = {
     enable = true;
     settings = {
+      # adguardHome
+      # listen_addresses = [ "127.0.0.1:5335" ];
+
       # ipv6_servers = true;
       require_dnssec = true;
       require_nolog = true;
       require_nofilter = true;
+      odoh_servers = true;
       query_log.file = "/var/log/dnscrypt-proxy/query.log";
 
       sources.public-resolvers = {
@@ -36,6 +51,16 @@ in
         minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
 
         cache_file = "/var/lib/dnscrypt-proxy/public-resolvers.md";
+      };
+
+      sources.relays = {
+        urls = [
+          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/relays.md"
+          "https://download.dnscrypt.info/resolvers-list/v3/relays.md"
+          "https://cdn.jsdelivr.net/gh/DNSCrypt/dnscrypt-resolvers@master/v3/relays.md"
+        ];
+        cache_file = "relays.md";
+        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
       };
 
       disabled_server_names = [
@@ -62,9 +87,8 @@ in
       # };
 
       # server_names = [ "adguard-dns-doh" ];
-      # listen_addresses = [ "127.0.0.1:5335" ];
-      # listen_addresses = [ "0.0.0.0:53" ];
     };
   };
+
   systemd.services.dnscrypt-proxy.serviceConfig.StateDirectory = StateDirectory;
 }

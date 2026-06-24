@@ -24,4 +24,12 @@
   no-scripting: fmhy.net false
   no-scripting: scispace.com false
   no-scripting: refseek.com false
+
+  no-scripting: wotaku.wiki false
+  no-strict-blocking: wotaku.wiki true
+  no-scripting: kagane.to false
+  no-scripting: weebcentral.com false
+  no-scripting: mangafire.to false
+  no-scripting: search.brave.com false
+  no-scripting: scilit.com false
 ''

@@ -1,27 +1,45 @@
-{ pkgs, inputs, ... }:
-
 {
-  imports = [
-    # inputs.nix-doom-emacs-unstraightened.homeModule
-  ];
-
-  # programs.emacs.enable = true;
-  # programs.emacs.package = pkgs.emacs-gtk;
-
-  # programs.doom-emacs = {
+  pkgs,
+  inputs,
+  ...
+}: {
+  # programs.emacs = {
   #   enable = true;
-  #   doomDir = ./doom; # or e.g. `./doom.d` for a local configuration
-  #   provideEmacs = false;
+  #   package = pkgs.emacs; # replace with pkgs.emacs-gtk if desired
+  #   extraPackages = epkgs: [
+  #     epkgs.nix-mode
+  #     epkgs.nixfmt
+  #   ];
+  #   extraConfig = ''
+  #     (setq standard-indent 2)
+  #   '';
   # };
 
   home.packages = with pkgs; [
-    # (doom-emacs {
-    #   doomDir = ./doom;
-    # })
     emacs-gtk
+    # vterm etc
     cmake
     gcc
     libtool
+    # req
     graphviz
+    plantuml
+    # lsp
+    marksman
+    nixd
+    lua-language-server
+    texlab
+    zotero
+    poppler-utils
+    vips
+    (aspellWithDicts (
+      dicts:
+        with dicts; [
+          en
+          en-computers
+          en-science
+          tr
+        ]
+    ))
   ];
 }

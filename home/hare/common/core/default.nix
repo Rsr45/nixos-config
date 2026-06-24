@@ -1,31 +1,35 @@
 #FIXME: Move attrs that will only work on linux to nixos.nix
-#FIXME: if pulling in homemanager for isMinimal maybe set up conditional for some packages
 {
   config,
   lib,
   pkgs,
   hostSpec,
   ...
-}:
-let
-  platform = if hostSpec.isDarwin then "darwin" else "nixos";
-in
-{
+}: let
+  platform =
+    if hostSpec.isDarwin
+    then "darwin"
+    else "nixos";
+in {
   imports = lib.flatten [
     (map lib.custom.relativeToRoot [
       "modules/common/host-spec.nix"
       # "modules/home"
     ])
     ./${platform}.nix
+    ## Directory set, and bookmarks
     ./xdg.nix
-    ./cursor.nix
-    ./wezterm.nix
-    # ./urxvt.nix
     ./gtk.nix
+    ## UI
+    ./cursor.nix
     ./qt.nix
+    ./kvantum.nix
+    ## Shell
+    ./aliases.nix
     ./bash.nix
     ./fish.nix
     ./nu.nix
+    ## CLI
     ./bat.nix
     # ./btop.nix
     # ./direnv.nix
@@ -52,55 +56,35 @@ in
     ];
     sessionVariables = {
       FLAKE = "$HOME/nixos-config";
-      SHELL = "fish";
-      TERM = "foot";
-      TERMINAL = "foot";
-      VISUAL = "nvim";
-      EDITOR = "nvim";
-      # MANPAGER = "batman";
+      EDITOR = "vi";
     };
     preferXdgDirectories = true;
   };
 
-  home.packages = builtins.attrValues {
-    inherit (pkgs)
-      # Packages that don't have custom configs go here
-      copyq # clipboard manager
-      coreutils # basic gnu utils
-      curl
-      eza # ls replacement
-      dust # disk usage
-      fd # tree style ls
-      findutils # find
-      fzf # fuzzy search
-      jq # json pretty printer and manipulator
-      nix-tree # nix package tree viewer
-      fastfetch # fancier system info than pfetch
-      ncdu # TUI disk usage
-      pciutils
-      pfetch # system info
-      pre-commit # git hooks
-      p7zip # compression & encryption
-      ripgrep # better grep
-      steam-run # for running non-NixOS-packaged binaries on Nix
-      usbutils
-      tree # cli dir tree viewer
-      unzip # zip extraction
-      unrar # rar extraction
-      wev # show wayland events. also handy for detecting keypress codes
-      wget # downloader
-      xdg-utils # provide cli tools such as `xdg-mime` and `xdg-open`
-      xdg-user-dirs
-      yq-go # yaml pretty printer and manipulator
-      zip # zip compression
-      vimiv-qt
-      ;
-  };
+  home.packages = with pkgs; [
+    # Packages that don't have custom configs go here
+    coreutils
+    findutils
+    pciutils
+    usbutils
+    xdg-utils
+    xdg-user-dirs
+    curl
+    dua # disk usage with  interactive mode that works like ncdu
+    dust # disk usage
+    dysk # fs disk usage
+    wl-clipboard
+    nix-tree # nix package tree viewer
+    hydra-check
+    steam-run
+    wev
+    wget
+    jq
+  ];
 
   programs.btop.enable = true;
   programs.mpv.enable = true;
-  programs.lazygit.enable = true;
-  programs.lazydocker.enable = true;
+  programs.feh.enable = true;
 
   nix = {
     package = lib.mkDefault pkgs.nix;

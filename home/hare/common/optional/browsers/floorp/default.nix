@@ -61,6 +61,8 @@
 
         settings = lib.foldl' lib.recursiveUpdate {} [
           (import ../settings.nix {inherit lib pkgs;})
+          (import ../settings-pdfjs.nix {inherit lib pkgs;})
+          (import ../settings-ai.nix {inherit lib pkgs;})
           (import ../settings-floorp.nix {inherit lib pkgs;})
           (import ./settings-uiCustomizations.nix {inherit lib pkgs;})
         ];

@@ -168,10 +168,10 @@
           setupOpts = {
             mappings = {
               # close       = "q";
-              go_in = "<Right>";
-              go_in_plus = "<S-Right>";
-              go_out = "<Left>";
-              go_out_plus = "<S-Left>";
+              go_in = "<Return>";
+              go_in_plus = "<S-Return>";
+              go_out = "<BS>";
+              go_out_plus = "<S-BS>";
               # mark_goto   = "'";
               # mark_set    = "m";
               # reset       = "<BS>";
@@ -237,6 +237,80 @@
           mode = "n";
           action = "<cmd>lua MiniBufremove.delete()<CR>";
           desc = "Buffer Delete";
+        }
+        {
+          key = "<leader>p";
+          mode = "x";
+          action = "\"_dP";
+          desc = "Paste without erasing register";
+          noremap = true;
+          silent = true;
+        }
+        {
+          key = "<leader>P";
+          mode = [
+            "n"
+            "v"
+            "x"
+          ];
+          action = "\"+p";
+          desc = "Paste from clipboard";
+          noremap = true;
+          silent = true;
+
+        }
+        {
+          key = "<leader>y";
+          mode = [
+            "n"
+            "v"
+            "x"
+          ];
+          action = "\"+y";
+          desc = "Yank to clipboard";
+          noremap = true;
+          silent = true;
+
+        }
+        {
+          key = "<leader>Y";
+          mode = [
+            "n"
+            "v"
+            "x"
+          ];
+          action = "\"+yy";
+          desc = "Yank line to clipboard";
+          noremap = true;
+          silent = true;
+
+        }
+        {
+          key = "<C-a>";
+          mode = [
+            "n"
+            "v"
+            "x"
+          ];
+          action = "gg0vG$";
+          desc = "Select all";
+          noremap = true;
+          silent = true;
+
+        }
+        {
+          key = "<Up>";
+          mode = "n";
+          action = "v:count == 0 ? 'gk' : 'k'";
+          expr = true;
+          silent = true;
+        }
+        {
+          key = "<Down>";
+          mode = "n";
+          action = "v:count == 0 ? 'gj' : 'j'";
+          expr = true;
+          silent = true;
         }
       ];
 

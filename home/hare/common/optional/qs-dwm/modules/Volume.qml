@@ -53,7 +53,7 @@ Rectangle {
 
             width: volumeTrack.width * visualVolume
 
-            color: muted ? Colors.borderColor : Colors.accent2Color
+            color: muted ? Colors.borderColor : Colors.accent
 
             Behavior on width {
                 NumberAnimation {

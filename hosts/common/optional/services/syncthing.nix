@@ -1,4 +1,4 @@
-{ config, ... }: {
+{config, ...}: {
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
@@ -18,7 +18,11 @@
       folders = {
         "Main Purpose" = {
           path = "/home/hare/shared";
-          devices = [ "phone" ];
+          devices = ["phone"];
+        };
+        "Notes" = {
+          path = "/home/hare/Documents/Notes";
+          devices = ["phone"];
         };
         # "Example" = {
         #   path = "/home/myusername/Example";

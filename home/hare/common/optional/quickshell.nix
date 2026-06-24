@@ -55,6 +55,7 @@ in {
       ${colors}
       EOF
     '';
+
     "qs-dwm".source = pkgs.runCommand "qs-config" {} ''
       set -euo pipefail
       mkdir -p $out/shared
@@ -65,5 +66,8 @@ in {
       ${colors}
       EOF
     '';
+
+    "qs-sway".source = ./qs-sway;
+    "qs-hyprland".source = ./qs-hyprland;
   };
 }

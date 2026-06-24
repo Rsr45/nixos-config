@@ -23,13 +23,13 @@
 
     fonts = {
       serif = {
-        package = pkgs.geist-font;
-        name = "Geist";
+        package = pkgs.cantarell-fonts;
+        name = "Cantarell";
       };
 
       sansSerif = {
-        package = pkgs.geist-font;
-        name = "Geist";
+        package = pkgs.cantarell-fonts;
+        name = "Cantarell";
       };
 
       monospace = {
@@ -105,10 +105,10 @@
       noctalia-shell.enable = true;
       gtk = {
         enable = true;
-        extraCss = ''
-          // Remove rounded corners
-          window.background { border-radius: 0; }
-        '';
+        # extraCss = ''
+        #   // Remove rounded corners
+        #   window.background { border-radius: 0; }
+        # '';
       };
       qt = {
         enable = true;
@@ -127,9 +127,9 @@
     };
   };
 
-  home.file.".cache/wal/colors-wal.json".text =
-    import (lib.custom.relativeToRoot "shared/wallust/colorschemes/stylix.nix")
-      { inherit config; };
+  # home.file.".cache/wal/colors-wal.json".text =
+  #   import (lib.custom.relativeToRoot "shared/wallust/colorschemes/stylix.nix")
+  #     { inherit config; };
 
   xdg = {
     configFile = {

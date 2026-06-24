@@ -166,7 +166,7 @@ caps esc     a @a   s @r   d @s   f @t   g @g            h @m   j @n   k @e   l 
              (tap-hold-release-keys $timeouttap $timeouthold
                                     (multi $keytap  @.tp-cole)
                                     $keyhold
-                                    $typinglist 
+                                    $typinglist
                                     )
              )
 
@@ -268,9 +268,9 @@ a a   s r   d s   f t   g g            h m   j n   k e   l i   ; o
 
 
 (deflayermap (navigation)
-  y @rdo u @pst i @cpy o @cut p @udo
-  h caps j left k down l up ; rght
-  n ins m home , pgdn . pgup / end
+  y @rdo u caps i up o @cut p @udo
+  h @pst j left k down l rght ; @cpy
+  n home m pgdn , pgup . end / ins
 
 )
 (deflayermap (mouse)
@@ -340,6 +340,16 @@ lsft lctl
   a @de-a
   8 S-2
 )
+
+;;(deflayermap (spacefn)
+;;   tab `     q S-[   w S-]   e S-9   r S-0   t S-`
+;;   caps S-3  a S-8   s S-6   d S-5   f S-4   g =
+;;   lsft \    < S-1   z S-7   x [     c ]     v S-\
+;;
+;;  y @rdo   u @pst   i @cpy   o @cut   p @udo
+;;  h caps   j left   k down   l up   ; rght
+;;  n ins   m home   , pgdn   . pgup   / end
+;; )
 ;; (defvirtualkeys
 ;;   callum (switch
 ;;     ((and nop1 nop2)) (layer-while-held number) break

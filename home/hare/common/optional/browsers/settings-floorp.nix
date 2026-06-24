@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   "userChrome.hidden.urlbar_iconbox" = true;
   "userChrome.hidden.tabbar" = true;
   "userChrome.hidden.sidebar_header" = true;
@@ -104,7 +103,7 @@
           "title" = "Floorp Support";
         }
       ];
-      blocked = [ ];
+      blocked = [];
     };
   };
 
