@@ -73,8 +73,8 @@
   ## DOH & HTTPS
   "dom.security.https_only_mode" = true;
   "network.trr.mode" = 3;
-  "network.trr.custom_uri" = "https://dns10.quad9.net/dns-query";
-  "network.trr.uri" = "https://dns10.quad9.net/dns-query";
+  "network.trr.custom_uri" = "https://dns11.quad9.net/dns-query";
+  "network.trr.uri" = "https://dns11.quad9.net/dns-query";
   # dnscrypt-proxy
   # Set network.trr.custom_uri and network.trr.uri to https://127.0.0.1:3000/dns-query
   # Set network.trr.mode to 2 or 3 info

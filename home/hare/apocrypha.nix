@@ -3,7 +3,7 @@
     # ========== X ==========
     # Never to be removed at all must have ...
     common/core
-    common/optional/xdg-portal.nix
+    # common/optional/xdg-portal.nix
     common/optional/xdg-mime.nix
     # ========== X ==========
     # WM/DE homemanager eq
@@ -43,7 +43,7 @@
     common/optional/direnv.nix
     # ========== X ==========
     #
-    common/optional/mpd.nix
+    # common/optional/mpd.nix # this and dbus broker which was getting slowed because of setting xdg.portal....
     common/optional/spotify.nix
     common/optional/audacious.nix
     common/optional/nixcord.nix

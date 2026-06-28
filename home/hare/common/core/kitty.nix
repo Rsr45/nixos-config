@@ -2,6 +2,7 @@
   # home.packages = [ pkgs.kitty-termi ];
   programs.kitty = {
     enable = true;
+    shellIntegration.mode = "no-sudo";
     # font = {
     #   size = 12;
     #   name = "Iosevka";
