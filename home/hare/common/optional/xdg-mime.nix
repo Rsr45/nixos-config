@@ -9,8 +9,6 @@
   ];
   editor = [
     "neovide.desktop"
-    # "nixCats.desktop"
-    "helix.desktop"
     "emacs.desktop"
   ];
   video = [
@@ -20,6 +18,7 @@
     "audacious.desktop"
   ];
   image = [
+    "com.interversehq.qView.desktop"
     "org.kde.gwenview.desktop"
   ];
   svg =

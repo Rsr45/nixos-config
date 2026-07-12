@@ -64,9 +64,10 @@ in
       hare-password = {};
       "mail/efe54676"= {};
       "mail/efe45676"= {};
-      # dnscrypt-cert-key = {
-      #   # restartUnits = [ "dnscrypt-proxy.service" ];
-      # };
+      "dnscrypt-cert-key.pem" = {
+        # restartUnits = [ "dnscrypt-proxy.service" ];
+        # owner = "dnscrypt-proxy";
+      };
       # nextcloud-admin = {
       #   owner = "nextcloud";
       # };

@@ -3,14 +3,15 @@
   services = {
     nextcloud = {
       enable = true;
-      package = pkgs.nextcloud31;
+      package = pkgs.nextcloud32;
       hostName = "localhost";
       configureRedis = true;
       database.createLocally = true;
       config = {
         adminuser = "admin";
         adminpassFile = "${config.sops.secrets.nextcloud-admin.path}";
-        dbtype = "pgsql";
+        # dbtype = "pgsql";
+        dbtype = "sqlite";
         # dbname = "nextcloud";
         # dbuser = "nextcloud";
       };
@@ -34,16 +35,16 @@
       };
       extraAppsEnable = true;
     };
-    postgresql = {
-      enable = true;
-      ensureDatabases = [ "nextcloud" ];
-      ensureUsers = [
-        {
-          name = "nextcloud";
-          ensureDBOwnership = true;
-        }
-      ];
-    };
+    # postgresql = {
+    #   enable = true;
+    #   ensureDatabases = [ "nextcloud" ];
+    #   ensureUsers = [
+    #     {
+    #       name = "nextcloud";
+    #       ensureDBOwnership = true;
+    #     }
+    #   ];
+    # };
     # postgresqlBackup = {
     # # optional backup for postgresql db
     #   enable = true;

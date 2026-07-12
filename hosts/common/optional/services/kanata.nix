@@ -4,7 +4,7 @@
     enable = true;
     keyboards = {
       default = {
-        configFile = ./ka-default.kbd;
+        configFile = ./ka-secondcoming.kbd;
       };
     };
   };

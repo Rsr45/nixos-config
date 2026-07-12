@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   programs = {
     carapace = {
       enable = true;
@@ -27,9 +26,9 @@
       buffer_editor = "vi";
     };
 
-    # $env.TRANSIENT_PROMPT_COMMAND = ^starship module character
     envFile.text = ''
       $env.CARAPACE_BRIDGES = 'fish,inshellisense'
+      $env.TRANSIENT_PROMPT_COMMAND = ^starship module character
     '';
 
     # configFile.text = ''

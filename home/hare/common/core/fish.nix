@@ -46,6 +46,7 @@
     # bind -M insert ctrl-e cancel
 
     preferAbbrs = true;
+    shellAbbrs = config.home.shellAliases;
     plugins = [
       # Enable a plugin (here grc for colorized command output) from nixpkgs
       {

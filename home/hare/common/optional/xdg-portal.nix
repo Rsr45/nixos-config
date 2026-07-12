@@ -4,26 +4,22 @@
   ...
 }: {
   xdg.portal = {
-    enable = lib.mkForce true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-wlr
-      pkgs.kdePackages.xdg-desktop-portal-kde
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-    config = {
-      common = {
-        default = [
-          "hyprland"
-          "kde"
-          "gtk"
-        ];
-        "org.freedesktop.impl.portal.FileChooser" = [
-          "kde"
-          "gtk"
-        ];
-      };
-    };
+    enable = true;
+#     extraPortals = [
+#       pkgs.kdePackages.xdg-desktop-portal-kde
+#     ];
+#     config = {
+#       common = {
+#         # default = [
+#         #   "hyprland"
+#         #   "kde"
+#         # ];
+#         "org.freedesktop.impl.portal.FileChooser" = [
+#           "kde"
+#         ];
+# "org.freedesktop.impl.portal.Secret" = "kwallet";
+#       };
+#     };
   };
   # xdg.configFile."xdg-desktop-portal-termfilechooser" = {
   #   source = ./termfilechooser;

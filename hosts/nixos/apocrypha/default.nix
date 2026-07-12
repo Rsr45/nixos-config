@@ -33,9 +33,9 @@
 
       # ========== Network Configs ==========
       "hosts/common/optional/services/dnscrypt-proxy.nix"
-
-
+      "hosts/common/optional/services/adguardhome.nix"
       "hosts/common/optional/services/syncthing.nix"
+      "hosts/common/optional/services/tor.nix"
 
       # ========== DE/WM Configs ==========
       "hosts/common/optional/wm/sway.nix"
@@ -50,6 +50,31 @@
     # ========== Apocrypha Specific ========
     ./stylix.nix
   ];
+
+
+  services.gnome.gnome-keyring.enable = false;
+  security.pam.services.login.kwallet = {
+    enable = true;
+    forceRun = true;
+  };
+  security.pam.services.greetd.kwallet = {
+    enable = true;
+    forceRun = true;
+  };
+
+  services.dbus.packages = with pkgs.kdePackages; [ kwallet ];
+  systemd.user.services.pam-kwallet-init = {
+    description = "Unlock kwallet from pam credentials";
+    wantedBy = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init";
+      Slice = "background.slice";
+      Restart = "no";
+    };
+  };
 
   # ========== Host Specification ==========
 
@@ -113,6 +138,7 @@
   programs.kdeconnect.enable = true;
 
   security = {
+    run0.enable = true;
     run0.enableSudoAlias = true;
     polkit.enable = true;
     sudo.enable = false;
@@ -347,6 +373,22 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
+extraPortals = [
+      pkgs.kdePackages.xdg-desktop-portal-kde
+pkgs.kdePackages.kwallet
+    ];
+    configPackages = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+    config = {
+      common = {
+        default = [
+        "hyprland" "kde"];
+        "org.freedesktop.impl.portal.FileChooser" = [
+          "kde"
+        ];
+"org.freedesktop.impl.portal.Secret" = "kwallet";
+      };
+    };
+
   };
 
   # environment.etc."opt/edge/policies/managed/managed.json".source = ./managed.json;
@@ -377,7 +419,11 @@
       kdePackages.kdenlive
       kdePackages.dolphin
       kdePackages.dolphin-plugins
+      kdePackages.konsole
       kdePackages.gwenview
+      kdePackages.kwallet
+      kdePackages.kwallet-pam
+      kdePackages.kwalletmanager
       vlc
       vlc-bittorrent
       qbittorrent

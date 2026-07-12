@@ -17,6 +17,7 @@
 
   home.packages = with pkgs; [
     emacs-gtk
+    nixfmt
     # vterm etc
     cmake
     gcc

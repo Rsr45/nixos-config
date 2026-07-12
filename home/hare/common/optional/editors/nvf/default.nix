@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   config,
+  lib,
   ...
 }:
 {
@@ -168,10 +169,10 @@
           setupOpts = {
             mappings = {
               # close       = "q";
-              go_in = "<Return>";
-              go_in_plus = "<S-Return>";
-              go_out = "<BS>";
-              go_out_plus = "<S-BS>";
+              # go_in = "<Return>";
+              # go_in_plus = "<S-Return>";
+              # go_out = "<BS>";
+              # go_out_plus = "<S-BS>";
               # mark_goto   = "'";
               # mark_set    = "m";
               # reset       = "<BS>";
@@ -189,9 +190,96 @@
 
       vim.utility.oil-nvim.enable = true;
 
+
+
+      vim.notes.obsidian.enable = true;
+
+vim.notes.obsidian.setupOpts = {
+      ui.enable = false;
+      legacy_commands = false;
+
+  link = {
+    style = "markdown";
+    format = "shortest";
+    auto_update = true;
+  };
+
+      workspaces = [
+        {
+          name = "Notes";
+          path = "~/Documents/Notes";
+          overrides = {
+            attachments = {
+              folder = "99_Meta/01_Attachments";
+            };
+          };
+        }
+      ];
+
+      templates = {
+        folder = "99_Meta/00_Templates";
+        date_format = "%Y-%m-%d";
+        time_format = "%H:%M";
+        # substitutions = {};
+        # customizations = {};
+      };
+
+      daily_notes = {
+        folder = "daily";
+        date_format = "DD.MM.YYYY";
+        default_tags = [ "daily" ];
+      };
+
+      note_id_func = lib.mkLuaInline ''
+        ---@param title string|?
+        ---@return string
+        function(title)
+            -- Create note IDs in a Zettelkasten format with a datetime and a suffix.
+            -- In this case a note with the title 'My new note' inside folder named 'VIM' will be given an ID that looks
+            -- like '202502132345-FRXT-VIM-my_new_note', and therefore the file name '202502132345-FRXT-VIM-my_new_note.md'.
+            local suffix = ""
+            if title ~= nil then
+                suffix = suffix ..
+                    "-" ..
+                    title:gsub(" ", "-"):gsub("[^A-Za-z0-9_-]", ""):lower()
+            else
+                suffix = suffix ..
+                    "-" ..
+                    title:gsub(" ", "-"):gsub("[^A-Za-z0-9_-]", ""):lower()
+            end
+            return tostring(os.date("%Y%m%dT%H%M%S")) .. "-" .. suffix
+        end
+      '';
+
+      frontmatter = {
+        enabled = true;
+        func =lib.mkLuaInline ''
+          function(note)
+            local out = { date = tostring(os.date("%Y-%m-%dT%H:%M:%S%z"):gsub("([+-]%d%d)(%d%d)$", "%1:%2")), identifier = os.date("%Y%m%dT%H%M%S"), tags = note.tags, title = note.title }
+              if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+                for k, v in pairs(note.metadata) do
+                  out[k] = v
+              end
+            end
+
+          return out
+          end
+        '';
+        sort = [
+          "title"
+          "date"
+          "tags"
+          "identifier"
+          "id"
+          "aliases"
+        ];
+      };
+
+      };
+
       vim.keymaps = [
         {
-          key = "<leader>,";
+          key = "<leader>bb";
           mode = "n";
           action = "<cmd>lua MiniPick.builtin.buffers()<CR>";
           desc = "Buffers";
@@ -209,7 +297,13 @@
           desc = "Code Trim";
         }
         {
-          key = "<leader>fe";
+          key = "<leader>cs";
+          mode = "n";
+          action = "<cmd>update<CR>";
+          desc = "Save File";
+        }
+        {
+          key = "<leader>fd";
           mode = "n";
           action = "<cmd>lua MiniFiles.open()<CR>";
           desc = "File Explorer";
@@ -227,7 +321,7 @@
           desc = "File Find";
         }
         {
-          key = "<leader>/";
+          key = "<leader>fg";
           mode = "n";
           action = "<cmd>lua MiniPick.builtin.grep_live()<CR>";
           desc = "Grep";
@@ -326,10 +420,10 @@
         mappings = {
           listMarks = "<C-t>";
           file1 = "<C-n>";
-          file2 = "<C-e>";
-          file3 = "<C-i>";
-          file4 = "<C-o>";
-          markFile = "<leader>a";
+          file2 = "<C-a>";
+          file3 = "<C-e>";
+          file4 = "<C-i>";
+          markFile = "<leader>s";
         };
       };
     };

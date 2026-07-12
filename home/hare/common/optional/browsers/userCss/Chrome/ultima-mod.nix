@@ -167,6 +167,7 @@
   #nav-bar {height: 30px !important;
    font-size: 12pt !important;
           font-family: Iosevka !important;
+          background-color: var(--toolbar-bgcolor) !important;
   }
 
   /* Url bar with bg color with accent border */

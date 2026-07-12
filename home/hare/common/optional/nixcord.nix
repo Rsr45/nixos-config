@@ -49,7 +49,7 @@
         fixYoutubeEmbeds.enable = true;
         forceOwnerCrown.enable = true;
         friendInvites.enable = true;
-        friendsSince.enable = true;
+        # friendsSince.enable = true;
         fullSearchContext.enable = true;
         fullUserInChatbox.enable = true;
         experiments = {
@@ -155,8 +155,8 @@
           removeProfileEffect = true;
           removeClanTag = true;
           alwaysShowUsername = true;
-          removeShopAboveDm = true;
-          removeQuestsAboveDm = true;
+          removeShopAboveDms = true;
+          removeQuestsAboveDms = true;
           removeServerBoostInfo = true;
           removeBillingSettings = true;
           removeGiftButton = true;

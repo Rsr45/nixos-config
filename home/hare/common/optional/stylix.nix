@@ -4,9 +4,8 @@
   config,
   lib,
   ...
-}:
-{
-  imports = [ inputs.stylix.homeModules.stylix ];
+}: {
+  imports = [inputs.stylix.homeModules.stylix];
 
   stylix = {
     enable = true;
@@ -23,13 +22,13 @@
 
     fonts = {
       serif = {
-        package = pkgs.cantarell-fonts;
-        name = "Cantarell";
+        package = pkgs.geist-font;
+        name = "Geist";
       };
 
       sansSerif = {
-        package = pkgs.cantarell-fonts;
-        name = "Cantarell";
+        package = pkgs.geist-font;
+        name = "Geist";
       };
 
       monospace = {
@@ -96,7 +95,7 @@
       spicetify.enable = true;
       obsidian = {
         enable = true;
-        vaultNames = [ "nix-roam" ];
+        vaultNames = ["nix-roam"];
       };
       blender.enable = true;
       bemenu.enable = true;
@@ -105,10 +104,11 @@
       noctalia-shell.enable = true;
       gtk = {
         enable = true;
-        # extraCss = ''
-        #   // Remove rounded corners
-        #   window.background { border-radius: 0; }
-        # '';
+        flatpakSupport.enable = true;
+        extraCss = ''
+          // Remove rounded corners
+          window.background { border-radius: 0; }
+        '';
       };
       qt = {
         enable = true;
@@ -135,15 +135,15 @@
     configFile = {
       "wallust/colorschemes/stylix.json".text =
         import (lib.custom.relativeToRoot "shared/wallust/colorschemes/stylix.nix")
-          { inherit config; };
+        {inherit config;};
 
       "awesome/themes/custom/stylix.lua".text =
         import (lib.custom.relativeToRoot "shared/awesome/themes/stylix.nix")
-          { inherit config; };
+        {inherit config;};
 
       "wallust/colorschemes/stylix-wal.json".text =
         import (lib.custom.relativeToRoot "shared/wallust/colorschemes/stylix.nix")
-          { inherit config; };
+        {inherit config;};
     };
   };
 }

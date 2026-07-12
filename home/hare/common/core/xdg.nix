@@ -13,8 +13,9 @@
         GAMES = "${config.home.homeDirectory}/games";
         SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
         WALLPAPERS = "${config.xdg.userDirs.pictures}/Wallpapers";
-        YOUTUBEMUSIC = "${config.xdg.userDirs.music}/Youtube";
-        YOUTUBE = "${config.xdg.userDirs.videos}/Youtube";
+        YT = "${config.xdg.userDirs.videos}/Youtube";
+        VIDMISC= "${config.xdg.userDirs.videos}/Misc";
+        NET = "${config.xdg.userDirs.videos}/clearnet";
       };
     };
   };

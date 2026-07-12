@@ -2,6 +2,7 @@
   lib,
   inputs,
   pkgs,
+config,
   ...
 }:
 let
@@ -34,12 +35,12 @@ in
     enable = true;
     settings = {
       # adguardHome
-      # listen_addresses = [ "127.0.0.1:5335" ];
+      listen_addresses = [ "127.0.0.1:5335" ];
 
       # ipv6_servers = true;
       require_dnssec = true;
       require_nolog = true;
-      require_nofilter = true;
+      # require_nofilter = false;
       odoh_servers = true;
       query_log.file = "/var/log/dnscrypt-proxy/query.log";
 
@@ -62,33 +63,17 @@ in
         cache_file = "relays.md";
         minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
       };
-
-      disabled_server_names = [
-        "cloudflare"
-      ];
-      bootstrap_resolvers = [
-        "9.9.9.11:53"
-      ];
-
-      ## fuck it it should work but somehow dnscrypt is not launching
-      # local_doh = {
-      #   listen_addresses = [ "127.0.0.1:3000" ];
-      #   path = "/dns-query";
-      #   cert_file = config.sops.secrets.dnscrypt-cert-key.path;
-      #   cert_key_file = config.sops.secrets.dnscrypt-cert-key.path;
-      # };
-      #
-      # monitoring_ui = {
-      #   enabled = true;
-      #   username = "admin";
-      #   password = "admin";
-      #   listen_address = "127.0.0.1:8079";
-      #   privacy_level = 1;
-      # };
-
-      # server_names = [ "adguard-dns-doh" ];
     };
   };
 
-  systemd.services.dnscrypt-proxy.serviceConfig.StateDirectory = StateDirectory;
+  # systemd.services.dnscrypt-proxy.serviceConfig.StateDirectory = StateDirectory;
+
+    systemd.services.dnscrypt-proxy.serviceConfig = {
+      StateDirectory = lib.mkForce "";
+      ReadWritePaths = "/var/lib/dnscrypt-proxy";
+    };
+
+    # Make sure this directory exists so the service doesn't fail on boot
+    systemd.tmpfiles.rules = [ "d /var/lib/dnscrypt-proxy 0755 root root -" ];
+
 }

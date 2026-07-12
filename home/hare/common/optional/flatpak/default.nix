@@ -5,9 +5,10 @@
 
   services.flatpak.packages = [
     "com.obsproject.Studio"
-    "im.riot.Riot"
-    "com.bilingify.readest"
+    "in.cinny.Cinny"
     "chat.simplex.simplex"
+    "app.grayjay.Grayjay"
+    "com.brave.Browser"
   ];
 
   services.flatpak.update.auto = {

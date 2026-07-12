@@ -29,7 +29,7 @@
           (extension "ublock-origin" "uBlock0@raymondhill.net")
           # (extension "adnauseam" "adnauseam@rednoise.org") ## cool
           (extension "sidebery" "{3c078156-979c-498b-8990-85f7987dd929}")
-          # (extension "darkreader" "addon@darkreader.org")
+          (extension "darkreader" "addon@darkreader.org")
           (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}")
           (extension "sponsorblock" "sponsorBlocker@ajay.app")
           (extension "tridactyl-vim" "tridactyl.vim@cmcaine.co.uk")
@@ -38,6 +38,7 @@
           # (extension "steam-database" "firefox-extension@steamdb.info")
           # (extension "augmented-steam" "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}")
           (extension "libredirect" "7esoorv3@alefvanoon.anonaddy.me")
+          (extension "fmhy-safeguard" "{5d554479-7cc4-487f-bd25-d8fc67a42602}")
         ];
       # To add additional extensions, find it on addons.mozilla.org, find
       # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)

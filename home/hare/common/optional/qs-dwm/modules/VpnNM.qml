@@ -24,7 +24,7 @@ Rectangle {
 
     Process {
         id: vpnProc
-        command: ["bash", "-c", "$HOME/.config/waybar/scripts/wbm_vpn wg-NO-FREE-10"]
+        command: ["bash", "-c", "$HOME/.config/waybar/scripts/wbm_vpn wgcf-profile"]
         running: false
 
         stdout: SplitParser {

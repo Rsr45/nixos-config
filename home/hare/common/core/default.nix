@@ -56,9 +56,10 @@ in {
     ];
     sessionVariables = {
       FLAKE = "$HOME/nixos-config";
-      EDITOR = "vi";
+      EDITOR = "nvim";
     };
     preferXdgDirectories = true;
+    enableDebugInfo = true;
   };
 
   home.packages = with pkgs; [

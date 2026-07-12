@@ -17,7 +17,5 @@ in
 
   ${youtube}
 
-  ${searxng}
-
   ${sidebar}
 ''

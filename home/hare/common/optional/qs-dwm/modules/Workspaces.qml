@@ -45,6 +45,16 @@ RowLayout {
                 onClicked: {
                     Hyprland.dispatch(`hl.dsp.focus({ workspace = ${modelData.id} })`);
                 }
+
+                onWheel: function (wheel) {
+                    if (wheel.angleDelta.y > 0) {
+                        Hyprland.dispatch("hl.dsp.focus({ workspace = \"e-1\" })");
+                    } else if (wheel.angleDelta.y < 0) {
+                        Hyprland.dispatch("hl.dsp.focus({ workspace = \"e+1\" })");
+                    }
+
+                    wheel.accepted = true;
+                }
             }
         }
     }

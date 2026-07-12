@@ -63,7 +63,7 @@
       enableDefaultExtensions = true;
       enableExtraExtensions = true;
       simplefox = {
-        enable = false; # use directly to customize
+        enable = false;
         showUrlBar = true;
       };
       darkreader.enable = true;

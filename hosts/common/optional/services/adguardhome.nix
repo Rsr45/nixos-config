@@ -10,6 +10,7 @@
     port = 3003;
     settings = {
       dns = {
+        port = 53;
         enable_dnssec = true;
         anonymize_client_ip = true;
         upstream_dns = [
@@ -35,15 +36,16 @@
             url = url;
           })
           [
-            ### ================== Suspicious Lists ==================
+            ### ================== Cool Lists ==================
             #
-            "https://badblock.celenity.dev/abp/badblock_plus.txt"
             "https://big.oisd.nl"
-            "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/ultimate.txt"
-            "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/tif.txt"
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/ultimate.txt"
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt"
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/spam-tlds.txt"
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adguard/dns-rebind-protection.txt"
             "https://raw.githubusercontent.com/fmhy/FMHYFilterlist/main/filterlist.txt"
-            "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/dyndns.txt"
-            "https://codeberg.org/hagezi/mirror2/raw/branch/main/dns-blocklists/adblock/spam-tlds-ublock.txt"
+            "https://badblock.celenity.dev/abp/badblock_plus.txt"
             #
             #
             ### ================== Suspicious Lists ==================

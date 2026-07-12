@@ -29,15 +29,15 @@
     common/optional/alacritty.nix
     common/optional/yazi.nix
     common/optional/broot.nix
-    common/optional/yt-dlp.nix
     common/optional/fastfetch.nix
     common/optional/sioyek.nix
 
     common/optional/typst.nix
     common/optional/pandoc.nix
     ## ========= Editors =========
-    common/optional/editors/nixCats # formatters need to be in path or is it only nixfmt??
+    # common/optional/editors/nixCats # formatters need to be in path or is it only nixfmt??
     common/optional/editors/helix # cool shit very nice but i dont like not being ablet to %%%
+    common/optional/editors/nvf # cool shit very nice but i dont like not being ablet to %%%
     common/optional/editors/emacs # ehh mehh i mean the only reason i would use it is denote and roam in which denote should be replicatable in vim as well so so
 
     common/optional/direnv.nix
@@ -56,6 +56,7 @@
     common/optional/browsers/qutebrowser.nix
     common/optional/browsers/floorp
     common/optional/browsers/helium.nix
+    # common/optional/browsers/schizofox.nix
     # common/optional/browsers/librewolf
     # common/optional/browsers/qutebrowser.nix
     # common/optional/browsers/brave.nix

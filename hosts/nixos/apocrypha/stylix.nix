@@ -33,13 +33,13 @@
 
     fonts = {
       serif = {
-        package = pkgs.cantarell-fonts;
-        name = "Cantarell";
+        package = pkgs.geist-font;
+        name = "Geist";
       };
 
       sansSerif = {
-        package = pkgs.cantarell-fonts;
-        name = "Cantarell";
+        package = pkgs.geist-font;
+        name = "Geist";
       };
 
       monospace = {
