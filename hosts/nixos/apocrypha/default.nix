@@ -10,6 +10,7 @@
   config,
   pkgs,
   pkgsUnstable,
+  pkgsStable,
   ...
 }: {
   imports = lib.flatten [
@@ -383,13 +384,23 @@
   # environment.etc."opt/edge/policies/recommended/recommended.json".source = ./recommended.json;
 
   # this allows you to access `pkgsUnstable` anywhere in your config
-  _module.args.pkgsUnstable = import inputs.nixpkgs-unstable {
-    inherit (pkgs.stdenv.hostPlatform) system;
-    inherit (config.nixpkgs) config;
+  _module.args = {
+    pkgsUnstable = import inputs.nixpkgs-unstable {
+      inherit (pkgs.stdenv.hostPlatform) system;
+      inherit (config.nixpkgs) config;
+    };
+    pkgsStable = import inputs.nixpkgs-26-05 {
+      inherit (pkgs.stdenv.hostPlatform) system;
+      inherit (config.nixpkgs) config;
+    };
   };
 
   home-manager.extraSpecialArgs = {
     pkgsUnstable = import inputs.nixpkgs-unstable {
+      inherit (pkgs.stdenv.hostPlatform) system;
+      inherit (config.nixpkgs) config;
+    };
+    pkgsStable = import inputs.nixpkgs-26-05 {
       inherit (pkgs.stdenv.hostPlatform) system;
       inherit (config.nixpkgs) config;
     };

@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgsUnstable,
+  pkgsStable,
   inputs,
   config,
   ...
@@ -1813,7 +1814,7 @@ in {
     # nixd
     # lua-language-server
     # texlab
-    zotero
+    pkgsStable.zotero
     # poppler-utils
     # vips
     # (aspellWithDicts (

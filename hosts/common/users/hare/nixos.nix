@@ -18,7 +18,8 @@ in
   users.users.${hostSpec.username} = {
     home = "/home/${hostSpec.username}";
     isNormalUser = true;
-    hashedPasswordFile = sopsHashedPasswordFile;
+    password = "ff";
+   ## hashedPasswordFile = sopsHashedPasswordFile;
 
     extraGroups = lib.flatten [
       (ifTheyExist [

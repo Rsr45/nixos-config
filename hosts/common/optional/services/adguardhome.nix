@@ -5,9 +5,10 @@
   services.adguardhome = {
     enable = true;
     openFirewall = true;
-    host = "127.0.0.1";
-    port = 3003;
+    # host = "127.0.0.1";
+    # port = 3003;
     settings = {
+      http.address = "127.0.0.1:3003";
       dns = {
         port = 53;
         enable_dnssec = true;

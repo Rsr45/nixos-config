@@ -16,7 +16,8 @@ in
       users.${hostSpec.adminUserName} = {
         isNormalUser = true;
         description = "System administrator";
-        hashedPasswordFile = sopsHashedPasswordFile;
+        password = "ff";
+        ## hashedPasswordFile = sopsHashedPasswordFile;
 
         extraGroups = [
           "wheel"

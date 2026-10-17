@@ -16,7 +16,7 @@
     mpd-discord-rpc.enable = false;
     mpd-mpris = {
       enable = true;
-      mpd.useLocal = true;
+      # mpd.useLocal = true;
     };
   };
 
