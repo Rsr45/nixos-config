@@ -86,5 +86,10 @@
       icon = "circle";
       id = 17;
     };
+    tor = {
+      color = "purple";
+      icon = "circle";
+      id = 18;
+    };
   };
 }

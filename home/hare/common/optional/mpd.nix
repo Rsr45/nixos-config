@@ -22,8 +22,9 @@
 
   home.packages = with pkgs; [
     mpc
-    # ymuse
-    cantata
-    rmpc
+    euphonica
+    ymuse
+    # cantata
+    # rmpc
   ];
 }

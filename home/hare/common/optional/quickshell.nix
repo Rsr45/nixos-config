@@ -12,6 +12,7 @@
     Singleton {
         property color bg: "#${config.lib.stylix.colors.base00}"
         property color bgAlt: "#${config.lib.stylix.colors.base01}"
+        property color bgDarker: "#${config.lib.stylix.colors.base01}"
         property color border: "#${config.lib.stylix.colors.base02}"
         property color fg: "#${config.lib.stylix.colors.base05}"
         property color accent: "#${config.lib.stylix.colors.base0B}"
@@ -20,7 +21,7 @@
         property color accent2Darker: "#C89726"
 
         property color backgroundColor: "#282828"
-        property color foregroundColor: "#D5C4A1"
+        property color foregroundColor: "#${config.lib.stylix.colors.base05}"
         property color indicatorBGColor: "#5C746A"
         property color borderColor: "#282828"
         property color moduleBG: "#2A2A2A"

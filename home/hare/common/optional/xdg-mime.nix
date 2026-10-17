@@ -4,8 +4,10 @@
   ...
 }: let
   browser = [
-    "helium.desktop"
-    "floorp.desktop"
+    "org.mozilla.firefox.desktop"
+    "firefox.desktop"
+    "com.brave.Browser.desktop"
+    "brave.desktop"
   ];
   editor = [
     "neovide.desktop"
@@ -13,23 +15,27 @@
   ];
   video = [
     "vlc.desktop"
+    "mpv.desktop"
   ];
   audio = [
     "audacious.desktop"
+    "mpv.desktop"
   ];
   image = [
     "com.interversehq.qView.desktop"
-    "org.kde.gwenview.desktop"
   ];
   svg =
     [
       "inkscape.desktop"
     ]
     ++ image;
+
   ebook = [
+    "org.kde.okular.desktop"
     "sioyek.desktop"
   ];
   pdf = [
+    "org.kde.okular.desktop"
     "sioyek.desktop"
   ];
   archive = [
@@ -121,6 +127,7 @@
     "x-scheme-handler/sgnl" = "signal-desktop.desktop";
 
     "audio/*" = audio;
+    "audio/x-opus+ogg" = audio;
     "video/*" = video;
     "image/*" = image;
     "image/jpeg" = image;

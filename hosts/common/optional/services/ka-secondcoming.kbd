@@ -3,7 +3,7 @@
 
 (defvar
   ;; variables for timings in ms using ZMK-like names
-  tapping-term 300                       ;; A higher number allows for one handed modded keys reducing the chance of false-positives when typing fast
+  tapping-term 200                       ;; A higher number allows for one handed modded keys reducing the chance of false-positives when typing fast
   quick-tap-ms 200                       ;; same as ZMK ($tap-repress-timeout in Kanata docs)
   require-prior-idle 250                 ;; same as ZMK (not used in vanilla kanata, but used as a workaround in this config)
 
@@ -11,7 +11,7 @@
   left-side-keys   (q w e r t z x c v b) ;; these keys will always make the precedent same hand tap-hold-release-tap-keys-release output tap.
   home-row-left-keys  (a s d f g)      ;; home row mods + z for fn  - these will output a tap if they're released after the first key
   right-side-keys   (y u i o p m n) ;; these keys will always make the precedent same hand tap-hold-release-tap-keys-release output tap.
-  home-row-right-keys  (; l k j h)      ;; home row mods + z for fn  - these will output a tap if they're released after the first key
+  home-row-right-keys  (; l k j h ')      ;; home row mods + z for fn  - these will output a tap if they're released after the first key
   )
 
 (deftemplate lhrm (tap-key hold-key) ;; these are home row mods for the left hand
@@ -49,10 +49,18 @@
   l (t! rhrm   e ralt   )
   y (t! rhrm   i rmet   )
 
-  i (fork RA-i S-RA-i (lsft rsft))
+  ;; i (fork RA-i RA-S-i (lsft rsft))
+  i (fork (multi ralt i)   (multi ralt S-i)   (lsft rsft))   ;; ı / I
   u (fork RA-u S-RA-u (lsft rsft))
   S (fork RA-s S-RA-s (lsft rsft))
   c (fork RA-c S-RA-c (lsft rsft))
+
+  ., (fork .  (unmod ,) (lsft rsft))   ;; . / ,
+  ? (fork (multi ralt .)   (multi ralt S-.)   (lsft rsft))   ;; ? / ¿
+
+  ;; symbol layer
+  syl (t! lhrm   t (layer-while-held symbol))
+  syr (t! rhrm   e (layer-while-held symbol))
   )
 
 (defvirtualkeys
@@ -68,60 +76,93 @@
  lctl lmet lalt           spc                 ralt rmet menu rctl)
 
 (deflayermap (FGOuU)
-             q v   w m   e l   r c   t p
+             q v   w m   e l   r (tap-hold 200 200 c (layer-while-held symbol))   t p
  caps esc    a @a  s @s  d @d  f @f  g y
              < z   z k   x q   c g   v w
 
-             y x   u f   i o   o u   p j
-             h .   j @j   k @k   l @l   ; @y ' @i
-             n b   m h   , '   . ; / ,
+             y x   u (tap-hold 200 200 f (layer-while-held symbol))   i o   o u   p j
+             h @., j @j   k @k   l @l   ; @y ' @i
+             n b   m h   , '   . ; / @?
+
              spc (tap-hold 200 200 spc (layer-while-held spacefn))
-             ralt bspc
+             lalt rpt
+             ralt rpt
              b ret
-         lalt bspc    esc (layer-switch coolmak)
              f12 (layer-switch game)
              )
 
 
 
 (deflayermap (nomods)
-
-             q v   w m   e l   r c   t p
- caps esc    a @a  s @s  d @d  f @f  g y
+             q v   w m   e l   r (tap-hold 200 200 c (layer-while-held symbol))   t p
+ caps esc    a @a  s @s  d @d   f @f  g y
              < z   z k   x q   c g   v w
 
-             y x   u f   i o   o u   p j
-             h .   j @j   k @k   l @l   ; @y
-             n b   m h   , '   . ; / ,
-             spc (tap-hold 200 200 spc (layer-while-held spacefn))
-             ralt bspc
-             b ret
-         lalt bspc    esc (layer-switch coolmak)
+             y x   u (tap-hold 200 200 f (layer-while-held symbol))   i o   o u   p j
+             h @., j @j   k @k   l @l  ; @y ' @i
+             n b   m h   , '   . ; / @?
 
+             spc (tap-hold 200 200 spc (layer-while-held spacefn))
+             lalt rpt
+             ralt rpt
+             b ret
              )
 
-(deflayermap (coolmak)
-             q q   w w   e f   r p   t b            y j   u l   i u   o y   p ;
-caps esc     a a   s r   d s   f t   g g            h m   j n   k e   l i   ; o
-             < z   z x   x c   c d   v v   b ret    n k   m h   , ,   . .   / /
-             lalt bspc             spc (tap-hold 200 200 spc (layer-while-held spacefn))            ralt bspc
-             esc (layer-switch FGOuU)
-)
 
 (deflayermap (game)
              q r   w q   e w   r e
- caps lsft    a f  s a  d s  f d
- lsft lctrl
+ caps lsft   a f   s a   d s   f d
+ lsft lctrl  < lctrl
              f12 (layer-switch FGOuU)
              )
 
-
-
 (deflayermap (spacefn)
-             q S-[   w S-]   e S-9   r S-0   t -
-             a S-8   s S-6   d S-5   f S-4   g S-=
-             < S-1   z S-7   x [     c ]     v /
+             q S-tab   w home   e up     r end      t pgup
+             a tab     s left   d down   f right   g pgdn
+             < M-1     z M-2    x M-3    c M-4     v M-5
 
-             y d   u r   i n   o h   p p   [ q   ] w
-             h t   j left   k down   l up   ; rght   ' s   \ x
-             n z   m bspc   , b   . .   / ,)
+             y y    u u   i i   o o   p p
+             h del    j bspc   k k   l l   ; ;
+             n M-6    m M-7   , M-8     . M-9  / M-0
+             )
+
+(deflayermap (symbol)
+   tab `     q S-[   w S-]   e S-9   r S-0   t S-\
+  caps S-3   a S-1   s S--   d [     f ]     g ;
+             < S-5   z S-/   x S-8   c S-=   v \
+
+             y S-6    u S-7   i S-3   o S-`   p `
+             h S-4    j =   k S-;   l S--   ; S-1
+             n /      m -   , S-,   . S-.   / S-'
+
+)
+
+(deflayermap (number)
+     tab ,   q S-8   w 7   e 8   r 9   t (fork / S-8 (rsft))
+    caps .   a 0     s 4   d 5   f 6   g S-=
+             < =     z 1   x 2   c 3   v -
+
+             h bspc   j rsft   k rctl   l ralt   ; rsft
+             )
+
+
+;; sgraar
+;; 5mo ago
+;; I was trying out your configuration, and it's great. Thanks!
+
+;; I do have a suggestion for a minor improvement. Consider, for example, the word "position". The "si" in the word might trigger a false hold if your typing form isn't perfect. When the "s" is pressed, you would still be in the default layer because neither the "p" or the "o" are sending you to the nomods layer.
+
+;; This can be easily solved. I'll leave the code here since it might save a couple of minutes for others who come across this post.
+
+;; Define a template:
+;; (deftemplate nomod (tap-key)
+;;   (multi $tap-key @tap) ;; this uses the tap alias from the posted configuration
+;; )
+
+;; Put this in defalias:
+;; o (t! nomod o)
+;; p (t! nomod p)
+
+;; And this in the base deflayer:
+;; o @o p @p
+;; Just add any other relevant keys that aren't otherwise configured

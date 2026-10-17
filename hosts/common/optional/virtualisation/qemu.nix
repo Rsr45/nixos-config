@@ -15,6 +15,8 @@
   };
   virtualisation.spiceUSBRedirection.enable = true;
 
+  networking.firewall.trustedInterfaces = [ "virbr0" "virbr1" ];
+
   # networking.firewall.interfaces."virbr*".allowedUDPPorts = [
   #   53
   #   67

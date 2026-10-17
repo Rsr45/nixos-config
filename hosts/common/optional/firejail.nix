@@ -49,28 +49,28 @@
         ];
       };
       mpv = {
-        executable = "${lib.getBin pkgs.mpv}/bin/mpv";
+        executable = "${lib.getBin pkgs.mpv}";
         profile = "${pkgs.firejail}/etc/firejail/mpv.profile";
       };
     };
   };
-  environment.etc = {
-    "firejail/firefox.local".text = ''
-      # Enable native notifications.
-      dbus-user.talk org.freedesktop.Notifications
-      # Allow inhibiting screensavers.
-      dbus-user.talk org.freedesktop.ScreenSaver
-      # Allow screensharing under Wayland.
-      dbus-user.talk org.freedesktop.portal.Desktop
-    '';
+  # environment.etc = {
+  #   "firejail/firefox.local".text = ''
+  #     # Enable native notifications.
+  #     dbus-user.talk org.freedesktop.Notifications
+  #     # Allow inhibiting screensavers.
+  #     dbus-user.talk org.freedesktop.ScreenSaver
+  #     # Allow screensharing under Wayland.
+  #     dbus-user.talk org.freedesktop.portal.Desktop
+  #   '';
 
-    "firejail/librewolf.local".text = ''
-      # Enable native notifications.
-      dbus-user.talk org.freedesktop.Notifications
-      # Allow inhibiting screensavers.
-      dbus-user.talk org.freedesktop.ScreenSaver
-      # Allow screensharing under Wayland.
-      dbus-user.talk org.freedesktop.portal.Desktop
-    '';
-  };
+  #   "firejail/librewolf.local".text = ''
+  #     # Enable native notifications.
+  #     dbus-user.talk org.freedesktop.Notifications
+  #     # Allow inhibiting screensavers.
+  #     dbus-user.talk org.freedesktop.ScreenSaver
+  #     # Allow screensharing under Wayland.
+  #     dbus-user.talk org.freedesktop.portal.Desktop
+  #   '';
+  # };
 }

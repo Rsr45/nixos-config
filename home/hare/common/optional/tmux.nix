@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   # home.packages = with pkgs; [
   #   tmux
   # ];
@@ -27,6 +26,10 @@
       bind v split-window -v -c "#{pane_current_path}"
 
       set-option -g status-position top
+
+      set -g status-interval 60
+      WEATHER='#(curl -s wttr.in/Menemen\?format\="%%l:+%%c%%20%%t%%60%%w&period=60")'
+      set -g status-right "$WEATHER ... %H:%M %d-%m-%Y"
     '';
     plugins = with pkgs; [
       tmuxPlugins.cpu
@@ -39,6 +42,17 @@
         extraConfig = ''
           set -g @continuum-restore 'on'
           set -g @continuum-save-interval '60' # minutes
+        '';
+      }
+      {
+        plugin = tmuxPlugins.vim-tmux-navigator;
+        extraConfig = ''
+          set -g @vim_navigator_mapping_left "C-S-t"
+          set -g @vim_navigator_mapping_right "C-S-d"
+          set -g @vim_navigator_mapping_up "C-S-l"
+          set -g @vim_navigator_mapping_down "C-S-r"
+          set -g @vim_navigator_mapping_prev ""  # removes the C-\ binding
+          set -g @vim_navigator_prefix_mapping_clear_screen "" # disable the automatic mapping of <prefix> C-l to send C-l
         '';
       }
     ];

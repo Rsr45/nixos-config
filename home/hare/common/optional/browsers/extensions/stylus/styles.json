@@ -1,0 +1,16 @@
+[
+  {
+    "enabled": true,
+    "installDate": 1791303674808,
+    "name": "Anti-cornerRadius",
+    "sections": [
+      {
+        "code": "* {\n    border-radius: 0px !important;\n}"
+      }
+    ],
+    "_rev": 1791303689031,
+    "updateDate": 1791303689031,
+    "_id": "20110119-840b-4510-a404-efaffeb09a5e",
+    "id": 2
+  }
+]

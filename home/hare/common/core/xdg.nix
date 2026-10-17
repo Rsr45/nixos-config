@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   xdg = {
     enable = true;
     userDirs = {
@@ -13,8 +12,6 @@
         GAMES = "${config.home.homeDirectory}/games";
         SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
         WALLPAPERS = "${config.xdg.userDirs.pictures}/Wallpapers";
-        YT = "${config.xdg.userDirs.videos}/Youtube";
-        VIDMISC= "${config.xdg.userDirs.videos}/Misc";
         NET = "${config.xdg.userDirs.videos}/clearnet";
       };
     };

@@ -6,7 +6,10 @@
       vicious
       luarocks
       luadbi-mysql
-      awesome-wm-widgets
     ];
   };
+  environment.systemPackages = with pkgs; [
+    fastcompmgr
+    picom
+  ];
 }

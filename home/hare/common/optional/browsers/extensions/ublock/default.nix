@@ -27,53 +27,52 @@ in {
       "ublock-privacy"
       "ublock-quick-fixes"
       "ublock-unbreak"
-      ## ----- Ads -----
+      # ===== Ads ====================
       "easylist"
       # "adguard-generic"
       "adguard-mobile"
-      ## ----- Privacy -----
+      # ===== Privacy ================
       "easyprivacy"
-      "LegitimateURLShortener"
-      # "adguard-spyware" # removed
       "adguard-spyware-url"
       "block-lan"
-      ## ----- Malware -----
+      # ===== Malware ================
       "urlhaus-1"
       "curben-phishing"
-      ## ----- Multipurpose -----
+      # ===== Multipurpose ===========
       "plowe-0"
       "dpollock-0"
-      ## ----- Cookie Notices -----
-      ### ----- Easylist -----
-      "fanboy-cookiemonster"
+      # ===== Cookie Notices =========
+      # ========== Easylist ==========
+      "fanboy-cookiemonster" # using fanboy-annoyance
       "ublock-cookies-easylist"
-      ### ----- Adguard -----
+      # ========== Adguard ===========
       # "adguard-cookies"
       # "ublock-cookies-adguard"
-      ## ----- Social -----
-      "fanboy-social"
+      # ===== Social =================
+      "fanboy-social" # using fanboy-annoyance
       # "adguard-social"
-      "fanboy-thirdparty_social"
-      ## ----- Annoyances -----
-      ### ----- Easylist -----
+      "fanboy-thirdparty_social" # anti-facebook use with fanboy-annoyance
+      # ===== Annoyances =============
+      # ========== Easylist ==========
+      # "fanboy-ai-suggestions"
       "easylist-chat"
       "easylist-newsletters"
       "easylist-notifications"
       "easylist-annoyances"
-      ### ----- Adguard -----
+      # ========== Adguard ===========
       # "adguard-mobile-app-banners"
       # "adguard-other-annoyances"
       # "adguard-popup-overlays"
       # "adguard-widgets"
-      ### ----- uBlock -----
+      # ===== uBlock =================
       "ublock-annoyances"
-      ## ----- Region -----
+      # ===== Region =================
       "KOR-0"
       "DEU-0"
       "FRA-0"
       "NLD-0"
       "GRC-0"
-      "NOR-0"
+      # "NOR-0" # already set in user filters eg ../bloclist.nix
       "RUS-0"
       "RUS-1"
       "TUR-0"

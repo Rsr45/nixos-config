@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgsUnstable,
   config,
   inputs,
   lib,
@@ -9,45 +10,92 @@
     # RSS Feed
     # bulletty # cool but no script
     newsboat
-    runapp
-    pywalfox-native
-    kew
-    calibre
-    # Network/
-    # bluetui
-    # impala
-    # Music
-    # cmus
+    python314Packages.pygments
+    # runapp
     # kew
-    # Disk
-    # ncdu
+    droidcam
+    # scrcpy
+    wl-screenrec # gpu heavy
+    wf-recorder # cpu heavy
+    keepassxc
+    uutils-coreutils
+    shellcheck
+    nsxiv
+
+    bubblewrap
+    moc
+    cmus
+    edir
+    ouch
+    pistol
+    xcolor
+    # inputs.tagstudio.packages.${pkgs.stdenv.hostPlatform.system}.tagstudio # build error
+    hyprpicker
+
+    # Music
+    # kew
+
+    dvtm
+    gimp-with-plugins
     # Web
-    # nyaa
     # lynx
     # elinks # build error
     # links2
-    # gcc
     # readability-cli
     # openmw
     lm_sensors
+    htop
     ffmpeg-full
     ffmpegthumbnailer
     gifski
+    wl-kbptr
+    anki
+    lyx
+
+    # Media
+    picard
+    kid3-qt
+    goldendict-ng
+    pkgsUnstable.brave-origin
+    vlc
+    vlc-bittorrent
+    # kdePackages.elisa
+    gram
     qview
+    qimgv
+    audacious
+    audacious-plugins
+    musikcube
+    # strawberry
+    # pkgsUnstable.deadbeef-with-plugins
+    # quodlibet-full
+    # fooyin # flatpak is used
     qmmp
+
+    ## Documents
+    kdePackages.okular
+
+    ## Creative
+    krita
+    kdePackages.kdenlive
+
+    ## Util
+    kdePackages.kleopatra
 
     mullvad-browser
     fluffychat
 
     metadata-cleaner
-    kdePackages.kleopatra
 
-    gallery-dl
-    yt-dlp
+    awww
+    vips
+    epub-thumbnailer
+    poppler-utils
+    mediainfo
+    ffmpegthumbnailer
 
-    # iamb
-    wf-recorder
     xclip
+    xev
     wl-clipboard
     ps3iso-utils
     ps3-disc-dumper
@@ -61,21 +109,20 @@
     enchant
     xdpyinfo
     xdotool
+
+    darktable
+    digikam
+    shotwell
     ## Screenshot and such
     grim
     slurp
     satty
 
     maim
-    slop
-    # OCR
     tesseract
-    audacious
     xwayland-satellite
 
-    tmux-sessionizer
-    # disk space calc
-    # best
+    # tmux-sessionizer
 
     wev
     # rmpc
@@ -105,12 +152,8 @@
     imagemagick
 
     aria2
-    # ghostscript
-    # mermaid-cli
-    # nodejs
-    # mlocate
     # --- 3DR ---
-    freecad
+    # freecad # vtk build error
     blender
     # --- EMU ---
     (heroic.override {
@@ -127,9 +170,8 @@
     # dsda-doom
     # woof-doom
     # eternity
-    pinentry-all
 
-    texliveFull
+    texliveMedium
     libsecret
     ueberzugpp
     chafa
@@ -140,422 +182,112 @@
     qalculate-qt
 
     alejandra
-
     pngquant
+
     oxipng
 
     (writeShellApplication {
-      name = "compress-ss";
-      runtimeInputs = with pkgs; [pngquant oxipng];
+      name = "screenshot-full";
+      bashOptions = [
+        "errexit"
+        "nounset"
+        "pipefail"
+      ];
+      runtimeInputs = with pkgs; [
+        grim
+        wl-clipboard
+        exiftool
+        libnotify
+        coreutils
+      ];
       text = ''
-        # PNG Screenshot Optimizer
-        # first looks for _optimized in filename if found skips, then in exif Comment
-        # field if found Compressed then skips if not found in either then processes
-        # the files.
+         # Define the directory and filename
+         SCREENSHOT_DIR="''${XDGPICTURESDIR:-$HOME/Pictures}/Screenshots"
+         FILENAME="$(date +'%Y%m%dT%H%M%S')__screenshot.png"
+         FILEPATH="$SCREENSHOT_DIR/$FILENAME"
+         USER_COMMENT="Screenshot"
 
-        # Configuration
-        QUALITY_MIN=70
-        QUALITY_MAX=90
-        OXI_LEVEL="max"
-        MARKER="compressed"
+        # Check if the capture was successful
+         if grim "$FILEPATH"; then
+             # Write to exif metadata Screenshot like in apple's scrennshot taken
+             exiftool -overwrite_original -UserComment="$USER_COMMENT" "$FILEPATH"
 
-        INPUT_DIR="''${1:-.}"
+             # Copy the image to the clipboard
+             wl-copy < "$FILEPATH"
 
-        if [ ! -d "$INPUT_DIR" ]; then
-            echo "Error: Directory '$INPUT_DIR' not found"
-            exit 1
-        fi
-
-        echo "Optimizing PNGs in: $INPUT_DIR"
-        echo "Logic: Append '$MARKER' to existing User Comment"
-        echo "---"
-
-        find "$INPUT_DIR" -type f -name "*.png" | while read -r file; do
-            if [[ "$(basename "$file")" == *"_comp"* ]]; then
-                continue
-            fi
-
-            filename=$(basename "$file")
-
-            # 1. Extract existing comment
-            existing_comment=$(exiftool -s -s -s -Comment "$file" 2>/dev/null)
-
-            # 2. Check if already marked (Case-insensitive)
-            if [[ "''${existing_comment,,}" == *"$MARKER"* ]]; then
-                echo "Skipping: $filename (Comment already contains '$MARKER')"
-                continue
-            fi
-
-            echo "Processing: $filename"
-            echo "  → Current comment: ' ''${existing_comment:-[None]}'"
-
-            original_size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null)
-            temp_file=$(mktemp --suffix=.png)
-            output_file="''${file%.png}_comp.png"
-
-            # Stage 1: pngquant
-            if ! pngquant --quality=$QUALITY_MIN-$QUALITY_MAX \
-                          --speed 1 \
-                          --skip-if-larger \
-                          --output "$temp_file" \
-                          "$file" 2>/dev/null; then
-                cp "$file" "$temp_file"
-            fi
-
-            # Stage 2: oxipng
-            oxipng --opt "$OXI_LEVEL" \
-                   --out "$output_file" \
-                   "$temp_file" 2>/dev/null
-
-            rm -f "$temp_file"
-
-            # Stage 3: exiftool (Smart Append)
-            if [ -f "$output_file" ]; then
-                if [ -z "$existing_comment" ]; then
-                    # If no comment exists, just set the marker
-                    exiftool -overwrite_original -Comment="$MARKER" "$output_file" 2>/dev/null
-                    echo "  → Comment set to: '$MARKER'"
-                else
-                    # If comment exists, append " compressed" to it
-                    # Syntax: -Comment<$Comment; " compressed" copies old + adds new
-                    exiftool -overwrite_original "-Comment<\$Comment; $MARKER" "$output_file" 2>/dev/null
-                    echo "  → Comment updated to: '$existing_comment $MARKER'"
-                fi
-
-                new_size=$(stat -f%z "$output_file" 2>/dev/null || stat -c%s "$output_file" 2>/dev/null)
-                reduction=$(( (original_size - new_size) * 100 / original_size ))
-                echo "  → Size reduced by ''${reduction}%"
-            fi
-        done
-
-        echo "---"
-        echo "Optimization complete!"
+             # Send a success notification
+             notify-send -i "$FILEPATH" "Full Screenshot Captured" "Saved to: $FILEPATH\nCopied to clipboard."
+         else
+             # Send an error notification
+             notify-send -u critical "Screenshot Failed" "Could not capture the screen with grim."
+         fi
       '';
     })
 
-    (writeShellApplication
-      {
-        name = "fzf-trash";
-        bashOptions = ["errexit" "nounset" "pipefail"];
-        runtimeInputs = with pkgs; [eza trashy libnotify fzf findutils coreutils];
-        text = ''
-          start=$(date +%s)
-
-          files=$(eza -1 -a | fzf -m)
-
-          if [ -n "$files" ]; then
-              count=$(printf "%s\n" "$files" | wc -l | tr -d ' ')
-
-              printf "%s\n" "$files" | xargs trash
-
-              end=$(date +%s)
-
-              duration=$((end - start))
-
-              notify-send "Trash" "Deleted ''${count} files in ''${duration}s"
-          fi
-        '';
-      })
-    (writeShellApplication
-      {
-        name = "duplicate-images-after-comp";
-        bashOptions = ["errexit" "nounset" "pipefail"];
-        runtimeInputs = with pkgs; [gawk coreutils];
-        text = ''
-          dir="''${1:-.}"
-          match_count=0
-          diff_count=0
-          missing_count=0
-
-          echo "🔍 Scanning directory: $dir"
-          echo "----------------------------------------"
-
-          for f in "$dir"/*_1_comp.png; do
-              [ -e "$f" ] || continue
-
-              # Derive original name
-              orig="''${f/_1_comp.png/_comp.png}"
-
-              if [ -f "$orig" ]; then
-                  hash1=$(sha256sum "$orig" | awk '{print $1}')
-                  hash2=$(sha256sum "$f" | awk '{print $1}')
-
-                  if [ "$hash1" == "$hash2" ]; then
-                      echo "✅ MATCH: $(basename "$f")"
-                      ((match_count++))
-                  else
-                      echo "❌ DIFFERENT: $(basename "$f")"
-                      ((diff_count++))
-                  fi
-              else
-                  echo "⚠️ MISSING ORIGINAL: $(basename "$f")"
-                  ((missing_count++))
-              fi
-          done
-
-          # Print Summary
-          echo "----------------------------------------"
-          echo "📊 SUMMARY:"
-          echo "   ✅ Matches:        $match_count"
-          echo "   ❌ Differences:    $diff_count"
-          echo "   ⚠️ Missing Original: $missing_count"
-          echo "   📁 Total Checked:  $((match_count + diff_count + missing_count))"
-        '';
-      })
-    (writeShellApplication
-      {
-        name = "list-duplicates";
-        bashOptions = ["errexit" "nounset" "pipefail"];
-        runtimeInputs = with pkgs; [findutils coreutils];
-        text = ''
-          # Usage:
-          #   ./find_duplicates.sh /path/to/directory       (Non-recursive, default)
-          #   ./find_duplicates.sh -r /path/to/directory    (Recursive)
-          #   ./find_duplicates.sh                          (Scans current directory, non-recursive)
-
-          RECURSIVE=false
-          DIR="."
-
-          # Parse arguments
-          while getopts "r" opt; do
-            case $opt in
-              r) RECURSIVE=true ;;
-              \?) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
-            esac
-          done
-          shift $((OPTIND-1))
-
-          # Set directory if provided as argument
-          if [ -n "$1" ]; then
-            DIR="$1"
-          fi
-
-          if [ ! -d "$DIR" ]; then
-            echo "Error: Directory '$DIR' not found"
-            exit 1
-          fi
-
-          echo "🔍 Scanning for duplicates in: $DIR"
-          if [ "$RECURSIVE" = true ]; then
-            echo "Mode: Recursive (including subdirectories)"
-          else
-            echo "Mode: Non-recursive (current directory only)"
-          fi
-          echo "----------------------------------------"
-
-          # Build the find command based on the toggle
-          # -maxdepth 1 restricts search to the current directory only
-          if [ "$RECURSIVE" = true ]; then
-            FIND_CMD="find \"$DIR\" -type f"
-          else
-            FIND_CMD="find \"$DIR\" -maxdepth 1 -type f"
-          fi
-
-          # Execute checksum generation and duplicate detection
-          # uniq -w 64 -D prints only lines with duplicate hashes (repeated groups)
-          eval "$FIND_CMD" -exec sha256sum {} + 2>/dev/null | sort | uniq -w 64 -D
-
-          echo "----------------------------------------"
-          echo "✅ Scan complete. Lines above show duplicate groups."
-        '';
-      })
-
-    (writeShellApplication
-      {
-        name = "screenshot-ocr";
-        bashOptions = ["errexit" "nounset" "pipefail"];
-        runtimeInputs = with pkgs; [grim slurp wl-clipboard libnotify tesseract coreutils];
-        text = ''
-          # Dependencies: grim, slurp, tesseract, wl-clipboard, libnotify
-          # Ensure language packs are installed: tesseract-ocr-tur, tesseract-ocr-lat
-
-          # Create a temporary file for the screenshot
-          TMPFILE=$(mktemp /tmp/ocr_XXXXXX.png)
-
-          # Cleanup function
-          trap 'rm -f $TMPFILE' EXIT
-
-          echo "Select the region to OCR..."
-
-          # 1. Capture the selected region
-          if ! grim -g "$(slurp)" "$TMPFILE"; then
-              echo "Screenshot cancelled or failed."
-              exit 1
-          fi
-
-          echo "Extracting text (Turkish + English + Latin)..."
-
-          # 2. Run Tesseract with multi-language support
-          # -l tur+eng+lat : Sets Turkish as primary, with English and Latin as secondary
-          # --psm 6        : Assumes a single uniform block of text (good for snippets)
-          TEXT=$(tesseract "$TMPFILE" - -l tur+eng+lat --psm 6 2>/dev/null)
-
-          # Check if text was found
-          if [ -z "$TEXT" ]; then
-              notify-send "OCR Failed" "No text detected in the selected region."
-              exit 0
-          fi
-
-          # 3. Copy to clipboard
-          echo "$TEXT" | wl-copy
-
-          # 4. Show notification
-          PREVIEW="''${TEXT:0:50}$([ ''${#TEXT} -gt 50 ] && echo '...')"
-          notify-send "OCR Complete" "Text copied to clipboard: $PREVIEW"
-
-          echo "Text copied to clipboard!"
-        '';
-      })
-
-    (writeShellApplication
-      {
-        name = "wallpaper-picker";
-        bashOptions = ["errexit" "nounset" "pipefail"];
-        runtimeInputs = with pkgs; [findutils coreutils awww vicinae];
-        text = ''
-          # Directory containing wallpapers
-          WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
-
-          # Find files, sort by modification time (newest first), strip timestamps, and pick one
-          SELECTED=$(find "$WALLPAPER_DIR" -type f -printf '%T@ %p\n' | sort -rn | cut -d' ' -f2- | vicinae dmenu -p 'Pick a wallpaper...')
-
-          # Apply wallpaper if a file was selected
-          if [ -n "$SELECTED" ]; then
-              if awww img "$SELECTED"; then
-                  # Success notification
-                  notify-send -i "$SELECTED" "Wallpaper Changed" "Successfully set: $(basename "$SELECTED")"
-              else
-                  # Error notification
-                  notify-send -u critical "Error" "Failed to set wallpaper."
-              fi
-          fi
-        '';
-      })
-
-    (writeShellApplication
-      {
-        name = "screenshot-full";
-        bashOptions = ["errexit" "nounset" "pipefail"];
-        runtimeInputs = with pkgs; [grim wl-clipboard exiftool libnotify coreutils];
-        text = ''
-           # Define the directory and filename
-           SCREENSHOT_DIR="''${XDGPICTURESDIR:-$HOME/Pictures}/Screenshots"
-           FILENAME="$(date +'%Y%m%dT%H%M%S')__screenshot.png"
-           FILEPATH="$SCREENSHOT_DIR/$FILENAME"
-           USER_COMMENT="Screenshot"
-
-          # Check if the capture was successful
-           if grim "$FILEPATH"; then
-               # Write to exif metadata Screenshot like in apple's scrennshot taken
-               exiftool -overwrite_original -UserComment="$USER_COMMENT" "$FILEPATH"
-
-               # Copy the image to the clipboard
-               wl-copy < "$FILEPATH"
-
-               # Send a success notification
-               notify-send -i "$FILEPATH" "Full Screenshot Captured" "Saved to: $FILEPATH\nCopied to clipboard."
-           else
-               # Send an error notification
-               notify-send -u critical "Screenshot Failed" "Could not capture the screen with grim."
-           fi
-        '';
-      })
-
-    (writeShellApplication
-      {
-        name = "screenshot-region";
-        bashOptions = ["errexit" "nounset" "pipefail"];
-        runtimeInputs = with pkgs; [grim slurp wl-clipboard exiftool libnotify coreutils];
-        text = ''
-          # Define the directory where screenshots will be saved.
-          # Uses XDG Pictures directory if available, otherwise defaults to ~/Pictures/Screenshots.
-          SCREENSHOT_DIR="''${XDGPICTURESDIR:-$HOME/Pictures}/Screenshots"
-
-          # Define the filename with the current date and time.
-          FILENAME="$(date +'%Y%m%dT%H%M%S')__screenshot_region.png"
-          FILEPATH="$SCREENSHOT_DIR/$FILENAME"
-          USER_COMMENT="Screenshot Region"
-
-          # Prompt the user to select a region using slurp.
-          # If a region is selected, slurp outputs the geometry.
-          GEOMETRY=$(slurp || true)
-
-          if [ -n "$GEOMETRY" ]; then
-              if grim -g "$GEOMETRY" "$FILEPATH"; then
-                  # Set User Comment Field in Exif Metadata to Screenshot Region
-                  exiftool -overwrite_original -UserComment="$USER_COMMENT" "$FILEPATH"
-
-                  # Copy the saved image to the clipboard using wl-copy.
-                  wl-copy < "$FILEPATH"
-
-                  # Send a success notification with the file path and an icon.
-                  notify-send -i "$FILEPATH" "Screenshot Captured" "Saved to: $FILEPATH\nCopied to clipboard."
-              else
-                  notify-send -u critical "Screenshot Failed" "Could not capture image with grim."
-              fi
-          else
-              # Notify if the user cancelled the selection.
-              notify-send "Screenshot Cancelled" "No region selected."
-          fi
-        '';
-      })
-
     (writeShellApplication {
-      name = "bookmarks";
-      bashOptions = ["errexit" "nounset" "pipefail"];
+      name = "screenshot-region";
+      bashOptions = [
+        "errexit"
+        "nounset"
+        "pipefail"
+      ];
       runtimeInputs = with pkgs; [
-        procps
-        gnused
+        grim
+        slurp
+        wl-clipboard
+        exiftool
+        libnotify
         coreutils
-        # rofi
-        vicinae
       ];
       text = ''
-        # DIR="$HOME/.config/rofi/themes/"
-        # THEME="grimm"
-        BOOKMARKS_FILE="$HOME/Personal/bookmarks/.bookmarks"
-        browser() {
-            if pgrep -x helium >/dev/null; then
-                helium "$@"
+        # Define the directory where screenshots will be saved.
+        # Uses XDG Pictures directory if available, otherwise defaults to ~/Pictures/Screenshots.
+        SCREENSHOT_DIR="''${XDGPICTURESDIR:-$HOME/Pictures}/Screenshots"
+
+        # Define the filename with the current date and time.
+        FILENAME="$(date +'%Y%m%dT%H%M%S')__screenshot_region.png"
+        FILEPATH="$SCREENSHOT_DIR/$FILENAME"
+        USER_COMMENT="Screenshot Region"
+
+        # Prompt the user to select a region using slurp.
+        # If a region is selected, slurp outputs the geometry.
+        GEOMETRY=$(slurp || true)
+
+        if [ -n "$GEOMETRY" ]; then
+            if grim -g "$GEOMETRY" "$FILEPATH"; then
+                # Set User Comment Field in Exif Metadata to Screenshot Region
+                exiftool -overwrite_original -UserComment="$USER_COMMENT" "$FILEPATH"
+
+                # Copy the saved image to the clipboard using wl-copy.
+                wl-copy < "$FILEPATH"
+
+                # Send a success notification with the file path and an icon.
+                notify-send -i "$FILEPATH" "Screenshot Captured" "Saved to: $FILEPATH\nCopied to clipboard."
             else
-                floorp "$@"
+                notify-send -u critical "Screenshot Failed" "Could not capture image with grim."
             fi
-        }
-
-        if [[ ! -e "''${BOOKMARKS_FILE}" ]]; then
-            touch "''${BOOKMARKS_FILE}"
-        fi
-
-        INPUT=$(vicinae dmenu -p "#B#" < "$BOOKMARKS_FILE")
-
-        if   [[ $INPUT == "+"* ]]; then
-            INPUT="''${INPUT#+}"
-            if [[ $INPUT == *"."* ]]; then
-                echo "$INPUT" >> "$BOOKMARKS_FILE"
-            else
-                INPUT="''${INPUT}.com" && echo "$INPUT" >> "$BOOKMARKS_FILE"
-            fi
-        elif [[ $INPUT == "_"* ]]; then
-            INPUT="''${INPUT#_}" && sed -i "/$INPUT/d" "$BOOKMARKS_FILE"
-        elif [[ $INPUT == *"."* ]]; then
-            browser "$INPUT"
-        elif [[ -z $INPUT  ]]; then
-            exit 0
         else
-            if pgrep -x helium >/dev/null; then
-                helium -new-tab "https://www.duckduckgo.com/search?q=""$INPUT"""
-            else
-                floorp \
-                    -search "$INPUT"
-            fi
+            # Notify if the user cancelled the selection.
+            notify-send "Screenshot Cancelled" "No region selected."
         fi
       '';
     })
 
     (writeShellApplication {
       name = "colorpicker";
-      bashOptions = ["errexit" "nounset" "pipefail"];
-      runtimeInputs = with pkgs; [grim slurp wl-clipboard libnotify imagemagick coreutils];
+      bashOptions = [
+        "errexit"
+        "nounset"
+        "pipefail"
+      ];
+      runtimeInputs = with pkgs; [
+        grim
+        slurp
+        wl-clipboard
+        libnotify
+        imagemagick
+        coreutils
+      ];
       text = ''
         showhelp() {
             echo "A basic wlroots compatible color picker script."
@@ -629,8 +361,17 @@
 
     (writeShellApplication {
       name = "tmux-sessionizer";
-      bashOptions = ["errexit" "nounset" "pipefail"];
-      runtimeInputs = with pkgs; [findutils procps tmux coreutils];
+      bashOptions = [
+        "errexit"
+        "nounset"
+        "pipefail"
+      ];
+      runtimeInputs = with pkgs; [
+        findutils
+        procps
+        tmux
+        coreutils
+      ];
       text = ''
         if [[ $# -eq 1 ]]; then
             selected=$1
@@ -658,27 +399,124 @@
       '';
     })
   ];
-  services.awww.enable = true;
+
   programs = {
-    # bat.enable = true;
     nnn.enable = true;
     ranger.enable = true;
     joshuto.enable = true;
     lf = {
       enable = true;
       extraConfig = ''
-        cmd unarchive $\{{
-          case "$f" in
-            *.zip) unzip "$f" ;;
-            *.rar) unrar x "$f" ;;
-            *.tar.gz) tar -xzvf "$f" ;;
-            *.tar.xz) tar -xf "$f" ;;
-            *.tar.bz2) tar -xjvf "$f" ;;
-            *.tar) tar -xvf "$f" ;;
-            *.7z) 7z e "$f" ;;
-            *) echo "Unsupported Format !!" ;;
-          esac
+        set previewer ~/.config/lf/previewer
+        set cleaner ~/.config/lf/cleaner
+        set ifs "\n"
+        set info custom
+
+        cmd z %{{
+            result="$(zoxide query --exclude "$PWD" "$@" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+            lf -remote "send $id cd \"$result\""
         }}
+
+        cmd zi ''${{
+            result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+            lf -remote "send $id cd \"$result\""
+        }}
+
+        cmd on-cd &{{
+            zoxide add "$PWD"
+        }}
+
+        cmd on-load &{{
+            cd "$(dirname "$1")" || exit 1
+            [ "$(git rev-parse --is-inside-git-dir 2>/dev/null)" = false ] || exit 0
+
+            cmds=""
+
+            for file in "$@"; do
+                case "$file" in
+                    */.git|*/.git/*) continue;;
+                esac
+
+                status=$(git status --porcelain --ignored -- "$file" | cut -c1-2 | head -n1)
+
+                if [ -n "$status" ]; then
+                    cmds="''${cmds}addcustominfo ''${file} \"$status\"; "
+                else
+                    cmds="''${cmds}addcustominfo ''${file} '''; "
+                fi
+            done
+
+            lf -remote "send $id :$cmds"
+        }}
+
+        cmd brename ''${{
+            [ -n "$fs" ] && edir -- $fs || edir
+        }}
+
+        cmd remove ''${{
+            if [ -z $fs ]; then
+                rm -fr $f
+            else
+                IFS=':'; echo $fs | tr " " "\n"
+                echo 'delete? [y/n]'
+                read ans
+
+                [ $ans = 'y' ] && (echo 'deleting files...' && rm -fr $fs) || (echo 'cancelled...')
+            fi
+        }}
+
+        cmd fzf_search ''${{
+            cmd="rg --column --line-number --no-heading --color=always --smart-case"
+            fzf --ansi --disabled --layout=reverse --header="Search in files" --delimiter=: \
+                --bind="start:reload([ -n {q} ] && $cmd -- {q} || true)" \
+                --bind="change:reload([ -n {q} ] && $cmd -- {q} || true)" \
+                --bind='enter:become(lf -remote "send $id select \"$(printf "%s" {1} | sed '\'''s/\\/\\\\/g;s/"/\\"/g'\''')\"")' \
+                --preview='cat -- {1}' # Use your favorite previewer here (bat, source-highlight, etc.), for example:
+                #--preview-window='+{2}-/2' \
+                #--preview='bat --color=always --highlight-line={2} -- {1}'
+                # Alternatively you can even use the same previewer you've configured for lf
+                #--preview='~/.config/lf/cleaner; ~/.config/lf/previewer {1} "$FZF_PREVIEW_COLUMNS" "$FZF_PREVIEW_LINES" "$FZF_PREVIEW_LEFT" "$FZF_PREVIEW_TOP"'
+        }}
+
+        cmd extract ''${{
+            set -f
+            ouch decompress $fx
+        }}
+
+        cmd on-cd &{{
+            # display repository status in your prompt
+            if [ -d .git ] || [ -f .git ]; then
+                branch="$(git branch --show-current 2>/dev/null)" || true
+                remote="$(git config --get "branch.$branch.remote" 2>/dev/null)" || true
+                url="$(git remote get-url "$remote" 2>/dev/null)" || true
+                fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m [GIT BRANCH:> $branch >> $url]\033[0m"
+            elif [ -d .hg ]; then
+                hg="$(hg branch 2>/dev/null)" || true
+                fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m [HG BRANCH:> $hg]\033[0m"
+            elif [ -d .svn ]; then
+                svn="$(svn info 2>/dev/null | awk '/^URL: /{print $2}')" || true
+                fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m [SVN URL:> $svn]\033[0m"
+            else
+                fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m"
+            fi
+            lf -remote "send $id set promptfmt \"$fmt\""
+        }}
+
+        cmd trash %trash $fx
+        cmd total-file-size  %du -sh $fx | fzf
+
+        map *n push :total-file-size<space>
+
+        map d
+        map dd delete
+        map dD trash
+
+        map \;
+        map \;c push :z<space>
+
+        map R brename
+
+        map gs :fzf_search
       '';
     };
     ripgrep = {
@@ -794,58 +632,82 @@
       # systemfiles_in_content_dir = "false"; # doub that will be good
     };
   };
+
   programs.prismlauncher = {
     enable = false;
   };
+
   services.kdeconnect.enable = true;
 
   programs = {
     vicinae = {
       enable = true;
-      systemd.enable = true;
+      # systemd.enable = false;
       settings = {
-        providers.applications.preferences = {
-          launchPrefix = "runapp";
+        "launcher_window" = {
+          rounding = 0;
+          "client_side_decorations" = {
+            # "enabled": true,
+            # // @Deprecated: prefer the top-level launcher_window.rounding.
+            # // "rounding": 10,
+            "border_width" = 2;
+            #
+            # // Draws drop shadows on the client side, ONLY if we are a layer surface.
+            # // We assume that non layer surfaces may already have drop shadows drawn by the compositor.
+            # // In order to play well with blur, we do NOT allow drop shadows if the compositor doesn't support
+            # // the ext-background-effect protocol (which allows defining a specific region to blur).
+            # # "shadow_size": 12
+          };
+        };
+
+        "close_on_focus_loss" = true;
+        "keybinding" = "emacs";
+        "input_server" = {
+          "enabled" = false;
+        };
+        "font" = {
+          "rendering" = "native";
+        };
+        "providers" = {
+          "applications" = {
+            "preferences" = {
+              "defaultAction" = "launch";
+              # launchPrefix = "runapp";
+            };
+          };
+          "clipboard" = {
+            "enabled" = false;
+            "preferences" = {
+              # "encryption" = true;
+              "eraseOnStartup" = true;
+              "ignorePasswords" = false;
+              "monitoring" = false;
+            };
+          };
+          "developer" = {
+            "enabled" = false;
+          };
+          "manage-shortcuts" = {
+            "enabled" = false;
+          };
+          "raycast-compat" = {
+            "enabled" = false;
+          };
+          "snippets" = {
+            "enabled" = false;
+          };
+          "theme" = {
+            "enabled" = false;
+          };
         };
       };
     };
   };
-  # programs.password-store.enable = true;
-  # services.pass-secret-service.enable = true;
   programs.gpg.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    pinentry.package = pkgs.pinentry-gtk2;
+  };
 
   programs.neovide.enable = true;
-  # programs.obsidian = {
-  #   enable = true;
-  #   cli.enable = true;
-  #   vaults = {
-  #     nix-roam = {
-  #       target = "/Documents/Notes/";
-  #       enable = true;
-  #       # target = "";
-  #       # settings = {
-  #       #   corePlugins = {
-  #       #     webviewer = {
-  #       #       enable = true;
-  #       #     };
-  #       #     templates = {
-  #       #       enable = false;
-  #       #     };
-  #       #     # webviewer = {
-  #       #     #   enable = true;
-  #       #     # };
-  #       #     # webviewer = {
-  #       #     #   enable = true;
-  #       #     # };
-  #       #     # webviewer = {
-  #       #     #   enable = true;
-  #       #     # };
-  #       #     # webviewer = {
-  #       #     #   enable = true;
-  #       #     # };
-  #       #   };
-  #       # };
-  #     };
-  #   };
-  # };
 }

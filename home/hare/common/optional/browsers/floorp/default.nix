@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  pkgsUnstable,
   lib,
   ...
 }: {
@@ -12,6 +13,7 @@
 
   programs.floorp = {
     enable = true;
+    package = pkgsUnstable.floorp-bin;
     nativeMessagingHosts = with pkgs; [
       tridactyl-native
     ];
@@ -33,7 +35,7 @@
           (extension "violentmonkey" "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}")
           (extension "sponsorblock" "sponsorBlocker@ajay.app")
           (extension "tridactyl-vim" "tridactyl.vim@cmcaine.co.uk")
-          # (extension "styl-us" "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}")
+          (extension "styl-us" "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}")
           # (extension "view-page-archive" "{d07ccf11-c0cd-4938-a265-2a4d6ad01189}")
           # (extension "steam-database" "firefox-extension@steamdb.info")
           # (extension "augmented-steam" "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}")
@@ -82,9 +84,9 @@
             "{3c078156-979c-498b-8990-85f7987dd929}".settings = import ../extensions/sidebery/default.nix {
               inherit config lib;
             };
-            # "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}".settings = {
-            #   styles = lib.importJSON.packages.catppuccin-userstyles;
-            # };
+            "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}".settings = {
+              styles = lib.importJSON.packages.catppuccin-userstyles;
+            };
           };
         };
 

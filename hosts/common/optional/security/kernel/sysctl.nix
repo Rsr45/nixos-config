@@ -1,118 +1,103 @@
 { ... }: {
   boot.kernel.sysctl = {
-    # Hide kptrs even for processes with CAP_SYSLOG
-    "kernel.kptr_restrict" = "2";
+    ## Copyright (C) 2019 - 2025 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
+    ## See the file COPYING for copying conditions.
 
-    # Disable bpf() JIT (to eliminate spray attacks)
-    "net.core.bpf_jit_enable" = false;
+    ## NOTE:
+    ## This file has a special name to ensure that /usr/lib/sysctl.d/99-protect-links.conf
+    ## is parsed first, followed by /usr/lib/sysctl.d/990-security-misc.conf.
+    ## https://github.com/Kicksecure/security-misc/pull/135
 
-    # Disable ftrace debugging
-    "kernel.ftrace_enabled" = false;
+    ## Definitions:
+    ## KSPP=yes: compliant with recommendations by the KSPP
+    ## KSPP=partial: partially compliant with recommendations by the KSPP
+    ## KSPP=no: not (currently) compliant with recommendations by the KSPP
+    ## If there is no explicit KSPP compliance notice, the setting is not mentioned by the KSPP.
 
-    # Disable io_uring, a large source of security vulnerabilities
-    # https://security.googleblog.com/2023/06/learnings-from-kctf-vrps-42-linux.html
-    "kernel.io_uring_disabled" = 2;
+    ## This configuration file is divided into 6 sections:
+    ## 1. Kernel Space
+    ## 2. User Space
+    ## 3. Core Dumps
+    ## 4. Swap Space
+    ## 5. Networking
+    ## 6. CD-ROM/DVD
 
-    # Enable strict reverse path filtering (that is, do not attempt to route
-    # packets that "obviously" do not belong to the iface's network; dropped
-    # packets are logged as martians).
-    "net.ipv4.conf.all.log_martians" = true;
-    "net.ipv4.conf.all.rp_filter" = "1";
-    "net.ipv4.conf.default.log_martians" = true;
-    "net.ipv4.conf.default.rp_filter" = "1";
+    ## For detailed explanations of most of the selected commands, refer to:
+    ## https://docs.kernel.org/admin-guide/sysctl/index.html
+    ## https://docs.kernel.org/networking/ip-sysctl.html
 
-    # Ignore broadcast ICMP (mitigate SMURF)
-    "net.ipv4.icmp_echo_ignore_broadcasts" = true;
-
-    # Ignore incoming ICMP redirects (note: default is needed to ensure that the
-    # setting is applied to interfaces added after the sysctls are set)
-    "net.ipv4.conf.all.accept_redirects" = false;
-    "net.ipv4.conf.all.secure_redirects" = false;
-    "net.ipv4.conf.default.accept_redirects" = false;
-    "net.ipv4.conf.default.secure_redirects" = false;
-    "net.ipv6.conf.all.accept_redirects" = false;
-    "net.ipv6.conf.default.accept_redirects" = false;
-
-    # Ignore outgoing ICMP redirects (this is ipv4 only)
-    "net.ipv4.conf.all.send_redirects" = false;
-    "net.ipv4.conf.default.send_redirects" = false;
-
-    "fs.suid_dumpable" = 0;
-    # restrict kernel log to CAP_SYSLOG capability
+    ## 1. Kernel Space:
+    "kernel.kptr_restrict" = 2;
     "kernel.dmesg_restrict" = 1;
-    # Note: certian container runtimes or browser sandboxes might rely on the following
-    # restrict eBPF to the CAP_BPF capability
     "kernel.unprivileged_bpf_disabled" = 1;
-    # should be enabled along with bpf above
-    # "net.core.bpf_jit_harden" = 2;
-    # restrict loading TTY line disciplines to the CAP_SYS_MODULE
-    "dev.tty.ldisk_autoload" = 0;
-    # prevent exploit of use-after-free flaws
+    "dev.tty.ldisc_autoload" = 0;
     "vm.unprivileged_userfaultfd" = 0;
-    # kexec is used to boot another kernel during runtime and can be abused
     "kernel.kexec_load_disabled" = 1;
-    # Kernel self-protection
-    # SysRq exposes a lot of potentially dangerous debugging functionality to unprivileged users
-    # 4 makes it so a user can only use the secure attention key. A value of 0 would disable completely
-    "kernel.sysrq" = 4;
-    # disable unprivileged user namespaces, Note: Docker, NH, and other apps may need this
-    # "kernel.unprivileged_userns_clone" = 0; # Set to 1 because it makes NH and other programs fail
-    # This should be set to 0 if you don't rely on flatpak, NH, Docker, etc.
-    "kernel.unprivileged_userns_clone" = 1;
-    # restrict all usage of performance events to the CAP_PERFMON capability
+    "kernel.sysrq" = 0;
     "kernel.perf_event_paranoid" = 3;
+    "kernel.panic" = "-1";
+    "dev.tty.legacy_tiocsti" = 0;
+    "kernel.io_uring_disabled" = 2;
+    "abi.vsyscall32" = 0;
 
-    # Network
-    # protect against SYN flood attacks (denial of service attack)
-    "net.ipv4.tcp_syncookies" = 1;
-    # protection against TIME-WAIT assassination
-    "net.ipv4.tcp_rfc1337" = 1;
-
-    # prevent man-in-the-middle attacks
-    "net.ipv4.icmp_echo_ignore_all" = 1;
-
-    # ignore ICMP request, helps avoid Smurf attacks
-    "net.ipv4.conf.all.forwarding" = 0;
-    "net.ipv4.conf.default.accept_source_route" = 0;
-    "net.ipv4.conf.all.accept_source_route" = 0;
-    "net.ipv6.conf.all.accept_source_route" = 0;
-    "net.ipv6.conf.default.accept_source_route" = 0;
-    # Reverse path filtering causes the kernel to do source validation of
-    "net.ipv6.conf.all.forwarding" = 0;
-    "net.ipv6.conf.all.accept_ra" = 0;
-    "net.ipv6.conf.default.accept_ra" = 0;
-
-    ## TCP hardening
-    # Prevent bogus ICMP errors from filling up logs.
-    "net.ipv4.icmp_ignore_bogus_error_responses" = 1;
-
-    # Userspace
-    # restrict usage of ptrace
-    "kernel.yama.ptrace_scope" = 2;
-
-    # ASLR memory protection (64-bit systems)
-    "vm.mmap_rnd_bits" = 32;
-    "vm.mmap_rnd_compat_bits" = 16;
-
-    # only permit symlinks to be followed when outside of a world-writable sticky directory
-    "fs.protected_symlinks" = 1;
+    ## 2. User Space:
     "fs.protected_hardlinks" = 1;
-    # Prevent creating files in potentially attacker-controlled environments
+    "fs.protected_symlinks" = 1;
     "fs.protected_fifos" = 2;
     "fs.protected_regular" = 2;
-
-    # Randomize memory
     "kernel.randomize_va_space" = 2;
-    # Exec Shield (Stack protection)
-    "kernel.exec-shield" = 1;
+    "vm.mmap_min_addr" = "65536";
+    "vm.max_map_count" = "1048576";
 
-    ## TCP optimization
-    # TCP Fast Open is a TCP extension that reduces network latency by packing
-    # data in the sender’s initial TCP SYN. Setting 3 = enable TCP Fast Open for
-    # both incoming and outgoing connections:
-    "net.ipv4.tcp_fastopen" = 3;
-    # Bufferbloat mitigations + slight improvement in throughput & latency
-    "net.ipv4.tcp_congestion_control" = "bbr";
-    "net.core.default_qdisc" = "cake";
+    ## 3. Core Dumps:
+    "kernel.core_pattern" = "|/bin/false";
+    "fs.suid_dumpable" = 0;
+    "kernel.core_uses_pid" = 1;
+
+    ## 4. Swap Space:
+    "vm.swappiness" = 1;
+
+    ## 5. Networking:
+    "net.core.bpf_jit_harden" = 2;
+    "net.ipv4.tcp_syncookies" = 1;
+    "net.ipv4.tcp_rfc1337" = 1;
+    "net.ipv4.conf.*.rp_filter" = 1;
+    "net.ipv4.conf.default.rp_filter" = 1;
+    "net.ipv4.conf.*.accept_redirects" = 0;
+    "net.ipv4.conf.*.send_redirects" = 0;
+    "net.ipv6.conf.*.accept_redirects" = 0;
+    "net.ipv4.conf.*.shared_media" = 0;
+    "net.ipv4.conf.*.arp_filter" = 1;
+    "net.ipv4.conf.*.arp_ignore" = 2;
+    "net.ipv4.conf.*.drop_gratuitous_arp" = 1;
+    "net.ipv4.icmp_echo_ignore_all" = 1;
+    "net.ipv6.icmp.echo_ignore_all" = 1;
+    "net.ipv4.icmp_ignore_bogus_error_responses" = 1;
+    "net.ipv4.conf.*.accept_source_route" = 0;
+    "net.ipv6.conf.*.accept_source_route" = 0;
+    "net.ipv6.conf.*.accept_ra" = 0;
+    "net.ipv4.tcp_timestamps" = 0;
+    "net.ipv4.tcp_tw_reuse" = 0;
+    "net.ipv4.conf.*.log_martians" = 1;
+
+    ## 6. CD-ROM/DVD
+    "dev.cdrom.autoclose" = 0;
+    "dev.cdrom.autoeject" = 0;
+    "dev.cdrom.debug" = 0;
+
+    # # Disable module loading. For example, this can be set after the system has finished booting and initializing hardware:
+    # # https://outflux.net/blog/archives/2009/07/31/blocking-module-loading/
+    # "kernel.modules_disabled" = 1;
+
+    # # Block all PTRACE_ATTACH. If you need ptrace to work, then avoid non-ancestor ptrace access to running processes and their credentials, and use value "1".
+    # "kernel.yama.ptrace_scope" = 3;
+
+    # # Disable User Namespaces, as it opens up a large attack surface to unprivileged users.
+    # # "user.max_user_namespaces" = 0;
+
+    # # Reboot after even 1 WARN or BUG/Oops. Adjust for your tolerances. (Since v6.2)
+    # # If you want to set oops_limit greater than one, you will need to disable CONFIG_PANIC_ON_OOPS.
+    # "kernel.warn_limit" = 1;
+    # "kernel.oops_limit" = 1;
   };
 }

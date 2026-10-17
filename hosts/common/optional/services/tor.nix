@@ -1,42 +1,35 @@
-{...}:{
-
-services.tor = {
-  enable = true;
-  openFirewall =true;
-
-  # Disable GeoIP to prevent the Tor client from estimating the locations of Tor nodes it connects to
-  # enableGeoIP = false;
-
-  # Enable Torsocks for transparent proxying of applications through Tor
-  torsocks.enable = true;
-
-  # Enable the Tor client
-  client = {
+{...}: {
+  services.tor = {
     enable = true;
-  };
+    openFirewall = true;
 
-  # Enable and configure the Tor relay
-  # relay = {
-  #   enable = true;
-  #   role = "relay";  # Set the relay role (e.g., "relay", "bridge")
-  # };
+    # Disable GeoIP to prevent the Tor client from estimating the locations of Tor nodes it connects to
+    # enableGeoIP = false;
 
-  # Configure Tor settings
-  # settings = {
-  #   # Nickname = "YourNickname";
-  #   # ContactInfo = "your-email@example.com";
-  #
-  #   # Bandwidth settings
-  #   MaxAdvertisedBandwidth = "100 MB";
-  #   BandWidthRate = "50 MB";
-  #   RelayBandwidthRate = "50 MB";
-  #   RelayBandwidthBurst = "100 MB";
-  #
-  #   # Restrict exit nodes to a specific country (use the appropriate country code)
-  #   ExitNodes = "{ch} StrictNodes 1";
-  #
-  #   # Reject all exit traffic
-  #   ExitPolicy = "reject *:*";
+    # Enable Torsocks for transparent proxying of applications through Tor
+    torsocks.enable = true;
+
+    # Enable the Tor client
+    client = {
+      enable = true;
+    };
+
+    # Enable and configure the Tor relay
+    # relay = {
+    #   enable = true;
+    #   role = "relay";  # Set the relay role (e.g., "relay", "bridge")
+    # };
+
+    # Configure Tor settings
+    # settings = {
+    #   # Nickname = "YourNickname";
+    #   # ContactInfo = "your-email@example.com";
+    #
+    #   # Bandwidth settings
+    #   MaxAdvertisedBandwidth = "100 MB";
+    #   BandWidthRate = "50 MB";
+    #   RelayBandwidthRate = "50 MB";
+    #   RelayBandwidthBurst = "100 MB";
 
     # Performance and security settings
     # CookieAuthentication = true;
@@ -47,6 +40,6 @@ services.tor = {
 
     # Network settings
     # ORPort = [443];
-  # };
-};
+    # };
+  };
 }

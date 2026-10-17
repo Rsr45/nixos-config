@@ -24,6 +24,10 @@
           path = "/home/hare/Documents/Notes";
           devices = ["phone"];
         };
+        "Music" = {
+          path = "/home/hare/Music";
+          devices = ["phone"];
+        };
         # "Example" = {
         #   path = "/home/myusername/Example";
         #   devices = [ "device1" ];

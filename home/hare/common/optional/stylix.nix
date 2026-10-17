@@ -11,8 +11,10 @@
     enable = true;
     autoEnable = false;
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     polarity = "dark";
+    # opacity.terminal = 0.7;
+
     icons = {
       enable = true;
       package = pkgs.papirus-icon-theme;
@@ -22,18 +24,24 @@
 
     fonts = {
       serif = {
-        package = pkgs.geist-font;
-        name = "Geist";
+        package = pkgs.iosevka-bin.override {
+          variant = "Aile";
+        };
+        name = "Iosevka Aile";
       };
 
       sansSerif = {
-        package = pkgs.geist-font;
-        name = "Geist";
+        package = pkgs.iosevka-bin.override {
+          variant = "Aile";
+        };
+        name = "Iosevka Aile";
       };
 
       monospace = {
-        package = pkgs.iosevka;
-        name = "Iosevka";
+        package = pkgs.iosevka-bin.override {
+          variant = "SGr-IosevkaTermCurly";
+        };
+        name = "Iosevka Term Curly Extended";
       };
 
       emoji = {
@@ -81,6 +89,7 @@
       };
       neovide.enable = true;
       zed.enable = true;
+      emacs.enable = true;
       swaync.enable = true;
       sway.enable = true;
       dunst.enable = true;
@@ -106,8 +115,12 @@
         enable = true;
         flatpakSupport.enable = true;
         extraCss = ''
+          * { border-radius: 0; box-shadow: none; }
           // Remove rounded corners
           window.background { border-radius: 0; }
+          decoration, window, window.background, window.titlebar, * {
+            border-radius: 0px;
+          }
         '';
       };
       qt = {
@@ -118,7 +131,13 @@
       hyprlock.enable = true;
       kde.enable = true;
       xresources.enable = true;
+      fuzzel.enable = true;
       # waybar.enable = false;
+      firefox = {
+        enable = true;
+        colorTheme.enable = true;
+        profileNames = ["default"];
+      };
       # floorp = {
       #   enable = false;
       # #   colorTheme.enable = true;
@@ -144,6 +163,40 @@
       "wallust/colorschemes/stylix-wal.json".text =
         import (lib.custom.relativeToRoot "shared/wallust/colorschemes/stylix.nix")
         {inherit config;};
+
+      "rofi/colors.rasi".text =
+        import (lib.custom.relativeToRoot "shared/stylix/rofi/colors.nix")
+        {inherit config;};
     };
   };
+
+  home.file.".local/share/color-schemes/stylix.colors".source = let
+    themePackage = builtins.head (
+      builtins.filter (
+        p: builtins.match ".*stylix-kde-theme.*" (builtins.baseNameOf p) != null
+      )
+      config.home.packages
+    );
+    colorSchemeSlug = lib.concatStrings (
+      lib.filter lib.isString (builtins.split "[^a-zA-Z]" config.lib.stylix.colors.scheme)
+    );
+  in "${themePackage}/share/color-schemes/${colorSchemeSlug}.colors";
+
+  # xdg.configFile.kdeglobals.source = let
+  #   themePackage = builtins.head (
+  #     builtins.filter (
+  #       p: builtins.match ".*stylix-kde-theme.*" (builtins.baseNameOf p) != null
+  #     )
+  #     config.home.packages
+  #   );
+  #   colorSchemeSlug = lib.concatStrings (
+  #     lib.filter lib.isString (builtins.split "[^a-zA-Z]" config.lib.stylix.colors.scheme)
+  #   );
+  # in "${themePackage}/share/color-schemes/${colorSchemeSlug}.colors";
+
+  # home.file = {
+  #   ".local/share/color-schemes/stylix.colors".text =
+  #     import (lib.custom.relativeToRoot "shared/stylix/kde/color-schemes-stylix.nix")
+  #     {inherit config;};
+  # };
 }

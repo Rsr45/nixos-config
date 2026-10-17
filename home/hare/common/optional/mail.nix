@@ -1,10 +1,13 @@
-{ config,inputs,... }:
 {
+  config,
+  inputs,
+  ...
+}: {
   ## FIXME
-  imports =[
+  imports = [
     inputs.sops-nix.homeModules.sops
   ];
-sops = {
+  sops = {
     #    defaultSopsFile = "${secretsFile}";
     # defaultSopsFile = "${sopsFolder}/${config.hostSpec.hostName}.yaml";
     validateSopsFiles = false;
@@ -19,25 +22,26 @@ sops = {
     # e.g. /run/secrets/msmtp-password
     # secrets required for user creation are handled in respective ./users/<username>.nix files
     # because they will be output to /run/secrets-for-users and only when the user is assigned to a host.
+    secrets = {
+      "refresh-token" = {};
+    };
   };
 
+  # use thunderbird with oauth no need for unsecure ways to login to mere email
+  # sops.secrets =
+  #     {
+  #       "mail/efe54676"= {};
+  #       "mail/efe45676"= {};
+  #     };
 
-
-
-sops.secrets =
-    {
-      "mail/efe54676"= {};
-      "mail/efe45676"= {};
-    };
-
-    accounts.email.accounts = {
+  accounts.email.accounts = {
     "efe54676@gmail.com" = {
       primary = true;
       realName = "Muhittin Efe Kaygısız";
       address = "efe54676@gmail.com";
       flavor = "gmail.com";
       # passwordCommand = "secret-tool lookup email efe54676@gmail.com";
-      passwordCommand = "cat ${config.sops.secrets."mail/efe54676".path}"; # even  work??
+      # passwordCommand = "cat ${config.sops.secrets."mail/efe54676".path}"; # even  work??
       # mbsync = {
       #   enable = true;
       #   create = "maildir";
@@ -52,7 +56,7 @@ sops.secrets =
       realName = "Muhittin Efe Kaygısız";
       address = "efe45676@gmail.com";
       flavor = "gmail.com";
-      passwordCommand = "cat ${config.sops.secrets."mail/efe45676".path}";
+      # passwordCommand = "cat ${config.sops.secrets."mail/efe45676".path}";
       # passwordCommand = "secret-tool lookup email efe45676@gmail.com";
       # mbsync = {
       #   enable = true;

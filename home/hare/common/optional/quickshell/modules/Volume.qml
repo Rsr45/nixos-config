@@ -39,7 +39,7 @@ Rectangle {
         anchors.leftMargin: 3
         anchors.rightMargin: 3
 
-        color: muted ? Colors.borderColor : Colors.accent2Color
+        color: muted ? Colors.borderColor : Colors.accent
 
         Behavior on width {
             NumberAnimation {

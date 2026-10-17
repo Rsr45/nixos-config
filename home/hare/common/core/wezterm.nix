@@ -6,7 +6,7 @@
       -- This will hold the configuration.
       local config = wezterm.config_builder()
 
-      config.default_prog = { '${lib.getExe pkgs.fish}', '-l' }
+      config.default_prog = { '${lib.getExe pkgs.zsh}', '-l' }
 
       config.window_padding = {
           left = 5,

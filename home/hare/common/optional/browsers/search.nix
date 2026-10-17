@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  default = "searx";
+  default = "ddg";
   privateDefault = "ddg";
   force = true;
   order = [

@@ -2,7 +2,7 @@
   lib,
   inputs,
   pkgs,
-config,
+  config,
   ...
 }:
 let
@@ -23,10 +23,10 @@ in
       dns = "none";
     };
 
-    resolvconf = {
-      enable = true;
-      useLocalResolver = true;
-    };
+    # resolvconf = {
+    #   enable = true;
+    #   useLocalResolver = true;
+    # };
   };
 
   services.resolved.enable = lib.mkForce false;
@@ -40,7 +40,7 @@ in
       # ipv6_servers = true;
       require_dnssec = true;
       require_nolog = true;
-      # require_nofilter = false;
+      require_nofilter = true;
       odoh_servers = true;
       query_log.file = "/var/log/dnscrypt-proxy/query.log";
 
@@ -68,12 +68,12 @@ in
 
   # systemd.services.dnscrypt-proxy.serviceConfig.StateDirectory = StateDirectory;
 
-    systemd.services.dnscrypt-proxy.serviceConfig = {
-      StateDirectory = lib.mkForce "";
-      ReadWritePaths = "/var/lib/dnscrypt-proxy";
-    };
+  systemd.services.dnscrypt-proxy.serviceConfig = {
+    StateDirectory = lib.mkForce "";
+    ReadWritePaths = "/var/lib/dnscrypt-proxy";
+  };
 
-    # Make sure this directory exists so the service doesn't fail on boot
-    systemd.tmpfiles.rules = [ "d /var/lib/dnscrypt-proxy 0755 root root -" ];
+  # Make sure this directory exists so the service doesn't fail on boot
+  systemd.tmpfiles.rules = [ "d /var/lib/dnscrypt-proxy 0755 root root -" ];
 
 }

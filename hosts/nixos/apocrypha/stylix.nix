@@ -1,5 +1,8 @@
-{ pkgs, inputs, ... }:
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.stylix.nixosModules.stylix
   ];
@@ -13,7 +16,8 @@
     enable = true;
     autoEnable = false;
     polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
+    # gruvbox-material-dark-medium
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
 
     homeManagerIntegration.followSystem = false;
     homeManagerIntegration.autoImport = false;
@@ -33,18 +37,24 @@
 
     fonts = {
       serif = {
-        package = pkgs.geist-font;
-        name = "Geist";
+        package = pkgs.iosevka-bin.override {
+          variant = "Aile";
+        };
+        name = "Iosevka Aile";
       };
 
       sansSerif = {
-        package = pkgs.geist-font;
-        name = "Geist";
+        package = pkgs.iosevka-bin.override {
+          variant = "Aile";
+        };
+        name = "Iosevka Aile";
       };
 
       monospace = {
-        package = pkgs.iosevka;
-        name = "Iosevka";
+        package = pkgs.iosevka-bin.override {
+          variant = "SGr-IosevkaTermCurly";
+        };
+        name = "Iosevka Term Curly Extended";
       };
 
       emoji = {

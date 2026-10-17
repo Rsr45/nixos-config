@@ -26,7 +26,9 @@ in {
     ./kvantum.nix
     ## Shell
     ./aliases.nix
+    ./scripts
     ./bash.nix
+    ./zsh.nix
     ./fish.nix
     ./nu.nix
     ## CLI
@@ -36,11 +38,11 @@ in {
     # ./fonts.nix
     # ./git.nix
     ./kitty.nix
-    # ./screen.nix
-    # ./ssh.nix
+    ./wezterm.nix
     ./zoxide.nix
     ./eza.nix
     ./starship.nix
+    ./gallery-dl.nix
   ];
 
   inherit hostSpec;

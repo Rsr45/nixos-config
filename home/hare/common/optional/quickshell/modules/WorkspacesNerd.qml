@@ -33,14 +33,14 @@ Rectangle {
             4: "" // files
             ,
             5: "" // music
-            // ,
-            // 6: "󰭹" // chat
-            // ,
-            // 7: "" // images
-            // ,
-            // 8: "" // media
-            // ,
-            // 9: ""  // settings
+        // ,
+        // 6: "󰭹" // chat
+        // ,
+        // 7: "" // images
+        // ,
+        // 8: "" // media
+        // ,
+        // 9: ""  // settings
         })
 
     ColumnLayout {
@@ -99,12 +99,22 @@ Rectangle {
                     onExited: hovered = false
 
                     onClicked: {
-                        Hyprland.dispatch("workspace " + modelData.id);
+                        Hyprland.dispatch(`hl.dsp.focus({ workspace = ${modelData.id} })`);
                     }
 
-                    onWheel: wheel => {
-                        const dir = wheel.angleDelta.y > 0 ? "-1" : "+1";
-                        Hyprland.dispatch("workspace e" + dir);
+                    // onWheel: wheel => {
+                    //     const dir = wheel.angleDelta.y > 0 ? "-1" : "+1";
+                    //     Hyprland.dispatch("workspace e" + dir);
+                    // }
+
+                    onWheel: function (wheel) {
+                        if (wheel.angleDelta.y > 0) {
+                            Hyprland.dispatch("hl.dsp.focus({ workspace = \"e-1\" })");
+                        } else if (wheel.angleDelta.y < 0) {
+                            Hyprland.dispatch("hl.dsp.focus({ workspace = \"e+1\" })");
+                        }
+
+                        wheel.accepted = true;
                     }
                 }
             }

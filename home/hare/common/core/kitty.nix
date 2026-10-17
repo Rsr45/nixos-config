@@ -19,15 +19,21 @@
       "page_down " = "scroll_page_down";
       # "home" = "scroll_home";
       # "end" = "scroll_end";
+      "ctrl+shift+t" = "no_op";
+      "ctrl+shift+r" = "no_op";
+      "ctrl+shift+d" = "no_op";
+      "ctrl+shift+l" = "no_op";
     };
     settings = {
       # include = "./generated-colors.conf"; # using stylix my boi again just like the old times
-      text_composition_strategy = "legacy";
+      allow_remote_control = "yes";
+      listen_on = "unix:kitty";
+      # text_composition_strategy = "legacy";
       confirm_os_window_close = "0";
       window_padding_width = "6";
       placement_strategy = "center";
-      shell = "fish";
-      notify_on_cmd_finish = "unfocused";
+      shell = "zsh";
+      # notify_on_cmd_finish = "unfocused";
     };
   };
 }

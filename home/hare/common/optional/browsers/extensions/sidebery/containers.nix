@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   containers = {
     firefox-container-1 = {
       id = "firefox-container-1";
@@ -11,7 +10,7 @@
       proxified = false;
       proxy = null;
       reopenRulesActive = false;
-      reopenRules = [ ];
+      reopenRules = [];
       userAgentActive = false;
       userAgent = "";
     };
@@ -25,7 +24,7 @@
       proxified = false;
       proxy = null;
       reopenRulesActive = false;
-      reopenRules = [ ];
+      reopenRules = [];
       userAgentActive = false;
       userAgent = "";
     };
@@ -39,7 +38,7 @@
       proxified = false;
       proxy = null;
       reopenRulesActive = false;
-      reopenRules = [ ];
+      reopenRules = [];
       userAgentActive = false;
       userAgent = "";
     };
@@ -53,7 +52,7 @@
       proxified = false;
       proxy = null;
       reopenRulesActive = false;
-      reopenRules = [ ];
+      reopenRules = [];
       userAgentActive = false;
       userAgent = "";
     };
@@ -111,7 +110,7 @@
       "proxified" = false;
       "proxy" = null;
       "reopenRulesActive" = false;
-      "reopenRules" = [ ];
+      "reopenRules" = [];
       "userAgentActive" = false;
       "userAgent" = "";
     };
@@ -176,7 +175,7 @@
       "proxified" = false;
       "proxy" = null;
       "reopenRulesActive" = false;
-      "reopenRules" = [ ];
+      "reopenRules" = [];
       "userAgentActive" = false;
       "userAgent" = "";
     };
@@ -190,7 +189,7 @@
       "proxified" = false;
       "proxy" = null;
       "reopenRulesActive" = false;
-      "reopenRules" = [ ];
+      "reopenRules" = [];
       "userAgentActive" = false;
       "userAgent" = "";
     };
@@ -292,7 +291,7 @@
       "proxified" = false;
       "proxy" = null;
       "reopenRulesActive" = false;
-      "reopenRules" = [ ];
+      "reopenRules" = [];
       "userAgentActive" = false;
       "userAgent" = "";
     };
@@ -315,6 +314,27 @@
           name = "canva.com";
         }
       ];
+      userAgentActive = false;
+      userAgent = "";
+    };
+    firefox-container-18 = {
+      id = "firefox-container-18";
+      cookieStoreId = "firefox-container-18";
+      name = "tor";
+      icon = "circle";
+      color = "purple";
+      colorCode = "#37adff";
+      proxified = true;
+      proxy = {
+        type = "socks";
+        host = "127.0.0.1";
+        port = "9050";
+        username = "";
+        password = "";
+        proxyDNS = true;
+      };
+      reopenRulesActive = true;
+      reopenRules = [];
       userAgentActive = false;
       userAgent = "";
     };

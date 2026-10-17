@@ -5,7 +5,7 @@ import qs.shared
 
 Singleton {
     property string font: "Iosevka"
-    property string icon: "Iosevka Nerd Font Propo"
+    property string icon: "Symbols Nerd Font Mono Propo"
     property string mono: "Geist Mono"
 
     // User Configuration

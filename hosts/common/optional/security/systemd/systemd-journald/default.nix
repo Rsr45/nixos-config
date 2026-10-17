@@ -5,4 +5,8 @@
     ProtectHostname = true;
     PrivateMounts = true;
   };
+  services.journald = {
+    storage = "volatile";
+    upload.enable = false;
+  };
 }

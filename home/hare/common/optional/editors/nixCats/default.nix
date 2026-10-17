@@ -24,9 +24,9 @@ in {
             suffix-path = true;
             suffix-LD = true;
             aliases = [
-              "vi"
+              # "vi"
               # "vim"
-              # "nvim"
+              "nvim"
             ];
 
             wrapRc = true;
@@ -37,14 +37,18 @@ in {
           };
           categories = {
             markdown = true;
-            notes = true;
+            notes = false;
             org = true;
             general = true;
             lint = true;
             format = true;
             neonixdev = true;
+            nix = true;
             typst = true;
             qml = true;
+            bash = true;
+            python = true;
+            tex = true;
 
             # enabling this category will enable the go category,
             # and ALSO debug.go and debug.default due to our extraCats in categoryDefinitions.

@@ -15,6 +15,7 @@ Rectangle {
         spacing: 5
 
         WorkspacesNerd {}
+        SysTray {}
         // WorkspacesRumda {}
     }
 }

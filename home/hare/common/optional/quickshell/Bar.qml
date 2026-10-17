@@ -38,8 +38,7 @@ Scope {
             //     bottom: 10
             // }
 
-            // color: Colors.bg
-            // color: Qt.alpha(Colors.bg, 0.90)
+            // color: Qt.alpha(Colors.bg, 0.70)
             color: Colors.bg
 
             Rectangle {

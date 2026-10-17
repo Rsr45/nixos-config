@@ -170,7 +170,7 @@
     animationSpeed = "norm";
     theme = "proton";
     density = "compact";
-    colorScheme = "dark";
+    colorScheme = "firefox";
     snapNotify = true;
     snapExcludePrivate = true;
     snapInterval = 0;

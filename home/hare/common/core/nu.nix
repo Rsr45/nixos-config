@@ -3,6 +3,7 @@
     carapace = {
       enable = true;
       enableNushellIntegration = true;
+      enableZshIntegration = true;
     };
 
     starship = {
@@ -23,7 +24,8 @@
 
     settings = {
       show_banner = false;
-      buffer_editor = "vi";
+      buffer_editor = "nvim";
+      abbreviations = config.home.shellAliases;
     };
 
     envFile.text = ''
@@ -31,92 +33,26 @@
       $env.TRANSIENT_PROMPT_COMMAND = ^starship module character
     '';
 
-    # configFile.text = ''
-    #   $env.config.table.mode = 'single'
-    #   let abbreviations = {
-    #   }
-    #
-    #   $env.config.keybindings ++= [{
-    #       name: tmux_sessionizer
-    #       modifier: control
-    #       keycode: char_f
-    #       mode: [emacs, vi_normal, vi_insert]
-    #       event: [
-    #           { edit: Clear }
-    #           {
-    #             edit: InsertString,
-    #             value: "tms"
-    #           }
-    #           { send: Enter }
-    #       ]
-    #   }]
-    #
-    #   $env.config.keybindings ++= [{
-    #       name: tmux_sessionizer
-    #       modifier: control
-    #       keycode: char_t
-    #       mode: [emacs, vi_normal, vi_insert]
-    #       event: [
-    #           { edit: Clear }
-    #           {
-    #             edit: InsertString,
-    #             value: "tms switch"
-    #           }
-    #           { send: Enter }
-    #       ]
-    #   }]
-    #
-    #   $env.config = {
-    #       keybindings: [
-    #         {
-    #           name: abbr_menu
-    #           modifier: none
-    #           keycode: enter
-    #           mode: [emacs, vi_normal, vi_insert]
-    #           event: [
-    #               { send: menu name: abbr_menu }
-    #               { send: enter }
-    #           ]
-    #         }
-    #         {
-    #           name: abbr_menu
-    #           modifier: none
-    #           keycode: space
-    #           mode: [emacs, vi_normal, vi_insert]
-    #           event: [
-    #               { send: menu name: abbr_menu }
-    #               { edit: insertchar value: ' '}
-    #           ]
-    #         }
-    #       ]
-    #
-    #       menus: [
-    #           {
-    #               name: abbr_menu
-    #               only_buffer_difference: false
-    #               marker: none
-    #               type: {
-    #                   layout: columnar
-    #                   columns: 1
-    #                   col_width: 20
-    #                   col_padding: 2
-    #               }
-    #               style: {
-    #                   text: green
-    #                   selected_text: green_reverse
-    #                   description_text: yellow
-    #               }
-    #               source: { |buffer, position|
-    #                   let match = $abbreviations | columns | where $it == $buffer
-    #                   if ($match | is-empty) {
-    #                       { value: $buffer }
-    #                   } else {
-    #                       { value: ($abbreviations | get $match.0) }
-    #                   }
-    #               }
-    #           }
-    #       ]
-    #   }
-    # '';
+    configFile.text = ''
+      # General =====================================================================
+      $env.config.show_banner = false
+      $env.config.bracketed_paste = true
+
+      # Table view
+      $env.config.table.mode = 'compact_double'
+      $env.config.table.header_on_separator = true
+      $env.config.table.missing_value_symbol = '×'
+      $env.config.table.trim = { methodology: "truncating", truncating_suffix: "…" }
+
+      $env.config.datetime_format.table = "%Y-%m-%d %H:%M:%S"
+      $env.config.datetime_format.normal = "%Y-%m-%d %H:%M:%S"
+
+      $env.config.completions.algorithm = "fuzzy"
+
+      # Vi mode =====================================================================
+      $env.config.edit_mode = 'vi'
+      $env.config.cursor_shape.vi_insert = 'line'
+      $env.config.cursor_shape.vi_normal = 'block'
+    '';
   };
 }

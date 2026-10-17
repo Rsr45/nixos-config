@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   # gtk.font = {
   #   package = pkgs.geist-font;
   #   name = "Geist";
@@ -32,9 +36,10 @@
 
   fonts.fontconfig = {
     enable = true;
-    #   hinting = "slight";
-    #   antialiasing = true;
-    #   subpixelRendering = "rgb";
+    hinting = lib.mkForce "full";
+    antialiasing = true;
+    subpixelRendering = lib.mkForce "rgb";
+    # subpixelRendering = lib.mkForce "rgb";
     #   defaultFonts = {
     #     monospace = [
     #       # "Geist Mono"
@@ -87,15 +92,8 @@
     #   };
   };
 
-  home.packages = with pkgs; [
-    nerd-fonts.ubuntu-sans
-    nerd-fonts.fira-code
-    nerd-fonts.symbols-only
-    font-awesome
-
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-cjk-serif
-    noto-fonts-color-emoji
-  ];
+  # home.packages = with pkgs; [
+  #   nerd-fonts.symbols-only
+  #   font-awesome
+  # ];
 }
